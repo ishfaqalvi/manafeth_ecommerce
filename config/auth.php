@@ -40,9 +40,9 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'guards' => [
+        'customer' => [
             'driver' => 'session',
-            'provider' => 'guards',
+            'provider' => 'customers',
         ],
         // 'firms' => [
         //     'driver' => 'session',
@@ -72,9 +72,9 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'guards' => [
+        'customers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\SecurityGuard::class,
+            'model' => App\Models\Customer::class,
         ],
         // 'firms' => [
         //     'driver' => 'eloquent',

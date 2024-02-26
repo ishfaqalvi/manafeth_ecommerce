@@ -15,7 +15,7 @@ function uploadFile($file, $path, $width, $height)
     $extension = $file->getClientOriginalExtension();
     $name = uniqid().".".$extension;
  
-    $folder = 'upload/images/'.$path;
+    $folder = 'images/'.$path;
     $finalPath = $folder.'/'.$name;
     $file->move($folder, $name);
 

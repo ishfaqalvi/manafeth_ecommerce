@@ -18,6 +18,7 @@
 <!-- Theme JS files -->
 <script src="{{ asset('assets/js/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/tables/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('assets/js/vendor/visualization/echarts/echarts.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/forms/validation/validate.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/notifications/noty.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/notifications/sweet_alert.min.js') }}"></script>

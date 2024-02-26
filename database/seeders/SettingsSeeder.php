@@ -17,8 +17,8 @@ class SettingsSeeder extends Seeder
     {
         DB::table('settings')->insert([
             [
-                'key' 	=> 'header_logo',
-                'value' => 'upload/images/settings/derivative-calculator-logo.webp',
+                'key' 	=> 'per_page_items',
+                'value' => '5',
             ],
             [
                 'key' 	=> 'footer_logo',

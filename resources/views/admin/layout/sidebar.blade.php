@@ -9,6 +9,52 @@
         <span>Dashboard</span>
     </a>
 </li>
+@can('customers-list')
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('admin/customers*') ? 'active' : ''}}" href="{{ route('customers.index') }}">
+        <i class="ph-users-three"></i>
+        <span>Customers</span>
+    </a>
+</li>
+@endcan
+@can('products-list')
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('admin/products*') ? 'active' : ''}}" href="{{ route('products.index') }}">
+        <i class="ph-article"></i>
+        <span>Products</span>
+    </a>
+</li>
+@endcan
+@can('brands-list')
+<li class="nav-item">
+    <a href="{{ route('brands.index') }}" class="nav-link {{ request()->is('admin/brands*') ? 'active' : ''}}">
+        <i class="ph-article"></i>
+        <span>Brands</span>
+    </a>
+</li>
+@endcanany
+@canany(['categories-list','categories-subList'])
+<li class="nav-item-header">
+    <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Categories</div>
+    <i class="ph-dots-three sidebar-resize-show"></i>
+</li>
+@endcanany
+@can('categories-list')
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('categories.all*') ? 'active' : ''}}" href="{{ route('categories.all.index') }}">
+        <i class="ph-article"></i>
+        <span>Main</span>
+    </a>
+</li>
+@endcan
+@can('categories-subList')
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('categories.sub*') ? 'active' : ''}}" href="{{ route('categories.sub.index') }}">
+        <i class="ph-article"></i>
+        <span>Sub</span>
+    </a>
+</li>
+@endcan
 @canany(['roles-list', 'users-list'])
 <li class="nav-item-header">
     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Access Management</div>

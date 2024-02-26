@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\ModelFilters\UsersFilter;
-use eloquentFilter\QueryFilter\ModelFilters\Filterable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,7 +15,6 @@ class User extends Authenticatable implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
-    use UsersFilter, Filterable;
 
     private static $whiteListFilter = [
         'name',
