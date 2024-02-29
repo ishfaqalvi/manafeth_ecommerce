@@ -62,6 +62,14 @@
                     </a>
                 </li>
                 @endcan
+                @can('products-imageList')
+                <li class="nav-item">
+                    <a href="#images" class="nav-link" data-bs-toggle="tab">
+                        <i class="ph-file-image me-2"></i>
+                        {{ __('Images') }}
+                    </a>
+                </li>
+                @endcan
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="detail">
@@ -75,6 +83,9 @@
                 </div>
                 <div class="tab-pane fade" id="resource">
                     @include('admin.product.include.resource.index')
+                </div>
+                <div class="tab-pane fade" id="images">
+                    @include('admin.product.include.image.index')
                 </div>
             </div>
         </div>

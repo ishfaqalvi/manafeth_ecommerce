@@ -24,6 +24,10 @@ class ProductController extends Controller
         $this->middleware('permission:products-create',['only' => ['create','store']]);
         $this->middleware('permission:products-edit',  ['only' => ['edit','update']]);
         $this->middleware('permission:products-delete',['only' => ['destroy']]);
+
+        $this->middleware('permission:products-imageList',    ['only' => ['images']]);
+        $this->middleware('permission:products-imageCreate',  ['only' => ['imageStore']]);
+        $this->middleware('permission:products-imageDelete',  ['only' => ['imageDestroy']]);
     }
 
     /**
@@ -239,6 +243,31 @@ class ProductController extends Controller
         ProductResource::find($id)->delete();
 
         return redirect()->back()->with('success', 'Resource deleted successfully!');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function imageStore(Request $request)
+    {
+        $product = Product::find($request->product_id);
+        $product->images()->create($request->all());
+        return redirect()->back()->with('success', 'Product Image created successfully.');
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function imageDestroy($id)
+    {
+        ProductImage::find($id)->delete();
+
+        return redirect()->back()->with('success', 'Product Image deleted successfully.');
     }
 
     /**

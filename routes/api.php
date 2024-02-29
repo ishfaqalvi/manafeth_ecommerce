@@ -45,6 +45,29 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	        Route::get('logout',            'logout' );
 	        Route::delete('delete/{id}',    'destroy');
 	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Wishlist Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(FavouriteProductController::class)->prefix('favourite/products')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('add',      		'store'  );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Cart Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(CartController::class)->prefix('cart/products')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
+	        Route::patch('edit/{cart}',     'update' );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
 	});
 });
 

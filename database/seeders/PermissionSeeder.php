@@ -38,7 +38,10 @@ class PermissionSeeder extends Seeder
                   'products-resourceList',
                   'products-resourceEdit',
                   'products-resourceCreate',
-                  'products-resourceDelete', 
+                  'products-resourceDelete',
+                  'products-imageList', 
+                  'products-imageCreate',
+                  'products-imageDelete',
 
                   'brands-list', 
                   'brands-view', 

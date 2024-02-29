@@ -27,6 +27,7 @@ return new class extends Migration
             $table->bigInteger('price');
             $table->string('rent')->nullable();
             $table->string('maintenance')->nullable();
+            $table->string('special')->nullable();
             $table->enum('status',['Publish','Unpublish'])->default('Publish');
             $table->timestamps();
         });

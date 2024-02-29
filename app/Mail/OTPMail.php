@@ -31,13 +31,18 @@ class OTPMail extends Mailable
      */
     public function build()
     {
-        if($this->type == 'Forgot Password')
+        if($this->type == 'Account Varification')
+        {
+            $subject = 'Account Varification';
+            $view = 'email.email_varification';
+        }
+        elseif($this->type == 'Forgot Password')
         {
             $subject = 'Forgot Password';
             $view = 'email.forgot_password';
         }else{
-            $subject = 'Reset Password OTP';
-            $view = 'email.forgot_password';
+            $subject = '';
+            $view = '';
         }
         return $this->subject($subject)->view($view)->with(['otp' => $this->otp]);
     }

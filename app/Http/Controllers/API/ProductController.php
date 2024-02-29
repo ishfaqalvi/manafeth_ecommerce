@@ -28,7 +28,7 @@ class ProductController extends BaseController
     {
         try {
             $product = Product::with(
-                ['brand','category','subCategory','features','specifications','resources']
+                ['brand','category','subCategory','features','specifications','resources','images']
             )->find($id);
             return $this->sendResponse($product, 'Product detail get successfully.');
         } catch (\Throwable $th) {

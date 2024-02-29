@@ -58,6 +58,7 @@ class Product extends Model implements Auditable
         'quantity',
         'price',
         'rent',
+        'special',
         'maintenance',
         'status',
         'description',
@@ -88,6 +89,56 @@ class Product extends Model implements Auditable
     public function getThumbnailAttribute($image)
     {
         if($image){ return asset($image); }
+    }
+
+    /**
+     * Scope a query to filter product.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $category
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter($query, $request)
+    {
+        if (isset($request['brand'])) {
+            $brand = $request['brand'];
+            $query->whereHas('brand', function ($query) use ($brand) {
+                $query->whereName($brand);
+            });
+        }
+        if (isset($request['category'])) {
+            $category = $request['category'];
+            $query->whereHas('category', function ($query) use ($category) {
+                $query->whereName($category);
+            });
+        }
+        if (isset($request['sub_category'])) {
+            $subCategory = $request['sub_category'];
+            $query->whereHas('subCategory', function ($query) use ($subCategory) {
+                $query->whereName($subCategory);
+            });
+        }
+        if (isset($request['model'])) {
+            $query->whereModel($request['model']);
+        }
+        if (isset($request['type'])) {
+            if($request['type'] == 'Rent'){
+                $query->whereRent('Yes');
+            }elseif($request['type'] == 'Maintenance'){
+                $query->whereMaintenance('Yes');
+            }
+        }
+        if(isset($request['special'])){
+            $query->whereSpecial('Yes');
+        }
+        if (isset($request['model'])) {
+            $query->whereModel($request['model']);
+        }
+        if (isset($request['search'])) {
+            $query->where('name', 'like', '%'.$request['search'].'%')
+            ->orWhere('description', 'like', '%'.$request['search'].'%');
+        }
+        return $query;
     }
 
     /**
@@ -136,5 +187,13 @@ class Product extends Model implements Auditable
     public function resources()
     {
         return $this->hasMany('App\Models\ProductResource', 'product_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function images()
+    {
+        return $this->hasMany('App\Models\ProductImage', 'product_id', 'id');
     }
 }

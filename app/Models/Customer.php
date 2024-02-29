@@ -82,4 +82,20 @@ class Customer extends Authenticatable implements Auditable
     {
         return isset($image) ? asset($image) : '';
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function favouriteProducts()
+    {
+        return $this->hasMany('App\Models\FavouriteProduct', 'customer_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function carts()
+    {
+        return $this->hasMany('App\Models\Cart', 'customer_id', 'id');
+    }
 }

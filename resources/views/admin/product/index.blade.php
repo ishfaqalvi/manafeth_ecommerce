@@ -60,7 +60,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($products as $key => $product)
+                    @forelse ($products as $key => $product)
                     <tr>
                         <td class="pe-0" style="width: 45px;">
                             <a href="#">
@@ -91,6 +91,14 @@
                         <td>{{ $product->status }}</td>
                         <td>
                             <div>
+                                @if($product->special == 'Yes')
+                                <i class="ph-check-circle fs-base lh-base align-top text-success me-1"></i>
+                                @else
+                                <i class="ph-x-circle fs-base lh-base align-top text-danger me-1"></i>
+                                @endif
+                                Special
+                            </div>
+                            <div>
                                 @if($product->rent == 'Yes')
                                 <i class="ph-check-circle fs-base lh-base align-top text-success me-1"></i>
                                 @else
@@ -111,7 +119,11 @@
                             @include('admin.product.actions')
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="8" class="text-center">No product is found!</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
             <div class="card-body">
