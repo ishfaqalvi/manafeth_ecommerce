@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Myaccount</title>
+    <!-- External Css File -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style-test.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Slick Slider link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+        integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+        integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="page-width">
+        <div
+            class="nav-top d-flex flex-md-column flex-sm-row flex-lg-row align-items-center justify-content-center justify-content-lg-between">
+            <div class="nav-top-left text-lg-left text-center">
+                <img src="assets/images/mobile.png" alt="Mobile Icon" srcset="" height="auto" width="auto">
+                <a href="tel:+971 54 994 4208" class="text-black ms-md-2 nav-top-text">Hotline Free: +971 54 994
+                    4208</a>
+            </div>
+            <div class="nav-top-right d-flex gap-5">
+                <div class="desktop-view">
+                    <img src="assets/images/heart.png" alt="Heart Icon" srcset="" height="auto" width="auto">
+                    <a href="http://" class="nav-top-text text-black">My Wishlisy</a>
+                </div>
+                <div class="dropdown d-flex align-items-center desktop-view">
+                    <a class="btn dropdown-toggle nav-top-text text-black p-0 border-0" href="#" role="button"
+                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="assets/images/uae.png" alt="Conturay Icon" srcset="" height="auto" width="auto"
+                            class="me-2">
+                        UAE
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black" href="#">
+                                <img src="assets/images/pakistan.png" alt="Conturay Icon" srcset="" height="auto"
+                                    width="auto" class="me-2">
+                                Pakistan
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black" href="#">
+                                <img src="assets/images/india.png" alt="Conturay Icon" srcset="" height="auto"
+                                    width="auto" class="me-2">
+                                India
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown d-flex align-items-center desktop-view">
+                    <span class="text-black me-1">Currency:</span>
+                    <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#" role="button"
+                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        AED
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                AED
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                AED
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown d-flex align-items-center desktop-view">
+                    <span class="text-black nav-top-text text-black me-1">Language:</span>
+                    <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#" role="button"
+                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        EN
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                EN
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                EN
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown d-flex align-items-center">
+                    <img src="assets/images/user-icon.png" alt="User Icon" srcset="" height="auto" width="32px"
+                        class="me-2">
+                    <a class="btn dropdown-toggle nav-top-text p-0 border-0" href="#" role="button"
+                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        Account
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item nav-top-text" href="#">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text" href="#">
+                                Settings
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text" href="#">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <div class="nav-bg">
+        <div class="page-width">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid px-0">
+                    <a class="navbar-brand" href="#">
+                        <img src="assets/images/logo.png" alt="" width="100%" height="auto">
+                    </a>
+                    <button class="header-navbar-toggle-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                        <div class="animated-icon2"><span></span><span></span><span></span><span></span></div>
+                     </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-lg-auto text-left text-center mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Brand</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">About us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Contact us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Blogs</a>
+                            </li>
+                        </ul>
+                        <div class="mobile-view">
+                            <img src="assets/images/heart.png" alt="Heart Icon" srcset="" height="auto" width="auto">
+                            <a href="http://" class="nav-top-text text-black">My Wishlisy</a>
+                        </div>
+                        <div class="dropdown d-flex align-items-center mobile-view">
+                            <a class="btn dropdown-toggle nav-top-text text-black p-0 border-0" href="#" role="button"
+                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="assets/images/uae.png" alt="Conturay Icon" srcset="" height="auto"
+                                    width="auto" class="me-2">
+                                UAE
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black" href="#">
+                                        <img src="assets/images/pakistan.png" alt="Conturay Icon" srcset=""
+                                            height="auto" width="auto" class="me-2">
+                                        Pakistan
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black" href="#">
+                                        <img src="assets/images/india.png" alt="Conturay Icon" srcset="" height="auto"
+                                            width="auto" class="me-2">
+                                        India
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown d-flex align-items-center mobile-view">
+                            <span class="text-black me-1">Currency:</span>
+                            <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#"
+                                role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                AED
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                        AED
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                        AED
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown d-flex align-items-center mobile-view">
+                            <span class="text-black nav-top-text text-black me-1">Language:</span>
+                            <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#"
+                                role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                EN
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                        EN
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                        EN
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form class="d-flex align-items-center me-3">
+                            <input class="form-control" type="search" placeholder="Search products, parts & more..."
+                                aria-label="Search">
+                            <button class="btn btn-outline-success d-flex align-items-center justify-content-center"
+                                type="submit">
+                                <img src="assets/images/search-icon.png" alt="Search Icon" srcset="" width="30px"
+                                    height="auto">
+                            </button>
+                        </form>
+                        <div class="cart-icon">
+                            <img src="assets/images/cart-icon.png" alt="Cart Icon" srcset="" height="auto" width="25px">
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <section class="bg-gray account-all-pages pt-pb-min-max my-order-page">
+        <div class="page-width">
+            <div class="container-fluid px-0">
+                <div class="row">
+                    <div class="col-md-4 col-lg-3">
+                        <h2 class="account-main-title text-md-start text-center">My Account</h2>
+                        <ul
+                            class="list-unstyled d-flex gap-1 flex-wrap mt-1 mt-md-0 mb-0 justify-content-md-start justify-content-center">
+                            <li>
+                                <a href="" class="checkout-breadcrumbs-item">Account
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px" x="0"
+                                        y="0" viewBox="0 0 407.436 407.436" style="enable-background:new 0 0 512 512"
+                                        xml:space="preserve" class="">
+                                        <g>
+                                            <path
+                                                d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                fill="#888888" opacity="1" data-original="#000000"></path>
+                                        </g>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" class="checkout-breadcrumbs-item active">Address Book</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <div class="desktop h-100">
+                            <nav class="d-flex align-items-end h-100 flex-wrap gap-3">
+                                <a href="http://" class="active button">
+                                    All Orders
+                                </a>
+                                <a href="http://" class="button">
+                                    Inprogress
+                                </a>
+                                <a href="http://" class="button">
+                                    Cancelled
+                                </a>
+                                <a href="http://" class="button">
+                                    Completed
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 min-height-590 gap-md-0 gap-5">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="w-100 my-account-information-sidebar border-all-form-outline bg-white">
+                            <ul class="list-unstyled gap-1 d-flex flex-column mb-0">
+                                <li>
+                                    <a href=""
+                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                        Account information
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href=""
+                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                        Address Book
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href=""
+                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                        My Wishlist
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href=""
+                                        class="account-information-sidebar-item active d-flex justify-content-between align-items-center">
+                                        My Orders
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href=""
+                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                        Maintenance
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href=""
+                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                        Rental Request
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href=""
+                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                        My Product Reviews
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#000000" opacity="1" data-original="#000000" class=""></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-lg-9">
+                        <div class="mobile">
+                            <nav class="d-flex align-items-end h-100 flex-wrap gap-3 mb-4 mb-md-0">
+                                <a href="http://" class="active button">
+                                    All Orders
+                                </a>
+                                <a href="http://" class="button">
+                                    Inprogress
+                                </a>
+                                <a href="http://" class="button">
+                                    Cancelled
+                                </a>
+                                <a href="http://" class="button">
+                                    Completed
+                                </a>
+                            </nav>
+                        </div>
+                        <div class="d-flex flex-column gap-4">
+                            <div class="product-my-orders-card d-flex flex-md-row flex-column">
+                                <div class="product-all-orders-card-img-block">
+                                    <img src="assets/images/p2.png" alt="Product Image" height="100%" width="100%">
+                                </div>
+                                <div
+                                    class="product-all-orders-card-body d-flex flex-lg-row flex-column align-items-lg-center w-100 gap-3">
+                                    <div class="left w-100">
+                                        <h3 class="serial-number mb-0">#02112024</h3>
+                                        <h3 class="my-1">Manual Standard Wheelchair <br> MW02</h3>
+                                        <h3 class="1x mb-1">1x</h3>
+                                        <div class="location-address">
+                                            <img src="assets/images/maps-icon.png" alt="location" height="auto"
+                                                width="auto" class="float-start me-2">
+                                            <span>40799 Andres Springs Suite 299, Kentucky, USA</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="right h-100 d-flex flex-lg-column align-items-end justify-content-between">
+                                        <div class="price-varient d-grid">
+                                            <span>3000AED</span>
+                                            <del>3500AED</del>
+                                        </div>
+                                        <a href="http://" class="button">Inprogress</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-my-orders-card d-flex flex-md-row flex-column">
+                                <div class="product-all-orders-card-img-block">
+                                    <img src="assets/images/p2.png" alt="Product Image" height="100%" width="100%">
+                                </div>
+                                <div
+                                    class="product-all-orders-card-body d-flex flex-lg-row flex-column align-items-lg-center w-100 gap-3">
+                                    <div class="left w-100">
+                                        <h3 class="serial-number mb-0">#02112024</h3>
+                                        <h3 class="my-1">Manual Standard Wheelchair <br> MW02</h3>
+                                        <h3 class="1x mb-1">1x</h3>
+                                        <div class="location-address">
+                                            <img src="assets/images/maps-icon.png" alt="location" height="auto"
+                                                width="auto" class="float-start me-2">
+                                            <span>40799 Andres Springs Suite 299, Kentucky, USA</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="right h-100 d-flex flex-lg-column align-items-end justify-content-between">
+                                        <div class="price-varient d-grid">
+                                            <span>3000AED</span>
+                                            <del>3500AED</del>
+                                        </div>
+                                        <a href="http://" class="button cancelled">Cancelled</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-my-orders-card d-flex flex-md-row flex-column">
+                                <div class="product-all-orders-card-img-block">
+                                    <img src="assets/images/p2.png" alt="Product Image" height="100%" width="100%">
+                                </div>
+                                <div
+                                    class="product-all-orders-card-body d-flex flex-lg-row flex-column align-items-lg-center w-100 gap-3">
+                                    <div class="left w-100">
+                                        <h3 class="serial-number mb-0">#02112024</h3>
+                                        <h3 class="my-1">Manual Standard Wheelchair <br> MW02</h3>
+                                        <h3 class="1x mb-1">1x</h3>
+                                        <div class="location-address">
+                                            <img src="assets/images/maps-icon.png" alt="location" height="auto"
+                                                width="auto" class="float-start me-2">
+                                            <span>40799 Andres Springs Suite 299, Kentucky, USA</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="right h-100 d-flex flex-lg-column align-items-end justify-content-between">
+                                        <div class="price-varient d-grid">
+                                            <span>3000AED</span>
+                                            <del>3500AED</del>
+                                        </div>
+                                        <a href="http://" class="button completed">Completed</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="news-letter position-relative">
+            <div
+                class="news-letter-wrapper mx-auto d-flex flex-column justify-content-center text-center  position-relative z-1">
+                <div class="mail-box d-flex align-items-center justify-content-center mx-auto">
+                    <img src="assets/images/open-mail.png" alt="Mail Box Icon" srcset="" height="auto" width="55px">
+                </div>
+                <h2 class="text-white mb-2 mt-4">
+                    Signup for NewsLetter
+                </h2>
+                <p class="mx-auto mb-0">
+                    Register to receive updates on our newest arrivals and enjoy exclusive early access to shopping.
+                </p>
+                <form class="d-flex align-items-center">
+                    <input class="form-control h-100" type="search" placeholder="Enter your Email Address"
+                        aria-label="Search">
+                    <button class="btn d-flex align-items-center justify-content-center h-100 text-white bg-black"
+                        type="submit">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="mx-auto mt-4">
+                    Jion our <bold class="text-white"> 10,000 </bold> Subscribe
+                </p>
+            </div>
+            <div class="news-letter-img-overflow position-absolute top-0 bottom-0 left-0 right-0"></div>
+        </div>
+        <div class="footer-wrapper">
+            <div class="page-width">
+                <div class="content-wrapper-block">
+                    <div class="content-wrapper position-relative">
+                        <h4 class="mb-3">
+                            Contact info:
+                        </h4>
+                        <div class="d-flex flex-column gap-2">
+                            <p class="m-0">
+                                <span class="me-1">Address:</span>Lorem ipsum dolor sit amet
+                            </p>
+                            <p class="m-0">
+                                <span class="me-1">Phone:</span>Lorem ipsum dolor sit amet
+                            </p>
+                            <p class="m-0">
+                                <span class="me-1">Email:</span>Lorem ipsum dolor sit amet
+                            </p>
+                        </div>
+                    </div>
+                    <div class="content-wrapper position-relative">
+                        <h4 class="mb-3">
+                            Products:
+                        </h4>
+                        <ul class="d-flex flex-column gap-2 list-unstyled m-0">
+                            <li><a href="http://" class="footer-link">New Products</a></li>
+                            <li><a href="http://" class="footer-link">Best Sales</a></li>
+                            <li><a href="http://" class="footer-link">Contact us</a></li>
+                            <li><a href="http://" class="footer-link">Sitemap</a></li>
+                            <li><a href="http://" class="footer-link">Store</a></li>
+                        </ul>
+                    </div>
+                    <div class="content-wrapper position-relative">
+                        <h4 class="mb-3">
+                            Our Company:
+                        </h4>
+                        <ul class="d-flex flex-column gap-2 list-unstyled m-0">
+                            <li><a href="http://" class="footer-link">Legal Notice</a></li>
+                            <li><a href="http://" class="footer-link">Delivery</a></li>
+                            <li><a href="http://" class="footer-link">Terms & Conditions</a></li>
+                            <li><a href="http://" class="footer-link">About us</a></li>
+                            <li><a href="http://" class="footer-link">Secure Payment</a></li>
+                        </ul>
+                    </div>
+                    <div class="content-wrapper position-relative">
+                        <h4 class="mb-3">
+                            Follow us:
+                        </h4>
+                        <ul class="footer-social-icon d-flex gap-2 list-unstyled m-0">
+                            <li><a href="http://" class="d-flex align-items-center justify-content-center">
+                                    <img src="assets/images/twitter.png" alt="Social Icon" srcset="" height="20px"
+                                        width="auto">
+                                </a></li>
+                            <li><a href="http://" class="d-flex align-items-center justify-content-center">
+                                    <img src="assets/images/instagram.png" alt="Social Icon" srcset="" height="20px"
+                                        width="auto">
+                                </a></li>
+                            <li><a href="http://" class="d-flex align-items-center justify-content-center">
+                                    <img src="assets/images/linkedin.png" alt="Social Icon" srcset="" height="20px"
+                                        width="auto">
+                                </a></li>
+                            <li><a href="http://" class="d-flex align-items-center justify-content-center">
+                                    <img src="assets/images/facebook.png" alt="Social Icon" srcset="" height="20px"
+                                        width="auto">
+                                </a></li>
+                        </ul>
+                        <h4 class="mb-3 mt-4">Payment Options:</h4>
+                        <div class="company-card d-flex gap-2">
+                            <img src="assets/images/linkedin.png" alt="Social Icon" srcset="" height="auto"
+                                width="auto">
+                            <img src="assets/images/linkedin.png" alt="Social Icon" srcset="" height="auto"
+                                width="auto">
+                            <img src="assets/images/linkedin.png" alt="Social Icon" srcset="" height="auto"
+                                width="auto">
+                        </div>
+                    </div>
+                    <div>
+                        <a href="http://" class="footer-logo d-flex justify-content-lg-end">
+                            <img src="assets/images/footer-logo.png" alt="Footer Logo" srcset="" height="auto"
+                                width="100%">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </footer>
+
+    <!-- Custom Js File -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+        integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Js Link -->
+    <script src="assets/js/custom.js"></script>
+
+    <script>
+
+        document.querySelector('.header-navbar-toggle-button').addEventListener('click', function () {
+            document.querySelector('.animated-icon2').classList.toggle('open');
+        });
+
+    </script>
+
+</body>
+
+</html>

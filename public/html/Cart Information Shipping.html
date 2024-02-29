@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Information Shipping</title>
+    <!-- External Css File -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Slick Slider link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+        integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
+        integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body>
+    <div class="page-width">
+        <div
+            class="nav-top d-flex flex-md-column flex-sm-row flex-lg-row align-items-center justify-content-center justify-content-lg-between">
+            <div class="nav-top-left text-lg-left text-center">
+                <img src="assets/images/mobile.png" alt="Mobile Icon" srcset="" height="auto" width="auto">
+                <a href="tel:+971 54 994 4208" class="text-black ms-md-2 nav-top-text">Hotline Free: +971 54 994
+                    4208</a>
+            </div>
+            <div class="nav-top-right d-flex gap-5">
+                <div class="desktop-view">
+                    <img src="assets/images/heart.png" alt="Heart Icon" srcset="" height="auto" width="auto">
+                    <a href="http://" class="nav-top-text text-black">My Wishlisy</a>
+                </div>
+                <div class="dropdown d-flex align-items-center desktop-view">
+                    <a class="btn dropdown-toggle nav-top-text text-black p-0 border-0" href="#" role="button"
+                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="assets/images/uae.png" alt="Conturay Icon" srcset="" height="auto" width="auto"
+                            class="me-2">
+                        UAE
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black" href="#">
+                                <img src="assets/images/pakistan.png" alt="Conturay Icon" srcset="" height="auto"
+                                    width="auto" class="me-2">
+                                Pakistan
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black" href="#">
+                                <img src="assets/images/india.png" alt="Conturay Icon" srcset="" height="auto"
+                                    width="auto" class="me-2">
+                                India
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown d-flex align-items-center desktop-view">
+                    <span class="text-black me-1">Currency:</span>
+                    <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#" role="button"
+                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        AED
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                AED
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                AED
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown d-flex align-items-center desktop-view">
+                    <span class="text-black nav-top-text text-black me-1">Language:</span>
+                    <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#" role="button"
+                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        EN
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                EN
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                EN
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dropdown d-flex align-items-center">
+                    <img src="assets/images/user-icon.png" alt="User Icon" srcset="" height="auto" width="32px"
+                        class="me-2">
+                    <a class="btn dropdown-toggle nav-top-text p-0 border-0" href="#" role="button"
+                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        Account
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li>
+                            <a class="dropdown-item nav-top-text" href="#">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text" href="#">
+                                Settings
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item nav-top-text" href="#">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Navbar -->
+    <div class="nav-bg">
+        <div class="page-width">
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid px-0">
+                    <a class="navbar-brand" href="#">
+                        <img src="assets/images/logo.png" alt="" width="100%" height="auto">
+                    </a>
+                    <button class="header-navbar-toggle-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                        <div class="animated-icon2"><span></span><span></span><span></span><span></span></div>
+                     </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-lg-auto text-left text-center mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Brand</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">About us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Contact us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="#">Blogs</a>
+                            </li>
+                        </ul>
+                        <div class="mobile-view">
+                            <img src="assets/images/heart.png" alt="Heart Icon" srcset="" height="auto" width="auto">
+                            <a href="http://" class="nav-top-text text-black">My Wishlisy</a>
+                        </div>
+                        <div class="dropdown d-flex align-items-center mobile-view">
+                            <a class="btn dropdown-toggle nav-top-text text-black p-0 border-0" href="#" role="button"
+                                id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="assets/images/uae.png" alt="Conturay Icon" srcset="" height="auto"
+                                    width="auto" class="me-2">
+                                UAE
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black" href="#">
+                                        <img src="assets/images/pakistan.png" alt="Conturay Icon" srcset=""
+                                            height="auto" width="auto" class="me-2">
+                                        Pakistan
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black" href="#">
+                                        <img src="assets/images/india.png" alt="Conturay Icon" srcset="" height="auto"
+                                            width="auto" class="me-2">
+                                        India
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown d-flex align-items-center mobile-view">
+                            <span class="text-black me-1">Currency:</span>
+                            <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#"
+                                role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                AED
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                        AED
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                        AED
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="dropdown d-flex align-items-center mobile-view">
+                            <span class="text-black nav-top-text text-black me-1">Language:</span>
+                            <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#"
+                                role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                EN
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                        EN
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item nav-top-text text-black-change" href="#">
+                                        EN
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form class="d-flex align-items-center me-3">
+                            <input class="form-control" type="search" placeholder="Search products, parts & more..."
+                                aria-label="Search">
+                            <button class="btn btn-outline-success d-flex align-items-center justify-content-center"
+                                type="submit">
+                                <img src="assets/images/search-icon.png" alt="Search Icon" srcset="" width="30px"
+                                    height="auto">
+                            </button>
+                        </form>
+                        <div class="cart-icon">
+                            <img src="assets/images/cart-icon.png" alt="Cart Icon" srcset="" height="auto" width="25px">
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <section class="bg-gray">
+        <div class="page-width pt-40 shopping-cart-page">
+            <div class="container-fluid px-0">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="d-flex flex-column">
+                            <h2 class="cart-main-heading order-summary-h4 mb-0 mt-md-4 mt-3">
+                                Checkout:
+                            </h2>
+                            <ul class="list-unstyled d-flex gap-1 flex-wrap mt-3 mt-md-0 mb-0">
+                                <li>
+                                    <a href="" class="checkout-breadcrumbs-item active">Cart
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#888888" opacity="1" data-original="#000000"></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="checkout-breadcrumbs-item active">Information
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#888888" opacity="1" data-original="#000000"></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="checkout-breadcrumbs-item active">Shipping
+                                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px" x="0"
+                                            y="0" viewBox="0 0 407.436 407.436"
+                                            style="enable-background:new 0 0 512 512" xml:space="preserve" class="">
+                                            <g>
+                                                <path
+                                                    d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z"
+                                                    fill="#888888" opacity="1" data-original="#000000"></path>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="" class="checkout-breadcrumbs-item">Payment</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <form class="mt-33 checkout-contact-information">
+                            <h2 class="mb-3">Contact Information</h2>
+                            <div class="form-group">
+                                <label for="inputEmail">
+                                    Already have an account? <a href="http://" class="login-now ms-2">Login Now</a>
+                                </label>
+                                <div class="shipping-form-group-block mt-md-4 mt-2 bg-white">
+                                    <div class="d-flex align-items-center border-bottom">
+                                        <label for="inputEmail">
+                                            Contact
+                                        </label>
+                                        <input type="email"
+                                            class="form-control border-all-form-outline"
+                                            id="inputEmail" placeholder="johndoe@gmail.com">
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <label for="inputAddress">
+                                            Ship To
+                                        </label>
+                                        <input type="text" class="form-control border-all-form-outline"
+                                            id="inputApartment" placeholder="Selected address display here">
+                                    </div>
+                                </div>
+                            </div>
+                            <h2 class="mb-0 shipping-method">Shipping method</h2>
+                            <div class="form-group shipping-method-business-days d-flex align-items-center w-100 mt-3 border-all-form-outline bg-white input-height-70">
+                                <span class="outline-radio-checkbox d-flex align-items-center me-2">
+                                    <input class="radio-input m-0" type="radio" name="radioOptions" id="option1"
+                                    value="option1" checked>
+                                </span>
+                                <label class="form-check-label w-100" for="option1">
+                                   <div class="d-flex justify-content-between mb-0">
+                                        FREE USPS Shipping [3-7 Business Days]
+                                        <span>
+                                            Free
+                                        </span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="d-flex justify-content-md-end">
+                                <button type="submit"
+                                    class="btn-secondary d-flex align-items-center justify-content-between">
+                                    <span>Next: Select Shipping</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="auto" x="0"
+                                        y="0" viewBox="0 0 256 256" style="enable-background:new 0 0 512 512"
+                                        xml:space="preserve" class="">
+                                        <g>
+                                            <path
+                                                d="M79.093 0 48.907 30.187 146.72 128l-97.813 97.813L79.093 256l128-128z"
+                                                fill="#fff" opacity="1" data-original="#000000" class=""></path>
+                                        </g>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <form action="/submit" method="post"
+                            class="order-summary-form bg-white d-flex flex-column mt-144">
+                            <h4 class="order-summary-h4 border-bottom nb-0 pb-3">
+                                Order Summary
+                            </h4>
+                            <ul
+                                class="budget-order-summery mb-0 py-lg-4 py-3 border-bottom d-flex flex-column gap-lg-3 gap-2 list-unstyled">
+                                <li class="d-flex justify-content-between">
+                                    <span>Subtotal:</span>
+                                    <span>6000 AED</span>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <span>Shipping:</span>
+                                    <span>0.00 AED</span>
+                                </li>
+                                <li class="d-flex justify-content-between">
+                                    <span>Order Total:</span>
+                                    <span>6000 AED</span>
+                                </li>
+                            </ul>
+                            <h4 class="order-summary-sm-h4 my-lg-4 my-3">APPLY DISCOUNT CODE</h4>
+                            <label for="mobile" class="form-label">Enter discount code</label>
+                            <input type="tel" class="form-control border-all-form-outline" id="mobile" name="mobile"
+                                placeholder="Enter discount code" required>
+                            <button type="submit" class="btn-primary mt-2">Apply Discount</button>
+                            <div class="border-bottom my-lg-4 my-3"></div>
+                            <button type="submit" class="btn-secondary">Proceed To Checkout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="news-letter position-relative">
+            <div
+                class="news-letter-wrapper mx-auto d-flex flex-column justify-content-center text-center  position-relative z-1">
+                <div class="mail-box d-flex align-items-center justify-content-center mx-auto">
+                    <img src="assets/images/open-mail.png" alt="Mail Box Icon" srcset="" height="auto" width="55px">
+                </div>
+                <h2 class="text-white mb-2 mt-4">
+                    Signup for NewsLetter
+                </h2>
+                <p class="mx-auto mb-0">
+                    Register to receive updates on our newest arrivals and enjoy exclusive early access to shopping.
+                </p>
+                <form class="d-flex align-items-center">
+                    <input class="form-control h-100" type="search" placeholder="Enter your Email Address"
+                        aria-label="Search">
+                    <button class="btn d-flex align-items-center justify-content-center h-100 text-white bg-black"
+                        type="submit">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="mx-auto mt-4">
+                    Jion our <bold class="text-white"> 10,000 </bold> Subscribe
+                </p>
+            </div>
+            <div class="news-letter-img-overflow position-absolute top-0 bottom-0 left-0 right-0"></div>
+        </div>
+        <div class="footer-wrapper">
+            <div class="page-width">
+                <div class="content-wrapper-block">
+                    <div class="content-wrapper position-relative">
+                        <h4 class="mb-3">
+                            Contact info:
+                        </h4>
+                        <div class="d-flex flex-column gap-2">
+                            <p class="m-0">
+                                <span class="me-1">Address:</span>Lorem ipsum dolor sit amet
+                            </p>
+                            <p class="m-0">
+                                <span class="me-1">Phone:</span>Lorem ipsum dolor sit amet
+                            </p>
+                            <p class="m-0">
+                                <span class="me-1">Email:</span>Lorem ipsum dolor sit amet
+                            </p>
+                        </div>
+                    </div>
+                    <div class="content-wrapper position-relative">
+                        <h4 class="mb-3">
+                            Products:
+                        </h4>
+                        <ul class="d-flex flex-column gap-2 list-unstyled m-0">
+                            <li><a href="http://" class="footer-link">New Products</a></li>
+                            <li><a href="http://" class="footer-link">Best Sales</a></li>
+                            <li><a href="http://" class="footer-link">Contact us</a></li>
+                            <li><a href="http://" class="footer-link">Sitemap</a></li>
+                            <li><a href="http://" class="footer-link">Store</a></li>
+                        </ul>
+                    </div>
+                    <div class="content-wrapper position-relative">
+                        <h4 class="mb-3">
+                            Our Company:
+                        </h4>
+                        <ul class="d-flex flex-column gap-2 list-unstyled m-0">
+                            <li><a href="http://" class="footer-link">Legal Notice</a></li>
+                            <li><a href="http://" class="footer-link">Delivery</a></li>
+                            <li><a href="http://" class="footer-link">Terms & Conditions</a></li>
+                            <li><a href="http://" class="footer-link">About us</a></li>
+                            <li><a href="http://" class="footer-link">Secure Payment</a></li>
+                        </ul>
+                    </div>
+                    <div class="content-wrapper position-relative">
+                        <h4 class="mb-3">
+                            Follow us:
+                        </h4>
+                        <ul class="footer-social-icon d-flex gap-2 list-unstyled m-0">
+                            <li><a href="http://" class="d-flex align-items-center justify-content-center">
+                                    <img src="assets/images/twitter.png" alt="Social Icon" srcset="" height="20px"
+                                        width="auto">
+                                </a></li>
+                            <li><a href="http://" class="d-flex align-items-center justify-content-center">
+                                    <img src="assets/images/instagram.png" alt="Social Icon" srcset="" height="20px"
+                                        width="auto">
+                                </a></li>
+                            <li><a href="http://" class="d-flex align-items-center justify-content-center">
+                                    <img src="assets/images/linkedin.png" alt="Social Icon" srcset="" height="20px"
+                                        width="auto">
+                                </a></li>
+                            <li><a href="http://" class="d-flex align-items-center justify-content-center">
+                                    <img src="assets/images/facebook.png" alt="Social Icon" srcset="" height="20px"
+                                        width="auto">
+                                </a></li>
+                        </ul>
+                        <h4 class="mb-3 mt-4">Payment Options:</h4>
+                        <div class="company-card d-flex gap-2">
+                            <img src="assets/images/linkedin.png" alt="Social Icon" srcset="" height="auto"
+                                width="auto">
+                            <img src="assets/images/linkedin.png" alt="Social Icon" srcset="" height="auto"
+                                width="auto">
+                            <img src="assets/images/linkedin.png" alt="Social Icon" srcset="" height="auto"
+                                width="auto">
+                        </div>
+                    </div>
+                    <div>
+                        <a href="http://" class="footer-logo d-flex justify-content-lg-end">
+                            <img src="assets/images/footer-logo.png" alt="Footer Logo" srcset="" height="auto"
+                                width="100%">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </footer>
+
+    <!-- Custom Js File -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"
+        integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Js Link -->
+    <script src="assets/js/custom.js"></script>
+    <script>
+
+        document.querySelector('.header-navbar-toggle-button').addEventListener('click', function () {
+            document.querySelector('.animated-icon2').classList.toggle('open');
+        });
+
+    </script>
+</body>
+
+</html>
