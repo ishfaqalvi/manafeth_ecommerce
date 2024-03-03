@@ -57,6 +57,7 @@ class Product extends Model implements Auditable
         'thumbnail',
         'quantity',
         'price',
+        'discount',
         'rent',
         'special',
         'maintenance',

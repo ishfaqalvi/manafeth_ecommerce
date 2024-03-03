@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\API\Customer;
 use App\Http\Controllers\API\BaseController;
 
-use App\Models\Cart;
+use App\Models\RentCart;
 use Illuminate\Http\Request;
 
 /**
- * Class CartController
+ * Class RentCartController
  * @package App\Http\Controllers
  */
-class CartController extends BaseController
+class RentCartController extends BaseController
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         try {
-            $data = auth()->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            $data = auth()->user()->rentCarts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
             return $this->sendResponse($data, 'Cart Product list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -38,16 +38,18 @@ class CartController extends BaseController
         try {
             $product = $request->product_id;
             $customer = auth()->user()->id;
-            $checkProduct = Cart::whereProductId($product)->whereCustomerId($customer)->first();
+            $checkProduct = RentCart::whereProductId($product)->whereCustomerId($customer)->first();
             if ($checkProduct) {
                 return $this->sendResponse('Record Exist', 'This product already exist in cart.');    
             }
-            Cart::create([
+            RentCart::create([
                 'customer_id'=> $customer,
                 'product_id' => $product,
-                'quantity'   => $request->quantity
+                'quantity'   => $request->quantity,
+                'from'       => $request->from,
+                'to'         => $request->to,
             ]);
-            $data = auth()->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            $data = auth()->user()->rentCarts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
             return $this->sendResponse($data, 'Product added in cart list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -58,14 +60,14 @@ class CartController extends BaseController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  Cart $cart
+     * @param  RentCart $rentCart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cart $cart)
+    public function update(Request $request, RentCart $cart)
     {
         try {
             $cart->update($request->all());
-            $data = auth()->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            $data = auth()->user()->rentCarts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
             return $this->sendResponse($data, 'Product updated from cart list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -80,8 +82,8 @@ class CartController extends BaseController
     public function destroy($id)
     {
         try {
-            Cart::find($id)->delete();
-            $data = auth()->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            RentCart::find($id)->delete();
+            $data = auth()->user()->rentCarts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
             return $this->sendResponse($data, 'Product deleted from cart list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

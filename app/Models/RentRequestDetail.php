@@ -6,22 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class Cart
+ * Class RentRequestDetail
  *
  * @property $id
- * @property $customer_id
+ * @property $request_id
  * @property $product_id
- * @property $type
  * @property $quantity
+ * @property $from
+ * @property $to
  * @property $created_at
  * @property $updated_at
  *
- * @property Customer $customer
  * @property Product $product
+ * @property RentRequest $rentRequest
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class Cart extends Model implements Auditable
+class RentRequestDetail extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
@@ -32,21 +33,22 @@ class Cart extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['customer_id','product_id','quantity'];
+    protected $fillable = ['request_id','product_id','quantity','from','to'];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function customer()
-    {
-        return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
-    }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function product()
     {
         return $this->hasOne('App\Models\Product', 'id', 'product_id');
+    }
+    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function rentRequest()
+    {
+        return $this->hasOne('App\Models\RentRequest', 'id', 'request_id');
     }
 }

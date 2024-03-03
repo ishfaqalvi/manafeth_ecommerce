@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class Cart
+ * Class RentCart
  *
  * @property $id
  * @property $customer_id
  * @property $product_id
- * @property $type
  * @property $quantity
+ * @property $from
+ * @property $to
  * @property $created_at
  * @property $updated_at
  *
@@ -21,9 +22,11 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class Cart extends Model implements Auditable
+class RentCart extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
+
+    
 
     protected $perPage = 20;
 
@@ -32,7 +35,8 @@ class Cart extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['customer_id','product_id','quantity'];
+    protected $fillable = ['customer_id','product_id','quantity','from','to'];
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -49,4 +53,6 @@ class Cart extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Product', 'id', 'product_id');
     }
+    
+
 }

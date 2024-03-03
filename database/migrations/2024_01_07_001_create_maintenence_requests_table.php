@@ -11,11 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
+        Schema::create('maintenence_requests', function (Blueprint $table) {
             $table->id();
+            $table->string('request_no');
             $table->foreignId('customer_id')->references('id')->on('customers')->cascadeOnDelete();
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('phone_number');
+            $table->string('address');
+            $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->foreignId('product_id')->references('id')->on('products')->cascadeOnDelete();
-            $table->integer('quantity')->default(1);
+            $table->text('message');
+            $table->string('images');
+            $table->enum('status',['Pending','Accepted','Assigned','Completed']);
             $table->timestamps();
         });
     }
@@ -25,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('maintenence_requests');
     }
 };

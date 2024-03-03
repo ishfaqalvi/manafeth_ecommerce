@@ -9,6 +9,30 @@
         <span>Dashboard</span>
     </a>
 </li>
+@can('orders-list')
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('admin/orders*') ? 'active' : ''}}" href="{{ route('orders.index') }}">
+        <i class="ph-shopping-cart"></i>
+        <span>Orders</span>
+    </a>
+</li>
+@endcan
+@can('rentRequests-list')
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('admin/rent/request*') ? 'active' : ''}}" href="{{ route('rent.index') }}">
+        <i class="ph-buildings"></i>
+        <span>Rent Requests</span>
+    </a>
+</li>
+@endcan
+@can('maintenenceRequests-list')
+<li class="nav-item">
+    <a class="nav-link {{ request()->is('admin/maintenance/request*') ? 'active' : ''}}" href="{{ route('maintenance.index') }}">
+        <i class="ph-lifebuoy"></i>
+        <span>Maintenence Requests</span>
+    </a>
+</li>
+@endcan
 @can('customers-list')
 <li class="nav-item">
     <a class="nav-link {{ request()->is('admin/customers*') ? 'active' : ''}}" href="{{ route('customers.index') }}">

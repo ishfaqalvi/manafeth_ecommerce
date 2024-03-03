@@ -98,4 +98,36 @@ class Customer extends Authenticatable implements Auditable
     {
         return $this->hasMany('App\Models\Cart', 'customer_id', 'id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function orders()
+    {
+        return $this->hasMany('App\Models\Order', 'customer_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function maintenenceRequests()
+    {
+        return $this->hasMany('App\Models\MaintenenceRequest', 'customer_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function rentCarts()
+    {
+        return $this->hasMany('App\Models\RentCart', 'customer_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function rentRequests()
+    {
+        return $this->hasMany('App\Models\RentRequest', 'customer_id', 'id');
+    }
 }

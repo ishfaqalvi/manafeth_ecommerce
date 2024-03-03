@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('thumbnail');
             $table->integer('quantity');
             $table->bigInteger('price');
+            $table->bigInteger('discount')->nullable();
             $table->string('rent')->nullable();
             $table->string('maintenance')->nullable();
             $table->string('special')->nullable();

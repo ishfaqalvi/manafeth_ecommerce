@@ -11,6 +11,54 @@ Route::get('dashboard', DashboardController::class)->name('dashboard');
 
 /*
 |--------------------------------------------------------------------------
+| Orders Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(OrderController::class)->prefix('orders')->as('orders.')->group(function () {
+	Route::get('list',				 'index'	 )->name('index'  	 );
+	Route::get('create',			 'create'	 )->name('create' 	 );
+	Route::post('store',			 'store'	 )->name('store'  	 );
+	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
+	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
+	Route::patch('update/{user}',    'update'	 )->name('update' 	 );
+	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
+	Route::post('check-email', 		 'checkEmail')->name('checkEmail');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Rent Requests Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(RentRequestController::class)->prefix('rent/request')->as('rent.')->group(function () {
+	Route::get('list',				 'index'	 )->name('index'  	 );
+	Route::get('create',			 'create'	 )->name('create' 	 );
+	Route::post('store',			 'store'	 )->name('store'  	 );
+	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
+	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
+	Route::patch('update/{user}',    'update'	 )->name('update' 	 );
+	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
+	Route::post('check-email', 		 'checkEmail')->name('checkEmail');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Maintenence Requests Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(MaintenenceRequestController::class)->prefix('maintenance/request')->as('maintenance.')->group(function () {
+	Route::get('list',				 'index'	 )->name('index'  	 );
+	Route::get('create',			 'create'	 )->name('create' 	 );
+	Route::post('store',			 'store'	 )->name('store'  	 );
+	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
+	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
+	Route::patch('update/{user}',    'update'	 )->name('update' 	 );
+	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
+	Route::post('check-email', 		 'checkEmail')->name('checkEmail');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Customer Routes
 |--------------------------------------------------------------------------
 */

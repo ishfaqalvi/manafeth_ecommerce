@@ -68,6 +68,51 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	        Route::patch('edit/{cart}',     'update' );
 	        Route::delete('delete/{id}',    'destroy');
 	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Orders Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(OrderController::class)->prefix('orders')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Rent Cart Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(RentCartController::class)->prefix('rent-cart/products')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
+	        Route::patch('edit/{cart}',     'update' );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Rent Requests Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(RentRequestController::class)->prefix('rent/request')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Maintenence Requests Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(MaintenenceRequestController::class)->prefix('maintenence/request')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
 	});
 });
 

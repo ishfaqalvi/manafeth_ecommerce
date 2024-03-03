@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class Cart
+ * Class OrderDetail
  *
  * @property $id
- * @property $customer_id
+ * @property $order_id
  * @property $product_id
- * @property $type
  * @property $quantity
+ * @property $price
  * @property $created_at
  * @property $updated_at
  *
- * @property Customer $customer
+ * @property Order $order
  * @property Product $product
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class Cart extends Model implements Auditable
+class OrderDetail extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
@@ -32,14 +32,15 @@ class Cart extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['customer_id','product_id','quantity'];
+    protected $fillable = ['order_id','product_id','quantity','price'];
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function customer()
+    public function order()
     {
-        return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
+        return $this->hasOne('App\Models\Order', 'id', 'order_id');
     }
     
     /**
