@@ -39,6 +39,10 @@
             {{ Form::number('price', $product->price, ['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Price','required']) }}
         </div>
         <div class="form-group col-lg-4 mb-3">
+            {{ Form::label('discount') }}
+            {{ Form::number('discount', $product->discount, ['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Discount']) }}
+        </div>
+        <div class="form-group col-lg-4 mb-3">
             {{ Form::label('status') }}
             {{ Form::select('status', ['Publish' => 'Publish', 'Unpublish' => 'Unpublish'], $product->status, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
         </div>
