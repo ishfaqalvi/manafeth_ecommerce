@@ -46,15 +46,15 @@
             {{ Form::label('status') }}
             {{ Form::select('status', ['Publish' => 'Publish', 'Unpublish' => 'Unpublish'], $product->status, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
         </div>
-        <div class="form-group col-lg-2 mb-3 pt-4">
+        <div class="form-group col-lg-12 mb-3">
             {{ Form::checkbox('special', 'Yes', $product->special, ['class' => 'form-check-input' . ($errors->has('special') ? ' is-invalid' : ''),'id'=>'special']) }}
             {{ Form::label('special','Special Product') }}
         </div>
-        <div class="form-group col-lg-2 mb-3 pt-4">
+        <div class="form-group col-lg-12 mb-3">
             {{ Form::checkbox('rent', 'Yes', $product->rent, ['class' => 'form-check-input' . ($errors->has('rent') ? ' is-invalid' : ''),'id'=>'rent']) }}
             {{ Form::label('rent','For Rent') }}
         </div>
-        <div class="form-group col-lg-2 mb-3 pt-4">
+        <div class="form-group col-lg-12 mb-3">
             {{ Form::checkbox('maintenance', 'Yes', $product->maintenance, ['class' => 'form-check-input' . ($errors->has('maintenance') ? ' is-invalid' : ''),'id'=>'maintenance']) }}
             {{ Form::label('maintenance', 'For Maintenance') }}
         </div>
