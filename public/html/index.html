@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
         integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/fa9a16eb6f.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -58,25 +59,6 @@
                                 <img src="assets/images/india.png" alt="Conturay Icon" srcset="" height="auto"
                                     width="auto" class="me-2">
                                 India
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="dropdown d-flex align-items-center desktop-view">
-                    <span class="text-black me-1">Currency:</span>
-                    <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#" role="button"
-                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        AED
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li>
-                            <a class="dropdown-item nav-top-text text-black-change" href="#">
-                                AED
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item nav-top-text text-black-change" href="#">
-                                AED
                             </a>
                         </li>
                     </ul>
@@ -128,7 +110,7 @@
             </div>
         </div>
     </div>
-    <!-- Navbar -->
+    <!-- Navbar --> 
     <div class="nav-bg">
         <div class="page-width">
             <nav class="navbar navbar-expand-lg">
@@ -136,9 +118,10 @@
                     <a class="navbar-brand" href="#">
                         <img src="assets/images/logo.png" alt="" width="100%" height="auto">
                     </a>
-                    <button class="header-navbar-toggle-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                    <button class="header-navbar-toggle-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent">
                         <div class="animated-icon2"><span></span><span></span><span></span><span></span></div>
-                     </button>
+                    </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-lg-auto text-left text-center mb-2 mb-lg-0">
                             <li class="nav-item">
@@ -243,7 +226,7 @@
     <section class="banner">
         <div class="page-width">
             <div class="container-fluid px-0">
-                <div class="row">
+                <div class="row gap-2 gap-md-0">
                     <div class="col-md-3">
                         <div class="banner-img">
                             <img src="assets/images/banner-left.png" alt="Banner Img" srcset="" height="auto"
@@ -251,7 +234,11 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="banner-img">
+                        <div class="banner-img-slider">
+                            <img src="assets/images/banner-center.png" alt="Banner Img" srcset="" height="auto"
+                                width="100%">
+                            <img src="assets/images/banner-center.png" alt="Banner Img" srcset="" height="auto"
+                                width="100%">
                             <img src="assets/images/banner-center.png" alt="Banner Img" srcset="" height="auto"
                                 width="100%">
                         </div>
@@ -370,7 +357,7 @@
     </section>
     <section class="product-tab-section">
         <nav>
-            <div class="nav nav-tabs mx-auto d-flex justify-content-between gap-md-1" id="nav-tab" role="tablist">
+            <div class="nav nav-tabs mx-auto d-grid" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
                     type="button" role="tab" aria-controls="nav-home" aria-selected="true">
                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -1395,7 +1382,7 @@
     </section>
     <section class="page-width">
         <div class="manual-standard">
-            <div class="container-fluid">
+            <div class="container-fluid px-0">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="manual-standard-img position-relative">
@@ -2172,14 +2159,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Js Link -->
     <script src="assets/js/custom.js"></script>
-
-    <script>
-
-        document.querySelector('.header-navbar-toggle-button').addEventListener('click', function () {
-            document.querySelector('.animated-icon2').classList.toggle('open');
-        });
-
-    </script>
 
 </body>
 

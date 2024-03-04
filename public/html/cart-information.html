@@ -21,7 +21,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
         integrity="sha512-yHknP1/AwR+yx26cB1y0cjvQUMvEa2PFzt1c9LlS4pRQ5NOTZFWbhBig+X9G9eYW/8m0/4OXNx8pxJ6z57x0dw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/fa9a16eb6f.js" crossorigin="anonymous"></script>
+    <!-- International Telephone Input CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css" rel="stylesheet">
+    <!-- Flag icons CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
 </head>
 
 <body>
@@ -58,25 +63,6 @@
                                 <img src="assets/images/india.png" alt="Conturay Icon" srcset="" height="auto"
                                     width="auto" class="me-2">
                                 India
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="dropdown d-flex align-items-center desktop-view">
-                    <span class="text-black me-1">Currency:</span>
-                    <a class="btn dropdown-toggle nav-top-text text-black-change p-0 border-0" href="#" role="button"
-                        id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        AED
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li>
-                            <a class="dropdown-item nav-top-text text-black-change" href="#">
-                                AED
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item nav-top-text text-black-change" href="#">
-                                AED
                             </a>
                         </li>
                     </ul>
@@ -136,9 +122,10 @@
                     <a class="navbar-brand" href="#">
                         <img src="assets/images/logo.png" alt="" width="100%" height="auto">
                     </a>
-                    <button class="header-navbar-toggle-button" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                    <button class="header-navbar-toggle-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent">
                         <div class="animated-icon2"><span></span><span></span><span></span><span></span></div>
-                     </button>
+                    </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-lg-auto text-left text-center mb-2 mb-lg-0">
                             <li class="nav-item">
@@ -247,10 +234,10 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="d-flex flex-column">
-                            <h2 class="cart-main-heading order-summary-h4 mb-0 mt-md-4 mt-3">
+                            <h2 class="cart-main-heading h2 mb-0 mt-md-4 mt-3">
                                 Checkout:
                             </h2>
-                            <ul class="list-unstyled d-flex gap-1 flex-wrap mt-3 mt-md-0 mb-0">
+                            <ul class="list-unstyled d-flex gap-1 flex-wrap mt-md-0 mb-0">
                                 <li>
                                     <a href="" class="checkout-breadcrumbs-item active">Cart
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
@@ -299,46 +286,110 @@
                             </ul>
                         </div>
                         <form class="mt-33 checkout-contact-information">
-                            <h2 class="mb-3">Contact Information</h2>
+                            <h2 class="mb-3 h2">Contact Information</h2>
                             <div class="form-group">
                                 <label for="inputEmail">
                                     Already have an account? <a href="http://" class="login-now ms-2">Login Now</a>
                                 </label>
-                                <input type="email" class="form-control mt-33 border-all-form-outline input-height-70" id="inputEmail" placeholder="Enter email">
+                                <input type="email" class="form-control mt-33 border-all-form-outline input-height-70"
+                                    id="inputEmail" placeholder="Enter email">
                             </div>
-                            <h2 class="mb-0 shipping-address">Shipping Address</h2>
-                            <div class="form-group mt-33">
-                                <select class="form-control border-all-form-outline input-height-70" id="inputRegion">
-                                    <option>Region / Selector</option>
-                                    <option>Region / Selector</option>
-                                    <option>Region / Selector</option>
+                            <h2 class="shipping-address h2 mt-md-4 mt-2">Shipping Address</h2>
+                            <div class="form-group mt-33 position-relative">
+                                <select class="form-control input-lg input-height-70" required="">
+                                    <option value="">Country / Region</option>
+                                    <option value="Location1">Country 1</option>
+                                    <option value="Location2">Country 2</option>
+                                    <option value="Location3">Country 3</option>
                                 </select>
+                                <i class="fa fa-chevron-down position-absolute top-0 end-0 m-3" aria-hidden="true"></i>
                             </div>
                             <div class="form-group d-flex flex-md-row flex-column mt-33 gap-md-4 gap-3">
-                                <input type="text" class="form-control border-all-form-outline input-height-70" id="inputFirstName" placeholder="First Name">
-                                <input type="text" class="form-control border-all-form-outline input-height-70" id="inputLastName" placeholder="Last Name">
+                                <input type="text" class="form-control border-all-form-outline input-height-70"
+                                    id="inputFirstName" placeholder="First Name">
+                                <input type="text" class="form-control border-all-form-outline input-height-70"
+                                    id="inputLastName" placeholder="Last Name">
                             </div>
                             <div class="form-group d-flex flex-md-row flex-column mt-33 gap-md-4 gap-3">
-                                <input type="text" class="form-control border-all-form-outline input-height-70" id="inputLastName" placeholder="Last Name">
-                                <input type="text" class="form-control border-all-form-outline input-height-70" id="inputAddress" placeholder="Address">
+                                <div class="w-100">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i id="flag-icon" class="flag-icon flag-icon-us"></i>
+                                        </div>
+                                    </div>
+                                    <input type="tel" class="form-control border-all-form-outline input-height-70"
+                                        id="phone" placeholder="201-666-3210">
+                                </div>
+                                <input type="text" class="form-control border-all-form-outline input-height-70"
+                                    id="inputAddress" placeholder="Address">
                             </div>
                             <div class="form-group mt-33">
-                                <input type="text" class="form-control border-all-form-outline input-height-70" id="inputApartment"
-                                    placeholder="Apartment, suite, etc. (Optional)">
+                                <input type="text" class="form-control border-all-form-outline input-height-70"
+                                    id="inputApartment" placeholder="Apartment, suite, etc. (Optional)">
                             </div>
                             <div class="form-group d-flex flex-md-row flex-column mt-33 gap-md-4 gap-3">
-                                <input type="text" class="form-control border-all-form-outline input-height-70" id="inputCity" placeholder="City">
-                                <select class="form-control border-all-form-outline input-height-70" id="inputState">
-                                    <option>State</option>
-                                    <option>State</option>
-                                    <option>State</option>
-                                </select>
-                                <input type="text" class="form-control border-all-form-outline input-height-70" id="inputPostalCode" placeholder="Postal Code">
+                                <input type="text" class="form-control border-all-form-outline input-height-70"
+                                    id="inputCity" placeholder="City">
+                                <div class="form-group position-relative w-100">
+                                    <select class="form-control border-all-form-outline input-height-70" required="">
+                                        <option value="">State</option>
+                                        <option value="Location1">State 1</option>
+                                        <option value="Location2">State 2</option>
+                                        <option value="Location3">State 3</option>
+                                    </select>
+                                    <i class="fa fa-chevron-down position-absolute top-0 end-0 m-3"
+                                        aria-hidden="true"></i>
+                                </div>
+                                <input type="text" class="form-control border-all-form-outline input-height-70"
+                                    id="inputPostalCode" placeholder="Postal Code">
                             </div>
-                            <div class="d-flex justify-content-md-end">
-                                <button type="submit" class="btn-secondary d-flex align-items-center justify-content-between">
-                                    <span>Next: Select Shipping</span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="auto" x="0" y="0" viewBox="0 0 256 256" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M79.093 0 48.907 30.187 146.72 128l-97.813 97.813L79.093 256l128-128z" fill="#fff" opacity="1" data-original="#000000" class=""></path></g></svg>
+                            <h2 class="mb-0 shipping-payment h2">Payment</h2>
+                            <div
+                                class="form-group payment-card-radio-block d-flex flex-md-row flex-column align-items-md-center mt-1 gap-md-5 gap-1">
+                                <div class="form-group d-flex align-items-center mt-md-3">
+                                    <span class="outline-radio-checkbox d-flex align-items-center me-2">
+                                        <input class="radio-input m-0" type="radio" name="radioOptions" id="option1"
+                                            value="option1">
+                                    </span>
+                                    <label class="form-check-label w-100" for="option1">
+                                        Cash on Delivery
+                                    </label>
+                                </div>
+                                <div class="form-group d-flex align-items-center mt-md-3">
+                                    <span class="outline-radio-checkbox d-flex align-items-center me-2">
+                                        <input class="radio-input m-0" type="radio" name="radioOptions" id="option1"
+                                            value="option1" checked="">
+                                    </span>
+                                    <label class="form-check-label w-100" for="option1">
+                                        Credit/Debit Card
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="tel" class="form-control border-all-form-outline input-height-70 mb-27"
+                                id="mobile" name="mobile" placeholder="Card Number">
+                            <input type="text" class="form-control border-all-form-outline input-height-70 mb-27"
+                                id="inputFirstName" placeholder="Card Holder Name">
+                            <div class="d-flex flex-md-row flex-column mb-27 gap-md-4 gap-3">
+                                <input type="text"
+                                    class="form-control border-all-form-outline input-height-70 mb-md-0 mb-3"
+                                    id="inputFirstName" placeholder="Expiration date (MM/YY)">
+                                <input type="tel" class="form-control border-all-form-outline input-height-70"
+                                    id="mobile" name="mobile" placeholder="Security Code" required="">
+                            </div>
+                            <div class="d-flex justify-content-end mt-md-0 mt-4">
+                                <button type="submit"
+                                    class="button pay-now d-flex align-items-center justify-content-between">
+                                    <span class="me-md-5 me-2">Proceed To Checkout</span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="auto" x="0"
+                                        y="0" viewBox="0 0 256 256" style="enable-background:new 0 0 512 512"
+                                        xml:space="preserve" class="">
+                                        <g>
+                                            <path
+                                                d="M79.093 0 48.907 30.187 146.72 128l-97.813 97.813L79.093 256l128-128z"
+                                                fill="#fff" opacity="1" data-original="#000000" class=""></path>
+                                        </g>
+                                    </svg>
                                 </button>
                             </div>
                         </form>
@@ -368,9 +419,9 @@
                             <label for="mobile" class="form-label">Enter discount code</label>
                             <input type="tel" class="form-control border-all-form-outline" id="mobile" name="mobile"
                                 placeholder="Enter discount code" required>
-                            <button type="submit" class="btn-primary mt-2">Apply Discount</button>
                             <div class="border-bottom my-lg-4 my-3"></div>
-                            <button type="submit" class="btn-secondary">Proceed To Checkout</button>
+                            <button type="submit" class="btn-primary mt-2">Apply Discount</button>
+
                         </form>
                     </div>
                 </div>
@@ -501,12 +552,25 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Js Link -->
     <script src="assets/js/custom.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <!-- International Telephone Input JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script>
-
-        document.querySelector('.header-navbar-toggle-button').addEventListener('click', function () {
-            document.querySelector('.animated-icon2').classList.toggle('open');
+        // Initialize International Telephone Input
+        var input = document.querySelector("#phone");
+        var iti = window.intlTelInput(input, {
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            initialCountry: "us", // Set default country to United States
+            separateDialCode: true,
+            preferredCountries: ["us", "gb"]
         });
 
+        // Update flag icon when the country is changed
+        input.addEventListener("countrychange", function () {
+            var countryCode = iti.getSelectedCountryData().iso2.toUpperCase();
+            document.getElementById("flag-icon").className = "flag-icon flag-icon-" + countryCode;
+        });
     </script>
 </body>
 

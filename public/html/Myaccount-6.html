@@ -24,7 +24,7 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/fa9a16eb6f.js" crossorigin="anonymous"></script>
 </head>
-
+ 
 <body>
     <div class="page-width">
         <div
@@ -224,7 +224,7 @@
         </div>
     </div>
 
-    <section class="bg-gray account-all-pages pt-pb-min-max left-right-equal-height">
+    <section class="bg-gray account-all-pages pt-pb-min-max">
         <div class="page-width">
             <div class="container-fluid px-0">
                 <div class="row">
@@ -251,9 +251,14 @@
                             </li>
                         </ul>
                     </div>
+                    <div class="col-md-8 col-lg-9">
+                        <div class="h-100 d-md-flex align-items-end justify-content-end new-request-desktop">
+                            <a href="http://" class="button">+ New Request</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="row mt-4 min-height-590 gap-md-0 gap-5">
-                    <div class="col-md-4 col-lg-3 equal-col">
+                    <div class="col-md-4 col-lg-3">
                         <div class="w-100 my-account-information-sidebar border-all-form-outline bg-white">
                             <ul class="list-unstyled gap-1 d-flex flex-column mb-0">
                                 <li>
@@ -274,7 +279,7 @@
                                 </li>
                                 <li>
                                     <a href=""
-                                        class="account-information-sidebar-item active d-flex justify-content-between align-items-center">
+                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
                                         Address Book
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
@@ -322,7 +327,7 @@
                                 </li>
                                 <li>
                                     <a href=""
-                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                        class="account-information-sidebar-item active d-flex justify-content-between align-items-center">
                                         Maintenance
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
@@ -371,72 +376,85 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-8 col-lg-9 equal-col">
-                        <form action="#" method="post"
-                            class="w-100 my-acount-detail-form d-flex flex-column border-all-form-outline bg-white">
-                            <div class="form-group d-flex flex-md-row flex-column gap-lg-4 gap-3">
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="first_name">First Name*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="first_name"
-                                        name="first_name" placeholder="First Name" required>
+                    <div class="col-md-8 col-lg-9 d-flex flex-column gap-4">
+                        <div class="new-request-mobile">
+                            <a href="http://" class="button">+ New Request</a>
+                        </div>
+                        <div class="product-my-orders-card d-flex flex-md-row flex-column">
+                            <div class="product-all-orders-card-img-block maintenance-card-slider-wrapper">
+                                <img src="assets/images/p2.png" alt="Product Image" height="auto" width="100%">
+                                <img src="assets/images/p2.png" alt="Product Image" height="auto" width="100%">
+                            </div>
+                            <div
+                                class="product-all-orders-card-body d-flex flex-lg-row flex-column align-items-lg-center w-100 gap-3">
+                                <div class="left w-100">
+                                    <h3 class="serial-number mb-0">Req: #02112024</h3>
+                                    <h3 class="my-1">Manual Standard Wheelchair <br> MW02</h3>
+                                    <h3 class="1x mb-1">1x</h3>
+                                    <div class="location-address">
+                                        <img src="assets/images/maps-icon.png" alt="location" height="auto"
+                                            width="auto" class="float-start me-2">
+                                        <span>40799 Andres Springs Suite 299, Kentucky, USA</span>
+                                    </div>
                                 </div>
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="last_name">Last Name*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="last_name"
-                                        name="last_name" placeholder="Last Name" required>
+                                <div
+                                    class="right h-100 d-flex flex-lg-column align-items-end justify-content-md-end">
+                                    <a href="http://" class="button request">Requested</a>
                                 </div>
                             </div>
-                            <div class="form-group d-flex flex-md-row flex-column gap-lg-4 gap-3">
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="phone">Phone No*</label>
-                                    <input type="tel" class="form-control border-all-form-outline" id="phone"
-                                        name="phone" placeholder="Phone No" required>
+                        </div>
+                        <div class="product-my-orders-card d-flex flex-md-row flex-column">
+                            <div class="product-all-orders-card-img-block maintenance-card-slider-wrapper">
+                                <img src="assets/images/p3.png" alt="Product Image" height="auto" width="100%">
+                                <img src="assets/images/p3.png" alt="Product Image" height="auto" width="100%">
+                            </div>
+                            <div
+                                class="product-all-orders-card-body d-flex flex-lg-row flex-column align-items-lg-center w-100 gap-3">
+                                <div class="left w-100">
+                                    <h3 class="serial-number mb-0">Req: #02112024</h3>
+                                    <h3 class="my-1">Manual Standard Wheelchair <br> MW02</h3>
+                                    <h3 class="1x mb-1">1x</h3>
+                                    <div class="location-address">
+                                        <img src="assets/images/maps-icon.png" alt="location" height="auto"
+                                            width="auto" class="float-start me-2">
+                                        <span>40799 Andres Springs Suite 299, Kentucky, USA</span>
+                                    </div>
                                 </div>
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="address">Address*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="address"
-                                        name="address" placeholder="Address" required>
+                                <div
+                                    class="right h-100 d-flex flex-lg-column align-items-end justify-content-md-end">
+                                    <a href="http://" class="button request">Requested</a>
                                 </div>
                             </div>
-                            <div class="form-group d-flex flex-md-row flex-column gap-lg-4 gap-3">
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="street_address">Street Address*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="street_address"
-                                        name="street_address" placeholder="Street Address" required>
+                        </div>
+                        <div class="product-my-orders-card d-flex flex-md-row flex-column">
+                            <div class="product-all-orders-card-img-block maintenance-card-slider-wrapper">
+                                <img src="assets/images/p4.png" alt="Product Image" height="auto" width="100%">
+                                <img src="assets/images/p4.png" alt="Product Image" height="auto" width="100%">
+                            </div>
+                            <div
+                                class="product-all-orders-card-body d-flex flex-lg-row flex-column align-items-lg-center w-100 gap-3">
+                                <div class="left w-100">
+                                    <h3 class="serial-number mb-0">Req: #02112024</h3>
+                                    <h3 class="my-1">Manual Standard Wheelchair <br> MW02</h3>
+                                    <h3 class="1x mb-1">1x</h3>
+                                    <div class="location-address">
+                                        <img src="assets/images/maps-icon.png" alt="location" height="auto"
+                                            width="auto" class="float-start me-2">
+                                        <span>40799 Andres Springs Suite 299, Kentucky, USA</span>
+                                    </div>
                                 </div>
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="country">Country*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="country"
-                                        name="country" placeholder="Country" required>
+                                <div
+                                    class="right h-100 d-flex flex-lg-column align-items-end justify-content-md-end">
+                                    <a href="http://" class="button request">Requested</a>
                                 </div>
                             </div>
-                            <div class="form-group d-flex flex-md-row flex-column gap-lg-4 gap-3">
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="state_province">State/Province*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="state_province"
-                                        name="state_province" placeholder="State/Province" required>
-                                </div>
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="city">City</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="city"
-                                        name="city" placeholder="City">
-                                </div>
-                            </div>
-                            <div class="form-group d-flex flex-column gap-2">
-                                <label for="zip_code">Zip/Postal Code</label>
-                                <input type="text" class="form-control border-all-form-outline" id="zip_code"
-                                    name="zip_code" placeholder="Zip/Postal Code">
-                            </div>
-                            <div class="form-group d-flex justify-content-end align-items-center">
-                                <button type="submit" class="button" name="update_profile">Update Address</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
+ 
     <footer>
         <div class="news-letter position-relative">
             <div

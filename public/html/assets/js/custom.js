@@ -1,6 +1,5 @@
 $(document).ready(function () {
   $('.shop-categories-slider').slick({
-    centerMode: false,
     infinite: false,
     arrows: true,
     speed: 300,
@@ -20,6 +19,22 @@ $(document).ready(function () {
         }
       }
     ]
+  });
+
+  $('.banner-img-slider').slick({
+    infinite: false,
+    arrows:true,
+    dots:true,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  });
+
+  $('.maintenance-card-slider-wrapper').slick({
+    infinite: false,
+    arrows:true,
+    dots:false,
+    slidesToShow: 1,
+    slidesToScroll: 1
   });
 
   // Quantity Selector Js 
@@ -44,9 +59,7 @@ $(document).ready(function () {
     }
   });
 
-
 });
-
 
 // List View Js
 const listBtn = document.getElementById('list-btn');
@@ -66,3 +79,23 @@ gridBtn.addEventListener('click', function () {
   gridBtn.classList.add('active');
   listBtn.classList.remove('active');
 });
+
+$('.header-navbar-toggle-button').click(function () {
+    $('.animated-icon2').toggleClass('open');
+});
+
+
+ // Initialize International Telephone Input
+ var input = document.querySelector("#phone");
+ var iti = window.intlTelInput(input, {
+   utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+   initialCountry: "us", // Set default country to United States
+   separateDialCode: true,
+   preferredCountries: ["us", "gb"]
+ });
+ 
+ // Update flag icon when the country is changed
+ input.addEventListener("countrychange", function() {
+   var countryCode = iti.getSelectedCountryData().iso2.toUpperCase();
+   document.getElementById("flag-icon").className = "flag-icon flag-icon-" + countryCode;
+ });

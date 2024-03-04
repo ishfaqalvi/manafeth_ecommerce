@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Myaccount</title>
+    <title>Account</title>
     <!-- External Css File -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Google Fonts -->
@@ -110,7 +110,7 @@
             </div>
         </div>
     </div>
-    <!-- Navbar --> 
+    <!-- Navbar -->
     <div class="nav-bg">
         <div class="page-width">
             <nav class="navbar navbar-expand-lg">
@@ -247,7 +247,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="" class="checkout-breadcrumbs-item active">Address Book</a>
+                                <a href="" class="checkout-breadcrumbs-item active">
+                                    Rental Request
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -274,7 +276,7 @@
                                 </li>
                                 <li>
                                     <a href=""
-                                        class="account-information-sidebar-item active d-flex justify-content-between align-items-center">
+                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
                                         Address Book
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
@@ -338,7 +340,7 @@
                                 </li>
                                 <li>
                                     <a href=""
-                                        class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                        class="account-information-sidebar-item active d-flex justify-content-between align-items-center">
                                         Rental Request
                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0"
@@ -372,71 +374,18 @@
                         </div>
                     </div>
                     <div class="col-md-8 col-lg-9 equal-col">
-                        <form action="#" method="post"
-                            class="w-100 my-acount-detail-form d-flex flex-column border-all-form-outline bg-white">
-                            <div class="form-group d-flex flex-md-row flex-column gap-lg-4 gap-3">
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="first_name">First Name*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="first_name"
-                                        name="first_name" placeholder="First Name" required>
-                                </div>
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="last_name">Last Name*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="last_name"
-                                        name="last_name" placeholder="Last Name" required>
-                                </div>
-                            </div>
-                            <div class="form-group d-flex flex-md-row flex-column gap-lg-4 gap-3">
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="phone">Phone No*</label>
-                                    <input type="tel" class="form-control border-all-form-outline" id="phone"
-                                        name="phone" placeholder="Phone No" required>
-                                </div>
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="address">Address*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="address"
-                                        name="address" placeholder="Address" required>
-                                </div>
-                            </div>
-                            <div class="form-group d-flex flex-md-row flex-column gap-lg-4 gap-3">
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="street_address">Street Address*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="street_address"
-                                        name="street_address" placeholder="Street Address" required>
-                                </div>
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="country">Country*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="country"
-                                        name="country" placeholder="Country" required>
-                                </div>
-                            </div>
-                            <div class="form-group d-flex flex-md-row flex-column gap-lg-4 gap-3">
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="state_province">State/Province*</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="state_province"
-                                        name="state_province" placeholder="State/Province" required>
-                                </div>
-                                <div class="w-100 d-flex flex-column gap-2">
-                                    <label for="city">City</label>
-                                    <input type="text" class="form-control border-all-form-outline" id="city"
-                                        name="city" placeholder="City">
-                                </div>
-                            </div>
-                            <div class="form-group d-flex flex-column gap-2">
-                                <label for="zip_code">Zip/Postal Code</label>
-                                <input type="text" class="form-control border-all-form-outline" id="zip_code"
-                                    name="zip_code" placeholder="Zip/Postal Code">
-                            </div>
-                            <div class="form-group d-flex justify-content-end align-items-center">
-                                <button type="submit" class="button" name="update_profile">Update Address</button>
-                            </div>
-                        </form>
+                        <div
+                            class="bg-white border-all-form-outline w-100 request-found-wrapper d-flex flex-column align-items-center justify-content-center gap-2">
+                            <img src="assets/images/Magnifier-icon.png" alt="Magnifier Icon" srcset="">
+                            <h2 class="mb-0">No request found!</h2>
+                            <p class="mb-3 text-center">You have not added any maintenance request yet!</p>
+                            <a href="http://" class="button">Add Rental Request</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
     <footer>
         <div class="news-letter position-relative">
             <div

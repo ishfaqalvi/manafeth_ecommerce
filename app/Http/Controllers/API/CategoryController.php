@@ -14,7 +14,7 @@ class CategoryController extends BaseController
     public function main()
     {
         try {
-            $categories = Category::get();
+            $categories = Category::with('subCategories')->get();
             return $this->sendResponse($categories, 'Main category list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
