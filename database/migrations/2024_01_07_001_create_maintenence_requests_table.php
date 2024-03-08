@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('maintenence_requests', function (Blueprint $table) {
             $table->id();
-            $table->string('request_no');
+            $table->string('request_no')->nullable();
             $table->foreignId('customer_id')->references('id')->on('customers')->cascadeOnDelete();
             $table->string('first_name');
             $table->string('last_name');

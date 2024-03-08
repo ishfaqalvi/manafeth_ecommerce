@@ -152,8 +152,9 @@ Route::group(['namespace'=>'App\Http\Controllers\API'], function(){
 	|--------------------------------------------------------------------------
 	*/
 	Route::controller(ProductController::class)->prefix('products')->group(function () {
-    	Route::get('list',			'index');
-    	Route::get('view/{id}',		'show' );
+    	Route::get('list',				'index'		  );
+    	Route::get('view/{id}',			'show' 		  );
+    	Route::get('category_wise/{id}','categoryWise');
 	});
 
 	/*

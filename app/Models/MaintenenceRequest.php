@@ -54,6 +54,20 @@ class MaintenenceRequest extends Model implements Auditable
     ];
 
     /**
+     * Attributes that should auto genereted.
+     *
+     * @var array
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($model) { 
+            $model->request_no = '#-' . str_pad($model->id, 6, "0", STR_PAD_LEFT);
+            $model->save();
+        });
+    }
+
+    /**
      * Set the images's.
      *
      * @param  string  $value
