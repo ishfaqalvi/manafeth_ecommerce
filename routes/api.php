@@ -129,6 +129,15 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 Route::group(['namespace'=>'App\Http\Controllers\API'], function(){
 	/*
 	|--------------------------------------------------------------------------
+	| Banners Routes
+	|--------------------------------------------------------------------------
+	*/
+	Route::controller(BannerController::class)->prefix('banners')->group(function () {
+    	Route::get('list',		'index');
+	});
+
+	/*
+	|--------------------------------------------------------------------------
 	| Category Routes
 	|--------------------------------------------------------------------------
 	*/

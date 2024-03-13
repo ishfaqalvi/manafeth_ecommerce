@@ -75,13 +75,14 @@ class MaintenenceRequest extends Model implements Auditable
      */
     public function setImagesAttribute($values) {
         if($values) {
+            $images = array();
             foreach($values as $file)
             {
                 $name = $file->getClientOriginalName();
                 $file->move('images/maintenence/', $name);
                 $images[] = $name;
-                $this->attributes['images'] = json_encode($images);
             }
+            $this->attributes['images'] = implode(',', $images);
         }else{
             unset($this->attributes['images']);
         }
@@ -96,7 +97,7 @@ class MaintenenceRequest extends Model implements Auditable
     public function getImagesAttribute($values){
         $images = array();
         if ($values) {
-            foreach (json_decode($values) as $key => $value) {
+            foreach (explode(',', $values) as $key => $value) {
                 $images[] = asset('images/maintenence/'.$value); 
             }
         }

@@ -61,6 +61,12 @@ class PermissionSeeder extends Seeder
                   'products-imageCreate',
                   'products-imageDelete',
 
+                  'banners-list', 
+                  'banners-view', 
+                  'banners-create', 
+                  'banners-edit', 
+                  'banners-delete',
+
                   'brands-list', 
                   'brands-view', 
                   'brands-create', 

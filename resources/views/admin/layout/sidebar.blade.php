@@ -49,6 +49,14 @@
     </a>
 </li>
 @endcan
+@can('banners-list')
+<li class="nav-item">
+    <a href="{{ route('banners.index') }}" class="nav-link {{ request()->is('admin/banners*') ? 'active' : ''}}">
+        <i class="ph-article"></i>
+        <span>Banners</span>
+    </a>
+</li>
+@endcanany
 @can('brands-list')
 <li class="nav-item">
     <a href="{{ route('brands.index') }}" class="nav-link {{ request()->is('admin/brands*') ? 'active' : ''}}">
