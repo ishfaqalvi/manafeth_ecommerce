@@ -58,9 +58,8 @@ class Product extends Model implements Auditable
         'quantity',
         'price',
         'discount',
-        'rent',
+        'type',
         'special',
-        'maintenance',
         'status',
         'description',
         'detail'
@@ -121,16 +120,6 @@ class Product extends Model implements Auditable
         }
         if (isset($request['model'])) {
             $query->whereModel($request['model']);
-        }
-        if (isset($request['type'])) {
-            if($request['type'] == 'Rent'){
-                $query->whereRent('Yes');
-            }elseif($request['type'] == 'Maintenance'){
-                $query->whereMaintenance('Yes');
-            }
-        }
-        if(isset($request['special'])){
-            $query->whereSpecial('Yes');
         }
         if (isset($request['model'])) {
             $query->whereModel($request['model']);

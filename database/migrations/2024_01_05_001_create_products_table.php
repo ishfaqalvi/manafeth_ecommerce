@@ -26,8 +26,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->bigInteger('price');
             $table->bigInteger('discount')->nullable();
-            $table->string('rent')->nullable();
-            $table->string('maintenance')->nullable();
+            $table->enum('type',['Rent','Sale','Maintenance']);
             $table->string('special')->nullable();
             $table->enum('status',['Publish','Unpublish'])->default('Publish');
             $table->timestamps();

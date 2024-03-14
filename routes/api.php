@@ -161,9 +161,16 @@ Route::group(['namespace'=>'App\Http\Controllers\API'], function(){
 	|--------------------------------------------------------------------------
 	*/
 	Route::controller(ProductController::class)->prefix('products')->group(function () {
-    	Route::get('list',				'index'		  );
-    	Route::get('view/{id}',			'show' 		  );
-    	Route::get('category_wise/{id}','categoryWise');
+    	Route::get('sale/all',							'saleList'		  		 );
+    	Route::get('sale/special',						'saleSpecial'		  	 );
+    	Route::get('sale/category_wise/{id}',			'saleCategoryWise'		 );
+    	Route::get('rent/all',							'rentList'		  		 );
+    	Route::get('rent/special',						'rentSpecial'		  	 );
+    	Route::get('rent/category_wise/{id}',			'rentCategoryWise'		 );
+    	Route::get('maintenance/all',					'maintenanceList'		 );
+    	Route::get('maintenance/special',				'maintenanceSpecial'	 );
+    	Route::get('maintenance/category_wise/{id}',	'maintenanceCategoryWise');
+    	Route::get('view/{id}',							'show' 		  			 );
 	});
 
 	/*
