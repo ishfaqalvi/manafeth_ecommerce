@@ -35,6 +35,22 @@ class ProductResource extends Model implements Auditable
     protected $fillable = ['product_id','type','name','file'];
 
     /**
+     * The set attributes.
+     *
+     * @var array
+     */
+    public function setFileAttribute($file)
+    {
+        if ($file instanceof \Illuminate\Http\UploadedFile) {
+            $name = $file->getClientOriginalName();
+            $file->move('images/product/resource', $name);
+            $this->attributes['file'] = 'images/product/resource/'.$name;
+        } else {
+            unset($this->attributes['file']);
+        }
+    }
+
+    /**
      * The get attributes.
      *
      * @var array

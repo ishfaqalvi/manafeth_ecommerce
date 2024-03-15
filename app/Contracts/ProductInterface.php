@@ -23,4 +23,38 @@ interface ProductInterface
 	public function maintenanceCategoryWise($id);
 
 	public function viewDetail($id);
+
+	public function create();
+
+	public function store($data);
+
+	public function show($id);
+
+	public function edit($id);
+
+	public function update($data, $id);
+
+	public function delete($id);
+
+	public function featureStore($data);
+
+	public function featureUpdate($data);
+
+	public function featureDelete($id);
+
+	public function specificationStore($data);
+
+	public function specificationUpdate($data);
+
+	public function specificationDelete($id);
+
+	public function resourceStore($data);
+
+	public function resourceUpdate($data);
+
+	public function resourceDelete($id);
+
+	public function imageStore($data);
+
+	public function imageDelete($id);
 }

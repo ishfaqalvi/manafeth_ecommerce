@@ -1,7 +1,7 @@
 <div id="addImage" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="{{ route('products.images.store') }}" class="validate" role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('products.images.store') }}" class="validateImageCreate" role="form" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title">{{ __('Create Product Image') }}</h5>

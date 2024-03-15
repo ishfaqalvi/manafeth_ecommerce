@@ -13,7 +13,7 @@
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <a href="{{ route('products.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            <a href="{{ route('products.maintenance.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-arrow-circle-left"></i>
                 </span>
@@ -31,8 +31,9 @@
             <h5 class="mb-0">{{ __('Create') }} Product</h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('products.store') }}" class="validate" role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('products.maintenance.store') }}" class="validate" role="form" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="type" value="Maintenance">
                 <div class="row">
                     <div class="form-group col-lg-4 mb-3">
                         {{ Form::label('brand') }}
@@ -78,17 +79,9 @@
                         {{ Form::label('status') }}
                         {{ Form::select('status', ['Publish' => 'Publish', 'Unpublish' => 'Unpublish'], $product->status, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
                     </div>
-                    <div class="form-group col-lg-12 mb-3">
-                        {{ Form::checkbox('special', 'Yes', $product->special, ['class' => 'form-check-input' . ($errors->has('special') ? ' is-invalid' : ''),'id'=>'special']) }}
-                        {{ Form::label('special','Special Product') }}
-                    </div>
-                    <div class="form-group col-lg-12 mb-3">
-                        {{ Form::checkbox('rent', 'Yes', $product->rent, ['class' => 'form-check-input' . ($errors->has('rent') ? ' is-invalid' : ''),'id'=>'rent']) }}
-                        {{ Form::label('rent','For Rent') }}
-                    </div>
-                    <div class="form-group col-lg-12 mb-3">
-                        {{ Form::checkbox('maintenance', 'Yes', $product->maintenance, ['class' => 'form-check-input' . ($errors->has('maintenance') ? ' is-invalid' : ''),'id'=>'maintenance']) }}
-                        {{ Form::label('maintenance', 'For Maintenance') }}
+                    <div class="form-group col-lg-4 mb-3">
+                        {{ Form::label('special','Home Top Product') }}
+                        {{ Form::select('special', ['Yes' => 'Yes', 'No' => 'No'], $product->special, ['class' => 'form-control form-select' . ($errors->has('special') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
                     </div>
                     <div class="form-group col-lg-12 mb-3">
                         {{ Form::label('description') }}
@@ -135,9 +128,6 @@
                 $(element).removeClass('is-invalid');
                 $(element).addClass('is-valid');
             },
-            success: function(label) {
-                label.addClass('validation-valid-label').text('Success.');
-            },
             errorPlacement: function(error, element) {
                 if (element.hasClass('select2-hidden-accessible')) {
                     error.appendTo(element.parent());
@@ -152,7 +142,7 @@
             let id = $(this).val();
             $('select[name=sub_category_id]').html('<option>--Select--</option>');
             $('select[name=sub_category_id]').attr('disabled',false);
-            $.get('/admin/products/sub-categories', {id: id}).done(function (result) {
+            $.get('/admin/categories/sub-categories', {id: id}).done(function (result) {
                 let data = JSON.parse(result);
                 $.each(data, function (i, val) {
                     $('select[name=sub_category_id]').append($('<option></option>').val(val.id).html(val.name));

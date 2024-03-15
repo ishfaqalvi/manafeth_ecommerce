@@ -33,7 +33,7 @@ class Order extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['customer_id','name','email','phone_number','address','status'];
+    protected $fillable = ['customer_id','payment_method','name','email','phone_number','address','status'];
 
 
     /**

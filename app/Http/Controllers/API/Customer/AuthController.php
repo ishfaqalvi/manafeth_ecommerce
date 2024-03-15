@@ -180,10 +180,10 @@ class AuthController extends BaseController
                     ->where('used', false)
                     ->first();
             if (!$savedOTP) {
-                return $this->sendResponse('', 'Invalid or expired OTP.');    
+                return $this->sendError('Invalid Error', 'Invalid or expired OTP.');    
             }
             $savedOTP->update(['used' => true]);
-            return $this->sendResponse('', 'OTP verified. Proceed to reset password.');
+            return $this->sendResponse('', 'OTP verified successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }

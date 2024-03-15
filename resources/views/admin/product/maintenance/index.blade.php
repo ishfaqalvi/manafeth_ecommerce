@@ -1,14 +1,14 @@
 @extends('admin.layout.app')
 
 @section('title')
-    Product
+    Maintenance Product
 @endsection
 
 @section('header')
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">Product Managment</span>
+            Home - <span class="fw-normal">Maintenance Products Managment</span>
         </h4>
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
@@ -19,8 +19,8 @@
                 </span>
                 Filter
             </button>
-            @can('products-create')
-            <a href="{{ route('products.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            @can('maintenanceProducts-create')
+            <a href="{{ route('products.maintenance.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-plus"></i>
                 </span>
@@ -36,9 +36,9 @@
 <div class="col-sm-12">
     <div class="card collapse {{ !is_null($userRequest) ? 'show' : ''}}" id="filters">
         <div class="card-body">
-            <form action="{{route('products.filter')}}" method="post">
+            <form action="{{route('products.maintenance.filter')}}" method="post">
                 @csrf
-                @include('admin.product.filter')
+                @include('admin.product.maintenance.filter')
             </form>
         </div>
     </div>
@@ -96,27 +96,11 @@
                                 @else
                                 <i class="ph-x-circle fs-base lh-base align-top text-danger me-1"></i>
                                 @endif
-                                Special
-                            </div>
-                            <div>
-                                @if($product->rent == 'Yes')
-                                <i class="ph-check-circle fs-base lh-base align-top text-success me-1"></i>
-                                @else
-                                <i class="ph-x-circle fs-base lh-base align-top text-danger me-1"></i>
-                                @endif
-                                For Rent
-                            </div>
-                            <div>
-                                @if($product->maintenance == 'Yes')
-                                <i class="ph-check-circle fs-base lh-base align-top text-success me-1"></i>
-                                @else
-                                <i class="ph-x-circle fs-base lh-base align-top text-danger me-1"></i>
-                                @endif
-                                For Maintenance
+                                Home Top Product
                             </div>
                         </td>
                         <td class="text-center">
-                            @include('admin.product.actions')
+                            @include('admin.product.maintenance.actions')
                         </td>
                     </tr>
                     @empty

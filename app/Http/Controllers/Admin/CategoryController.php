@@ -172,4 +172,15 @@ class CategoryController extends Controller
 
         return redirect()->back()->with('success', 'Sub Category deleted successfully.');
     }
+
+    /**
+     * get a listing of the resource
+     *
+     * @return void
+     */
+    public function subCategories(Request $request)
+    {
+        $category = Category::find($request->id);
+        echo json_encode($category->subCategories);
+    }
 }

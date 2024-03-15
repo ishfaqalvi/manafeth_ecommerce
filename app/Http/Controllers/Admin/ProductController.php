@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
-use App\Models\{Product,Category,ProductFeature,ProductSpecification,ProductResource};
+use App\Contracts\ProductInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -12,13 +12,12 @@ use Illuminate\Http\Request;
  */
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function __construct()
+    protected $product;
+    
+    public function __construct(ProductInterface $product)
     {
+        $this->product = $product;
+
         $this->middleware('permission:products-list',  ['only' => ['index']]);
         $this->middleware('permission:products-view',  ['only' => ['show']]);
         $this->middleware('permission:products-create',['only' => ['create','store']]);
@@ -35,13 +34,38 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function saleList(Request $request) 
     {
-        $products = Product::filter($request->all())->paginate();
+        $products = $this->product->saleProductList($request->all());
         $request->method() == 'POST' ? $userRequest = $request : $userRequest = null;
 
-        return view('admin.product.index', compact('products','userRequest'))
-        ->with('i', (request()->input('page', 1) - 1) * $products->perPage());
+        return view('admin.product.sale.index', compact('products','userRequest'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function rentList(Request $request) 
+    {
+        $products = $this->product->rentProductList($request->all());
+        $request->method() == 'POST' ? $userRequest = $request : $userRequest = null;
+
+        return view('admin.product.rent.index', compact('products','userRequest'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function maintenanceList(Request $request) 
+    {
+        $products = $this->product->maintenanceProductList($request->all());
+        $request->method() == 'POST' ? $userRequest = $request : $userRequest = null;
+
+        return view('admin.product.maintenance.index', compact('products','userRequest'));
     }
 
     /**
@@ -51,9 +75,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $product = new Product();
+        $product = $this->product->create();
         return view('admin.product.create', compact('product'));
-    }
+    } 
 
     /**
      * Store a newly created resource in storage.
@@ -63,7 +87,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-       $product = Product::create($request->all());
+        $product = Product::create($request->all());
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
     }
@@ -268,16 +292,5 @@ class ProductController extends Controller
         ProductImage::find($id)->delete();
 
         return redirect()->back()->with('success', 'Product Image deleted successfully.');
-    }
-
-    /**
-     * get a listing of the resource
-     *
-     * @return void
-     */
-    public function subCategories(Request $request)
-    {
-        $category = Category::find($request->id);
-        echo json_encode($category->subCategories);
     }
 }

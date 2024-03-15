@@ -75,13 +75,6 @@ Route::controller(CustomerController::class)->prefix('customers')->as('customers
 
 /*
 |--------------------------------------------------------------------------
-| Products Routes
-|--------------------------------------------------------------------------
-*/
-Route::prefix('products')->group(__DIR__.'/products.php');
-
-/*
-|--------------------------------------------------------------------------
 | Banners Routes
 |--------------------------------------------------------------------------
 */
@@ -116,19 +109,20 @@ Route::controller(BrandController::class)->prefix('brands')->as('brands.')->grou
 |--------------------------------------------------------------------------
 */
 Route::controller(CategoryController::class)->prefix('categories')->as('categories.')->group(function () {
-	Route::get('list',					'index'		)->name('all.index'		);
-	Route::post('list',					'index'		)->name('all.filter'	);
-	Route::get('create',				'create'	)->name('all.create'	);
-	Route::post('store',				'store'		)->name('store'		 	);
-	Route::get('edit/{id}',				'edit'		)->name('all.edit'		);
-	Route::get('show/{id}',				'show'		)->name('all.show'		);
-	Route::patch('update/{category}',	'update'	)->name('update'	 	);
-	Route::delete('delete/{id}',		'destroy'	)->name('destroy'	 	);
-	Route::get('sub/list',				'sub'		)->name('sub.index'	 	);
-	Route::post('sub/list',				'sub'		)->name('sub.filter'	);
-	Route::post('sub/store',			'subStore'	)->name('sub.store'  	);
-	Route::post('sub/update',			'subUpdate'	)->name('sub.update'  	);
-	Route::delete('sub/delete/{id}',	'subDestroy')->name('sub.destroy'	);
+	Route::get('list',					'index'			)->name('all.index'		);
+	Route::post('list',					'index'			)->name('all.filter'	);
+	Route::get('create',				'create'		)->name('all.create'	);
+	Route::post('store',				'store'			)->name('store'		 	);
+	Route::get('edit/{id}',				'edit'			)->name('all.edit'		);
+	Route::get('show/{id}',				'show'			)->name('all.show'		);
+	Route::patch('update/{category}',	'update'		)->name('update'	 	);
+	Route::delete('delete/{id}',		'destroy'		)->name('destroy'	 	);
+	Route::get('sub/list',				'sub'			)->name('sub.index'	 	);
+	Route::post('sub/list',				'sub'			)->name('sub.filter'	);
+	Route::post('sub/store',			'subStore'		)->name('sub.store'  	);
+	Route::post('sub/update',			'subUpdate'		)->name('sub.update'  	);
+	Route::delete('sub/delete/{id}',	'subDestroy'	)->name('sub.destroy'	);
+	Route::get('sub-categories',    	'subCategories' );
 });
 
 /*
