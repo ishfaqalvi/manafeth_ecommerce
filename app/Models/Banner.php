@@ -30,7 +30,7 @@ class Banner extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['title','image','order','status'];
+    protected $fillable = ['title','image','order','type','status'];
 
     protected static function booted()
     {
@@ -62,5 +62,20 @@ class Banner extends Model implements Auditable
     public function getImageAttribute($value)
     {
         return isset($value) ? asset($value) : '';
+    }
+
+    /**
+     * Scope a query to filter product.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $category
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter($query, $request)
+    {
+        if (isset($request['type'])) {
+            $query->whereType($request['type']);
+        }
+        return $query;
     }
 }

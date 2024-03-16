@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('image');
             $table->integer('order');
+            $table->enum('type',['Rent','Sale','Maintenance']);
             $table->enum('status',['Active','Inactive']);
             $table->timestamps();
         });

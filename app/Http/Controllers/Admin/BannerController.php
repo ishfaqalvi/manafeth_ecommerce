@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
-use App\Models\Banner;
+use App\Contracts\BannerInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -12,13 +12,11 @@ use Illuminate\Http\Request;
  */
 class BannerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    function __construct()
-    {
+    protected $banner;
+    
+    public function __construct(BannerInterface $banner){
+        $this->banner = $banner;
+
         $this->middleware('permission:banners-list',  ['only' => ['index']]);
         $this->middleware('permission:banners-view',  ['only' => ['show']]);
         $this->middleware('permission:banners-create',['only' => ['create','store']]);
@@ -33,7 +31,7 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $banners = Banner::get();
+        $banners = $this->banner->groupByList();
 
         return view('admin.banner.index', compact('banners'));
     }
@@ -45,7 +43,7 @@ class BannerController extends Controller
      */
     public function create()
     {
-        $banner = new Banner();
+        $banner = $this->banner->create();
         return view('admin.banner.create', compact('banner'));
     }
 
@@ -57,9 +55,8 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-       $banner = Banner::create($request->all());
-        return redirect()->route('banners.index')
-            ->with('success', 'Banner created successfully.');
+        $banner = $this->banner->store($request->all());
+        return redirect()->route('banners.index')->with('success', 'Banner created successfully.');
     }
 
     /**
@@ -70,7 +67,7 @@ class BannerController extends Controller
      */
     public function show($id)
     {
-        $banner = Banner::find($id);
+        $banner = $this->banner->find($id);
 
         return view('admin.banner.show', compact('banner'));
     }
@@ -83,7 +80,7 @@ class BannerController extends Controller
      */
     public function edit($id)
     {
-        $banner = Banner::find($id);
+        $banner = $this->banner->find($id);
 
         return view('admin.banner.edit', compact('banner'));
     }
@@ -95,12 +92,11 @@ class BannerController extends Controller
      * @param  Banner $banner
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Banner $banner)
+    public function update(Request $request, $banner)
     {
-        $banner->update($request->all());
+        $banner->update($request->all(), $banner);
 
-        return redirect()->route('banners.index')
-            ->with('success', 'Banner updated successfully');
+        return redirect()->route('banners.index')->with('success', 'Banner updated successfully');
     }
 
     /**
@@ -110,9 +106,8 @@ class BannerController extends Controller
      */
     public function destroy($id)
     {
-        $banner = Banner::find($id)->delete();
+        $banner = $this->banner->delete($id);
 
-        return redirect()->route('banners.index')
-            ->with('success', 'Banner deleted successfully');
+        return redirect()->route('banners.index')->with('success', 'Banner deleted successfully');
     }
 }

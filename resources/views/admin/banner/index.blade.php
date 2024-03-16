@@ -44,18 +44,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($banners as $key => $banner)
-                    <tr>
-                        <td class="pe-0" style="width: 45px;">
-                            <a href="#">
-                                <img src="{{ $banner->image }}" height="60" alt="">
-                            </a>
-                        </td>
-    					<td>{{ $banner->title }}</td>
-    					<td>{{ $banner->order }}</td>
-    					<td>{{ $banner->status }}</td>
-                        <td class="text-center">@include('admin.banner.actions')</td>
-                    </tr>
+                @foreach ($banners as $key => $row)
+                    <tr class="table-light">
+                        <th colspan="5" class="fw-semibold">{{ $key }} Banners</th>
+                    </tr>  
+                    @foreach ($row as $key => $banner)
+                        <tr>
+                            <td class="pe-0" style="width: 45px;">
+                                <a href="#">
+                                    <img src="{{ $banner->image }}" height="60" alt="">
+                                </a>
+                            </td>
+        					<td>{{ $banner->title }}</td>
+        					<td>{{ $banner->order }}</td>
+        					<td>{{ $banner->status }}</td>
+                            <td class="text-center">@include('admin.banner.actions')</td>
+                        </tr>
+                    @endforeach
                 @endforeach
                 </tbody>
             </table>
