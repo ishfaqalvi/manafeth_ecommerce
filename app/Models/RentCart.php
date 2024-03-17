@@ -37,6 +37,21 @@ class RentCart extends Model implements Auditable
      */
     protected $fillable = ['customer_id','product_id','quantity','from','to'];
 
+    /**
+     * Interact with the date.
+     */
+    public function setFromAttribute($value)
+    {
+        $this->attributes['from'] = strtotime($value);
+    }
+
+    /**
+     * Interact with the date.
+     */
+    public function setToAttribute($value)
+    {
+        $this->attributes['to'] = strtotime($value);
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
