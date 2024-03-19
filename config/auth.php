@@ -43,11 +43,7 @@ return [
         'customer' => [
             'driver' => 'session',
             'provider' => 'customers',
-        ],
-        // 'firms' => [
-        //     'driver' => 'session',
-        //     'provider' => 'firms',
-        // ],
+        ]
     ],
 
     /*
@@ -75,11 +71,7 @@ return [
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
-        ],
-        // 'firms' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\SecurityFirm::class,
-        // ],
+        ]
     ],
 
     /*

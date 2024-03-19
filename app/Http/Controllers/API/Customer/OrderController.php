@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\Customer;
 use App\Http\Controllers\API\BaseController;
 
-use App\Models\Order;
+use App\Contracts\SaleInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -12,6 +12,12 @@ use Illuminate\Http\Request;
  */
 class OrderController extends BaseController
 {
+    protected $order;
+    
+    public function __construct(SaleInterface $order){
+        $this->order = $order;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +26,7 @@ class OrderController extends BaseController
     public function index()
     {
         try {
-            $data = auth()->user()->orders()->with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
+            $data = $this->order->orderList(auth()->user()->id);
             return $this->sendResponse($data, 'Orders list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -36,19 +42,10 @@ class OrderController extends BaseController
     public function store(Request $request)
     {
         try {
-            $customer = auth()->user()->id;
-            if (auth()->user()->carts()->count() == 0) {
+            if (count($this->order->cartItemList()) == 0) {
                 return $this->sendResponse('No Record Found', 'Your cart is empty.');    
             }
-            $order = auth()->user()->orders()->create($request->all());
-            foreach(auth()->user()->carts as $row){
-                $order->details()->create([
-                    'product_id'=> $row->product_id,
-                    'quantity'  => $row->quantity,
-                    'price'     => $row->product->price - $row->product->discount
-                ]);
-            }
-            $data = auth()->user()->orders()->with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
+            $data = $this->order->orderStore($request->all(), auth()->user()->id);
             return $this->sendResponse($data, 'Order created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -63,10 +60,8 @@ class OrderController extends BaseController
     public function destroy($id)
     {
         try {
-            $order = Order::find($id);
-            if ($order->status == 'Pending') {
-                $order->delete();
-                $data = auth()->user()->orders()->with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
+            if ($this->order->orderFind($id)->status == 'Pending') {
+                $data = $this->order->orderDelete($id);
                 return $this->sendResponse($data, 'Order deleted successfully.');    
             }else{
                 return $this->sendResponse('', 'You can not delete under process order.');

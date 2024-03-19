@@ -13,6 +13,7 @@ class RepositoriesServiceProvider extends ServiceProvider
     {
         $this->app->bind('App\Contracts\BannerInterface','App\Repositories\BannerRepository');
         $this->app->bind('App\Contracts\ProductInterface','App\Repositories\ProductRepository');
+        $this->app->bind('App\Contracts\SaleInterface','App\Repositories\SaleRepository');
     }
 
     /**
