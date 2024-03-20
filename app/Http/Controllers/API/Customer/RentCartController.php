@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\Customer;
 use App\Http\Controllers\API\BaseController;
 
-use App\Models\RentCart;
+use App\Contracts\RentInterface;
 use Illuminate\Http\Request;
 
 /**
@@ -12,6 +12,12 @@ use Illuminate\Http\Request;
  */
 class RentCartController extends BaseController
 {
+    protected $cart;
+    
+    public function __construct(RentInterface $cart){
+        $this->cart = $cart;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +26,7 @@ class RentCartController extends BaseController
     public function index()
     {
         try {
-            $data = auth()->user()->rentCarts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            $data = $this->cart->cartItemList();
             return $this->sendResponse($data, 'Cart Product list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -36,20 +42,10 @@ class RentCartController extends BaseController
     public function store(Request $request)
     {
         try {
-            $product = $request->product_id;
-            $customer = auth()->user()->id;
-            $checkProduct = RentCart::whereProductId($product)->whereCustomerId($customer)->first();
-            if ($checkProduct) {
+            if ($this->cart->cartCheckItem($request->product_id)) {
                 return $this->sendResponse('Record Exist', 'This product already exist in cart.');    
             }
-            RentCart::create([
-                'customer_id'=> $customer,
-                'product_id' => $product,
-                'quantity'   => $request->quantity,
-                'from'       => $request->from,
-                'to'         => $request->to,
-            ]);
-            $data = auth()->user()->rentCarts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            $data = $this->cart->cartStoreItem($request->all());
             return $this->sendResponse($data, 'Product added in cart list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -63,11 +59,10 @@ class RentCartController extends BaseController
      * @param  RentCart $rentCart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RentCart $cart)
+    public function update(Request $request,$cart)
     {
         try {
-            $cart->update($request->all());
-            $data = auth()->user()->rentCarts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            $data = $this->cart->cartUpdateItem($request->all(), $cart);
             return $this->sendResponse($data, 'Product updated from cart list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -82,8 +77,7 @@ class RentCartController extends BaseController
     public function destroy($id)
     {
         try {
-            RentCart::find($id)->delete();
-            $data = auth()->user()->rentCarts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            $data = $this->cart->cartDeleteItem($id);
             return $this->sendResponse($data, 'Product deleted from cart list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

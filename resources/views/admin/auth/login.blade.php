@@ -1,9 +1,9 @@
-@extends('auth.layout.app')
+@extends('admin.auth.layout.app')
 
 @section('page_title', 'Login')
 
 @section('page_content')
-<form class="login-form needs-validation" method="POST" action="{{ route('login') }}" novalidate>
+<form class="login-form needs-validation" method="POST" action="{{ route('admin.login') }}" novalidate>
     @csrf
     <div class="card mb-0">
         <div class="card-body">
@@ -45,7 +45,7 @@
                     <input type="checkbox" name="remember" class="form-check-input" checked>
                     <span class="form-check-label">Remember</span>
                 </label>
-                <a href="{{ route('password.request') }}" class="ms-auto">Forgot password?</a>
+                <a href="{{ route('admin.password.request') }}" class="ms-auto">Forgot password?</a>
             </div>
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary w-100">Sign in</button>

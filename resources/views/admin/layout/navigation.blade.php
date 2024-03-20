@@ -128,10 +128,10 @@
                     <i class="ph-user-circle me-2"></i>
                     My profile
                 </a>
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
                     <a 
-                        href="{{ route('logout') }}" 
+                        href="{{ route('admin.logout') }}" 
                         class="dropdown-item" 
                         onclick="event.preventDefault(); this.closest('form').submit();">
                         <i class="ph-sign-out me-2"></i>
