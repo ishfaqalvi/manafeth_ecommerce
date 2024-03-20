@@ -48,9 +48,9 @@ class RentRequestController extends BaseController
                     'from'      => $row->from,
                     'to'        => $row->to
                 ]);
+                $row->delete();
             }
-            $data = auth()->user()->rentRequests()->with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
-            return $this->sendResponse($data, 'Rent Request created successfully.');
+            return $this->sendResponse($order, 'Rent Request created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -67,8 +67,7 @@ class RentRequestController extends BaseController
             $order = RentRequest::find($id);
             if ($order->status == 'Pending') {
                 $order->delete();
-                $data = auth()->user()->rentRequests()->with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
-                return $this->sendResponse($data, 'Request deleted successfully.');    
+                return $this->sendResponse('', 'Request deleted successfully.');    
             }else{
                 return $this->sendResponse('', 'You can not delete under process request.');
             }
