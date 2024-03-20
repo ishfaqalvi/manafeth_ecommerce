@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 use App\Contracts\SaleInterface;
-use App\Models\{Cart,Order};
+use App\Models\{Cart,Order,Customer};
 
 class SaleRepository implements SaleInterface
 {
@@ -42,7 +42,7 @@ class SaleRepository implements SaleInterface
 		}else{
 			$orders = Order::with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
 		}
-		return $orders
+		return $orders;
 	}
 
 	public function orderFind($id)
@@ -52,7 +52,7 @@ class SaleRepository implements SaleInterface
 
 	public function orderStore($data, $customer_id)
 	{
-		$customer = Customer::find($customer_id)
+		$customer = Customer::find($customer_id);
 		$order = $customer->orders()->create($data);
         foreach($customer->carts as $row){
             $order->details()->create([
