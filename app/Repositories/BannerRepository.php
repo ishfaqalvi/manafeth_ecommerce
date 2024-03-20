@@ -13,7 +13,7 @@ class BannerRepository implements BannerInterface
 	}
 
 	//To view all banners data
-	public function list($filter)
+	public function list($filter = null)
 	{
 		return Banner::filter($filter)->whereStatus('Active')->get();
 	}

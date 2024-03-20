@@ -6,7 +6,7 @@ interface BannerInterface
 {
 	public function groupByList();
 
-	public function list($filter);
+	public function list($filter = null);
 
 	public function create();
 

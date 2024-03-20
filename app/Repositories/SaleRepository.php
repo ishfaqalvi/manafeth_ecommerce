@@ -60,8 +60,8 @@ class SaleRepository implements SaleInterface
                 'quantity'  => $row->quantity,
                 'price'     => $row->product->price - $row->product->discount
             ]);
+            $row->delete();
         }
-        $customer->carts()->delete();
         return $order;
 	}
 
