@@ -42,7 +42,7 @@ class OrderController extends BaseController
     public function store(Request $request)
     {
         try {
-            if (count($this->order->cartItemList()) == 0) {
+            if (count($this->order->cartItemList()) == 0) { 
                 return $this->sendResponse('No Record Found', 'Your cart is empty.');    
             }
             $data = $this->order->orderStore($request->all(), auth()->user()->id);
