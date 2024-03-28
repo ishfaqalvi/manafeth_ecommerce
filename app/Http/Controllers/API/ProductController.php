@@ -143,4 +143,17 @@ class ProductController extends BaseController
             return $this->sendException($th->getMessage());
         }
     }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function filters(Request $request)
+    {
+        try {
+            $filters = $this->product->filters($request->all());
+            return $this->sendResponse($filters, 'Product filters get successfully.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+    }
 }

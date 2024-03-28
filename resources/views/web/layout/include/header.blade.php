@@ -54,6 +54,7 @@
                 </ul>
             </div>
             <div class="dropdown d-flex align-items-center">
+                @auth('customer')
                 <img src="{{ asset('assets/web/images/user-icon.png') }}" alt="User Icon" srcset="" height="auto" width="32px"
                     class="me-2">
                 <a class="btn dropdown-toggle nav-top-text p-0 border-0" href="#" role="button"
@@ -77,6 +78,26 @@
                         </a>
                     </li>
                 </ul>
+                @else
+                <img src="{{ asset('assets/web/images/user-icon.png') }}" alt="User Icon" srcset="" height="auto" width="32px"
+                    class="me-2">
+                <a class="btn dropdown-toggle nav-top-text p-0 border-0" href="#" role="button"
+                    id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    Account
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li>
+                        <a class="dropdown-item nav-top-text" href="{{ route('web.showLoginForm') }}">
+                            Login
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item nav-top-text" href="{{ route('web.showRegisterForm') }}">
+                            Register
+                        </a>
+                    </li>
+                </ul>
+                @endauth
             </div>
         </div>
     </div>

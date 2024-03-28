@@ -158,6 +158,42 @@ select:focus {
   border: 1px solid rgba(0, 0, 0, 0.2) !important;
 }
 
+/* Validation */
+input.invalid {
+  border: 2px solid red !important;
+}
+span.error {
+  color: red !important;
+}
+input.success {
+  border: 2px solid green !important;
+}
+
+/*Overlay css strat here*/
+#overlay {
+  background: #ffffff;
+  color: #F2A82B;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  float: left;
+  text-align: center;
+  padding-top: 15%;
+  opacity: .80;
+}
+.spinner {
+  margin: 0 auto;
+  height: 64px;
+  width: 64px;
+  animation: rotate 0.8s infinite linear;
+  border: 5px solid rgba(242, 168, 43, 0.8);
+  border-right-color: transparent;
+  border-radius: 50%;
+}
+
 @media screen and (max-width: 991px) {
 
   .button {

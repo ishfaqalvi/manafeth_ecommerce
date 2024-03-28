@@ -171,6 +171,7 @@ Route::group(['namespace'=>'App\Http\Controllers\API'], function(){
     	Route::get('maintenance/special',				'maintenanceSpecial'	 );
     	Route::get('maintenance/category_wise/{id}',	'maintenanceCategoryWise');
     	Route::get('view/{id}',							'show' 		  			 );
+    	Route::get('filters',							'filters' 		  		 );
 	});
 
 	/*

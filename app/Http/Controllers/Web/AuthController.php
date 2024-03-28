@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Contracts\CustomerInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 
 class AuthController extends Controller
 {
+    protected $customer;
+    
+    public function __construct(CustomerInterface $customer){
+        $this->customer = $customer;
+    }
     /**
      * Show the application's register form.
      *
@@ -30,8 +36,7 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        Customer::create($request->all());
-        return redirect()->route('web.login')->with('success', 'Your account created successfully!');
+        return $this->customer->register($request->all());
     }
 
     /**
@@ -70,11 +75,6 @@ class AuthController extends Controller
      */
     public function checkEmail(Request $request)
     {
-        if ($request->id) {
-            $user = Customer::where('id','!=',$request->id)->where('email', $request->email)->first();
-        }else{
-            $user = Customer::where('email', $request->email)->first();
-        }
-        if($user){ echo "false"; }else{ echo "true";}
+        return $this->customer->checkEmail($request->all());
     }
 }

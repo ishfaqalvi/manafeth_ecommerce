@@ -57,4 +57,6 @@ interface ProductInterface
 	public function imageStore($data);
 
 	public function imageDelete($id);
+
+	public function filters($type = null);
 }

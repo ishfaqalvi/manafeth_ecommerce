@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -31,7 +32,7 @@ class Customer extends Authenticatable implements Auditable
 
     protected $guard = 'customers';
 
-    protected $perPage = 20;
+    protected $perPage = 20; 
 
     /**
      * Attributes that should be mass-assignable.
@@ -47,6 +48,15 @@ class Customer extends Authenticatable implements Auditable
      */
     protected $hidden = [
         'password'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime'
     ];
 
     /**

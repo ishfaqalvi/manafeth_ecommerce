@@ -39,6 +39,10 @@
                 <strong>Image:</strong>
                 <img src="{{ $category->image }}">
             </div>
+            <div class="form-group mb-3">
+                <strong>Banner:</strong>
+                <img src="{{ $category->banner }}">
+            </div>
         </div>
     </div>
 </div>

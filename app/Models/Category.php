@@ -34,7 +34,7 @@ class Category extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['name','image'];
+    protected $fillable = ['name','image','banner'];
 
     /**
      * The set attributes.
@@ -51,11 +51,35 @@ class Category extends Model implements Auditable
     }
 
     /**
+     * The set attributes.
+     *
+     * @var array
+     */
+    public function setBannerAttribute($image)
+    {
+        if ($image) {
+            $this->attributes['banner'] = uploadFile($image, 'brand', '200', '200');
+        } else {
+            unset($this->attributes['banner']);
+        }
+    }
+
+    /**
      * The get attributes.
      *
      * @var array
      */
     public function getImageAttribute($value)
+    {
+        return isset($value) ? asset($value) : '';
+    }
+
+    /**
+     * The get attributes.
+     *
+     * @var array
+     */
+    public function getBannerAttribute($value)
     {
         return isset($value) ? asset($value) : '';
     }
