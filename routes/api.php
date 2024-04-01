@@ -33,7 +33,7 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	| Protected Routes
 	|--------------------------------------------------------------------------
 	*/
-	Route::middleware('auth:sanctum')->group(function () {
+	Route::middleware('auth:sanctum,customerapi')->group(function () {
 	    /*
 	    |--------------------------------------------------------------------------
 	    | Auth Route
@@ -153,6 +153,17 @@ Route::group(['namespace'=>'App\Http\Controllers\API'], function(){
 	*/
 	Route::controller(BrandController::class)->prefix('brands')->group(function () {
     	Route::get('list',		'index');
+	});
+
+    /*
+	|--------------------------------------------------------------------------
+	| Blogs Routes
+	|--------------------------------------------------------------------------
+	*/
+	Route::controller(BlogController::class)->prefix('blogs')->group(function () {
+    	Route::get('list',		'index'  );
+        Route::get('special',	'special');
+    	Route::get('view/{id}',	'show'   );
 	});
 
 	/*

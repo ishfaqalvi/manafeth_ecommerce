@@ -32,14 +32,14 @@ class Customer extends Authenticatable implements Auditable
 
     protected $guard = 'customers';
 
-    protected $perPage = 20; 
+    protected $perPage = 20;
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['name','email','mobile_number','password','address','image','status'];
+    protected $fillable = ['name','email','mobile_number','password','email_verified_at','address','image','status'];
 
     /**
      * The attributes that should be hidden for serialization.

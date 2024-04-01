@@ -18,6 +18,7 @@
         "spatie/laravel-permission": "^5.8"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.0",
         "fakerphp/faker": "^1.9.1",
         "ibex/crud-generator": "^1.4",
         "laravel/pint": "^1.0",

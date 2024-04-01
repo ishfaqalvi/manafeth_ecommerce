@@ -55,7 +55,7 @@
             </div>
             <div class="dropdown d-flex align-items-center">
                 @auth('customer')
-                <img src="{{ asset('assets/web/images/user-icon.png') }}" alt="User Icon" srcset="" height="auto" width="32px"
+                <img src="{{ auth('customer')->user()->image }}" alt="User Icon" srcset="" height="auto" width="32px"
                     class="me-2">
                 <a class="btn dropdown-toggle nav-top-text p-0 border-0" href="#" role="button"
                     id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,7 +63,7 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <li>
-                        <a class="dropdown-item nav-top-text" href="#">
+                        <a class="dropdown-item nav-top-text" href="{{ route('profile.show') }}">
                             Profile
                         </a>
                     </li>
@@ -73,9 +73,12 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item nav-top-text" href="#">
+                        <a class="dropdown-item nav-top-text" href="{{ route('profile.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Logout
                         </a>
+                        <form id="logout-form" method="POST" action="{{ route('profile.logout') }}" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
                 </ul>
                 @else
@@ -107,7 +110,7 @@
     <div class="page-width">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid px-0">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="{{ route('home') }}">
                     <img src="{{ asset('assets/web/images/logo.png') }}" alt="" width="100%" height="auto">
                 </a>
                 <button class="header-navbar-toggle-button" type="button" data-bs-toggle="collapse"
@@ -117,10 +120,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-lg-auto text-left text-center mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link {{ request()->routeIs('home') ? 'active' : ''}}" aria-current="page" href="{{ route('home') }}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Brand</a>
+                            <a class="nav-link {{ request()->routeIs('brand.index') ? 'active' : ''}}" aria-current="page" href="{{ route('brand.index') }}">Brand</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">About us</a>
@@ -129,7 +132,7 @@
                             <a class="nav-link" aria-current="page" href="#">Contact us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Blogs</a>
+                            <a class="nav-link {{ request()->routeIs('web.blogs*') ? 'active' : ''}}" aria-current="page" href="{{ route('web.blogs.index') }}">Blogs</a>
                         </li>
                     </ul>
                     <div class="mobile-view">

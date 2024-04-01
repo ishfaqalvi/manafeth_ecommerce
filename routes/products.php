@@ -14,7 +14,7 @@ Route::controller(SaleController::class)->prefix('sale')->as('products.sale.')->
 	Route::post('store',			 'store'	 )->name('store'  	 );
 	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
 	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
-	Route::patch('update/{id}', 	 	 'update'	 )->name('update' 	 );
+	Route::patch('update/{id}', 	 'update'	 )->name('update' 	 );
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
 });
 

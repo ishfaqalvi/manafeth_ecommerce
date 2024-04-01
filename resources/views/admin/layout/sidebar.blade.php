@@ -52,8 +52,8 @@
     <ul class="nav-group-sub collapse {{ request()->is('admin/products*') ? 'show' : ''}}">
         @can('saleProducts-list')
             <li class="nav-item">
-                <a 
-                    href ="{{ route('products.sale.index') }}" 
+                <a
+                    href ="{{ route('products.sale.index') }}"
                     class="nav-link {{ request()->routeIs('products.sale*') ? 'active' : ''}}">
                     Sale
                 </a>
@@ -61,7 +61,7 @@
         @endcan
         @can('rentProducts-list')
             <li class="nav-item">
-                <a 
+                <a
                     href="{{ route('products.rent.index') }}"
                     class="nav-link {{ request()->routeIs('products.rent*') ? 'active' : ''}}">
                     Rent
@@ -70,7 +70,7 @@
         @endcan
         @can('maintenanceProducts-list')
             <li class="nav-item">
-                <a 
+                <a
                     href="{{ route('products.maintenance.index') }}"
                     class="nav-link {{ request()->routeIs('products.maintenance*') ? 'active' : ''}}">
                     Maintenance
@@ -95,7 +95,7 @@
         <span>Banners</span>
     </a>
 </li>
-@endcanany
+@endcan
 @can('brands-list')
 <li class="nav-item">
     <a href="{{ route('brands.index') }}" class="nav-link {{ request()->is('admin/brands*') ? 'active' : ''}}">
@@ -103,7 +103,15 @@
         <span>Brands</span>
     </a>
 </li>
-@endcanany
+@endcan
+@can('blogs-list')
+<li class="nav-item">
+    <a href="{{ route('blogs.index') }}" class="nav-link {{ request()->is('admin/blogs*') ? 'active' : ''}}">
+        <i class="ph-article"></i>
+        <span>Blogs</span>
+    </a>
+</li>
+@endcan
 @canany(['categories-list','categories-subList'])
 <li class="nav-item-header">
     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Categories</div>

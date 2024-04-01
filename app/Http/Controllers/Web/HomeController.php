@@ -3,30 +3,38 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Contracts\{BannerInterface,ProductInterface};
+use App\Contracts\{BlogInterface,BannerInterface,ProductInterface};
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     protected $banner;
     protected $product;
-    
+    protected $blog;
+
     public function __construct(
         BannerInterface $banner,
-        ProductInterface $product
+        ProductInterface $product,
+        BlogInterface $blog
     ){
         $this->banner = $banner;
         $this->product = $product;
+        $this->blog = $blog;
     }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $data['banners'] = $this->banner->list();
-        $data['sale'] = $this->product->saleSpecial($request->all());
-        $data['rent'] = $this->product->rentSpecial($request->all());
-        $data['maintenance'] = $this->product->maintenanceSpecial($request->all());
+        $products['sale']        = $this->product->saleSpecial($request->all());
+        $products['rent']        = $this->product->rentSpecial($request->all());
+        $products['maintenance'] = $this->product->maintenanceSpecial($request->all());
+
+        $data = [
+            'banners' => $this->banner->list(),
+            'products' => $products,
+            'blogs'    => $this->blog->specialList()
+        ];
         return view('web.home.index', compact('data'));
     }
 }

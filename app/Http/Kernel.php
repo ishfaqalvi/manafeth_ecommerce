@@ -70,5 +70,8 @@ class Kernel extends HttpKernel
         'permission'        => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission'=> \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'trim.trailing'     => \App\Http\Middleware\TrimTrailingSlashes::class,
+        'employee'          => \App\Http\Middleware\EmployeeMiddleware::class,
+        'customer'          => \App\Http\Middleware\CustomerMiddleware::class,
+        'customerapi'       => \App\Http\Middleware\CustomerApiMiddleware::class,
     ];
 }

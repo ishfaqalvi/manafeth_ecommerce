@@ -6,27 +6,31 @@ interface CustomerInterface
 {
 	public function register($data);
 
-	public function checkEmail($data);
+	public function verifyOTP($data);
 
-	public function verifiOtp($data);
+    public function verifyAccount($data);
 
-	// public function login($data);
+	public function webLogin($credentials, $email);
 
-	// public function logout();
+    public function webLogout();
 
-	// public function detail($data);
+	public function appLogin($data);
 
-	// public function find($id);
+    public function appLogout();
 
-	// public function update($data, $id);
+    public function view();
 
-	// public function forgotPassword($data, $id);
+    public function update($data, $id);
 
-	
+	public function forgotPassword($data);
 
-	// public function resetPassword($data, $id);
-	
-	// public function accountVarify($data, $id);
+	public function resetPassword($data);
 
-	// public function delete($id);
+	public function delete($id);
+
+    public function checkEmail($data);
+
+    public function verifyEmail($data);
+
+	public function checkPassword($data);
 }

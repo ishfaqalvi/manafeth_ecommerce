@@ -12,6 +12,7 @@ class RepositoriesServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind('App\Contracts\BannerInterface','App\Repositories\BannerRepository');
+        $this->app->bind('App\Contracts\BlogInterface','App\Repositories\BlogRepository');
         $this->app->bind('App\Contracts\CustomerInterface','App\Repositories\CustomerRepository');
         $this->app->bind('App\Contracts\ProductInterface','App\Repositories\ProductRepository');
         $this->app->bind('App\Contracts\SaleInterface','App\Repositories\SaleRepository');

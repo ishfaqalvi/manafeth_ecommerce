@@ -13,11 +13,10 @@ class BrandSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('brands')->insert([
-            ['name'=>'Drive Medical', 'logo'=>'images/brand/Drive-Medical.jpg'],
-            ['name'=>'Heartway',      'logo'=>'images/brand/Heartway.png'],
-            ['name'=>'Rehamo',        'logo'=>'images/brand/Rehamo.jpg'],
-            ['name'=>'Thunder',       'logo'=>'images/brand/Thunder.png']
-        ]);
+        $data = [];
+        for($i = 1; $i < 20; $i++) {
+            $data[] = ['name'=>'Brand '.$i, 'logo'=>'images/brand/brand_'.$i.'.png'];
+        }
+        DB::table('brands')->insert($data);
     }
 }

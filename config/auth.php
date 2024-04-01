@@ -40,10 +40,18 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'employee' => [
+            'driver' => 'sanctum',
+            'provider' => 'employees',
+        ],
         'customer' => [
-            'driver' => 'session',
+            'driver' => 'session', // For web
             'provider' => 'customers',
-        ]
+        ],
+        'customerapi' => [
+            'driver' => 'sanctum', // For API
+            'provider' => 'customers',
+        ],
     ],
 
     /*
@@ -68,10 +76,14 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'employees' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employee::class,
+        ],
         'customers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Customer::class,
-        ]
+        ],
     ],
 
     /*
