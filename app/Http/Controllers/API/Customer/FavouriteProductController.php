@@ -20,7 +20,7 @@ class FavouriteProductController extends BaseController
     public function index()
     {
         try {
-            $data = auth()->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->paginate();
+            $data = auth()->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
             return $this->sendResponse($data, 'Favourite Product list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -42,7 +42,7 @@ class FavouriteProductController extends BaseController
                 return $this->sendError('Record Exist', 'This product already exist in favourite list.');    
             }
             FavouriteProduct::create(['customer_id' => auth()->user()->id,'product_id' => $product]);
-            $data = auth()->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->paginate();
+            $data = auth()->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
             return $this->sendResponse($data, 'Product added in favourite list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -58,7 +58,7 @@ class FavouriteProductController extends BaseController
     {
         try {
             FavouriteProduct::find($id)->delete();
-            $data = auth()->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->paginate();
+            $data = auth()->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
             return $this->sendResponse($data, 'Product deleted from favourite list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

@@ -34,7 +34,7 @@
         <div class="card-header">
             <h5 class="mb-0">Blog</h5>
         </div>
-        <table class="table datatable-basic">
+        <table class="table">
             <thead class="thead">
                 <tr>
                     <th>No</th>
@@ -58,6 +58,9 @@
             @endforeach
             </tbody>
         </table>
+        <div class="card-body">
+            {{ $blogs->links('vendor.pagination.bootstrap-5') }}
+        </div>
     </div>
 </div>
 @endsection

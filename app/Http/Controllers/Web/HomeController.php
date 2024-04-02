@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Contracts\{BlogInterface,BannerInterface,ProductInterface};
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -31,9 +32,10 @@ class HomeController extends Controller
         $products['maintenance'] = $this->product->maintenanceSpecial($request->all());
 
         $data = [
-            'banners' => $this->banner->list(),
-            'products' => $products,
-            'blogs'    => $this->blog->specialList()
+            'banners'    => $this->banner->list(),
+            'products'   => $products,
+            'blogs'      => $this->blog->specialList(),
+            'categories' => Category::all()
         ];
         return view('web.home.index', compact('data'));
     }

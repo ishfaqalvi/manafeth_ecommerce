@@ -44,6 +44,16 @@ class Blog extends Model implements Auditable
      *
      * @var array
      */
+    public function setDateAttribute($value)
+    {
+        $this->attributes['date'] = strtotime($value);
+    }
+
+    /**
+     * The set attributes.
+     *
+     * @var array
+     */
     public function setImageAttribute($image)
     {
         if ($image) {

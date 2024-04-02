@@ -126,10 +126,10 @@
                             <a class="nav-link {{ request()->routeIs('brand.index') ? 'active' : ''}}" aria-current="page" href="{{ route('brand.index') }}">Brand</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">About us</a>
+                            <a class="nav-link {{ request()->routeIs('aboutUs*') ? 'active' : ''}}" aria-current="page" href="{{ route('aboutUs.index') }}">About us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Contact us</a>
+                            <a class="nav-link {{ request()->routeIs('web.contactUs*') ? 'active' : ''}}" aria-current="page" href="{{ route('web.contactUs.index') }}">Contact us</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('web.blogs*') ? 'active' : ''}}" aria-current="page" href="{{ route('web.blogs.index') }}">Blogs</a>

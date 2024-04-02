@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
-use App\Models\Blog;
 use Illuminate\Http\Request;
+use App\Contracts\BlogInterface;
 
 /**
  * Class BlogController
@@ -12,13 +12,14 @@ use Illuminate\Http\Request;
  */
 class BlogController extends Controller
 {
+    protected $blog;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
-    {
+    public function __construct(BlogInterface $blog){
+        $this->blog = $blog;
         $this->middleware('permission:blogs-list',  ['only' => ['index']]);
         $this->middleware('permission:blogs-view',  ['only' => ['show']]);
         $this->middleware('permission:blogs-create',['only' => ['create','store']]);
@@ -33,7 +34,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::get();
+        $blogs = $this->blog->paginationList();
 
         return view('admin.blog.index', compact('blogs'));
     }
@@ -45,7 +46,8 @@ class BlogController extends Controller
      */
     public function create()
     {
-        $blog = new Blog();
+        $blog = $this->blog->create();
+
         return view('admin.blog.create', compact('blog'));
     }
 
@@ -57,7 +59,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-       $blog = Blog::create($request->all());
+        $blog = $this->blog->store($request->all());
         return redirect()->route('blogs.index')
             ->with('success', 'Blog created successfully.');
     }
@@ -70,7 +72,7 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        $blog = Blog::find($id);
+        $blog = $this->blog->find($id);
 
         return view('admin.blog.show', compact('blog'));
     }
@@ -83,7 +85,7 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        $blog = Blog::find($id);
+        $blog = $this->blog->find($id);
 
         return view('admin.blog.edit', compact('blog'));
     }
@@ -95,9 +97,9 @@ class BlogController extends Controller
      * @param  Blog $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Blog $blog)
+    public function update(Request $request, $blog)
     {
-        $blog->update($request->all());
+        $this->blog->update($request->all(), $blog);
 
         return redirect()->route('blogs.index')
             ->with('success', 'Blog updated successfully');
@@ -110,7 +112,7 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        $blog = Blog::find($id)->delete();
+        $this->blog->delete($id);
 
         return redirect()->route('blogs.index')
             ->with('success', 'Blog deleted successfully');

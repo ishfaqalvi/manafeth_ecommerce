@@ -40,96 +40,17 @@
                 <b>Categories</b>
             </h2>
             <div class="shop-categories-slider">
+                @foreach ($data['categories'] as $category)
                 <div class="shop-categories-card d-flex flex-column align-items-center">
                     <div class="out-line">
                         <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
+                            <img src="{{ $category->image }}" alt="Shop Categories Product Image"
                                 srcset="" height="auto" width="100%">
                         </div>
                     </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
+                    <h6 class="mt-2 text-center">{{ $category->name }}</h6>
                 </div>
-                <div class="shop-categories-card d-flex flex-column align-items-center">
-                    <div class="out-line">
-                        <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
-                                srcset="" height="auto" width="100%">
-                        </div>
-                    </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
-                </div>
-                <div class="shop-categories-card d-flex flex-column align-items-center">
-                    <div class="out-line">
-                        <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
-                                srcset="" height="auto" width="100%">
-                        </div>
-                    </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
-                </div>
-                <div class="shop-categories-card d-flex flex-column align-items-center">
-                    <div class="out-line">
-                        <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
-                                srcset="" height="auto" width="100%">
-                        </div>
-                    </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
-                </div>
-                <div class="shop-categories-card d-flex flex-column align-items-center">
-                    <div class="out-line">
-                        <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
-                                srcset="" height="auto" width="100%">
-                        </div>
-                    </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
-                </div>
-                <div class="shop-categories-card d-flex flex-column align-items-center">
-                    <div class="out-line">
-                        <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
-                                srcset="" height="auto" width="100%">
-                        </div>
-                    </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
-                </div>
-                <div class="shop-categories-card d-flex flex-column align-items-center">
-                    <div class="out-line">
-                        <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
-                                srcset="" height="auto" width="100%">
-                        </div>
-                    </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
-                </div>
-                <div class="shop-categories-card d-flex flex-column align-items-center">
-                    <div class="out-line">
-                        <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
-                                srcset="" height="auto" width="100%">
-                        </div>
-                    </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
-                </div>
-                <div class="shop-categories-card d-flex flex-column align-items-center">
-                    <div class="out-line">
-                        <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
-                                srcset="" height="auto" width="100%">
-                        </div>
-                    </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
-                </div>
-                <div class="shop-categories-card d-flex flex-column align-items-center">
-                    <div class="out-line">
-                        <div class="shop-categories-card-product">
-                            <img src="{{ asset('assets/web/images/shop-categories-img.png') }}" alt="Shop Categories Product Image"
-                                srcset="" height="auto" width="100%">
-                        </div>
-                    </div>
-                    <h6 class="mt-2 text-center">Manual Wheelchair</h6>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -254,7 +175,7 @@
                         </div>
                         @endforeach
                         <div class="col-12 load-more-items text-center pt-lg-5 mt-4">
-                            <a href="http://" class="button">View All Products</a>
+                            <a href="{{ route('web.products.sale') }}" class="button">View All Products</a>
                         </div>
                     </div>
                 </div>
@@ -322,7 +243,7 @@
                             </div>
                         @endforeach
                         <div class="col-12 load-more-items text-center pt-lg-5 mt-4">
-                            <a href="http://" class="button">View All Products</a>
+                            <a href="{{ route('web.products.rent') }}" class="button">View All Products</a>
                         </div>
                     </div>
                 </div>
@@ -390,7 +311,7 @@
                         </div>
                         @endforeach
                         <div class="col-12 load-more-items text-center pt-lg-5 mt-4">
-                            <a href="http://" class="button">View All Products</a>
+                            <a href="{{ route('web.products.maintenance') }}" class="button">View All Products</a>
                         </div>
                     </div>
                 </div>
