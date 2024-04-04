@@ -33,4 +33,16 @@ interface CustomerInterface
     public function verifyEmail($data);
 
 	public function checkPassword($data);
+
+	public function addressList($id);
+
+	public function addressNew();
+
+	public function addressStore($data);
+
+	public function addressFind($id);
+
+	public function addressUpdate($data, $id);
+
+	public function addressDelete($id);
 }

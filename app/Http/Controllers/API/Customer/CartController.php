@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class CartController extends BaseController
 {
     protected $cart;
-    
+
     public function __construct(SaleInterface $cart){
         $this->cart = $cart;
     }
@@ -23,7 +23,7 @@ class CartController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
         try {
             $data = $this->cart->cartItemList();
@@ -43,7 +43,7 @@ class CartController extends BaseController
     {
         try {
             if ($this->cart->cartCheckItem($request->product_id)) {
-                return $this->sendResponse('Record Exist', 'This product already exist in cart.');    
+                return $this->sendResponse('Record Exist', 'This product already exist in cart.');
             }
             $data = $this->cart->cartStoreItem($request->all());
             return $this->sendResponse($data, 'Product added in cart list successfully.');

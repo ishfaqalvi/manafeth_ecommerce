@@ -18,8 +18,12 @@ class EmployeeMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!Auth::guard('employee')->check()) {
-
-            return response()->json(['error' => 'Unauthorized'], 401);
+            $response = [
+                'success' => true,
+                'data'    => '',
+                'message' => 'Unauthorized',
+            ];
+            return response()->json($response, 401);
         }
         return $next($request);
     }

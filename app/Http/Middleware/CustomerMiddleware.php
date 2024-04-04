@@ -19,6 +19,10 @@ class CustomerMiddleware
         if (Auth::guard('customer')->check()) {
             return $next($request);
         }
-        return redirect('web.showLoginForm');
+        if (!$request->expectsJson()) {
+            return redirect()->route('web.showLoginForm');
+        } else {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
     }
 }

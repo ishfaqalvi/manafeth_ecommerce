@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Repositories;
+
 use App\Mail\OTPMail;
-use App\Models\{Customer,Token};
 use App\Contracts\CustomerInterface;
+use App\Models\{Customer, Token, Address};
 use Illuminate\Support\Facades\{Validator,Hash,Mail, Auth};
 
 class CustomerRepository implements CustomerInterface
@@ -151,5 +151,35 @@ class CustomerRepository implements CustomerInterface
     {
         $customer = Customer::find($data['id']);
         if(!Hash::check($data['old_password'], $customer['password'])) { echo "false"; }else{ echo "true";}
+    }
+
+    public function addressList($id)
+    {
+        return Address::whereCustomerId($id)->get();
+    }
+
+    public function addressNew()
+    {
+        return new Address();
+    }
+
+    public function addressStore($data)
+    {
+        Address::create($data);
+    }
+
+    public function addressFind($id)
+    {
+        return Address::find($id);
+    }
+
+    public function addressUpdate($data, $id)
+    {
+        Address::find($id)->update($data);
+    }
+
+    public function addressDelete($id)
+    {
+        Address::find($id)->delete();
     }
 }

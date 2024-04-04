@@ -31,9 +31,6 @@
                         <div class="account-member-block-img">
                             <img src="{{ auth('customer')->user()->image }}" alt="Member Image Icon" srcset="" height="auto" width="100%">
                         </div>
-                        {{-- <a href="http://" class="d-flex align-items-center justify-content-center position-absolute bottom-0">
-                            <img src="assets/images/plus-white.png" alt="Plus Icon" srcset="" height="auto" width="auto">
-                        </a> --}}
                     </div>
                 </div>
             </div>
@@ -48,13 +45,13 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="" class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                <a href="{{ route('address.index') }}" class="account-information-sidebar-item d-flex justify-content-between align-items-center {{ request()->is('customer/address*') ? 'active' : ''}}">
                                     Address Book
                                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0" y="0" viewBox="0 0 407.436 407.436" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z" fill="#000000" opacity="1" data-original="#000000" class=""></path></g></svg>
                                 </a>
                             </li>
                             <li>
-                                <a href="" class="account-information-sidebar-item d-flex justify-content-between align-items-center">
+                                <a href="{{ route('favourite.index') }}" class="account-information-sidebar-item d-flex justify-content-between align-items-center {{ request()->is('customer/favourite*') ? 'active' : ''}}">
                                     My Wishlist
                                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" x="0" y="0" viewBox="0 0 407.436 407.436" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M112.814 0 91.566 21.178l181.946 182.54-181.946 182.54 21.248 21.178 203.055-203.718z" fill="#000000" opacity="1" data-original="#000000" class=""></path></g></svg>
                                 </a>

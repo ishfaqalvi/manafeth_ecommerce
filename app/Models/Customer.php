@@ -94,7 +94,14 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasOMany     */
+    public function addresses()
+    {
+        return $this->hasMany('App\Models\Address', 'customer_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function favouriteProducts()
     {
@@ -102,7 +109,7 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function carts()
     {
@@ -110,7 +117,7 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function orders()
     {
@@ -118,7 +125,7 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function maintenenceRequests()
     {
@@ -126,7 +133,7 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function rentCarts()
     {
@@ -134,7 +141,7 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function rentRequests()
     {

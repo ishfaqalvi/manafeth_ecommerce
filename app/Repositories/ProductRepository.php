@@ -2,8 +2,9 @@
 
 namespace App\Repositories;
 use App\Contracts\ProductInterface;
+use Auth;
 use App\Models\{
-	Brand,Product,Category,SubCategory,ProductFeature,ProductSpecification,ProductResource,ProductImage
+	Brand,Product,Category,SubCategory,ProductFeature,ProductSpecification,ProductResource,ProductImage,FavouriteProduct
 };
 
 class ProductRepository implements ProductInterface
@@ -191,5 +192,29 @@ class ProductRepository implements ProductInterface
 	            'maxPrice' => $maxPrice
 	        ]
 	    ];
+	}
+
+    //To view all favourite products
+	public function favouriteList()
+	{
+        return Auth::guard('customer')->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+	}
+
+    //To store a product favourite
+	public function favouriteStore($data)
+	{
+        $product = $data['product_id'];
+        $checkProduct = Auth::guard('customer')->user()->favouriteProducts()->whereProductId($product)->first();
+        if ($checkProduct) {
+            return false;
+        }
+        FavouriteProduct::create(['customer_id' => Auth::guard('customer')->user()->id, 'product_id' => $product]);
+        return true;
+	}
+
+	//To delete a product favourite
+	public function favouriteRemove($id)
+	{
+		return FavouriteProduct::find($id)->delete();
 	}
 }

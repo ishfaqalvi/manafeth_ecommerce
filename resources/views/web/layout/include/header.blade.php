@@ -8,7 +8,7 @@
         <div class="nav-top-right d-flex gap-5">
             <div class="desktop-view">
                 <img src="{{ asset('assets/web/images/heart.png') }}" alt="Heart Icon" srcset="" height="auto" width="auto">
-                <a href="http://" class="nav-top-text text-black">My Wishlisy</a>
+                <a href="{{ route('favourite.index') }}" class="nav-top-text text-black">My Wishlist</a>
             </div>
             <div class="dropdown d-flex align-items-center desktop-view">
                 <a class="btn dropdown-toggle nav-top-text text-black p-0 border-0" href="#" role="button"

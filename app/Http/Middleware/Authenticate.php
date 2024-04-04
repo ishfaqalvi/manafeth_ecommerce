@@ -16,6 +16,13 @@ class Authenticate extends Middleware
     {
         if (! $request->expectsJson()) {
             return route('admin.showLoginForm');
+        } else {
+            $response = [
+                'success' => true,
+                'data'    => '',
+                'message' => 'Unauthorized',
+            ];
+            return response()->json($response, 401);
         }
     }
 }

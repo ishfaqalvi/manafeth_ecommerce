@@ -120,17 +120,17 @@
                         @foreach($data['products']['sale'] as $product)
                         <div class="col-lg-3 col-md-4 col-6">
                             <div class="product-card position-relative">
-                                <div
-                                    class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
-                                    <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset="" width="auto"
-                                        height="auto">
+                                <div class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
+                                    <a href="javascript:void(0)" class="add-to-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                                        <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset="" width="auto" height="auto">
+                                    </a>
                                 </div>
-                                <a href="http://">
+                                <a href="{{ route('web.products.show', $product->id) }}">
                                     <img src="{{ $product->thumbnail }}" alt="Product Image" srcset="" width="100%" height="auto">
                                 </a>
                                 <div class="product-card-body">
                                     <h2 class="m-0 product-card-title">
-                                        <a href="http://" class="text-black">
+                                        <a href="{{ route('web.products.show', $product->id) }}" class="text-black">
                                             {{ $product->name }} <br>{{ $product->model }}
                                         </a>
                                     </h2>
@@ -188,17 +188,17 @@
                         @foreach($data['products']['rent'] as $product)
                             <div class="col-lg-3 col-md-4 col-6">
                                 <div class="product-card position-relative">
-                                    <div
-                                        class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
-                                        <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset="" width="auto"
-                                            height="auto">
+                                    <div class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
+                                        <a href="javascript:void(0)" class="add-to-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                                            <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset="" width="auto" height="auto">
+                                        </a>
                                     </div>
-                                    <a href="http://">
+                                    <a href="{{ route('web.products.show', $product->id) }}">
                                         <img src="{{ $product->thumbnail }}" alt="Product Image" srcset="" width="100%" height="auto">
                                     </a>
                                     <div class="product-card-body">
                                         <h2 class="m-0 product-card-title">
-                                            <a href="http://" class="text-black">
+                                            <a href="{{ route('web.products.show', $product->id) }}" class="text-black">
                                                 {{ $product->name }} <br>{{ $product->model }}
                                             </a>
                                         </h2>
@@ -256,17 +256,17 @@
                         @foreach($data['products']['maintenance'] as $product)
                         <div class="col-lg-3 col-md-4 col-6">
                             <div class="product-card position-relative">
-                                <div
-                                    class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
-                                    <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset="" width="auto"
-                                        height="auto">
+                                <div class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
+                                    <a href="javascript:void(0)" class="add-to-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                                        <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset="" width="auto" height="auto">
+                                    </a>
                                 </div>
-                                <a href="http://">
+                                <a href="{{ route('web.products.show', $product->id) }}">
                                     <img src="{{ $product->thumbnail }}" alt="Product Image" srcset="" width="100%" height="auto">
                                 </a>
                                 <div class="product-card-body">
                                     <h2 class="m-0 product-card-title">
-                                        <a href="http://" class="text-black">
+                                        <a href="{{ route('web.products.show', $product->id) }}" class="text-black">
                                             {{ $product->name }} <br>{{ $product->model }}
                                         </a>
                                     </h2>

@@ -46,6 +46,18 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	        Route::delete('delete/{id}',    'destroy');
 	    });
 
+        /*
+        |--------------------------------------------------------------------------
+        | Address Route
+        |--------------------------------------------------------------------------
+        */
+        Route::controller(AddressController::class)->prefix('address')->as('address.')->group(function () {
+            Route::get('list',			    'index'  )->name('index' );
+            Route::post('store',		    'store'  )->name('store' );
+            Route::post('update',	        'update' )->name('update');
+            Route::delete('delete/{id}',    'destroy')->name('delete');
+        });
+
 	    /*
 	    |--------------------------------------------------------------------------
 	    | Wishlist Route

@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\API\Customer;
-use App\Http\Controllers\API\BaseController;
-
-use App\Models\FavouriteProduct;
 use Illuminate\Http\Request;
+
+use App\Contracts\ProductInterface;
+use App\Http\Controllers\API\BaseController;
 
 /**
  * Class FavouriteProductController
@@ -12,6 +12,12 @@ use Illuminate\Http\Request;
  */
 class FavouriteProductController extends BaseController
 {
+    protected $product;
+
+    public function __construct(ProductInterface $product){
+        $this->product = $product;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +26,7 @@ class FavouriteProductController extends BaseController
     public function index()
     {
         try {
-            $data = auth()->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
-            return $this->sendResponse($data, 'Favourite Product list get successfully.');
+            return $this->sendResponse($this->product->favouriteList(), 'Favourite Product list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -36,14 +41,11 @@ class FavouriteProductController extends BaseController
     public function store(Request $request)
     {
         try {
-            $product = $request->product_id;
-            $checkProduct = auth()->user()->favouriteProducts()->whereProductId($product)->first();
-            if ($checkProduct) {
-                return $this->sendError('Record Exist', 'This product already exist in favourite list.');    
+            $responce = $this->product->favouriteStore($request->all());
+            if ($responce = false) {
+                return $this->sendError('Record Exist', 'This product already exist in favourite list.');
             }
-            FavouriteProduct::create(['customer_id' => auth()->user()->id,'product_id' => $product]);
-            $data = auth()->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
-            return $this->sendResponse($data, 'Product added in favourite list successfully.');
+            return $this->sendResponse($this->product->favouriteList(), 'Product added in favourite list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -57,9 +59,8 @@ class FavouriteProductController extends BaseController
     public function destroy($id)
     {
         try {
-            FavouriteProduct::find($id)->delete();
-            $data = auth()->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
-            return $this->sendResponse($data, 'Product deleted from favourite list successfully.');
+            $this->product->favouriteRemove();
+            return $this->sendResponse($this->product->favouriteList(), 'Product deleted from favourite list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }

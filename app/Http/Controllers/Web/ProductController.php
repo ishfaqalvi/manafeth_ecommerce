@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 class ProductController extends Controller
 {
     protected $product;
-    
+
     public function __construct(ProductInterface $product)
     {
         $this->product = $product;
@@ -41,13 +41,13 @@ class ProductController extends Controller
         $products = $this->product->maintenanceProductList($request->all());
         return view('web.product.sale', compact('products'));
     }
-    
+
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        $product = $this->product->find($id);
+        $product = $this->product->show($id);
         return view('web.product.show', compact('product'));
     }
 }
