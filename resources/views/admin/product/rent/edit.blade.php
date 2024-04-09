@@ -133,22 +133,22 @@
             sub_category_list(id, 0);
         });
         function sub_category_list(id,sub_category_id){
-            $('select[name=sub_category_id]').html('<option>--Select--</option>');
+            $('select[name=sub_category_id]').html('<option value="">--Select--</option>');
             $('select[name=sub_category_id]').attr('disabled',false);
             $.get('/admin/categories/sub-categories', {id: id}).done(function (result) {
                 let data = JSON.parse(result);
                 $.each(data, function (i, val) {
                     if(val.id == sub_category_id){
-                        $('select[name=sub_category_id]').append($('<option>', 
+                        $('select[name=sub_category_id]').append($('<option>',
                             {selected : 'selected', value : val.id, text : val.name}
                         ));
                     }else{
-                        $('select[name=sub_category_id]').append($('<option>', 
+                        $('select[name=sub_category_id]').append($('<option>',
                             {value : val.id,  text : val.name}
                         ));
                     }
                 });
-            }); 
+            });
         }
         $('.editFeatureRecord').click(function(){
             $('#edit-id').val($(this).data('id'));

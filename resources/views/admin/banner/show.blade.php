@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    {{ $banner->name ?? "{{ __('Show') Banner" }}
+    {{ $banner->title ?? "Show Banner" }}
 @endsection
 
 @section('header')
@@ -31,24 +31,22 @@
             <h5 class="mb-0">{{ __('Show') }} Banner</h5>
         </div>
         <div class="card-body">
-            
-                        <div class="form-group mb-3">
-                            <strong>Title:</strong>
-                            {{ $banner->title }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Image:</strong>
-                            {{ $banner->image }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Order:</strong>
-                            {{ $banner->order }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Status:</strong>
-                            {{ $banner->status }}
-                        </div>
-
+            <div class="form-group mb-3">
+                <strong>Title:</strong>
+                {{ $banner->title }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Image:</strong>
+                <img src="{{ $banner->image }}" width="100%">
+            </div>
+            <div class="form-group mb-3">
+                <strong>Order:</strong>
+                {{ $banner->order }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Status:</strong>
+                {{ $banner->status }}
+            </div>
         </div>
     </div>
 </div>

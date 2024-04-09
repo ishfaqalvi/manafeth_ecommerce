@@ -9,6 +9,12 @@ use App\Models\{
 
 class ProductRepository implements ProductInterface
 {
+    //To view all sale products data
+    public function saleAdminList($filter)
+    {
+        return Product::filter($filter)->whereType('Sale')->with(['brand','category','subCategory'])->paginate();
+    }
+
 	//To view all sale products data
 	public function saleProductList($filter)
 	{
@@ -33,6 +39,12 @@ class ProductRepository implements ProductInterface
 		return Product::filter($filter)->whereStatus('Publish')->whereType('Rent')->with(['brand','category','subCategory'])->paginate();
 	}
 
+    //To view all rent products data
+	public function rentAdminList($filter)
+	{
+		return Product::filter($filter)->whereType('Rent')->with(['brand','category','subCategory'])->paginate();
+	}
+
 	//To view special rent products data
 	public function rentSpecial($filter)
 	{
@@ -49,6 +61,12 @@ class ProductRepository implements ProductInterface
 	public function maintenanceProductList($filter)
 	{
 		return Product::filter($filter)->whereStatus('Publish')->whereType('Maintenance')->with(['brand','category','subCategory'])->paginate();
+	}
+
+    //To view all maintence products data
+	public function maintenanceAdminList($filter)
+	{
+		return Product::filter($filter)->whereType('Maintenance')->with(['brand','category','subCategory'])->paginate();
 	}
 
 	//To view special maintence products data
@@ -195,9 +213,9 @@ class ProductRepository implements ProductInterface
 	}
 
     //To view all favourite products
-	public function favouriteList()
+	public function favouriteList($guard)
 	{
-        return Auth::guard('customer')->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+        return Auth::guard($guard)->user()->favouriteProducts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
 	}
 
     //To store a product favourite

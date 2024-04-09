@@ -26,7 +26,7 @@ class FavouriteProductController extends BaseController
     public function index()
     {
         try {
-            return $this->sendResponse($this->product->favouriteList(), 'Favourite Product list get successfully.');
+            return $this->sendResponse($this->product->favouriteList('customerapi'), 'Favourite Product list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }

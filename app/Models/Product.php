@@ -112,8 +112,8 @@ class Product extends Model implements Auditable
         if (isset($request['model'])) {
             $query->whereModel($request['model']);
         }
-        if (isset($request['model'])) {
-            $query->whereModel($request['model']);
+        if (isset($request['status'])) {
+            $query->whereStatus($request['status']);
         }
         if (isset($request['search'])) {
             $query->where('name', 'like', '%'.$request['search'].'%')
@@ -129,7 +129,7 @@ class Product extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Brand', 'id', 'brand_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -137,7 +137,7 @@ class Product extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Category', 'id', 'category_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

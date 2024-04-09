@@ -4,17 +4,23 @@ namespace App\Contracts;
 
 interface ProductInterface
 {
+	public function saleAdminList($filter);
+
 	public function saleProductList($filter);
 
 	public function saleSpecial($filter);
 
 	public function saleCategoryWise($id);
 
+	public function rentAdminList($filter);
+
 	public function rentProductList($filter);
 
 	public function rentSpecial($filter);
 
 	public function rentCategoryWise($id);
+
+	public function maintenanceAdminList($filter);
 
 	public function maintenanceProductList($filter);
 
@@ -60,7 +66,7 @@ interface ProductInterface
 
 	public function filters($type = null);
 
-    public function favouriteList();
+    public function favouriteList($guard);
 
     public function favouriteStore($data);
 

@@ -25,7 +25,7 @@
     </div>
     <div class="form-group col-lg-6 mb-3">
         {{ Form::label('image') }}
-        {{ Form::file('image', ['class' => 'form-control dropify' . ($errors->has('image') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','data-default-file' => $banner->image, 'data-height' => '200', isset($banner->image) ? '' : 'required']) }}
+        {{ Form::file('image', ['class' => 'form-control dropify' . ($errors->has('image') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','data-default-file' => $banner->image, 'data-height' => '200', empty($banner->image) ? 'required' : '']) }}
         {!! $errors->first('image', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="col-md-12 d-flex justify-content-end align-items-center mt-3">

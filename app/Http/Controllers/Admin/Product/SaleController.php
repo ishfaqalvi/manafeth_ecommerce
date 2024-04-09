@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class SaleController extends Controller
 {
     protected $product;
-    
+
     public function __construct(ProductInterface $product)
     {
         $this->product = $product;
@@ -26,10 +26,10 @@ class SaleController extends Controller
      */
     public function index(Request $request)
     {
-        $products = $this->product->saleProductList($request->all());
+        $products = $this->product->saleAdminList($request->all());
         $request->method() == 'POST' ? $userRequest = $request : $userRequest = null;
 
-        return view('admin.product.sale.index', compact('products','userRequest'));   
+        return view('admin.product.sale.index', compact('products','userRequest'));
     }
 
     /**
@@ -47,7 +47,7 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $product = $this->product->store($request->all());
-        return redirect()->route('products.sale.index')
+        return redirect()->route('products.maintenance.edit', $product->id)
             ->with('success', 'Product created successfully.');
     }
 

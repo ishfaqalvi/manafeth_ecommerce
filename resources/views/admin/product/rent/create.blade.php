@@ -140,7 +140,7 @@
         });
         $('select[name=category_id]').change(function () {
             let id = $(this).val();
-            $('select[name=sub_category_id]').html('<option>--Select--</option>');
+            $('select[name=sub_category_id]').html('<option value="">--Select--</option>');
             $('select[name=sub_category_id]').attr('disabled',false);
             $.get('/admin/categories/sub-categories', {id: id}).done(function (result) {
                 let data = JSON.parse(result);

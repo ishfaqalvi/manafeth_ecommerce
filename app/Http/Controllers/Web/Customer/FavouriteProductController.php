@@ -25,7 +25,7 @@ class FavouriteProductController extends Controller
      */
     public function index()
     {
-        $favouriteProducts = $this->product->favouriteList();
+        $favouriteProducts = $this->product->favouriteList('customer');
         return view('web.customer.favourite.index', compact('favouriteProducts'));
     }
 

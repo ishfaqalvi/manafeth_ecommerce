@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class BannerController extends Controller
 {
     protected $banner;
-    
+
     public function __construct(BannerInterface $banner){
         $this->banner = $banner;
 
@@ -94,7 +94,7 @@ class BannerController extends Controller
      */
     public function update(Request $request, $banner)
     {
-        $banner->update($request->all(), $banner);
+        $this->banner->update($request->all(), $banner);
 
         return redirect()->route('banners.index')->with('success', 'Banner updated successfully');
     }
