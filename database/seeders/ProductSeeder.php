@@ -27,7 +27,7 @@ class ProductSeeder extends Seeder
                     'engine_number' => "EN-{$type}-{$i}",
                     'model' => "{$type}Model{$i}",
                     'description' => "Description for {$type} Product {$i}",
-                    'detail' => 'Thunder mobility now is approaching you with something unique that is advantageous and favorable. Power wheelchairs launched by the company are now providing the client a chance to be independent. Disabled people are no more dependent on others. We have manufactured these powered wheelchairs just for your relief.',
+                    'features' => '<p>Thunder mobility now is approaching you with something unique that is advantageous and favorable. <strong>Power wheelchairs</strong> launched by the company are now providing the client a chance to be independent. Disabled people are no more dependent on others. We have manufactured these powered wheelchairs just for your relief.</p>',
                     'thumbnail' => 'images/product/p1.png',
                     'quantity' => 10,
                     'price' => 1000 * $i,

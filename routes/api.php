@@ -178,6 +178,16 @@ Route::group(['namespace'=>'App\Http\Controllers\API'], function(){
     	Route::get('view/{id}',	'show'   );
 	});
 
+    /*
+	|--------------------------------------------------------------------------
+	| Top Searches Routes
+	|--------------------------------------------------------------------------
+	*/
+	Route::controller(TopSearchController::class)->prefix('top-searches')->group(function () {
+    	Route::get('list',		'index');
+        Route::post('create',	'store');
+	});
+
 	/*
 	|--------------------------------------------------------------------------
 	| Products Routes

@@ -20,8 +20,6 @@ return new class extends Migration
             $table->string('serial_number');
             $table->string('engine_number');
             $table->string('model');
-            $table->text('description');
-            $table->text('detail')->nullable();
             $table->text('thumbnail');
             $table->integer('quantity');
             $table->bigInteger('price');
@@ -29,6 +27,8 @@ return new class extends Migration
             $table->enum('type',['Rent','Sale','Maintenance']);
             $table->string('special')->nullable();
             $table->enum('status',['Publish','Unpublish'])->default('Publish');
+            $table->text('description');
+            $table->text('features')->nullable();
             $table->timestamps();
         });
     }

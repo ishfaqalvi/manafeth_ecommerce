@@ -42,12 +42,6 @@ interface ProductInterface
 
 	public function delete($id);
 
-	public function featureStore($data);
-
-	public function featureUpdate($data);
-
-	public function featureDelete($id);
-
 	public function specificationStore($data);
 
 	public function specificationUpdate($data);

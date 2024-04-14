@@ -84,7 +84,7 @@ class ProductRepository implements ProductInterface
 	//To view category wise maintence products data
 	public function viewDetail($id)
 	{
-		return Product::with(['brand','category','subCategory','features','specifications','resources','images'])->find($id);
+		return Product::with(['brand','category','subCategory','specifications','resources','images'])->find($id);
 	}
 
 	//To create a new product
@@ -121,24 +121,6 @@ class ProductRepository implements ProductInterface
 	public function delete($id)
 	{
 		return Product::find($id)->delete();
-	}
-
-	//To store a product feature
-	public function featureStore($data)
-	{
-		return ProductFeature::create($data);
-	}
-
-	//To update a product feature
-	public function featureUpdate($data)
-	{
-		return ProductFeature::find($data['id'])->update($data);
-	}
-
-	//To delete a product feature
-	public function featureDelete($id)
-	{
-		return ProductFeature::find($id)->delete();
 	}
 
 	//To store a product specification

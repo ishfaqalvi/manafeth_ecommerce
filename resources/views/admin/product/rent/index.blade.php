@@ -13,12 +13,6 @@
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <button class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill me-2 collapsed" data-bs-toggle="collapse" data-bs-target="#filters" aria-expanded="true">
-                <span class="btn-labeled-icon bg-primary text-white rounded-pill">
-                    <i class="ph-funnel"></i>
-                </span>
-                Filter
-            </button>
             @can('rentProducts-create')
             <a href="{{ route('products.rent.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
@@ -34,7 +28,7 @@
 
 @section('content')
 <div class="col-sm-12">
-    <div class="card collapse {{ !is_null($userRequest) ? 'show' : ''}}" id="filters">
+    <div class="card">
         <div class="card-body">
             <form action="{{route('products.rent.filter')}}" method="post">
                 @csrf
@@ -69,7 +63,7 @@
                         </td>
                         <td>
                             <a href="#" class="d-block fw-semibold">
-                                {{ Str::limit($product->name, 30) }} 
+                                {{ Str::limit($product->name, 30) }}
                             </a>
                             <div class="d-inline-flex align-items-center text-muted fs-sm">
                                 <span class="bg-secondary rounded-pill p-1 me-1"></span>

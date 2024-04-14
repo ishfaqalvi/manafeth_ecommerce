@@ -50,10 +50,6 @@
             {{ Form::label('special','Home Top Product') }}
             {{ Form::select('special', ['Yes' => 'Yes', 'No' => 'No'], $product->special, ['class' => 'form-control form-select' . ($errors->has('special') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
         </div>
-        <div class="form-group col-lg-12 mb-3">
-            {{ Form::label('description') }}
-            {{ Form::text('description', $product->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description','required']) }}
-        </div>
     </div>
     <div class="row">
         <div class="form-group col-lg-6 mb-3">
@@ -61,8 +57,12 @@
             {{ Form::file('thumbnail', ['class' => 'form-control dropify' . ($errors->has('thumbnail') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','data-default-file' => $product->thumbnail, isset($product->thumbnail) ? '' : 'required','data-height' => '225']) }}
         </div>
         <div class="form-group col-lg-6 mb-3">
-            {{ Form::label('detail') }}
-            {{ Form::textarea('detail', $product->detail, ['class' => 'form-control' . ($errors->has('detail') ? ' is-invalid' : ''), 'placeholder' => 'Detail','required']) }}
+            {{ Form::label('description') }}
+            {{ Form::textarea('description', $product->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description','required']) }}
+        </div>
+        <div class="form-group col-lg-12 mb-3">
+            {{ Form::label('features') }}
+            {{ Form::textarea('features', $product->features, ['class' => 'form-control' . ($errors->has('features') ? ' is-invalid' : ''), 'placeholder' => 'Features', 'id'=>'ckeditor']) }}
         </div>
         <div class="col-md-12 d-flex justify-content-end align-items-center mt-3">
             <button type="submit" class="btn btn-primary ms-3">

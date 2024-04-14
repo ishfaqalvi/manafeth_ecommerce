@@ -14,7 +14,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property $sub_category_id
  * @property $name
  * @property $description
- * @property $detail
+ * @property $features
  * @property $thumbnail
  * @property $quantity
  * @property $price
@@ -62,7 +62,7 @@ class Product extends Model implements Auditable
         'special',
         'status',
         'description',
-        'detail'
+        'features'
     ];
 
     /**
@@ -144,14 +144,6 @@ class Product extends Model implements Auditable
     public function subCategory()
     {
         return $this->hasOne('App\Models\SubCategory', 'id', 'sub_category_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function features()
-    {
-        return $this->hasMany('App\Models\ProductFeature', 'product_id', 'id');
     }
 
     /**

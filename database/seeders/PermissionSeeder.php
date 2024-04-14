@@ -58,11 +58,6 @@ class PermissionSeeder extends Seeder
             'maintenanceProducts-edit',
             'maintenanceProducts-delete',
 
-            'productFeatures-list',
-            'productFeatures-create',
-            'productFeatures-edit',
-            'productFeatures-delete',
-
             'productSpecification-list',
             'productSpecification-create',
             'productSpecification-edit',
@@ -94,6 +89,12 @@ class PermissionSeeder extends Seeder
             'blogs-create',
             'blogs-edit',
             'blogs-delete',
+
+            'topSearches-list',
+            'topSearches-view',
+            'topSearches-create',
+            'topSearches-edit',
+            'topSearches-delete',
 
             'categories-list',
             'categories-view',

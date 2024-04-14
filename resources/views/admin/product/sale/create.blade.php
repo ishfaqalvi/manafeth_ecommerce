@@ -83,10 +83,6 @@
                         {{ Form::label('special','Home Top Product') }}
                         {{ Form::select('special', ['Yes' => 'Yes', 'No' => 'No'], $product->special, ['class' => 'form-control form-select' . ($errors->has('special') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
                     </div>
-                    <div class="form-group col-lg-12 mb-3">
-                        {{ Form::label('description') }}
-                        {{ Form::text('description', $product->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description','required']) }}
-                    </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-lg-6 mb-3">
@@ -94,8 +90,12 @@
                         {{ Form::file('thumbnail', ['class' => 'form-control dropify' . ($errors->has('thumbnail') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','data-default-file' => $product->thumbnail, isset($product->thumbnail) ? '' : 'required','data-height' => '225']) }}
                     </div>
                     <div class="form-group col-lg-6 mb-3">
-                        {{ Form::label('detail') }}
-                        {{ Form::textarea('detail', $product->detail, ['class' => 'form-control' . ($errors->has('detail') ? ' is-invalid' : ''), 'placeholder' => 'Detail','required']) }}
+                        {{ Form::label('description') }}
+                        {{ Form::textarea('description', $product->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description','required']) }}
+                    </div>
+                    <div class="form-group col-lg-12 mb-3">
+                        {{ Form::label('features') }}
+                        {{ Form::textarea('features', $product->features, ['class' => 'form-control' . ($errors->has('features') ? ' is-invalid' : ''), 'placeholder' => 'Features', 'id'=>'ckeditor']) }}
                     </div>
                     <div class="col-md-12 d-flex justify-content-end align-items-center mt-3">
                         <button type="submit" class="btn btn-primary ms-3">
@@ -149,6 +149,19 @@
                 })
             });
         });
+        ClassicEditor.create(document.querySelector('#ckeditor'), {
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                ]
+            }
+        }).catch(console.error);
     });
 </script>
 @endsection

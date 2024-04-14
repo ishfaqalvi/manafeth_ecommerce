@@ -41,8 +41,6 @@
     </a>
 </li>
 @endcan
-
-
 @canany(['saleProducts-list','rentProducts-list','maintenanceProducts-list'])
 <li class="nav-item nav-item-submenu {{ request()->is('admin/products*') ? 'nav-item-open' : ''}}">
     <a href="#" class="nav-link">
@@ -109,6 +107,14 @@
     <a href="{{ route('blogs.index') }}" class="nav-link {{ request()->is('admin/blogs*') ? 'active' : ''}}">
         <i class="ph-article"></i>
         <span>Blogs</span>
+    </a>
+</li>
+@endcan
+@can('topSearches-list')
+<li class="nav-item">
+    <a href="{{ route('top-searches.index') }}" class="nav-link {{ request()->is('admin/top-searches*') ? 'active' : ''}}">
+        <i class="ph-file-search"></i>
+        <span>Top Searches</span>
     </a>
 </li>
 @endcan
