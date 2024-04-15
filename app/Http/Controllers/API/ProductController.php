@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ProductController extends BaseController
 {
     protected $product;
-    
+
     public function __construct(ProductInterface $product){
         $this->product = $product;
     }
@@ -150,7 +150,7 @@ class ProductController extends BaseController
     public function filters(Request $request)
     {
         try {
-            $filters = $this->product->filters($request->all());
+            $filters = $this->product->filters($request->type, $request->category_id, $request->sub_category_id);
             return $this->sendResponse($filters, 'Product filters get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

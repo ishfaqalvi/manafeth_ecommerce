@@ -69,4 +69,12 @@ class SubCategory extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Category', 'id', 'category_id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product', 'sub_category_id', 'id');
+    }
 }

@@ -91,4 +91,12 @@ class Category extends Model implements Auditable
     {
         return $this->hasMany('App\Models\SubCategory', 'category_id', 'id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product', 'category_id', 'id');
+    }
 }

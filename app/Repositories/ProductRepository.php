@@ -172,27 +172,73 @@ class ProductRepository implements ProductInterface
 	}
 
 	//To get filters of a products
-	public function filters($type = null)
-	{
-	    $query = Product::query();
+	// public function filters($type = null)
+	// {
+	//     $query = Product::query();
 
-	    if (!empty($type)) {
-	        $query->where('type', $type);
-	    }
+	//     if (!empty($type)) {
+	//         $query->where('type', $type);
+	//     }
 
-	    $minPrice = $query->min('price');
-	    $maxPrice = $query->max('price');
+	//     $minPrice = $query->min('price');
+	//     $maxPrice = $query->max('price');
 
-	    return [
-	        'categories'      => Category::get(['id','name']),
-	        'sub_categories'  => SubCategory::get(['id','name']),
-	        'brands'          => Brand::get(['id','name']),
-	        'products'        => [
-	            'minPrice' => $minPrice,
-	            'maxPrice' => $maxPrice
-	        ]
-	    ];
-	}
+	//     return [
+	//         'categories'      => Category::get(['id','name']),
+	//         'sub_categories'  => SubCategory::get(['id','name']),
+	//         'brands'          => Brand::get(['id','name']),
+	//         'products'        => [
+	//             'minPrice' => $minPrice,
+	//             'maxPrice' => $maxPrice
+	//         ]
+	//     ];
+	// }
+    public function filters($type = null, $categoryId = null, $subCategoryId = null)
+    {
+        $query = Product::query();
+
+        if (!empty($type)) {
+            $query->where('type', $type);
+        }
+
+        if (!empty($categoryId)) {
+            $query->where('category_id', $categoryId);
+        }
+
+        if (!empty($subCategoryId)) {
+            $query->where('sub_category_id', $subCategoryId);
+        }
+
+        $minPrice = $query->min('price');
+        $maxPrice = $query->max('price');
+
+        $categories = Category::get(['id', 'name']);
+        $subCategories = SubCategory::get(['id', 'name']);
+        $brands = Brand::get(['id', 'name']);
+
+        if (!empty($categoryId)) {
+            $subCategories = SubCategory::where('category_id', $categoryId)->get(['id', 'name']);
+            $brands = Brand::whereHas('products', function ($query) use ($categoryId) {
+                $query->where('category_id', $categoryId);
+            })->get(['id', 'name']);
+        }
+
+        if (!empty($subCategoryId)) {
+            $brands = Brand::whereHas('products', function ($query) use ($subCategoryId) {
+                $query->where('sub_category_id', $subCategoryId);
+            })->get(['id', 'name']);
+        }
+
+        return [
+            'categories'     => $categories,
+            'sub_categories' => $subCategories,
+            'brands'         => $brands,
+            'products'       => [
+                'minPrice' => $minPrice,
+                'maxPrice' => $maxPrice
+            ]
+        ];
+    }
 
     //To view all favourite products
 	public function favouriteList($guard)

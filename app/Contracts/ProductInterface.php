@@ -58,7 +58,7 @@ interface ProductInterface
 
 	public function imageDelete($id);
 
-	public function filters($type = null);
+	public function filters($type = null, $categoryId = null, $subCategoryId = null);
 
     public function favouriteList($guard);
 

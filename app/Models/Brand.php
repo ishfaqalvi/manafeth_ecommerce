@@ -66,4 +66,12 @@ class Brand extends Model implements Auditable
     {
         return isset($value) ? asset($value) : '';
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function products()
+    {
+        return $this->hasMany('App\Models\Product', 'brand_id', 'id');
+    }
 }
