@@ -20,15 +20,15 @@
         </div>
         <div class="form-group col-lg-4 mb-3">
             {{ Form::label('serial_number') }}
-            {{ Form::text('serial_number', $product->serial_number, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number','required']) }}
+            {{ Form::text('serial_number', $product->serial_number, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number']) }}
         </div>
         <div class="form-group col-lg-4 mb-3">
             {{ Form::label('engine_number') }}
-            {{ Form::text('engine_number', $product->engine_number, ['class' => 'form-control' . ($errors->has('engine_number') ? ' is-invalid' : ''), 'placeholder' => 'Engine Number','required']) }}
+            {{ Form::text('engine_number', $product->engine_number, ['class' => 'form-control' . ($errors->has('engine_number') ? ' is-invalid' : ''), 'placeholder' => 'Engine Number']) }}
         </div>
         <div class="form-group col-lg-4 mb-3">
             {{ Form::label('model') }}
-            {{ Form::text('model', $product->model, ['class' => 'form-control' . ($errors->has('model') ? ' is-invalid' : ''), 'placeholder' => 'Model Number','required']) }}
+            {{ Form::text('model', $product->model, ['class' => 'form-control' . ($errors->has('model') ? ' is-invalid' : ''), 'placeholder' => 'Model Number']) }}
         </div>
         <div class="form-group col-lg-4 mb-3">
             {{ Form::label('quantity') }}
@@ -52,17 +52,17 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group col-lg-6 mb-3">
+        <div class="form-group col-lg-12 mb-3">
             {{ Form::label('thumbnail') }}
             {{ Form::file('thumbnail', ['class' => 'form-control dropify' . ($errors->has('thumbnail') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','data-default-file' => $product->thumbnail, isset($product->thumbnail) ? '' : 'required','data-height' => '225']) }}
         </div>
-        <div class="form-group col-lg-6 mb-3">
-            {{ Form::label('description') }}
-            {{ Form::textarea('description', $product->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description','required']) }}
-        </div>
         <div class="form-group col-lg-12 mb-3">
             {{ Form::label('features') }}
-            {{ Form::textarea('features', $product->features, ['class' => 'form-control' . ($errors->has('features') ? ' is-invalid' : ''), 'placeholder' => 'Features', 'id'=>'ckeditor']) }}
+            {{ Form::textarea('features', $product->features, ['class' => 'form-control' . ($errors->has('features') ? ' is-invalid' : ''), 'placeholder' => 'Features', 'id'=>'ckeditorFeatures']) }}
+        </div>
+        <div class="form-group col-lg-12 mb-3">
+            {{ Form::label('description') }}
+            {{ Form::textarea('description', $product->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description', 'id'=>'ckeditorDescription']) }}
         </div>
         <div class="col-md-12 d-flex justify-content-end align-items-center mt-3">
             <button type="submit" class="btn btn-primary ms-3">

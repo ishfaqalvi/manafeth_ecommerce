@@ -53,15 +53,15 @@
                     </div>
                     <div class="form-group col-lg-4 mb-3">
                         {{ Form::label('serial_number') }}
-                        {{ Form::text('serial_number', $product->serial_number, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number','required']) }}
+                        {{ Form::text('serial_number', $product->serial_number, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number']) }}
                     </div>
                     <div class="form-group col-lg-4 mb-3">
                         {{ Form::label('engine_number') }}
-                        {{ Form::text('engine_number', $product->engine_number, ['class' => 'form-control' . ($errors->has('engine_number') ? ' is-invalid' : ''), 'placeholder' => 'Engine Number','required']) }}
+                        {{ Form::text('engine_number', $product->engine_number, ['class' => 'form-control' . ($errors->has('engine_number') ? ' is-invalid' : ''), 'placeholder' => 'Engine Number']) }}
                     </div>
                     <div class="form-group col-lg-4 mb-3">
                         {{ Form::label('model') }}
-                        {{ Form::text('model', $product->model, ['class' => 'form-control' . ($errors->has('model') ? ' is-invalid' : ''), 'placeholder' => 'Model Number','required']) }}
+                        {{ Form::text('model', $product->model, ['class' => 'form-control' . ($errors->has('model') ? ' is-invalid' : ''), 'placeholder' => 'Model Number']) }}
                     </div>
                     <div class="form-group col-lg-4 mb-3">
                         {{ Form::label('quantity') }}
@@ -85,17 +85,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-lg-6 mb-3">
+                    <div class="form-group col-lg-12 mb-3">
                         {{ Form::label('thumbnail') }}
                         {{ Form::file('thumbnail', ['class' => 'form-control dropify' . ($errors->has('thumbnail') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','data-default-file' => $product->thumbnail, isset($product->thumbnail) ? '' : 'required','data-height' => '225']) }}
                     </div>
-                    <div class="form-group col-lg-6 mb-3">
-                        {{ Form::label('description') }}
-                        {{ Form::textarea('description', $product->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description','required']) }}
-                    </div>
                     <div class="form-group col-lg-12 mb-3">
                         {{ Form::label('features') }}
-                        {{ Form::textarea('features', $product->features, ['class' => 'form-control' . ($errors->has('features') ? ' is-invalid' : ''), 'placeholder' => 'Features', 'id'=>'ckeditor']) }}
+                        {{ Form::textarea('features', $product->features, ['class' => 'form-control' . ($errors->has('features') ? ' is-invalid' : ''), 'placeholder' => 'Features', 'id'=>'ckeditorFeatures']) }}
+                    </div>
+                    <div class="form-group col-lg-12 mb-3">
+                        {{ Form::label('description') }}
+                        {{ Form::textarea('description', $product->description, ['class' => 'form-control' . ($errors->has('description') ? ' is-invalid' : ''), 'placeholder' => 'Description', 'id'=>'ckeditorDescription']) }}
                     </div>
                     <div class="col-md-12 d-flex justify-content-end align-items-center mt-3">
                         <button type="submit" class="btn btn-primary ms-3">
@@ -149,7 +149,20 @@
                 })
             });
         });
-        ClassicEditor.create(document.querySelector('#ckeditor'), {
+        ClassicEditor.create(document.querySelector('#ckeditorFeatures'), {
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                    { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                    { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                    { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                    { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                    { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                    { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                ]
+            }
+        }).catch(console.error);
+        ClassicEditor.create(document.querySelector('#ckeditorDescription'), {
             heading: {
                 options: [
                     { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },

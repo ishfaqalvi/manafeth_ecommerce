@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->foreignId('sub_category_id')->references('id')->on('sub_categories')->cascadeOnDelete();
             $table->string('name');
-            $table->string('serial_number');
-            $table->string('engine_number');
-            $table->string('model');
+            $table->string('serial_number')->nullable();
+            $table->string('engine_number')->nullable();
+            $table->string('model')->nullable();
             $table->text('thumbnail');
             $table->integer('quantity');
             $table->bigInteger('price');
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->enum('type',['Rent','Sale','Maintenance']);
             $table->string('special')->nullable();
             $table->enum('status',['Publish','Unpublish'])->default('Publish');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->text('features')->nullable();
             $table->timestamps();
         });
