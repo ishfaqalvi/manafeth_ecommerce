@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 | Auth Routes
 |--------------------------------------------------------------------------
 */
-
 Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
     Route::controller(AuthController::class)->as('web.')->group(function () {
         Route::get('register',          'showRegisterForm'  )->name('showRegisterForm');
@@ -79,7 +78,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
         Route::get('rent',             'rent'        )->name('rent'       );
         Route::get('maintenance',      'maintenance' )->name('maintenance');
         Route::get('show/{id}',        'show'        )->name('show'       );
-    });
+    }); 
 
     /*
 	|--------------------------------------------------------------------------

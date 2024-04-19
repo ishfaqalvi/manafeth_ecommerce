@@ -100,7 +100,7 @@
                         <div class="col-12">
                             <div class="product-card position-relative d-flex">
                                 <div class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
-                                    <a href="javascript:void(0)" class="remove-from-wishlist" data-id="{{ $row->id }}" title="Add to Wishlist">
+                                    <a href="javascript:void(0)" class="remove-from-wishlist" data-id="{{ $row->id }}" title="Remove from Wishlist">
                                         <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset="" width="auto" height="auto">
                                     </a>
                                 </div>

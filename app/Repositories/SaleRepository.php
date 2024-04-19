@@ -2,37 +2,35 @@
 
 namespace App\Repositories;
 use App\Contracts\SaleInterface;
+use Illuminate\Support\Facades\Auth;
 use App\Models\{Cart,Order,Customer};
 
 class SaleRepository implements SaleInterface
 {
-	public function cartItemList()
+	public function cartItemList($guard)
 	{
-		return auth()->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+		return Auth::guard($guard)->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
 	}
 
-	public function cartCheckItem($id)
+    public function cartStoreItem($data, $guard)
 	{
-		return auth()->user()->carts()->whereProductId($id)->first();
-	}
-
-	public function cartStoreItem($data)
-	{
-        $data['customer_id'] = auth()->user()->id;
-        Cart::create($data);
-        return auth()->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+        $product = $data['product_id'];
+        $checkProduct = Auth::guard($guard)->user()->carts()->whereProductId($product)->first();
+        if ($checkProduct) {
+            return false;
+        }
+        Cart::create(['customer_id' => Auth::guard($guard)->user()->id, 'product_id' => $product]);
+        return true;
 	}
 
 	public function cartUpdateItem($data, $id)
 	{
 		Cart::find($id)->update($data);
-		return auth()->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
 	}
 
 	public function cartDeleteItem($id)
 	{
 		Cart::find($id)->delete();
-		return auth()->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
 	}
 
 	public function orderList($customer_id)

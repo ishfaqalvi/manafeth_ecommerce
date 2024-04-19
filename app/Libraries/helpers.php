@@ -4,6 +4,7 @@
 use App\Models\Setting;
 use Spatie\Image\Image;
 use Spatie\Image\Manipulations;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Get listing of a resource.
@@ -14,7 +15,7 @@ function uploadFile($file, $path, $width, $height)
 {
     $extension = $file->getClientOriginalExtension();
     $name = uniqid().".".$extension;
- 
+
     $folder = 'images/'.$path;
     $finalPath = $folder.'/'.$name;
     $file->move($folder, $name);
@@ -31,4 +32,21 @@ function uploadFile($file, $path, $width, $height)
 function settings($key)
 {
     return Setting::get($key);
+}
+
+/**
+ * Get listing of a resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function cartSummary()
+{
+    $subTotal = 0;
+    foreach(Auth::guard('customer')->user()->carts()->get() as $item){
+        $product = $item->product;
+        $price = $product->price - $product->discount;
+        $amount = $item->quantity * $price;
+        $subTotal += $amount;
+    }
+    return $subTotal;
 }

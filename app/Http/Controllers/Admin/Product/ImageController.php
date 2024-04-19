@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class ImageController extends Controller
 {
     protected $product;
-    
+
     public function __construct(ProductInterface $product)
     {
         $this->product = $product;

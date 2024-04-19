@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class RentRequestController extends BaseController
 {
     protected $order;
-    
+
     public function __construct(RentInterface $order){
         $this->order = $order;
     }
@@ -25,7 +25,7 @@ class RentRequestController extends BaseController
     public function index()
     {
         try {
-            $data = $this->order->orderList(auth()->user()->id);
+            $data = $this->order->orderList('customerapi');
             return $this->sendResponse($data, 'Rent Request list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -41,10 +41,10 @@ class RentRequestController extends BaseController
     public function store(Request $request)
     {
         try {
-            if (count($this->order->cartItemList()) == 0) { 
-                return $this->sendResponse('No Record Found', 'Your cart is empty.');    
+            if (count($this->order->cartItemList('customerapi')) == 0) {
+                return $this->sendResponse('No Record Found', 'Your cart is empty.');
             }
-            $data = $this->order->orderStore($request->all(), auth()->user()->id);
+            $data = $this->order->orderStore($request->all(), 'customerapi');
             return $this->sendResponse($order, 'Rent Request created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -61,7 +61,7 @@ class RentRequestController extends BaseController
         try {
             if ($this->order->orderFind($id)->status == 'Pending') {
                 $this->order->orderDelete($id);
-                return $this->sendResponse('', 'Request deleted successfully.');    
+                return $this->sendResponse('', 'Request deleted successfully.');
             }else{
                 return $this->sendResponse('', 'You can not delete under process request.');
             }

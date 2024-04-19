@@ -162,7 +162,11 @@ class ProductRepository implements ProductInterface
 	//To store a product images
 	public function imageStore($data)
 	{
-		return ProductImage::create($data);
+        foreach($data['images'] as $image){
+            $data['image'] = $image;
+            ProductImage::create($data);
+        }
+		return true;
 	}
 
 	//To delete a product images
@@ -247,14 +251,14 @@ class ProductRepository implements ProductInterface
 	}
 
     //To store a product favourite
-	public function favouriteStore($data)
+	public function favouriteStore($data, $guard)
 	{
         $product = $data['product_id'];
-        $checkProduct = Auth::guard('customer')->user()->favouriteProducts()->whereProductId($product)->first();
+        $checkProduct = Auth::guard($guard)->user()->favouriteProducts()->whereProductId($product)->first();
         if ($checkProduct) {
             return false;
         }
-        FavouriteProduct::create(['customer_id' => Auth::guard('customer')->user()->id, 'product_id' => $product]);
+        FavouriteProduct::create(['customer_id' => Auth::guard($guard)->user()->id, 'product_id' => $product]);
         return true;
 	}
 

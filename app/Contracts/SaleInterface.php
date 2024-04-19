@@ -4,11 +4,9 @@ namespace App\Contracts;
 
 interface SaleInterface
 {
-	public function cartItemList();
+	public function cartItemList($guard);
 
-	public function cartCheckItem($id);
-
-	public function cartStoreItem($data);
+	public function cartStoreItem($data, $guard);
 
 	public function cartUpdateItem($data, $id);
 

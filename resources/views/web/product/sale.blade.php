@@ -265,10 +265,10 @@
                                     @foreach ($products as $product)
                                     <div class="col-xl-3 col-6">
                                         <div class="product-card position-relative">
-                                            <div
-                                                class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
-                                                <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset=""
-                                                    width="auto" height="auto">
+                                            <div class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
+                                                <a href="javascript:void(0)" class="add-to-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                                                    <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset="" width="auto" height="auto">
+                                                </a>
                                             </div>
                                             <a href="{{ route('web.products.show', $product->id) }}">
                                                 <img src="{{ $product->thumbnail }}" alt="Product Image" srcset=""
@@ -299,7 +299,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="product-button text-center mt-4">
-                                                    <a href="http://" class="button">
+                                                    <a href="javascript:void(0)" class="button add-to-cart" data-product-id="{{ $product->id }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="20"
                                                             height="20px" x="0" y="0" viewBox="0 0 450.391 450.391"
@@ -318,7 +318,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -327,18 +327,16 @@
                                     @foreach ($products as $product)
                                     <div class="col-12">
                                         <div class="product-card position-relative d-flex">
-                                            <div
-                                                class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
-                                                <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset=""
-                                                    width="auto" height="auto">
+                                            <div class="wish-icon position-absolute d-flex align-items-center justify-content-center end-0">
+                                                <a href="javascript:void(0)" class="add-to-wishlist" data-product-id="{{ $product->id }}" title="Add to Wishlist">
+                                                    <img src="{{ asset('assets/web/images/heart-white.png') }}" alt="Wish Icon" srcset="" width="auto" height="auto">
+                                                </a>
                                             </div>
                                             <a href="{{ route('web.products.show', $product->id) }}" class="product-card-img position-relative">
-                                                <img src="{{ $product->thumbnail }}" alt="Product Image" srcset=""
-                                                    width="100%" height="100%">
+                                                <img src="{{ $product->thumbnail }}" alt="Product Image" srcset="" width="100%" height="100%">
                                                 <span class="deail-box position-absolute top-0 start-0">15% OFF</span>
                                             </a>
-                                            <div
-                                                class="product-card-body position-relative w-100 d-flex flex-column justify-content-center">
+                                            <div class="product-card-body position-relative w-100 d-flex flex-column justify-content-center">
                                                 <p class="category-sub-category pb-lg-1">
                                                     {{ $product->category->name }} / {{ $product->subCategory->name }}
                                                 </p>
@@ -347,8 +345,7 @@
                                                         {{ $product->name }}
                                                     </a>
                                                 </h2>
-                                                <div
-                                                    class="reviews-block mt-1 d-flex flex-column gap-2 justify-content-between">
+                                                <div class="reviews-block mt-1 d-flex flex-column gap-2 justify-content-between">
                                                     <div class="rate-block d-flex flex-wrap align-items-baseline gap-md-1">
                                                         <span>
                                                             {{ $product->price }}AED
@@ -360,14 +357,13 @@
                                                         @endif
                                                     </div>
                                                     <div class="star-reviews d-flex align-items-center gap-1">
-                                                        <img src="assets/images/star-p.png" alt="Star Icon"
-                                                            srcset="" height="auto" width="auto">
+                                                        <img src="{{ asset('assets/web/images/star-p.png') }}" alt="Star Icon" srcset="" height="auto" width="auto">
                                                         <span>4.5(128)</span>
                                                     </div>
                                                 </div>
                                                 <div
                                                     class="product-button text-center position-absolute end-0 bottom-0 m-md-3 m-2">
-                                                    <a href="http://" class="button">
+                                                    <a href="javascript:void(0)" class="button add-to-cart" data-product-id="{{ $product->id }}">
                                                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
                                                             xmlns:xlink="http://www.w3.org/1999/xlink" width="20"
                                                             height="20px" x="0" y="0" viewBox="0 0 450.391 450.391"

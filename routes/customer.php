@@ -38,3 +38,15 @@ Route::controller(FavouriteProductController::class)->prefix('favourite')->as('f
     Route::post('store',		    'store'        )->name('store' );
     Route::post('delete',		    'destroy'      )->name('delete');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Sale Cart Route
+|--------------------------------------------------------------------------
+*/
+Route::controller(CartController::class)->prefix('cart')->as('carts.')->group(function () {
+	Route::get('list',			    'index'        )->name('index' );
+    Route::post('store',		    'store'        )->name('store' );
+    Route::post('update',		    'update'       )->name('update');
+    Route::post('delete',		    'destroy'      )->name('delete');
+});

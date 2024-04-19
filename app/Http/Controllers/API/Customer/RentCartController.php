@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class RentCartController extends BaseController
 {
     protected $cart;
-    
+
     public function __construct(RentInterface $cart){
         $this->cart = $cart;
     }
@@ -26,7 +26,7 @@ class RentCartController extends BaseController
     public function index()
     {
         try {
-            $data = $this->cart->cartItemList();
+            $data = $this->cart->cartItemList('customerapi');
             return $this->sendResponse($data, 'Cart Product list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -42,10 +42,11 @@ class RentCartController extends BaseController
     public function store(Request $request)
     {
         try {
-            if ($this->cart->cartCheckItem($request->product_id)) {
-                return $this->sendResponse('Record Exist', 'This product already exist in cart.');    
+            $responce = $this->cart->cartStoreItem($request->all(), 'customerapi');
+            if ($responce = false) {
+                return $this->sendError('Record Exist', 'This product already exist in cart.');
             }
-            $data = $this->cart->cartStoreItem($request->all());
+            $data = $this->cart->cartItemList('customerapi');
             return $this->sendResponse($data, 'Product added in cart list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -62,7 +63,8 @@ class RentCartController extends BaseController
     public function update(Request $request,$cart)
     {
         try {
-            $data = $this->cart->cartUpdateItem($request->all(), $cart);
+            $this->cart->cartUpdateItem($request->all(), $cart);
+            $data = $this->cart->cartItemList('customerapi');
             return $this->sendResponse($data, 'Product updated from cart list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -77,7 +79,8 @@ class RentCartController extends BaseController
     public function destroy($id)
     {
         try {
-            $data = $this->cart->cartDeleteItem($id);
+            $this->cart->cartDeleteItem($id);
+            $data = $this->cart->cartItemList('customerapi');
             return $this->sendResponse($data, 'Product deleted from cart list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

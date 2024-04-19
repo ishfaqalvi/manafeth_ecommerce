@@ -210,9 +210,9 @@
                                 height="auto">
                         </button>
                     </form>
-                    <div class="cart-icon">
+                    <a href="{{ route('carts.index') }}" class="cart-icon">
                         <img src="{{ asset('assets/web/images/cart-icon.png') }}" alt="Cart Icon" srcset="" height="auto" width="25px">
-                    </div>
+                    </a>
                 </div>
             </div>
         </nav>

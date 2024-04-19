@@ -159,7 +159,7 @@ class AuthController extends BaseController
      */
     public function destroy($id)
     {
-       $this->customer->delete($id);
+        $this->customer->delete($id);
         return $this->sendResponse('', 'Your account removed successfully.');
     }
 }

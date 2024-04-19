@@ -2,50 +2,44 @@
 
 namespace App\Repositories;
 use App\Contracts\RentInterface;
+use Illuminate\Support\Facades\Auth;
 use App\Models\{RentCart,RentRequest,Customer};
 
 class RentRepository implements RentInterface
 {
-	public function cartItemList()
+	public function cartItemList($guard)
 	{
-		return auth()->user()->rentCarts()->with(
+		return Auth::guard($guard)->user()->rentCarts()->with(
 			['product.brand', 'product.category', 'product.subCategory']
 		)->get();
 	}
 
-	public function cartCheckItem($id)
+    public function cartStoreItem($data, $guard)
 	{
-		return auth()->user()->rentCarts()->whereProductId($id)->first();
-	}
-
-	public function cartStoreItem($data)
-	{
-        $data['customer_id'] = auth()->user()->id;
+        $product = $data['product_id'];
+        $data['customer_id'] = Auth::guard($guard)->user()->id;
+        $checkProduct = Auth::guard($guard)->user()->rentCarts()->whereProductId($product)->first();
+        if ($checkProduct) {
+            return false;
+        }
         RentCart::create($data);
-        return auth()->user()->rentCarts()->with(
-        	['product.brand', 'product.category', 'product.subCategory']
-        )->get();
+        return true;
 	}
 
 	public function cartUpdateItem($data, $id)
 	{
 		RentCart::find($id)->update($data);
-		return auth()->user()->rentCarts()->with(
-			['product.brand', 'product.category', 'product.subCategory']
-		)->get();
 	}
 
 	public function cartDeleteItem($id)
 	{
 		RentCart::find($id)->delete();
-		return auth()->user()->rentCarts()->with(
-			['product.brand', 'product.category', 'product.subCategory']
-		)->get();
 	}
 
-	public function orderList($customer_id)
+	public function orderList($guard)
 	{
-		if ($customer_id) {
+		if ($guard) {
+            $customer_id = Auth::guard($guard)->user()->id;
 			$orders = RentRequest::whereCustomerId($customer_id)->with(
 				['details','details.product.brand', 'details.product.category', 'details.product.subCategory']
 			)->get();
@@ -57,15 +51,9 @@ class RentRepository implements RentInterface
 		return $orders;
 	}
 
-	public function orderFind($id)
+    public function orderStore($data, $guard)
 	{
-		return RentRequest::find($id);
-	}
-
-	public function orderStore($data, $customer_id)
-	{
-		$customer = Customer::find($customer_id);
-		$order = $customer->rentRequests()->create($data);
+		$order = Auth::guard($guard)->user()->rentRequests()->create($data);
         foreach($customer->rentCarts as $row){
             $order->details()->create([
                 'product_id'=> $row->product_id,
@@ -75,7 +63,12 @@ class RentRepository implements RentInterface
             ]);
             $row->delete();
         }
-        return $order;
+        return true;
+	}
+
+	public function orderFind($id)
+	{
+		return RentRequest::find($id);
 	}
 
 	public function orderUpdate($data, $id)

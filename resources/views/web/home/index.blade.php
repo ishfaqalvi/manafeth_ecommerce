@@ -153,7 +153,7 @@
                                         </div>
                                     </div>
                                     <div class="product-button text-center mt-4">
-                                        <a href="http://" class="button">
+                                        <a href="javascript:void(0)" class="button add-to-cart" data-product-id="{{ $product->id }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20px"
                                                 x="0" y="0" viewBox="0 0 450.391 450.391"

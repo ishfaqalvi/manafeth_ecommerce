@@ -61,6 +61,118 @@ $(function () {
         });
     });
 
+    $('.add-to-cart').on('click', function(e) {
+        $("#overlay").show('slow');
+        e.preventDefault();
+        var id = $(this).data('product-id');
+        $.ajax({
+            url: "/customer/cart/store",
+            type: 'POST',
+            data: {
+                product_id: id,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                $("#overlay").hide('slow');
+                if(response.success){
+                    toastr.success('Product added to cart successfully.');
+                }else{
+                    toastr.warning('Product already exist.');
+                }
+            },
+            error: function(xhr, status, error) {
+                $("#overlay").hide('slow');
+                if(xhr.status === 401) {
+                    toastr.warning('Please login first to add items to the cart.');
+                } else {
+                    toastr.error('Error adding product to cart!');
+                }
+            }
+        });
+    });
+    $('.qty-btn-minus').on('click', function(e) {
+        $("#overlay").show('slow');
+        e.preventDefault();
+        var id = $(this).data('id');
+        var quantity = $(this).data('quantity');
+        $.ajax({
+            url: '/customer/cart/update',
+            type: 'POST',
+            data: {
+                id: id,
+                quantity: quantity - 1,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                $("#overlay").hide('slow');
+                toastr.success('Quantity updated successfully.');
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                $("#overlay").hide('slow');
+                if(xhr.status === 401) {
+                    toastr.warning('Please login first to update item from cart.');
+                } else {
+                    toastr.error('Error update item!');
+                }
+            }
+        });
+    });
+    $('.qty-btn-plus').on('click', function(e) {
+        $("#overlay").show('slow');
+        e.preventDefault();
+        var id = $(this).data('id');
+        var quantity = $(this).data('quantity');
+        $.ajax({
+            url: '/customer/cart/update',
+            type: 'POST',
+            data: {
+                id: id,
+                quantity: quantity + 1,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                $("#overlay").hide('slow');
+                toastr.success('Quantity updated successfully.');
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                $("#overlay").hide('slow');
+                if(xhr.status === 401) {
+                    toastr.warning('Please login first to update item from cart.');
+                } else {
+                    toastr.error('Error update item!');
+                }
+            }
+        });
+    });
+    $('.remove-from-cart').on('click', function(e) {
+        $("#overlay").show('slow');
+        e.preventDefault();
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/customer/cart/delete',
+            type: 'POST',
+            data: {
+                id: id,
+                _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                $("#overlay").hide('slow');
+                toastr.success('Product removed successfully.');
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                $("#overlay").hide('slow');
+                if(xhr.status === 401) {
+                    toastr.warning('Please login first to remove item from cart.');
+                } else {
+                    toastr.error('Error remove items from cart!');
+                }
+            }
+        });
+    });
+
 
 
 

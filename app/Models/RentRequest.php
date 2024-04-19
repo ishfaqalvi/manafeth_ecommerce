@@ -36,8 +36,7 @@ class RentRequest extends Model implements Auditable
      */
     protected $fillable = [
         'customer_id',
-        'first_name',
-        'last_name',
+        'full_name',
         'phone_number',
         'address',
         'message',
@@ -51,7 +50,7 @@ class RentRequest extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

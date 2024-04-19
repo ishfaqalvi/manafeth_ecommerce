@@ -25,7 +25,7 @@ class CustomerSeeder extends Seeder
             'tokenable_type'=> 'App\Models\Customer',
             'tokenable_id'  => '1',
             'name'          => 'customer-token',
-            'token'         => '1b29b9fc6dcd9ea3489a712d9a0de3eae055ff4641873c7d392f7f8ad0176873',
+            'token'         => '2|5TEVtTENBFp3WPMKiRpcx8WrBrvcjuH0kXcdAeW084476a7c',
             'abilities'     => '["*"]'
         ]);
     }

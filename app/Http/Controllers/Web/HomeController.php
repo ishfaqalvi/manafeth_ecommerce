@@ -2,25 +2,31 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Http\Controllers\Controller;
-use App\Contracts\{BlogInterface,BannerInterface,ProductInterface};
+use GuzzleHttp\Client;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use GuzzleHttp\Exception\RequestException;
+use App\Contracts\{BlogInterface,BannerInterface,ProductInterface};
+use App\Services\WhatsAppService;
 
 class HomeController extends Controller
 {
     protected $banner;
     protected $product;
     protected $blog;
+    protected $whatsAppService;
 
     public function __construct(
         BannerInterface $banner,
         ProductInterface $product,
-        BlogInterface $blog
+        BlogInterface $blog,
+        WhatsAppService $whatsAppService
     ){
         $this->banner = $banner;
         $this->product = $product;
         $this->blog = $blog;
+        $this->whatsAppService = $whatsAppService;
     }
     /**
      * Display a listing of the resource.
@@ -38,5 +44,9 @@ class HomeController extends Controller
             'categories' => Category::all()
         ];
         return view('web.home.index', compact('data'));
+    }
+    public function sendWatsap()
+    {
+        return $this->whatsAppService->sendMessage("*Heading*\nThis is a description under the heading. Here is some _italic_ text, and here is some ~strikethrough~ text. You can also use ```monospace``` for things like code.");
     }
 }

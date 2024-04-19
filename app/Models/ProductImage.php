@@ -22,7 +22,7 @@ class ProductImage extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
-    
+
 
     protected $perPage = 20;
 
@@ -41,7 +41,10 @@ class ProductImage extends Model implements Auditable
     public function setImageAttribute($image)
     {
         if ($image instanceof \Illuminate\Http\UploadedFile) {
-            $this->attributes['image'] = uploadFile($image, 'product/gallery', '400', '400');
+            $name = $image->getClientOriginalName();
+            $image->move('images/product/gallery', $name);
+            $this->attributes['image'] = 'images/product/gallery/'.$name;
+            // $this->attributes['image'] = uploadFile($image, 'product/gallery', '400', '400');
         } else {
             unset($this->attributes['image']);
         }

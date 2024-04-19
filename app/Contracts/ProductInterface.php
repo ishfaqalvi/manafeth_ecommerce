@@ -62,7 +62,7 @@ interface ProductInterface
 
     public function favouriteList($guard);
 
-    public function favouriteStore($data);
+    public function favouriteStore($data, $guard);
 
     public function favouriteRemove($id);
 }

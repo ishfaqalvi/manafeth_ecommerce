@@ -41,11 +41,11 @@ class FavouriteProductController extends BaseController
     public function store(Request $request)
     {
         try {
-            $responce = $this->product->favouriteStore($request->all());
+            $responce = $this->product->favouriteStore($request->all(), 'customerapi');
             if ($responce = false) {
                 return $this->sendError('Record Exist', 'This product already exist in favourite list.');
             }
-            return $this->sendResponse($this->product->favouriteList(), 'Product added in favourite list successfully.');
+            return $this->sendResponse($this->product->favouriteList('customerapi'), 'Product added in favourite list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -59,8 +59,8 @@ class FavouriteProductController extends BaseController
     public function destroy($id)
     {
         try {
-            $this->product->favouriteRemove();
-            return $this->sendResponse($this->product->favouriteList(), 'Product deleted from favourite list successfully.');
+            $this->product->favouriteRemove($id);
+            return $this->sendResponse($this->product->favouriteList('customerapi'), 'Product deleted from favourite list successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }

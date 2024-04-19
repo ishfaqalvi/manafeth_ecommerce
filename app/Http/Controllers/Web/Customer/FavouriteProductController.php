@@ -37,7 +37,7 @@ class FavouriteProductController extends Controller
      */
     public function store(Request $request)
     {
-        $responce = $this->product->favouriteStore($request->all());
+        $responce = $this->product->favouriteStore($request->all(), 'customer');
         return response()->json(['success' => $responce]);
     }
 

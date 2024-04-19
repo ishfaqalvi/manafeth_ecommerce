@@ -34,6 +34,8 @@ class Product extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
+    protected $appends = ['web_page_url'];
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -92,6 +94,16 @@ class Product extends Model implements Auditable
     }
 
     /**
+     * The get attributes.
+     *
+     * @var array
+     */
+    public function getWebPageUrlAttribute()
+    {
+        return route("web.products.sale", $this->id);
+    }
+
+    /**
      * Scope a query to filter product.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
@@ -114,6 +126,12 @@ class Product extends Model implements Auditable
         }
         if (isset($request['status'])) {
             $query->whereStatus($request['status']);
+        }
+        if (isset($request['min_price'])) {
+            $query->where('price', '>', $request['min_price']);
+        }
+        if (isset($request['max_price'])) {
+            $query->where('price', '<', $request['max_price']);
         }
         if (isset($request['search'])) {
             $query->where('name', 'like', '%'.$request['search'].'%')

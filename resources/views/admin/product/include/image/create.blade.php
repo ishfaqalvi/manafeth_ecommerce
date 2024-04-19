@@ -12,7 +12,7 @@
                         {{ Form::hidden('product_id', $product->id) }}
                         <div class="form-group">
                             {{ Form::label('image') }}
-                            {{ Form::file('image', ['class' => 'form-control dropify' . ($errors->has('image') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','required','data-height' => '225']) }}
+                            {{ Form::file('images[]', ['class' => 'form-control dropify' . ($errors->has('image') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','required','data-height' => '225', 'multiple']) }}
                         </div>
                     </div>
                 </div>
