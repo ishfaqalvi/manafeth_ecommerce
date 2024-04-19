@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\API\Customer;
-use App\Http\Controllers\API\BaseController;
+use Illuminate\Http\Request;
 
 use App\Contracts\SaleInterface;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\API\BaseController;
 
 /**
  * Class OrderController
@@ -13,7 +14,7 @@ use Illuminate\Http\Request;
 class OrderController extends BaseController
 {
     protected $order;
-    
+
     public function __construct(SaleInterface $order){
         $this->order = $order;
     }
@@ -26,7 +27,7 @@ class OrderController extends BaseController
     public function index()
     {
         try {
-            $data = $this->order->orderList(auth()->user()->id);
+            $data = $this->order->orderList(Auth::guard('customerapi')->user()->id);
             return $this->sendResponse($data, 'Orders list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -42,10 +43,10 @@ class OrderController extends BaseController
     public function store(Request $request)
     {
         try {
-            if (count($this->order->cartItemList()) == 0) { 
-                return $this->sendResponse('No Record Found', 'Your cart is empty.');    
+            if (count($this->order->cartItemList('customerapi')) == 0) {
+                return $this->sendResponse('No Record Found', 'Your cart is empty.');
             }
-            $data = $this->order->orderStore($request->all(), auth()->user()->id);
+            $data = $this->order->orderStore($request->all(), 'customerapi');
             return $this->sendResponse($data, 'Order created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -62,7 +63,7 @@ class OrderController extends BaseController
         try {
             if ($this->order->orderFind($id)->status == 'Pending') {
                 $data = $this->order->orderDelete($id);
-                return $this->sendResponse($data, 'Order deleted successfully.');    
+                return $this->sendResponse($data, 'Order deleted successfully.');
             }else{
                 return $this->sendResponse('', 'You can not delete under process order.');
             }

@@ -48,9 +48,9 @@ class SaleRepository implements SaleInterface
 		return Order::find($id);
 	}
 
-	public function orderStore($data, $customer_id)
+	public function orderStore($data, $guard)
 	{
-		$customer = Customer::find($customer_id);
+		$customer = Auth::guard($guard)->user();
 		$order = $customer->orders()->create($data);
         foreach($customer->carts as $row){
             $order->details()->create([

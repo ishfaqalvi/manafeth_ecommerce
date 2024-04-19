@@ -53,7 +53,8 @@ class RentRepository implements RentInterface
 
     public function orderStore($data, $guard)
 	{
-		$order = Auth::guard($guard)->user()->rentRequests()->create($data);
+        $customer = Auth::guard($guard)->user();
+		$order = $customer->rentRequests()->create($data);
         foreach($customer->rentCarts as $row){
             $order->details()->create([
                 'product_id'=> $row->product_id,

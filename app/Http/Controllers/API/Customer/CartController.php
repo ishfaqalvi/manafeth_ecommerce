@@ -26,7 +26,7 @@ class CartController extends BaseController
     public function index()
     {
         try {
-            $data = $this->cart->cartItemList();
+            $data = $this->cart->cartItemList('customerapi');
             return $this->sendResponse($data, 'Cart Product list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

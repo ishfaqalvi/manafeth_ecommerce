@@ -45,7 +45,7 @@ class RentRequestController extends BaseController
                 return $this->sendResponse('No Record Found', 'Your cart is empty.');
             }
             $data = $this->order->orderStore($request->all(), 'customerapi');
-            return $this->sendResponse($order, 'Rent Request created successfully.');
+            return $this->sendResponse($data, 'Rent Request created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
