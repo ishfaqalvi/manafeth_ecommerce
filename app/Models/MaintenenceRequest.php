@@ -31,7 +31,7 @@ class MaintenenceRequest extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
-    
+
     protected $perPage = 20;
 
     /**
@@ -61,7 +61,7 @@ class MaintenenceRequest extends Model implements Auditable
     protected static function boot()
     {
         parent::boot();
-        static::created(function ($model) { 
+        static::created(function ($model) {
             $model->request_no = '#-' . str_pad($model->id, 6, "0", STR_PAD_LEFT);
             $model->save();
         });
@@ -98,7 +98,7 @@ class MaintenenceRequest extends Model implements Auditable
         $images = array();
         if ($values) {
             foreach (explode(',', $values) as $key => $value) {
-                $images[] = asset('images/maintenence/'.$value); 
+                $images[] = asset('images/maintenence/'.$value);
             }
         }
         return $images;
@@ -111,7 +111,7 @@ class MaintenenceRequest extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Category', 'id', 'category_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -119,7 +119,7 @@ class MaintenenceRequest extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

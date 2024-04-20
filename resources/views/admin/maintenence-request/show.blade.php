@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    {{ $maintenenceRequest->name ?? "{{ __('Show') Maintenence Request" }}
+    {{ $maintenenceRequest->name ?? "Show Maintenence Request" }}
 @endsection
 
 @section('header')
@@ -31,44 +31,44 @@
             <h5 class="mb-0">{{ __('Show') }} Maintenence Request</h5>
         </div>
         <div class="card-body">
-            
-                        <div class="form-group mb-3">
-                            <strong>Customer Id:</strong>
-                            {{ $maintenenceRequest->customer_id }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>First Name:</strong>
-                            {{ $maintenenceRequest->first_name }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Last Name:</strong>
-                            {{ $maintenenceRequest->last_name }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Phone Number:</strong>
-                            {{ $maintenenceRequest->phone_number }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Address:</strong>
-                            {{ $maintenenceRequest->address }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Category Id:</strong>
-                            {{ $maintenenceRequest->category_id }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Product Id:</strong>
-                            {{ $maintenenceRequest->product_id }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Message:</strong>
-                            {{ $maintenenceRequest->message }}
-                        </div>
-                        <div class="form-group mb-3">
-                            <strong>Images:</strong>
-                            {{ $maintenenceRequest->images }}
-                        </div>
-
+            <div class="form-group mb-3">
+                <strong>Customer Id:</strong>
+                {{ $maintenenceRequest->customer->name }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>First Name:</strong>
+                {{ $maintenenceRequest->first_name }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Last Name:</strong>
+                {{ $maintenenceRequest->last_name }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Phone Number:</strong>
+                {{ $maintenenceRequest->phone_number }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Address:</strong>
+                {{ $maintenenceRequest->address }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Category Id:</strong>
+                {{ $maintenenceRequest->category->name }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Product:</strong>
+                {{ $maintenenceRequest->product->name }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Message:</strong>
+                {{ $maintenenceRequest->message }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Images:</strong>
+                @foreach ($maintenenceRequest->images as $image)
+                    <img src="{{ $image }}" />
+                @endforeach
+            </div>
         </div>
     </div>
 </div>

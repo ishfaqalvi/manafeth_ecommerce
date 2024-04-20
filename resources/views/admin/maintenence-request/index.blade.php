@@ -36,17 +36,10 @@
             <thead class="thead">
                 <tr>
                     <th>No</th>
-                    
-										<th>Customer Id</th>
-										<th>First Name</th>
-										<th>Last Name</th>
-										<th>Phone Number</th>
-										<th>Address</th>
-										<th>Category Id</th>
-										<th>Product Id</th>
-										<th>Message</th>
-										<th>Images</th>
-
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Product</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -54,17 +47,10 @@
             @foreach ($maintenenceRequests as $key => $maintenenceRequest)
                 <tr>
                     <td>{{ ++$key }}</td>
-                    
-											<td>{{ $maintenenceRequest->customer_id }}</td>
-											<td>{{ $maintenenceRequest->first_name }}</td>
-											<td>{{ $maintenenceRequest->last_name }}</td>
-											<td>{{ $maintenenceRequest->phone_number }}</td>
-											<td>{{ $maintenenceRequest->address }}</td>
-											<td>{{ $maintenenceRequest->category_id }}</td>
-											<td>{{ $maintenenceRequest->product_id }}</td>
-											<td>{{ $maintenenceRequest->message }}</td>
-											<td>{{ $maintenenceRequest->images }}</td>
-
+                    <td>{{ $maintenenceRequest->first_name.' '.$maintenenceRequest->last_name }}</td>
+                    <td>{{ $maintenenceRequest->phone_number }}</td>
+                    <td>{{ $maintenenceRequest->address }}</td>
+                    <td>{{ $maintenenceRequest->product->name }}</td>
                     <td class="text-center">@include('admin.maintenence-request.actions')</td>
                 </tr>
             @endforeach
