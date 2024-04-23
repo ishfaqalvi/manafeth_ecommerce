@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Repositories;
+
 use App\Contracts\SaleInterface;
 use Illuminate\Support\Facades\Auth;
-use App\Models\{Cart,Order,Customer};
+use App\Models\{Product,Cart,Order,Customer};
 
 class SaleRepository implements SaleInterface
 {
@@ -52,13 +53,22 @@ class SaleRepository implements SaleInterface
 	{
 		$customer = Auth::guard($guard)->user();
 		$order = $customer->orders()->create($data);
-        foreach($customer->carts as $row){
+        if (!is_null($data['buy_now'])) {
+            $product = Product::find($data['product_id']);
             $order->details()->create([
-                'product_id'=> $row->product_id,
-                'quantity'  => $row->quantity,
-                'price'     => $row->product->price - $row->product->discount
+                'product_id'=> $data['product_id'],
+                'quantity'  => 1,
+                'price'     => $product->price - $product->discount
             ]);
-            $row->delete();
+        }else{
+            foreach($customer->carts as $row){
+                $order->details()->create([
+                    'product_id'=> $row->product_id,
+                    'quantity'  => $row->quantity,
+                    'price'     => $row->product->price - $row->product->discount
+                ]);
+                $row->delete();
+            }
         }
         return $order;
 	}
