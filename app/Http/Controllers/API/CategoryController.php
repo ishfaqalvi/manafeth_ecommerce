@@ -2,19 +2,24 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\API\BaseController;
-use App\Models\{Category,SubCategory};
 use Illuminate\Http\Request;
+use App\Contracts\CategoryInterface;
+use App\Http\Controllers\API\BaseController;
 
 class CategoryController extends BaseController
 {
+    protected $category;
+
+    public function __construct(CategoryInterface $category){
+        $this->category = $category;
+    }
     /**
      * Display a listing of the resource.
      */
-    public function main()
+    public function main(Request $request)
     {
         try {
-            $categories = Category::with('subCategories')->get();
+            $categories = $this->category->mainList($request->type);
             return $this->sendResponse($categories, 'Main category list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -24,10 +29,10 @@ class CategoryController extends BaseController
     /**
      * Display a listing of the resource.
      */
-    public function sub()
+    public function sub(Request $request)
     {
         try {
-            $subCategories = SubCategory::with('category')->get();
+            $subCategories = $this->category->subList($request->type);
             return $this->sendResponse($subCategories, 'Sub category list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

@@ -1,19 +1,19 @@
 @extends('admin.layout.app')
 
 @section('title')
-    {{ __('Update') }} Category
+    {{ __('Update') }} Rent Category
 @endsection
 
 @section('header')
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">Category Managment</span>
+            Home - <span class="fw-normal">Rent Category Managment</span>
         </h4>
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <a href="{{ route('categories.all.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            <a href="{{ route('main.rent.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-arrow-circle-left"></i>
                 </span>
@@ -28,13 +28,13 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">{{ __('Edit ') }} Category </h5>
+            <h5 class="mb-0">{{ __('Edit ') }} Rent Category </h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('categories.update', $category->id) }}" class="validate"   role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('main.rent.update', $category->id) }}" class="validate"   role="form" enctype="multipart/form-data">
                 @csrf
                 {{ method_field('PATCH') }}
-                @include('admin.category.form')
+                @include('admin.category.main.rent.form')
             </form>
         </div>
     </div>

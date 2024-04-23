@@ -8,7 +8,7 @@
         </div>
         <div class="form-group col-lg-4 mb-3">
             {{ Form::label('category') }}
-            {{ Form::select('category_id', categories(), $product->category_id, ['class' => 'form-control select' . ($errors->has('category_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
+            {{ Form::select('category_id', categories('Rent'), $product->category_id, ['class' => 'form-control select' . ($errors->has('category_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
         </div>
         <div class="form-group col-lg-4 mb-3">
             {{ Form::label('sub_category') }}

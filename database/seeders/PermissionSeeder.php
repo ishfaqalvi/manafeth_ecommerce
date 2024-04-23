@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 
 class PermissionSeeder extends Seeder
@@ -15,6 +16,16 @@ class PermissionSeeder extends Seeder
     */
     public function run()
     {
+        $role = Role::findById(1);
+        $permissions = $role->permissions;
+
+        foreach ($permissions as $permission) {
+            $role->revokePermissionTo($permission);
+        }
+        $role->syncPermissions();
+
+
+        Permission::query()->delete();
         $permissions = [
             'orders-list',
             'orders-view',
@@ -96,15 +107,29 @@ class PermissionSeeder extends Seeder
             'topSearches-edit',
             'topSearches-delete',
 
-            'categories-list',
-            'categories-view',
-            'categories-create',
-            'categories-edit',
-            'categories-delete',
-            'categories-subList',
-            'categories-subCreate',
-            'categories-subEdit',
-            'categories-subDelete',
+            'saleCategories-list',
+            'saleCategories-view',
+            'saleCategories-create',
+            'saleCategories-edit',
+            'saleCategories-delete',
+
+            'rentCategories-list',
+            'rentCategories-view',
+            'rentCategories-create',
+            'rentCategories-edit',
+            'rentCategories-delete',
+
+            'saleSubCategories-list',
+            'saleSubCategories-view',
+            'saleSubCategories-create',
+            'saleSubCategories-edit',
+            'saleSubCategories-delete',
+
+            'rentSubCategories-list',
+            'rentSubCategories-view',
+            'rentSubCategories-create',
+            'rentSubCategories-edit',
+            'rentSubCategories-delete',
 
             'roles-list',
             'roles-view',
@@ -143,5 +168,7 @@ class PermissionSeeder extends Seeder
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
+
+        $role->syncPermissions(Permission::all());
     }
 }

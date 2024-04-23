@@ -17,9 +17,14 @@ function brands()
  *
  * @return \Illuminate\Http\Response
  */
-function categories()
+function categories($type = null)
 {
-    return Category::pluck('name','id');
+    $query = Category::query();
+    
+    if (!is_null($type)) {
+        $query->where('type', $type);
+    }
+    return $query->pluck('name','id');
 }
 
 /**

@@ -36,7 +36,7 @@ class SubCategory extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['category_id','name','image'];
+    protected $fillable = ['type','category_id','name','image'];
 
     /**
      * The set attributes.
