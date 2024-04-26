@@ -209,7 +209,8 @@ Route::controller(AuditController::class)->prefix('audits')->as('audits.')->grou
 |--------------------------------------------------------------------------
 */
 Route::controller(SettingController::class)->prefix('settings')->as('settings.')->group(function () {
-	Route::get('index', 		'index'		)->name('index'		  );
+	Route::get('general', 		'general'		)->name('general'		  );
+	Route::get('whatsapp', 		'whatsapp'		)->name('whatsapp'		  );
 	Route::get('clear-cache', 	'clearCache')->name('clear-cache' );
 	Route::post('save', 		'save'		)->name('save'		  );
 });

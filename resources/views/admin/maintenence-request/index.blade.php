@@ -40,6 +40,7 @@
                     <th>Phone Number</th>
                     <th>Address</th>
                     <th>Product</th>
+                    <th>Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -51,6 +52,7 @@
                     <td>{{ $maintenenceRequest->phone_number }}</td>
                     <td>{{ $maintenenceRequest->address }}</td>
                     <td>{{ $maintenenceRequest->product->name }}</td>
+                    <td>{{ $maintenenceRequest->status }}</td>
                     <td class="text-center">@include('admin.maintenence-request.actions')</td>
                 </tr>
             @endforeach

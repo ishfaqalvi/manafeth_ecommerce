@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\API\Customer;
-use App\Http\Controllers\API\BaseController;
-
-use App\Models\MaintenenceRequest;
 use Illuminate\Http\Request;
+
+use App\Contracts\MaintenenceInterface;
+use App\Http\Controllers\API\BaseController;
 
 /**
  * Class MaintenenceRequestController
@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
  */
 class MaintenenceRequestController extends BaseController
 {
+    protected $maintenence;
+
+    public function __construct(MaintenenceInterface $maintenence){
+        $this->maintenence = $maintenence;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +25,7 @@ class MaintenenceRequestController extends BaseController
     public function index()
     {
         try {
-            $data = auth()->user()->maintenenceRequests()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            $data = $this->maintenence->list('customerapi');
             return $this->sendResponse($data, 'Maintenence Request list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -36,9 +41,9 @@ class MaintenenceRequestController extends BaseController
     public function store(Request $request)
     {
         try {
-            auth()->user()->maintenenceRequests()->create($request->all());
+            $this->maintenence->store('customerapi', $request->all());
 
-            $data = auth()->user()->maintenenceRequests()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+            $data = $this->maintenence->list('customerapi');
             return $this->sendResponse($data, 'Maintenence Request created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -53,11 +58,10 @@ class MaintenenceRequestController extends BaseController
     public function destroy($id)
     {
         try {
-            $request = MaintenenceRequest::find($id);
-            if ($request->status == 'Pending') {
-                $request->delete();
-                $data = auth()->user()->maintenenceRequests()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
-                return $this->sendResponse($data, 'Maintenence Request deleted successfully.');    
+            if ($this->maintenence->find($id)->status == 'Pending') {
+                $this->maintenence->delete($id);
+                $data = $this->maintenence->list('customerapi');
+                return $this->sendResponse($data, 'Maintenence Request deleted successfully.');
             }
             return $this->sendResponse('', 'Your request is in under process.');
         } catch (\Throwable $th) {

@@ -27,9 +27,19 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function general()
     {
-        return view('admin.settings.index');
+        return view('admin.settings.general');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function whatsapp()
+    {
+        return view('admin.settings.whatsapp');
     }
 
     /**

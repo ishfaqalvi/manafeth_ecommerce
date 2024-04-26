@@ -47,6 +47,6 @@ class HomeController extends Controller
     }
     public function sendWatsap()
     {
-        return $this->whatsAppService->sendMessage("*Heading*\nThis is a description under the heading. Here is some _italic_ text, and here is some ~strikethrough~ text. You can also use ```monospace``` for things like code.");
+        return $this->whatsAppService->sendMessage('sale_product_added_to_cart', "*Heading*\nThis is a description under the heading. Here is some _italic_ text, and here is some ~strikethrough~ text. You can also use ```monospace``` for things like code.");
     }
 }

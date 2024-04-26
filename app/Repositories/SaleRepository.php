@@ -3,11 +3,19 @@
 namespace App\Repositories;
 
 use App\Contracts\SaleInterface;
+use App\Services\WhatsAppService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Product,Cart,Order,Customer};
 
 class SaleRepository implements SaleInterface
 {
+    protected $whatsAppService;
+
+    public function __construct(WhatsAppService $whatsAppService){
+        $this->whatsAppService = $whatsAppService;
+    }
+
 	public function cartItemList($guard)
 	{
 		return Auth::guard($guard)->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
@@ -16,11 +24,16 @@ class SaleRepository implements SaleInterface
     public function cartStoreItem($data, $guard)
 	{
         $product = $data['product_id'];
-        $checkProduct = Auth::guard($guard)->user()->carts()->whereProductId($product)->first();
+        $customer = Auth::guard($guard)->user();
+        $checkProduct = $customer->carts()->whereProductId($product)->first();
         if ($checkProduct) {
             return false;
         }
-        Cart::create(['customer_id' => Auth::guard($guard)->user()->id, 'product_id' => $product]);
+        $cart = Cart::create(['customer_id' => $customer->id, 'product_id' => $product]);
+        if(settings('sale_item_add_to_cart_whatsapp_notification') == 'Yes'){
+            $data = [$customer->name, $customer->mobile_number, $cart->product->name];
+            $this->whatsAppService->sendMessage('sale_product_added_to_cart', $data);
+        }
         return true;
 	}
 
@@ -51,26 +64,36 @@ class SaleRepository implements SaleInterface
 
 	public function orderStore($data, $guard)
 	{
-		$customer = Auth::guard($guard)->user();
-		$order = $customer->orders()->create($data);
-        if (!is_null($data['buy_now'])) {
-            $product = Product::find($data['product_id']);
-            $order->details()->create([
-                'product_id'=> $data['product_id'],
-                'quantity'  => 1,
-                'price'     => $product->price - $product->discount
-            ]);
-        }else{
-            foreach($customer->carts as $row){
+        $responce = DB::transaction(function () use($data, $guard) {
+            $products = '';
+            $customer = Auth::guard($guard)->user();
+            $order = $customer->orders()->create($data);
+            if (!is_null($data['buy_now'])) {
+                $product = Product::find($data['product_id']);
                 $order->details()->create([
-                    'product_id'=> $row->product_id,
-                    'quantity'  => $row->quantity,
-                    'price'     => $row->product->price - $row->product->discount
+                    'product_id'=> $data['product_id'],
+                    'quantity'  => 1,
+                    'price'     => $product->price - $product->discount
                 ]);
-                $row->delete();
+                $products .= $product->name.' ( 1 Qty)';
+            }else{
+                foreach($customer->carts as $row){
+                    $order->details()->create([
+                        'product_id'=> $row->product_id,
+                        'quantity'  => $row->quantity,
+                        'price'     => $row->product->price - $row->product->discount
+                    ]);
+                    $products .= $row->product->name.' ( '.$row->quantity.' Qty)';
+                    $row->delete();
+                }
             }
-        }
-        return $order;
+            if(settings('sale_order_whatsapp_notification') == 'Yes'){
+                $data = [$customer->name, $customer->mobile_number, $products];
+                $this->whatsAppService->sendMessage('purchase_order_placed', $data);
+            }
+            return $order;
+        });
+        return $responce;
 	}
 
 	public function orderUpdate($data, $id)

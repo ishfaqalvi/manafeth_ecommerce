@@ -36,6 +36,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
 	|--------------------------------------------------------------------------
 	*/
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/message', 'HomeController@sendWatsap')->name('home');
 
     /*
 	|--------------------------------------------------------------------------
@@ -78,7 +79,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
         Route::get('rent',             'rent'        )->name('rent'       );
         Route::get('maintenance',      'maintenance' )->name('maintenance');
         Route::get('show/{id}',        'show'        )->name('show'       );
-    }); 
+    });
 
     /*
 	|--------------------------------------------------------------------------

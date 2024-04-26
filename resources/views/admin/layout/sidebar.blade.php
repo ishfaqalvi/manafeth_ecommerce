@@ -249,7 +249,7 @@
 </li>
 @endcan
 <li class="nav-item">
-    <a class="nav-link {{ request()->routeIs('settings*') ? 'active' : ''}}" href="{{ route('settings.index') }}">
+    <a class="nav-link {{ request()->routeIs('settings*') ? 'active' : ''}}" href="{{ route('settings.general') }}">
         <i class="ph-gear"></i>
         <span>Settings</span>
     </a>

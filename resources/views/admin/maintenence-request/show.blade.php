@@ -66,7 +66,7 @@
             <div class="form-group mb-3">
                 <strong>Images:</strong>
                 @foreach ($maintenenceRequest->images as $image)
-                    <img src="{{ $image }}" />
+                    <img src="{{ $image }}" width="100%"/>
                 @endforeach
             </div>
         </div>

@@ -27,7 +27,38 @@ class SettingsSeeder extends Seeder
             [
                 'key'   => 'page_title_icon',
                 'value' => 'upload/images/settings/derivative-favicon.png',
-            ]
+            ],
+
+
+
+
+
+
+
+            [
+                'key' 	=> 'whatsapp_notification_number',
+                'value' => '',
+            ],
+            [
+                'key' 	=> 'sale_item_add_to_cart_whatsapp_notification',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'sale_order_whatsapp_notification',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'rent_item_add_to_cart_whatsapp_notification',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'rent_order_whatsapp_notification',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'maintenence_request_whatsapp_notification',
+                'value' => 'No',
+            ],
         ]);
     }
 }
