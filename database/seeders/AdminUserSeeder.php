@@ -24,9 +24,7 @@ class AdminUserSeeder extends Seeder
             'password'  	=> 'password',
         ]);
 
-        $role = Role::create(['name' => 'Super Admin','guard_name' => 'web']);
-
-        $role->syncPermissions(Permission::all());
+        $role = Role::findById(1);
         $user->assignRole(1);
     }
 }

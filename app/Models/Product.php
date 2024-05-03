@@ -128,10 +128,10 @@ class Product extends Model implements Auditable
             $query->whereStatus($request['status']);
         }
         if (isset($request['min_price'])) {
-            $query->where('price', '>', $request['min_price']);
+            $query->where('price', '>=', $request['min_price']);
         }
         if (isset($request['max_price'])) {
-            $query->where('price', '<', $request['max_price']);
+            $query->where('price', '<=', $request['max_price']);
         }
         if (isset($request['search'])) {
             $query->where('name', 'like', '%'.$request['search'].'%')

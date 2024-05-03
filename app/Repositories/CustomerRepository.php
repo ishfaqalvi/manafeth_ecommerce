@@ -97,14 +97,19 @@ class CustomerRepository implements CustomerInterface
     public function forgotPassword($data)
     {
         $customer = Customer::whereEmail($data['email'])->first();
-        $otp = rand(1000, 9999);
-        Token::updateOrCreate(['email' => $data['email']], [
-            'email'      => $data['email'],
-            'otp'        => $otp,
-            'expiry_time'=> now()->addMinutes(10),
-            'used'       => false
-        ]);
-        Mail::to($data['email'])->send(new OTPMail($otp, 'Forgot Password'));
+        if($customer){
+            $otp = rand(1000, 9999);
+            Token::updateOrCreate(['email' => $data['email']], [
+                'email'      => $data['email'],
+                'otp'        => $otp,
+                'expiry_time'=> now()->addMinutes(10),
+                'used'       => false
+            ]);
+            Mail::to($data['email'])->send(new OTPMail($otp, 'Forgot Password'));
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public function resetPassword($data)

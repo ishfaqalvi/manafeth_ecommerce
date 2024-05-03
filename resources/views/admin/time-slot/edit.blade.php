@@ -1,19 +1,19 @@
 @extends('admin.layout.app')
 
 @section('title')
-{{ __('Create') }} Promo Code
+    {{ __('Update') }} Time Slot
 @endsection
 
 @section('header')
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">Promo Code Managment</span>
+            Home - <span class="fw-normal">Time Slot Managment</span>
         </h4>
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <a href="{{ route('promo-codes.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            <a href="{{ route('time-slots.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-arrow-circle-left"></i>
                 </span>
@@ -28,12 +28,13 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">{{ __('Create') }} Promo Code</h5>
+            <h5 class="mb-0">{{ __('Edit ') }} Time Slot </h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('promo-codes.store') }}" class="validate" role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('time-slots.update', $timeSlot->id) }}" class="validate"   role="form" enctype="multipart/form-data">
                 @csrf
-                @include('admin.promo-code.form')
+                {{ method_field('PATCH') }}
+                 @include('admin.time-slot.form')
             </form>
         </div>
     </div>

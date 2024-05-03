@@ -27,8 +27,6 @@ class PromoCode extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
-    
-
     protected $perPage = 20;
 
     /**
@@ -36,8 +34,30 @@ class PromoCode extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['title','code','discount_type','discount_value','valid_from','valid_until','usage_limit','status'];
+    protected $fillable = [
+        'title',
+        'code',
+        'discount_type',
+        'discount_value',
+        'valid_from',
+        'valid_until',
+        'usage_limit',
+        'status'
+    ];
 
+    /**
+     * Interact with the date.
+     */
+    public function setValidFromAttribute($value)
+    {
+        $this->attributes['valid_from'] = strtotime($value);
+    }
 
-
+    /**
+     * Interact with the date.
+     */
+    public function setValidUntilAttribute($value)
+    {
+        $this->attributes['valid_until'] = strtotime($value);
+    }
 }

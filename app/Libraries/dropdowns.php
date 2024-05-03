@@ -40,3 +40,18 @@ function users()
     })->toArray();
     return $users; 
 }
+
+/**
+ * Get listing of a resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function topics()
+{
+    $topic = array();
+    foreach(explode(',',settings('firebase_topic')) as $topic)
+    {
+        $tpics[$topic] = $topic;
+    }
+    return $tpics; 
+}

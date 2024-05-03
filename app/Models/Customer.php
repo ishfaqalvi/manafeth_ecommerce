@@ -39,7 +39,17 @@ class Customer extends Authenticatable implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['name','email','mobile_number','password','email_verified_at','address','image','status'];
+    protected $fillable = [
+        'name',
+        'email',
+        'mobile_number',
+        'fcm_token',
+        'password',
+        'email_verified_at',
+        'address',
+        'image',
+        'status'
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -146,5 +156,13 @@ class Customer extends Authenticatable implements Auditable
     public function rentRequests()
     {
         return $this->hasMany('App\Models\RentRequest', 'customer_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function coupons()
+    {
+        return $this->hasMany('App\Models\Coupon', 'customer_id', 'id');
     }
 }

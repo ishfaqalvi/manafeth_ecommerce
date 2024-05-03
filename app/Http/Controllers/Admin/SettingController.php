@@ -47,6 +47,16 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function fcm()
+    {
+        return view('admin.settings.fcm');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function clearCache()
     {
         Artisan::call('optimize');

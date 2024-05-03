@@ -20,7 +20,7 @@ Route::controller(OrderController::class)->prefix('orders')->as('orders.')->grou
 	Route::post('store',			 'store'	 )->name('store'  	 );
 	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
 	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
-	Route::patch('update/{user}',    'update'	 )->name('update' 	 );
+	Route::patch('update/{order}',    'update'	 )->name('update' 	 );
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
 	Route::post('check-email', 		 'checkEmail')->name('checkEmail');
 });
@@ -157,6 +157,27 @@ Route::controller(BlogController::class)->prefix('blogs')->as('blogs.')->group(f
 
 /*
 |--------------------------------------------------------------------------
+| FCM Notifications Routes
+|--------------------------------------------------------------------------
+*/
+Route::resource('fcm-notifications', FcmNotificationController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Time Slots Routes
+|--------------------------------------------------------------------------
+*/
+Route::resource('time-slots', TimeSlotController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Promo Codes Routes
+|--------------------------------------------------------------------------
+*/
+Route::resource('promo-codes', PromoCodeController::class);
+
+/*
+|--------------------------------------------------------------------------
 | Role Routes
 |--------------------------------------------------------------------------
 */
@@ -209,8 +230,9 @@ Route::controller(AuditController::class)->prefix('audits')->as('audits.')->grou
 |--------------------------------------------------------------------------
 */
 Route::controller(SettingController::class)->prefix('settings')->as('settings.')->group(function () {
-	Route::get('general', 		'general'		)->name('general'		  );
-	Route::get('whatsapp', 		'whatsapp'		)->name('whatsapp'		  );
+	Route::get('general', 		'general'	)->name('general'	  );
+	Route::get('whatsapp', 		'whatsapp'	)->name('whatsapp'	  );
+	Route::get('fcm', 		    'fcm'		)->name('fcm'		  );
 	Route::get('clear-cache', 	'clearCache')->name('clear-cache' );
 	Route::post('save', 		'save'		)->name('save'		  );
 });

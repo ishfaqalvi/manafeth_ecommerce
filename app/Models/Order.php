@@ -33,8 +33,27 @@ class Order extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['customer_id','payment_method','name','email','phone_number','address','status'];
+    protected $fillable = [
+        'customer_id',
+        'payment_method',
+        'collection_type',
+        'collection_date',
+        'time_slot_id',
+        'discount',
+        'name',
+        'email',
+        'phone_number',
+        'address',
+        'status'
+    ];
 
+    /**
+     * Interact with the date.
+     */
+    public function setCollectionDateAttribute($value)
+    {
+        $this->attributes['collection_date'] = strtotime($value);
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

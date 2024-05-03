@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
 
-use App\Models\PromoCode;
 use Illuminate\Http\Request;
+use App\Contracts\CouponInterface;
+use App\Http\Controllers\Controller;
 
 /**
  * Class PromoCodeController
@@ -12,13 +12,15 @@ use Illuminate\Http\Request;
  */
 class PromoCodeController extends Controller
 {
+    protected $coupon;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
+    function __construct(CouponInterface $coupon)
     {
+        $this->coupon = $coupon;
         $this->middleware('permission:promoCodes-list',  ['only' => ['index']]);
         $this->middleware('permission:promoCodes-view',  ['only' => ['show']]);
         $this->middleware('permission:promoCodes-create',['only' => ['create','store']]);
@@ -33,7 +35,7 @@ class PromoCodeController extends Controller
      */
     public function index()
     {
-        $promoCodes = PromoCode::get();
+        $promoCodes = $this->coupon->promoCodeList('pagination');
 
         return view('admin.promo-code.index', compact('promoCodes'));
     }
@@ -45,7 +47,7 @@ class PromoCodeController extends Controller
      */
     public function create()
     {
-        $promoCode = new PromoCode();
+        $promoCode = $this->coupon->promoCodeNew();
         return view('admin.promo-code.create', compact('promoCode'));
     }
 
@@ -57,7 +59,7 @@ class PromoCodeController extends Controller
      */
     public function store(Request $request)
     {
-       $promoCode = PromoCode::create($request->all());
+        $promoCode = $this->coupon->promoCodeStore($request->all());
         return redirect()->route('promo-codes.index')
             ->with('success', 'PromoCode created successfully.');
     }
@@ -70,7 +72,7 @@ class PromoCodeController extends Controller
      */
     public function show($id)
     {
-        $promoCode = PromoCode::find($id);
+        $promoCode = $this->coupon->promoCodeFind($id);
 
         return view('admin.promo-code.show', compact('promoCode'));
     }
@@ -83,7 +85,7 @@ class PromoCodeController extends Controller
      */
     public function edit($id)
     {
-        $promoCode = PromoCode::find($id);
+        $promoCode = $this->coupon->promoCodeFind($id);
 
         return view('admin.promo-code.edit', compact('promoCode'));
     }
@@ -95,9 +97,9 @@ class PromoCodeController extends Controller
      * @param  PromoCode $promoCode
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PromoCode $promoCode)
+    public function update(Request $request, $id)
     {
-        $promoCode->update($request->all());
+        $this->coupon->promoCodeUpdate($request->all(), $id);
 
         return redirect()->route('promo-codes.index')
             ->with('success', 'PromoCode updated successfully');
@@ -110,7 +112,7 @@ class PromoCodeController extends Controller
      */
     public function destroy($id)
     {
-        $promoCode = PromoCode::find($id)->delete();
+        $this->coupon->promoCodeDelete($id);
 
         return redirect()->route('promo-codes.index')
             ->with('success', 'PromoCode deleted successfully');

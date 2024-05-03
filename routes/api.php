@@ -125,6 +125,26 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	        Route::post('create',      		'store'  );
 	        Route::delete('delete/{id}',    'destroy');
 	    });
+
+		/*
+	    |--------------------------------------------------------------------------
+	    | FCM Notifications Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(FcmNotificationController::class)->prefix('fcm-notifications')->group(function(){
+	        Route::get('list',             	'index' );
+	        Route::get('read/{id}',      	'read'  );
+	    });
+
+        /*
+	    |--------------------------------------------------------------------------
+	    | Coupon Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(CouponController::class)->prefix('coupons')->group(function(){
+	        Route::post('apply',            'apply'     );
+	        Route::get('discount',      	'discount'  );
+	    });
 	});
 });
 
@@ -206,6 +226,15 @@ Route::group(['namespace'=>'App\Http\Controllers\API'], function(){
     	Route::get('view/{id}',							'show' 		  			 );
     	Route::get('filters',							'filters' 		  		 );
 	});
+
+    /*
+    |--------------------------------------------------------------------------
+    | Time Slots Route
+    |--------------------------------------------------------------------------
+    */
+    Route::controller(TimeSlotController::class)->prefix('time-slots')->group(function(){
+        Route::get('list',  'index' );
+    });
 
 	/*
 	|--------------------------------------------------------------------------

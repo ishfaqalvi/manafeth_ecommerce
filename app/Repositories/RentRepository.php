@@ -10,9 +10,14 @@ use App\Models\{RentCart,RentRequest,Customer};
 class RentRepository implements RentInterface
 {
     protected $whatsAppService;
+    protected $fcmNotification;
 
-    public function __construct(WhatsAppService $whatsAppService){
+    public function __construct(
+        WhatsAppService $whatsAppService,
+        FcmInterface $fcmNotification
+    ){
         $this->whatsAppService = $whatsAppService;
+        $this->fcmNotification = $fcmNotification;
     }
 
 	public function cartItemList($guard)
@@ -90,6 +95,14 @@ class RentRepository implements RentInterface
             if(settings('rent_order_whatsapp_notification') == 'Yes'){
                 $data = [$data['full_name'], $data['phone_number'], $products];
                 $this->whatsAppService->sendMessage('renta_order_placed', $data);
+            }
+            if(settings('rent_order_fcm_notification') == 'Yes' && $guard == 'customerapi'){
+                $data = [
+                    'title' => 'Rent Request',
+                    'body' => 'Your rental request has been submitted successfully.',
+                    'customer_id' => $customer->id
+                ];
+                $this->fcmNotification->store($data);
             }
         });
         return $responce;

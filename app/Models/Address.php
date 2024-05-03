@@ -35,7 +35,7 @@ class Address extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['customer_id','full_name','phone_number','postal_code','city','state','country','address'];
+    protected $fillable = ['customer_id','full_name','phone_number','city','state','country','address'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

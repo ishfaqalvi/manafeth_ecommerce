@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-
+use Illuminate\Support\Facades\DB;
 
 class PermissionSeeder extends Seeder
 {
@@ -16,16 +16,20 @@ class PermissionSeeder extends Seeder
     */
     public function run()
     {
-        $role = Role::findById(1);
-        $permissions = $role->permissions;
-
-        foreach ($permissions as $permission) {
-            $role->revokePermissionTo($permission);
+        $check_role = DB::table('roles')->find(1);
+        if($check_role){
+            $role = Role::findById(1);
+            $permissions = $role->permissions;
+            foreach ($permissions as $permission) {
+                $role->revokePermissionTo($permission);
+            }
+            $role->syncPermissions();
+            Permission::query()->delete();
         }
-        $role->syncPermissions();
-
-
-        Permission::query()->delete();
+        else
+        {
+            $role = Role::create(['name' => 'Super Admin','guard_name' => 'web']);
+        }
         $permissions = [
             'orders-list',
             'orders-view',
@@ -130,6 +134,24 @@ class PermissionSeeder extends Seeder
             'rentSubCategories-create',
             'rentSubCategories-edit',
             'rentSubCategories-delete',
+
+            'fcmNotifications-list',
+            'fcmNotifications-view',
+            'fcmNotifications-create',
+            'fcmNotifications-edit',
+            'fcmNotifications-delete',
+
+            'timeSlots-list',
+            'timeSlots-view',
+            'timeSlots-create',
+            'timeSlots-edit',
+            'timeSlots-delete',
+
+            'promoCodes-list',
+            'promoCodes-view',
+            'promoCodes-create',
+            'promoCodes-edit',
+            'promoCodes-delete',
 
             'roles-list',
             'roles-view',

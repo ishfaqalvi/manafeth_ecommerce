@@ -10,9 +10,14 @@ use App\Contracts\MaintenenceInterface;
 class MaintenenceRepository implements MaintenenceInterface
 {
     protected $whatsAppService;
+    protected $fcmNotification;
 
-    public function __construct(WhatsAppService $whatsAppService){
+    public function __construct(
+        WhatsAppService $whatsAppService,
+        FcmInterface $fcmNotification
+    ){
         $this->whatsAppService = $whatsAppService;
+        $this->fcmNotification = $fcmNotification;
     }
 
     public function list($guard = null, $pagination = false)
@@ -44,6 +49,14 @@ class MaintenenceRepository implements MaintenenceInterface
                     $data['message']
                 ];
                 $this->whatsAppService->sendMessage('maintenance_req_submitted', $data);
+            }
+            if(settings('maintenence_request_fcm_notification') == 'Yes' && $guard == 'customerapi'){
+                $data = [
+                    'title' => 'Maintenence Request',
+                    'body' => 'Your maintenence request has been submitted successfully.',
+                    'customer_id' => $customer->id
+                ];
+                $this->fcmNotification->store($data);
             }
         });
     }

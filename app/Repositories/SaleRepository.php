@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Contracts\FcmInterface;
 use App\Contracts\SaleInterface;
 use App\Services\WhatsAppService;
 use Illuminate\Support\Facades\DB;
@@ -11,9 +12,14 @@ use App\Models\{Product,Cart,Order,Customer};
 class SaleRepository implements SaleInterface
 {
     protected $whatsAppService;
+    protected $fcmNotification;
 
-    public function __construct(WhatsAppService $whatsAppService){
+    public function __construct(
+        WhatsAppService $whatsAppService,
+        FcmInterface $fcmNotification
+    ){
         $this->whatsAppService = $whatsAppService;
+        $this->fcmNotification = $fcmNotification;
     }
 
 	public function cartItemList($guard)
@@ -90,6 +96,14 @@ class SaleRepository implements SaleInterface
             if(settings('sale_order_whatsapp_notification') == 'Yes'){
                 $data = [$customer->name, $customer->mobile_number, $products];
                 $this->whatsAppService->sendMessage('purchase_order_placed', $data);
+            }
+            if(settings('sale_order_fcm_notification') == 'Yes' && $guard == 'customerapi'){
+                $data = [
+                    'title' => 'Order Placed',
+                    'body' => 'Your order has been placed successfully.',
+                    'customer_id' => $customer->id
+                ];
+                $this->fcmNotification->store($data);
             }
             return $order;
         });

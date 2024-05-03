@@ -39,6 +39,9 @@
 					<th>Name</th>
 					<th>Email</th>
 					<th>Phone Number</th>
+					<th>Date</th>
+					<th>Time</th>
+					<th>Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -49,6 +52,9 @@
 					<td>{{ $order->name }}</td>
 					<td>{{ $order->email }}</td>
 					<td>{{ $order->phone_number }}</td>
+					<td>{{ Carbon\Carbon::parse($order->created_at)->toDateString() }}</td>
+					<td>{{ Carbon\Carbon::parse($order->created_at)->toTimeString() }}</td>
+                    <td>{{ $order->status }}</td>
                     <td class="text-center">@include('admin.order.actions')</td>
                 </tr>
             @endforeach

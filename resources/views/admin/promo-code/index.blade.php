@@ -11,7 +11,7 @@
             Home - <span class="fw-normal">Promo Code Managment</span>
         </h4>
     </div>
-    @can('promo-codes-create')
+    @can('promoCodes-create')
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
             <a href="{{ route('promo-codes.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
@@ -36,16 +36,13 @@
             <thead class="thead">
                 <tr>
                     <th>No</th>
-                    
-										<th>Title</th>
-										<th>Code</th>
-										<th>Discount Type</th>
-										<th>Discount Value</th>
-										<th>Valid From</th>
-										<th>Valid Until</th>
-										<th>Usage Limit</th>
-										<th>Status</th>
-
+                    <th>Title</th>
+                    <th>Code</th>
+                    <th>Discount</th>
+                    <th>Valid From</th>
+                    <th>Valid Until</th>
+                    <th>Usage Limit</th>
+                    <th>Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -53,16 +50,19 @@
             @foreach ($promoCodes as $key => $promoCode)
                 <tr>
                     <td>{{ ++$key }}</td>
-                    
-											<td>{{ $promoCode->title }}</td>
-											<td>{{ $promoCode->code }}</td>
-											<td>{{ $promoCode->discount_type }}</td>
-											<td>{{ $promoCode->discount_value }}</td>
-											<td>{{ $promoCode->valid_from }}</td>
-											<td>{{ $promoCode->valid_until }}</td>
-											<td>{{ $promoCode->usage_limit }}</td>
-											<td>{{ $promoCode->status }}</td>
-
+                    <td>{{ $promoCode->title }}</td>
+                    <td>{{ $promoCode->code }}</td>
+                    <td>
+                        @if($promoCode->discount_type == 'Percentage')
+                            {{ $promoCode->discount_value .'%' }}
+                        @else
+                            {{ number_format($promoCode->discount_value) }}
+                        @endif
+                    </td>
+                    <td>{{ date('d M Y', $promoCode->valid_from) }}</td>
+                    <td>{{ date('d M Y', $promoCode->valid_until) }}</td>
+                    <td>{{ $promoCode->usage_limit }}</td>
+                    <td>{{ $promoCode->status }}</td>
                     <td class="text-center">@include('admin.promo-code.actions')</td>
                 </tr>
             @endforeach
@@ -71,36 +71,7 @@
     </div>
 </div>
 @endsection
-@canany(['promo-codes-view', 'promo-codes-edit', 'promo-codes-delete'])
-<div class="d-inline-flex">
-    <div class="dropdown">
-        <a href="#" class="text-body" data-bs-toggle="dropdown">
-            <i class="ph-list"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-end">
-            <form action="{{ route('promo-codes.destroy',$promoCode->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                @can('promo-codes-view')
-                    <a href="{{ route('promo-codes.show',$promoCode->id) }}" class="dropdown-item">
-                        <i class="ph-eye me-2"></i>{{ __('Show') }}
-                    </a>
-                @endcan
-                @can('promo-codes-edit')
-                    <a href="{{ route('promo-codes.edit',$promoCode->id) }}" class="dropdown-item">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Edit') }}
-                    </a>
-                @endcan
-                @can('promo-codes-delete')
-                    <button type="submit" class="dropdown-item sa-confirm">
-                        <i class="ph-trash me-2"></i>{{ __('Delete') }}
-                    </button>
-                @endcan
-            </form>
-        </div>
-    </div>
-</div>
-@endcanany
+
 @section('script')
 <script>
     $(function () {

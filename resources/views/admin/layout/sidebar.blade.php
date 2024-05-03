@@ -174,6 +174,30 @@
     </a>
 </li>
 @endcan
+@can('timeSlots-list')
+<li class="nav-item">
+    <a href="{{ route('time-slots.index') }}" class="nav-link {{ request()->is('admin/time-slots*') ? 'active' : ''}}">
+        <i class="ph-timer"></i>
+        <span>Time Slots</span>
+    </a>
+</li>
+@endcan
+@can('fcmNotifications-list')
+<li class="nav-item">
+    <a href="{{ route('fcm-notifications.index') }}" class="nav-link {{ request()->is('admin/fcm-notifications*') ? 'active' : ''}}">
+        <i class="ph-bell"></i>
+        <span>FCM Notifications</span>
+    </a>
+</li>
+@endcan
+@can('promoCodes-list')
+<li class="nav-item">
+    <a href="{{ route('promo-codes.index') }}" class="nav-link {{ request()->is('admin/promo-codes*') ? 'active' : ''}}">
+        <i class="ph-puzzle-piece"></i>
+        <span>Promo Codes</span>
+    </a>
+</li>
+@endcan
 @canany(['categories-list','categories-subList'])
 <li class="nav-item-header">
     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Categories</div>

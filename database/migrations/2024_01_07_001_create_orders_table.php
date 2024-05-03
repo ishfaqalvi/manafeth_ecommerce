@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->references('id')->on('customers')->cascadeOnDelete();
-            $table->string('payment_method');
+            $table->enum('payment_method',['Cash On Delivery']);
+            $table->enum('collection_type',['Self Pickup','Home Delivery']);
+            $table->bigInteger('collection_date');
+            $table->foreignId('time_slot_id')->references('id')->on('time_slots')->cascadeOnDelete();
+            $table->integer('discount')->nullable();
             $table->string('name');
             $table->string('email');
             $table->string('phone_number');
             $table->string('address');
-            $table->enum('status',['Pending','Accepted','Completed']);
+            $table->enum('status',['Processing','Confirmed','On the way','Deliver']);
             $table->timestamps();
         });
     }

@@ -83,8 +83,12 @@ class AuthController extends BaseController
     public function forgotPass(Request $request)
     {
         try {
-            $this->customer->forgotPassword($request->all());
-            return $this->sendResponse('', 'OTP sent to your email successfully.');
+            $responce = $this->customer->forgotPassword($request->all());
+            if($responce){
+                return $this->sendResponse('', 'OTP sent to your email successfully.');
+            }else{
+                return $this->sendError('Invalid Error', 'Email is not exist is our record.');    
+            }
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }

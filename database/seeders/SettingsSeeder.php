@@ -32,9 +32,7 @@ class SettingsSeeder extends Seeder
 
 
 
-
-
-
+            
             [
                 'key' 	=> 'whatsapp_notification_number',
                 'value' => '',
@@ -57,6 +55,32 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' 	=> 'maintenence_request_whatsapp_notification',
+                'value' => 'No',
+            ],
+
+
+            [
+                'key' 	=> 'firebase_project_id',
+                'value' => 'e-manafeth-9bd48',
+            ],
+            [
+                'key' 	=> 'google_application_credentials',
+                'value' => '',
+            ],
+            [
+                'key' 	=> 'firebase_topic',
+                'value' => 'manafeth',
+            ],
+            [
+                'key' 	=> 'sale_order_fcm_notification',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'rent_order_fcm_notification',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'maintenence_request_fcm_notification',
                 'value' => 'No',
             ],
         ]);
