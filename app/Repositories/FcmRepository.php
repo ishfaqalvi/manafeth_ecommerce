@@ -35,7 +35,7 @@ class FcmRepository implements FcmInterface
 		$record = FcmNotification::create($data);
         if(!is_null($record->topic))
         {
-            $this->fcm->sendMessageToTopic($record->topic, $$record->title, $record->body, $record->image);
+            $this->fcm->sendMessageToTopic($record->topic, $record->title, $record->body, $record->image);
         }
         if(!is_null($record->customer_id))
         {
