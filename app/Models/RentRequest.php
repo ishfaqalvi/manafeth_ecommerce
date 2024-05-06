@@ -36,6 +36,11 @@ class RentRequest extends Model implements Auditable
      */
     protected $fillable = [
         'customer_id',
+        'payment_method',
+        'collection_type',
+        'collection_date',
+        'time_slot_id',
+        'discount',
         'full_name',
         'phone_number',
         'address',
@@ -44,11 +49,27 @@ class RentRequest extends Model implements Auditable
     ];
 
     /**
+     * Interact with the date.
+     */
+    public function setCollectionDateAttribute($value)
+    {
+        $this->attributes['collection_date'] = strtotime($value);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function customer()
     {
         return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function timeSlot()
+    {
+        return $this->hasOne('App\Models\TimeSlot', 'id', 'time_slot_id');
     }
 
     /**

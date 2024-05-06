@@ -62,7 +62,15 @@ class Order extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
     }
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function timeSlot()
+    {
+        return $this->hasOne('App\Models\TimeSlot', 'id', 'time_slot_id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

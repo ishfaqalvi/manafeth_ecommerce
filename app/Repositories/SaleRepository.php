@@ -56,12 +56,11 @@ class SaleRepository implements SaleInterface
 
 	public function orderList($customer_id)
 	{
+        $query = Order::query();
 		if ($customer_id) {
-			$orders = Order::whereCustomerId($customer_id)->with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
-		}else{
-			$orders = Order::with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
+            $query->whereCustomerId($customer_id);
 		}
-		return $orders;
+		return $query->with(['timeSlot','details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
 	}
 
 	public function orderFind($id)

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+use App\Contracts\FcmInterface;
 use App\Services\WhatsAppService;
 use App\Models\MaintenenceRequest;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,8 @@ class MaintenenceRepository implements MaintenenceInterface
 	public function store($guard, $data)
     {
         DB::transaction(function () use($guard, $data){
-            $record = Auth::guard($guard)->user()->maintenenceRequests()->create($data);
+            $customer = Auth::guard($guard)->user();
+            $record = $customer->maintenenceRequests()->create($data);
             if(settings('maintenence_request_whatsapp_notification') == 'Yes'){
                 $data = [
                     $data['first_name'].' '.$data['last_name'],

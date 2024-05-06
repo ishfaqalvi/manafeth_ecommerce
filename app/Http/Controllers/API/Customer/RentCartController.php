@@ -43,7 +43,7 @@ class RentCartController extends BaseController
     {
         try {
             $responce = $this->cart->cartStoreItem($request->all(), 'customerapi');
-            if ($responce = false) {
+            if ($responce == false) {
                 return $this->sendError('Record Exist', 'This product already exist in cart.');
             }
             $data = $this->cart->cartItemList('customerapi');

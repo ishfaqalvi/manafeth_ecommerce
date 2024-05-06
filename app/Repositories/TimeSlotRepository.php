@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 use Carbon\Carbon;
-use App\Models\Order;
-use App\Models\TimeSlot;
+use Illuminate\Support\Arr;
 use App\Contracts\TimeSlotInterface;
+use App\Models\{Order,TimeSlot,RentRequest};
 
 class TimeSlotRepository implements TimeSlotInterface
 {
@@ -20,7 +20,9 @@ class TimeSlotRepository implements TimeSlotInterface
         $bookedSlots = [];
         if($type == 'Home Delivery'){
             $check_date = strtotime($date);
-            $bookedSlots = Order::whereCollectionType($type)->whereCollectionDate($check_date)->pluck('time_slot_id')->all();
+            $orderSlotIds = Order::whereCollectionType($type)->whereCollectionDate($check_date)->pluck('time_slot_id')->all();
+            $rentSlotIds = RentRequest::whereCollectionType($type)->whereCollectionDate($check_date)->pluck('time_slot_id')->all();
+            $bookedSlots = array_unique(array_merge($orderSlotIds, $rentSlotIds));
         }
         return $query->whereType($type)->get()->map(function ($slot) use ($bookedSlots) {
             $slot->status = in_array($slot->id, $bookedSlots) ? 'Not Available' : 'Available';

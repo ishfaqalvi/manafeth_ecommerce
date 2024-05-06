@@ -89,7 +89,7 @@ class RentRepository implements RentInterface
                     'from'      => $row->from,
                     'to'        => $row->to
                 ]);
-                $products .= $row->product->name.' ( '.$row->quantity.' Qty)';
+                $products .= $row->product->name.' ( '.$row->quantity.' Qty)'.' (From: '. date('d M Y', $row->from).') (To: '.date('d M Y', $row->to).')';
                 $row->delete();
             }
             if(settings('rent_order_whatsapp_notification') == 'Yes'){
@@ -104,6 +104,7 @@ class RentRepository implements RentInterface
                 ];
                 $this->fcmNotification->store($data);
             }
+            return $order;
         });
         return $responce;
 	}
