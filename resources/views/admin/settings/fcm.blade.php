@@ -32,7 +32,7 @@
                         </div>
                         <label class="col-lg-4 mb-3 col-form-label">Google Application Credentials :</label>
                         <div class="col-lg-8 mb-3">
-                            <input type="file" name="values[google_application_credentials]" class="form-control">
+                            <input type="file" name="google_application_credentials" class="form-control dropify" accept=".json" data-default-file="{{ settings('google_application_credentials') }}">
                         </div>
                         <label class="col-lg-4 mb-3 col-form-label">Message Topic For All Customer :</label>
                         <div class="col-lg-8 mb-3">
@@ -69,4 +69,12 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $('.dropify').dropify();
+    });
+</script>
 @endsection

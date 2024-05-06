@@ -83,12 +83,37 @@ class SettingController extends Controller
             }
         }
         foreach ($request->file() as $key => $file) {
-            if ($image = $request->file($key)) {
-                $filenamewithextension = $image->getClientOriginalName();
-                $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-                $filenametostore = 'upload/images/settings/' . $filename . '_' . time() . '.webp';
-                // $img = Image::make($image)->encode('webp', 90)->resize(100 , 200)->save(public_path($filenametostore));
-                $img = Image::make($image)->encode('webp', 90)->save(public_path($filenametostore));
+            if ($file = $request->file($key)) {
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+
+                // Check if the file is an image
+                if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif'])) {
+                    // Resize the image
+                    $image = Image::make($file);
+                    $image->resize(300, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+
+                    // Save the resized image to a specific folder
+                    $image->save(public_path('images/settings/' . $filename));
+
+                    $filenametostore = 'images/settings/'. $filename;
+                } else {
+                    // Move the file to a specific folder as is
+                    $file->move(public_path('uploads/files'), $filename);
+                    $filenametostore = 'uploads/files/'. $filename;
+                }
+
+
+
+
+
+
+                // $filenamewithextension = $image->getClientOriginalName();
+                // $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+                // $filenametostore = 'upload/images/settings/' . $filename . '_' . time() . '.webp';
+                // // $img = Image::make($image)->encode('webp', 90)->resize(100 , 200)->save(public_path($filenametostore));
+                // $img = Image::make($image)->encode('webp', 90)->save(public_path($filenametostore));
             }
             $data[] = array(
                 'key'    => $key,

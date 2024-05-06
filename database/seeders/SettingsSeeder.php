@@ -32,7 +32,7 @@ class SettingsSeeder extends Seeder
 
 
 
-            
+
             [
                 'key' 	=> 'whatsapp_notification_number',
                 'value' => '',
@@ -65,7 +65,7 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' 	=> 'google_application_credentials',
-                'value' => '',
+                'value' => 'uploads/files/google-application-credentials.json',
             ],
             [
                 'key' 	=> 'firebase_topic',

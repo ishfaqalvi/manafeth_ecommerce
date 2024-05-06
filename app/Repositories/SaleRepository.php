@@ -31,6 +31,7 @@ class SaleRepository implements SaleInterface
 	{
         $product = $data['product_id'];
         $customer = Auth::guard($guard)->user();
+
         $checkProduct = $customer->carts()->whereProductId($product)->first();
         if ($checkProduct) {
             return false;

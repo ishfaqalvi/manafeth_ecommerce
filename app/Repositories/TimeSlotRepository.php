@@ -17,15 +17,16 @@ class TimeSlotRepository implements TimeSlotInterface
     public function available($type, $date)
     {
         $query = TimeSlot::query();
+        $bookedSlots = [];
         if($type == 'Home Delivery'){
             $check_date = strtotime($date);
-            $ids = Order::whereCollectionType($type)->whereCollectionDate($check_date)->pluck('time_slot_id');
-            $query->whereNotIn('id',$ids);
+            $bookedSlots = Order::whereCollectionType($type)->whereCollectionDate($check_date)->pluck('time_slot_id')->all();
         }
-        return $query->whereType($type)->get()->mapWithKeys(function ($slot) {
-            $sTime = Carbon::parse($slot->start_time)->format('g:i A');
-            $eTime = Carbon::parse($slot->end_time)->format('g:i A');
-            return [$slot->id => "{$sTime} - {$eTime}"];
+        return $query->whereType($type)->get()->map(function ($slot) use ($bookedSlots) {
+            $slot->status = in_array($slot->id, $bookedSlots) ? 'Not Available' : 'Available';
+            $slot->start_time = Carbon::parse($slot->start_time)->format('g:i A');
+            $slot->end_time = Carbon::parse($slot->end_time)->format('g:i A');
+            return $slot;
         })->toArray();
     }
 

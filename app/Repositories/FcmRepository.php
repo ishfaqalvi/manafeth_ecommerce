@@ -39,7 +39,7 @@ class FcmRepository implements FcmInterface
         }
         if(!is_null($record->customer_id))
         {
-            $this->fcm->sendNotification($$record->title, $record->body, $record->customer->fcm_token);
+            $this->fcm->sendNotification($record->title, $record->body, $record->customer->fcm_token);
         }
 	}
 

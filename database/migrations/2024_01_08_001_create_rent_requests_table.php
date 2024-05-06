@@ -14,12 +14,17 @@ return new class extends Migration
         Schema::create('rent_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->references('id')->on('customers')->cascadeOnDelete();
+            $table->enum('payment_method',['Cash On Delivery']);
+            $table->enum('collection_type',['Self Pickup','Home Delivery']);
+            $table->bigInteger('collection_date');
+            $table->foreignId('time_slot_id')->references('id')->on('time_slots')->cascadeOnDelete();
+            $table->integer('discount')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('phone_number');
             $table->string('address');
             $table->text('message');
-            $table->enum('status',['Pending','Accepted','Completed']);
+            $table->enum('status',['Processing','Confirmed','On the way','Deliver']);
             $table->timestamps();
         });
     }

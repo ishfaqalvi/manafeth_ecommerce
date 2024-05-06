@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(BrandSeeder::class);
         $this->call(BlogSeeder::class);
         $this->call(CategorySeeder::class);
+        $this->call(TimeSlotSeeder::class);
         $this->call(ProductSeeder::class);
         $this->call(CustomerSeeder::class);
         $this->call(SettingsSeeder::class);

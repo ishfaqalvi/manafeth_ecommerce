@@ -5,12 +5,14 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Log;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Log\Logger;
 
 class WhatsAppService
 {
     protected $client;
     protected $config;
     protected $to;
+    protected $logger;
 
     public function __construct()
     {
@@ -20,6 +22,9 @@ class WhatsAppService
             'timeout'  => $this->config['timeout'],
         ]);
         $this->to = settings('whatsapp_notification_number') ?? $this->config['default_number'];
+        $this->logger = new Logger();
+        $this->logger->setFilePath(public_path('logs/custom.log'));
+
     }
 
     public function sendMessage($template, $data)
@@ -58,9 +63,9 @@ class WhatsAppService
                 'body' => $body,
             ]);
             Log::info('Received WhatsApp response: Message sent successfully!');
-
         } catch (GuzzleHttp\Exception\RequestException $e) {
             Log::error('Error with WhatsApp service', ['error' => $e->getMessage()]);
         }
+
     }
 }

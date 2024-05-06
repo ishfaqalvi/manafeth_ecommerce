@@ -18,7 +18,7 @@ class FCMService
         $this->httpClient    = new HttpClient();
         $this->projectID     = settings('firebase_project_id') ?? env('FIREBASE_PROJECT_ID');
         $googleAppCredentialsSetting = settings('google_application_credentials');
-        $this->appCredetials = settings('google_application_credentials') ? public_path(settings('google_application_credentials')) : env('GOOGLE_APPLICATION_CREDENTIALS');
+        $this->appCredetials = settings('google_application_credentials') ? public_path(settings('google_application_credentials')) : '';
     }
 
     public function authenticate() {
@@ -87,7 +87,7 @@ class FCMService
         }
     }
 
-    public function sendMessageToTopic($topic, $title, $body, $imageUrl) 
+    public function sendMessageToTopic($topic, $title, $body, $imageUrl)
     {
         $accessToken = $this->authenticate();
         $message = [
@@ -100,6 +100,7 @@ class FCMService
                 ],
             ],
         ];
+        // dd($message);
         $headers = [
             'Authorization' => 'Bearer ' . $accessToken['access_token'],
             'Content-Type' => 'application/json',
@@ -109,10 +110,10 @@ class FCMService
                 'headers' => $headers,
                 'json' => $message
             ]);
-            Log::info('Received FCM response: Topic wise notification sent successfully!');
+            Log::info('Received FCM response: Topic wise notification sent successfully!', ['file' => public_path('logs/fcm.log')]);
 
         } catch (GuzzleHttp\Exception\RequestException $e) {
-            Log::error('Error with FCM service', ['error' => $e->getMessage()]);
+            Log::error('Error with FCM service', ['error' => $e->getMessage(), 'file' => public_path('logs/fcm.log')]);
         }
     }
 }
