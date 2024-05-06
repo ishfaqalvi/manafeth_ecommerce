@@ -123,7 +123,7 @@ class CustomerRepository implements CustomerInterface
             return false;
         }else {
             $customer = Customer::whereEmail($data['email'])->first();
-            $customer->update($data);
+            $customer->update(['password' => Hash::make($data['password'])]);
             $record->delete();
             return true;
         }

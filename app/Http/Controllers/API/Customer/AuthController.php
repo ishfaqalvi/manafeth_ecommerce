@@ -87,7 +87,7 @@ class AuthController extends BaseController
             if($responce){
                 return $this->sendResponse('', 'OTP sent to your email successfully.');
             }else{
-                return $this->sendError('Invalid Error', 'Email is not exist is our record.');    
+                return $this->sendError('Invalid Error', 'Email is not exist is our record.');
             }
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -120,7 +120,7 @@ class AuthController extends BaseController
     public function resetPass(Request $request)
     {
         try {
-            $responce = $this->customer->resetPassword($request->all());
+            $responce = $this->customer->resetPassword($request->all()); 
             if($responce == true){
                 return $this->sendResponse('', 'Password has been reset successfully.');
             }
