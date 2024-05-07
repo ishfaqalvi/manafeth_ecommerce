@@ -4,6 +4,7 @@ namespace App\Repositories;
 use App\Services\FCMService;
 use App\Contracts\FcmInterface;
 use App\Models\FcmNotification;
+use Illuminate\Support\Facades\Auth;
 
 class FcmRepository implements FcmInterface
 {
