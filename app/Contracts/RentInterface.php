@@ -21,4 +21,6 @@ interface RentInterface
 	public function orderUpdate($data, $id);
 
 	public function orderDelete($id);
+
+    public function orderReview($data);
 }

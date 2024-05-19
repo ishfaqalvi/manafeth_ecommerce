@@ -153,6 +153,12 @@ class PermissionSeeder extends Seeder
             'promoCodes-edit',
             'promoCodes-delete',
 
+            'employees-list',
+            'employees-view',
+            'employees-create',
+            'employees-edit',
+            'employees-delete',
+
             'roles-list',
             'roles-view',
             'roles-create',

@@ -62,6 +62,7 @@
         </table>
     </div>
 </div>
+@include('admin.order.status')
 @endsection
 
 @section('script')
@@ -93,6 +94,11 @@
             }).then((result) => {
                 if (result.value === true)  $(this).closest("form").submit();
             });
+        });
+        $(".changeStatus").click(function(){
+            $('#order-id').val($(this).data('id'));
+            $('#order-status').val($(this).data('status'));
+            $('#editOrder').modal('show');
         });
     });
 </script>

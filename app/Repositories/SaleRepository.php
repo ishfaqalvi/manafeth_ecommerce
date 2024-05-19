@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\OrderDetail;
 use App\Contracts\FcmInterface;
 use App\Contracts\SaleInterface;
 use App\Services\WhatsAppService;
@@ -36,7 +37,7 @@ class SaleRepository implements SaleInterface
         if ($checkProduct) {
             return false;
         }
-        $cart = Cart::create(['customer_id' => $customer->id, 'product_id' => $product]);
+        $cart = Cart::create(['customer_id' => $customer->id, 'product_id' => $product, 'quantity' => $data['quantity']]);
         if(settings('sale_item_add_to_cart_whatsapp_notification') == 'Yes'){
             $data = [$customer->name, $customer->mobile_number, $cart->product->name];
             $this->whatsAppService->sendMessage('sale_product_added_to_cart', $data);
@@ -54,13 +55,14 @@ class SaleRepository implements SaleInterface
 		Cart::find($id)->delete();
 	}
 
-	public function orderList($customer_id)
+	public function orderList($customer_id = null, $pagination = false)
 	{
         $query = Order::query();
-		if ($customer_id) {
+		if (!is_null($customer_id)) {
             $query->whereCustomerId($customer_id);
 		}
-		return $query->with(['timeSlot','details','details.product.brand', 'details.product.category', 'details.product.subCategory'])->get();
+        $relations = ['timeSlot','details','details.product.brand', 'details.product.category', 'details.product.subCategory'];
+		return $pagination ? $query->with($relations)->paginate() : $query->with($relations)->get();
 	}
 
 	public function orderFind($id)
@@ -81,6 +83,7 @@ class SaleRepository implements SaleInterface
                     'quantity'  => 1,
                     'price'     => $product->price - $product->discount
                 ]);
+                $product->decrement('quantity');
                 $products .= $product->name.' ( 1 Qty)';
             }else{
                 foreach($customer->carts as $row){
@@ -90,6 +93,7 @@ class SaleRepository implements SaleInterface
                         'price'     => $row->product->price - $row->product->discount
                     ]);
                     $products .= $row->product->name.' ( '.$row->quantity.' Qty)';
+                    $row->product->decrement('quantity', $row->quantity);
                     $row->delete();
                 }
             }
@@ -112,11 +116,38 @@ class SaleRepository implements SaleInterface
 
 	public function orderUpdate($data, $id)
 	{
-		return Order::find($id)->update($data);
+        DB::transaction(function () use($data, $id) {
+            $order = Order::find($id);
+            if($data['status'] == 'Cancelled'){
+                foreach($order->details as $row){
+                    $row->product->increment('quantity', $row->quantity);
+                }
+            }
+            if(settings('sale_order_fcm_notification') == 'Yes'){
+                $data = [
+                    'title' => 'Order '. $data['status'],
+                    'body' => 'Your order has been updated successfully.',
+                    'customer_id' => $order->customer->id
+                ];
+                $this->fcmNotification->store($data);
+            }
+            $order->update($data);
+        });
+		return true;
 	}
 
 	public function orderDelete($id)
 	{
 		return Order::find($id)->delete();
 	}
+
+    public function orderReview($data)
+    {
+        $record = OrderDetail::find($data['id']);
+        if(is_null($record->star) && is_null($record->remarks)){
+            $record->update($data);
+            return true;
+        }
+        return false;
+    }
 }

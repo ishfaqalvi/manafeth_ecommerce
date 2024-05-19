@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
-
 use App\Models\Order;
+
 use Illuminate\Http\Request;
+use App\Contracts\SaleInterface;
+use App\Http\Controllers\Controller;
 
 /**
  * Class OrderController
@@ -12,13 +13,15 @@ use Illuminate\Http\Request;
  */
 class OrderController extends Controller
 {
+    protected $order;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
+    function __construct(SaleInterface $order)
     {
+        $this->order = $order;
         $this->middleware('permission:orders-list',  ['only' => ['index']]);
         $this->middleware('permission:orders-view',  ['only' => ['show']]);
         $this->middleware('permission:orders-create',['only' => ['create','store']]);
@@ -33,7 +36,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::get();
+        $orders = $this->order->orderList(null, true );
 
         return view('admin.order.index', compact('orders'));
     }
@@ -57,7 +60,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-       $order = Order::create($request->all());
+        $order = Order::create($request->all());
         return redirect()->route('orders.index')
             ->with('success', 'Order created successfully.');
     }
@@ -70,7 +73,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
+        $order = $this->order->find($id);
 
         return view('admin.order.show', compact('order'));
     }
@@ -95,9 +98,9 @@ class OrderController extends Controller
      * @param  Order $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request)
     {
-        $order->update($request->all());
+        $this->order->orderUpdate($request->all(), $request->id);
 
         return redirect()->route('orders.index')
             ->with('success', 'Order updated successfully');

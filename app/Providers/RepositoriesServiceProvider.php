@@ -16,6 +16,7 @@ class RepositoriesServiceProvider extends ServiceProvider
         $this->app->bind('App\Contracts\CouponInterface',       'App\Repositories\CouponRepository');
         $this->app->bind('App\Contracts\CategoryInterface',     'App\Repositories\CategoryRepository');
         $this->app->bind('App\Contracts\CustomerInterface',     'App\Repositories\CustomerRepository');
+        $this->app->bind('App\Contracts\EmployeeInterface',     'App\Repositories\EmployeeRepository');
         $this->app->bind('App\Contracts\FcmInterface',          'App\Repositories\FcmRepository');
         $this->app->bind('App\Contracts\ProductInterface',      'App\Repositories\ProductRepository');
         $this->app->bind('App\Contracts\SaleInterface',         'App\Repositories\SaleRepository');

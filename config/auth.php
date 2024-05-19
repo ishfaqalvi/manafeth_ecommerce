@@ -51,7 +51,7 @@ return [
         'customerapi' => [
             'driver' => 'sanctum', // For API
             'provider' => 'customers',
-        ],
+        ]
     ],
 
     /*
@@ -122,5 +122,4 @@ return [
     */
 
     'password_timeout' => 10800,
-
 ];

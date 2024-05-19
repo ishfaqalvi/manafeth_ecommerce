@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('mobile_number');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('address')->nullable();
             $table->string('image')->default('images/profile/avatar.jpg');
+            $table->string('roles');
+            $table->string('fcm_token')->nullable();
             $table->enum('status',['Active','Disable','Block'])->default('Active');
             $table->timestamps();
         });

@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    {{ $order->name ?? "{{ __('Show') Order" }}
+    {{ $order->name ?? "Show Order" }}
 @endsection
 
 @section('header')
@@ -55,7 +55,7 @@
                             </td>
                             <td>
                                 <a href="#" class="d-block fw-semibold">
-                                    {{ Str::limit($product->name, 30) }} 
+                                    {{ Str::limit($product->name, 30) }}
                                 </a>
                                 <div class="d-inline-flex align-items-center text-muted fs-sm">
                                     <span class="bg-secondary rounded-pill p-1 me-1"></span>

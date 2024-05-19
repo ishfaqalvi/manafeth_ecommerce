@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->bigInteger('from');
             $table->bigInteger('to');
+            $table->integer('star')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

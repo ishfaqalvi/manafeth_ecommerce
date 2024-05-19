@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('address');
             $table->text('message');
-            $table->enum('status',['Processing','Confirmed','On the way','Deliver']);
+            $table->enum('status',['Pending','Cancelled','Processing','Confirmed','On the way','Deliver','Picked Up','Returned']);
             $table->timestamps();
         });
     }

@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Repositories;
+use App\Models\RentRequestDetail;
 use App\Services\WhatsAppService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Models\{RentCart,RentRequest,Customer};
 use App\Contracts\{FcmInterface,RentInterface};
+use App\Models\{RentCart,RentRequest,Customer};
 
 class RentRepository implements RentInterface
 {
@@ -89,6 +90,7 @@ class RentRepository implements RentInterface
                     'from'      => $row->from,
                     'to'        => $row->to
                 ]);
+                $row->product->decrement('quantity', $row->quantity);
                 $products .= $row->product->name.' ( '.$row->quantity.' Qty)'.' (From: '. date('d M Y', $row->from).') (To: '.date('d M Y', $row->to).')';
                 $row->delete();
             }
@@ -114,13 +116,40 @@ class RentRepository implements RentInterface
 		return RentRequest::find($id);
 	}
 
-	public function orderUpdate($data, $id)
+    public function orderUpdate($data, $id)
 	{
-		return RentRequest::find($id)->update($data);
+        DB::transaction(function () use($data, $id) {
+            $rentRequest = RentRequest::find($id);
+            if($data['status'] == 'Cancelled' || $data['status'] == 'Returned'){
+                foreach($rentRequest->details as $row){
+                    $row->product->increment('quantity', $row->quantity);
+                }
+            }
+            if(settings('rent_order_fcm_notification') == 'Yes'){
+                $data = [
+                    'title' => 'Rent Request '. $data['status'],
+                    'body' => 'Your rental request has been updated successfully.',
+                    'customer_id' => $rentRequest->customer->id
+                ];
+                $this->fcmNotification->store($data);
+            }
+            $rentRequest->update($data);
+        });
+		return true;
 	}
 
-	public function orderDelete($id)
+    public function orderDelete($id)
 	{
 		return RentRequest::find($id)->delete();
 	}
+
+    public function orderReview($data)
+    {
+        $record = RentRequestDetail::find($data['id']);
+        if(is_null($record->star) && is_null($record->remarks)){
+            $record->update($data);
+            return true;
+        }
+        return false;
+    }
 }

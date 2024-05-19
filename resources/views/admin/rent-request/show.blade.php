@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    {{ $rentRequest->name ?? "{{ __('Show') Rent Request" }}
+    {{ $rentRequest->name ?? "Show Rent Request" }}
 @endsection
 
 @section('header')
@@ -31,7 +31,7 @@
             <h5 class="mb-0">{{ __('Show') }} Rent Request</h5>
         </div>
         <div class="card-body">
-            
+
                         <div class="form-group mb-3">
                             <strong>Customer Id:</strong>
                             {{ $rentRequest->customer_id }}

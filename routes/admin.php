@@ -20,7 +20,7 @@ Route::controller(OrderController::class)->prefix('orders')->as('orders.')->grou
 	Route::post('store',			 'store'	 )->name('store'  	 );
 	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
 	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
-	Route::patch('update/{order}',    'update'	 )->name('update' 	 );
+	Route::post('update',            'update'	 )->name('update' 	 );
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
 	Route::post('check-email', 		 'checkEmail')->name('checkEmail');
 });
@@ -36,7 +36,7 @@ Route::controller(RentRequestController::class)->prefix('rent/request')->as('ren
 	Route::post('store',			 'store'	 )->name('store'  	 );
 	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
 	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
-	Route::patch('update/{user}',    'update'	 )->name('update' 	 );
+	Route::post('update',            'update'	 )->name('update' 	 );
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
 	Route::post('check-email', 		 'checkEmail')->name('checkEmail');
 });

@@ -89,6 +89,153 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	    Route::controller(OrderController::class)->prefix('orders')->group(function(){
 	        Route::get('list',             	'index'  );
 	        Route::post('create',      		'store'  );
+	        Route::post('cancel',      		'cancel' );
+	        Route::delete('delete/{id}',    'destroy');
+	        Route::post('reviews',      	'reviews');
+	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Rent Cart Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(RentCartController::class)->prefix('rent-cart/products')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
+	        Route::patch('edit/{cart}',     'update' );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Rent Requests Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(RentRequestController::class)->prefix('rent/request')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
+            Route::post('cancel',      		'cancel' );
+	        Route::delete('delete/{id}',    'destroy');
+            Route::post('reviews',      	'reviews');
+	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Maintenence Requests Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(MaintenenceRequestController::class)->prefix('maintenence/request')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
+
+		/*
+	    |--------------------------------------------------------------------------
+	    | FCM Notifications Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(FcmNotificationController::class)->prefix('fcm-notifications')->group(function(){
+	        Route::get('list',             	'index' );
+	        Route::get('read/{id}',      	'read'  );
+	    });
+
+        /*
+	    |--------------------------------------------------------------------------
+	    | Coupon Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(CouponController::class)->prefix('coupons')->group(function(){
+	        Route::post('apply',            'apply'     );
+	        Route::get('discount',      	'discount'  );
+	    });
+	});
+});
+
+/*
+|--------------------------------------------------------------------------
+| Employee API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+
+Route::group(['prefix'=>'employee', 'namespace'=>'App\Http\Controllers\API\Employee'], function(){
+	/*
+	|--------------------------------------------------------------------------
+	| Public Routes
+	|--------------------------------------------------------------------------
+	*/
+	Route::controller(AuthController::class)->prefix('auth')->group(function () {
+    	Route::post('login',			'login'			);
+    	Route::post('forgot_password',  'forgotPass'	);
+        Route::post('reset_password',   'resetPass' 	);
+	});
+
+	/*
+	|--------------------------------------------------------------------------
+	| Protected Routes
+	|--------------------------------------------------------------------------
+	*/
+	Route::middleware('auth:sanctum,employee')->group(function () {
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Auth Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(AuthController::class)->prefix('auth')->group(function () {
+	        Route::get('view',                  'view'          );
+	        Route::post('update',               'update'        );
+	        Route::get('logout',                'logout'        );
+	        Route::post('check_old_password',   'checkOldPass'  );
+	    });
+
+        /*
+        |--------------------------------------------------------------------------
+        | Address Route
+        |--------------------------------------------------------------------------
+        */
+        Route::controller(AddressController::class)->prefix('address')->as('address.')->group(function () {
+            Route::get('list',			    'index'  )->name('index' );
+            Route::post('store',		    'store'  )->name('store' );
+            Route::post('update',	        'update' )->name('update');
+            Route::delete('delete/{id}',    'destroy')->name('delete');
+        });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Wishlist Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(FavouriteProductController::class)->prefix('favourite/products')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('add',      		'store'  );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Cart Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(CartController::class)->prefix('cart/products')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
+	        Route::patch('edit/{cart}',     'update' );
+	        Route::delete('delete/{id}',    'destroy');
+	    });
+
+	    /*
+	    |--------------------------------------------------------------------------
+	    | Orders Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(OrderController::class)->prefix('orders')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('create',      		'store'  );
 	        Route::delete('delete/{id}',    'destroy');
 	    });
 

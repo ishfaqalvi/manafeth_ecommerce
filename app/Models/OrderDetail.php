@@ -32,7 +32,7 @@ class OrderDetail extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['order_id','product_id','quantity','price'];
+    protected $fillable = ['order_id','product_id','quantity','price', 'star', 'remarks'];
 
 
     /**
@@ -42,7 +42,7 @@ class OrderDetail extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Order', 'id', 'order_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

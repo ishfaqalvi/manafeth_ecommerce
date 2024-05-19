@@ -220,6 +220,14 @@
     </a>
 </li>
 @endcan
+@can('employees-list')
+<li class="nav-item">
+    <a href="{{ route('employees.index') }}" class="nav-link {{ request()->is('admin/employees*') ? 'active' : ''}}">
+        <i class="ph-users"></i>
+        <span>Employees</span>
+    </a>
+</li>
+@endcan
 @canany(['roles-list', 'users-list'])
 <li class="nav-item-header">
     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Access Management</div>

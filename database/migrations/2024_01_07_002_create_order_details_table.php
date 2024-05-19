@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->integer('quantity')->default(1);
             $table->integer('price');
+            $table->integer('star')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }
