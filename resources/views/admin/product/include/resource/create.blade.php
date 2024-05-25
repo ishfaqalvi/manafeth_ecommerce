@@ -12,7 +12,7 @@
                         {{ Form::hidden('product_id', $product->id) }}
                         <div class="form-group mb-3">
                             {{ Form::label('type') }}
-                            {{ Form::select('type', ['Basic Operation Documents' => 'Basic Operation Documents','Brochures'=>'Brochures', 'Spec Sheets'=>'Spec Sheets','Order Forms'=>'Order Forms','Owner Manuals'=>'Owner Manuals','Warranty Inserts'=>'Warranty Inserts','Quantum Videos'=>'Quantum Videos','IBPs(UK)'=>'IBPs(UK)'], null, ['class' => 'form-control' . ($errors->has('type') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
+                            {{ Form::select('type', productResourceTypes($product->id), null, ['class' => 'form-control' . ($errors->has('type') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
                         </div>
                         <div class="form-group col-lg-12 mb-3">
                             {{ Form::label('file') }}

@@ -103,4 +103,12 @@ class Employee extends Model implements Auditable
     {
         return explode(',',$value);
     }
+
+    /**
+     * Get all of the employee's order operations.
+     */
+    public function orderOperations()
+    {
+        return $this->morphMany(OrderOperation::class, 'actor');
+    }
 }

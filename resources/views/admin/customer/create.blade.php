@@ -31,6 +31,7 @@
         <div class="card-body">
             <form method="POST" action="{{ route('customers.store') }}" class="validate" role="form" enctype="multipart/form-data">
                 @csrf
+                <input type="hidden" name="email_verified_at" value="{{ now() }}">
                 @include('admin.customer.form')
             </form>
         </div>
@@ -75,7 +76,7 @@
                     required: true,
                     minlength:8,
                     maxlength:15
-                },    
+                },
                 confirm_password:{
                     required: true,
                     equalTo: "#password"

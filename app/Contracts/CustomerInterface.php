@@ -45,4 +45,12 @@ interface CustomerInterface
 	public function addressUpdate($data, $id);
 
 	public function addressDelete($id);
+
+    public function list();
+
+    public function new();
+
+    public function store($data);
+
+    public function find($id);
 }

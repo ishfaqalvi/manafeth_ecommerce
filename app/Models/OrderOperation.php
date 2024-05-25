@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class OrderDetail
+ * Class OrderOperation
  *
  * @property $id
  * @property $order_id
- * @property $product_id
- * @property $quantity
- * @property $price
+ * @property $actor_id
+ * @property $actor_type
+ * @property $action
+ * @property $performed_at
  * @property $created_at
  * @property $updated_at
  *
  * @property Order $order
- * @property Product $product
  * @package App
  * @mixin \Illuminate\Database\Eloquent\Builder
  */
-class OrderDetail extends Model implements Auditable
+class OrderOperation extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
@@ -32,7 +32,8 @@ class OrderDetail extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['order_id','product_id','quantity','price', 'star', 'remarks'];
+    protected $fillable = ['order_id','actor_id','actor_type','action','performed_at'];
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -43,18 +44,10 @@ class OrderDetail extends Model implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * Get the owning actor model (Customer, Employee, or User).
      */
-    public function product()
+    public function actor()
     {
-        return $this->hasOne('App\Models\Product', 'id', 'product_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function services()
-    {
-        return $this->hasMany('App\Models\OrderDetailService', 'order_detail_id', 'id');
+        return $this->morphTo();
     }
 }

@@ -18,11 +18,11 @@ Route::controller(OrderController::class)->prefix('orders')->as('orders.')->grou
 	Route::get('list',				 'index'	 )->name('index'  	 );
 	Route::get('create',			 'create'	 )->name('create' 	 );
 	Route::post('store',			 'store'	 )->name('store'  	 );
-	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
 	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
 	Route::post('update',            'update'	 )->name('update' 	 );
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
-	Route::post('check-email', 		 'checkEmail')->name('checkEmail');
+    Route::post('services',          'services'	 )->name('services'  );
+	Route::get('time-slots',         'timeSlots' )->name('timeSlots' );
 });
 
 /*
@@ -175,6 +175,21 @@ Route::resource('time-slots', TimeSlotController::class);
 |--------------------------------------------------------------------------
 */
 Route::resource('promo-codes', PromoCodeController::class);
+
+/*
+|--------------------------------------------------------------------------
+| Feedbacks Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(FeedbackController::class)->prefix('feedbacks')->as('feedbacks.')->group(function () {
+	Route::get('list',					'index'			)->name('index'		 	);
+	Route::get('create',				'create'		)->name('create'	 	);
+	Route::post('store',				'store'			)->name('store'		 	);
+	Route::get('edit/{id}',				'edit'			)->name('edit'		 	);
+	Route::get('show/{id}',				'show'			)->name('show'		 	);
+	Route::patch('update/{blog}',		'update'		)->name('update'	 	);
+	Route::delete('delete/{id}',		'destroy'		)->name('destroy'	 	);
+});
 
 /*
 |--------------------------------------------------------------------------

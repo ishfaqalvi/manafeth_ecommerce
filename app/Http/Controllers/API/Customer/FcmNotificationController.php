@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
  * Class FcmNotificationController
  * @package App\Http\Controllers
  */
-class FcmNotificationController extends BaseController
+class FcmNotificationController extends BaseController 
 {
     protected $notification;
     /**

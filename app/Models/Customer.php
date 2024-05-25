@@ -104,6 +104,14 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
+     * Get all of the customer's order operations.
+     */
+    public function orderOperations()
+    {
+        return $this->morphMany(OrderOperation::class, 'actor');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOMany     */
     public function addresses()
     {

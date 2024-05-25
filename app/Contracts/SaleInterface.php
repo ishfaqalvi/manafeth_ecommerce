@@ -14,6 +14,8 @@ interface SaleInterface
 
 	public function orderList($customer_id, $pagination);
 
+	public function orderNew();
+
 	public function orderFind($id);
 
 	public function orderStore($data,$customer_id);
@@ -23,4 +25,8 @@ interface SaleInterface
 	public function orderDelete($id);
 
     public function orderReview($data);
+
+    public function storeServices($orderDetailId, $product);
+
+    public function updateServices($id);
 }

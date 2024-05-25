@@ -78,4 +78,12 @@ class Order extends Model implements Auditable
     {
         return $this->hasMany('App\Models\OrderDetail', 'order_id', 'id');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operations()
+    {
+        return $this->hasMany('App\Models\OrderOperation', 'order_id', 'id');
+    }
 }

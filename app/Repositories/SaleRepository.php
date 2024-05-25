@@ -6,6 +6,7 @@ use App\Models\OrderDetail;
 use App\Contracts\FcmInterface;
 use App\Contracts\SaleInterface;
 use App\Services\WhatsAppService;
+use App\Models\OrderDetailService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\{Product,Cart,Order,Customer};
@@ -25,14 +26,17 @@ class SaleRepository implements SaleInterface
 
 	public function cartItemList($guard)
 	{
-		return Auth::guard($guard)->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory'])->get();
+		return Auth::guard($guard)->user()->carts()->with(['product.brand', 'product.category', 'product.subCategory', 'product.reviews.order.customer'])->get();
 	}
 
     public function cartStoreItem($data, $guard)
 	{
+        if($guard == 'Admin'){
+            $customer = Customer::find($data['customer_id']);
+        }else{
+            $customer = Auth::guard($guard)->user();
+        }
         $product = $data['product_id'];
-        $customer = Auth::guard($guard)->user();
-
         $checkProduct = $customer->carts()->whereProductId($product)->first();
         if ($checkProduct) {
             return false;
@@ -61,42 +65,86 @@ class SaleRepository implements SaleInterface
 		if (!is_null($customer_id)) {
             $query->whereCustomerId($customer_id);
 		}
-        $relations = ['timeSlot','details','details.product.brand', 'details.product.category', 'details.product.subCategory'];
+        $relations = [
+            'customer',
+            'timeSlot',
+            'details',
+            'operations',
+            'operations.actor',
+            'details.services',
+            'details.product.brand',
+            'details.product.category',
+            'details.product.subCategory',
+            'details.product.reviews.order.customer'
+        ];
 		return $pagination ? $query->with($relations)->paginate() : $query->with($relations)->get();
 	}
 
-	public function orderFind($id)
+	public function orderNew()
 	{
-		return Order::find($id);
+		return new Order();
+	}
+
+    public function orderFind($id)
+	{
+        $relations = [
+            'customer',
+            'timeSlot',
+            'details',
+            'operations',
+            'operations.actor',
+            'details.services',
+            'details.product.brand',
+            'details.product.category',
+            'details.product.subCategory',
+            'details.product.reviews.order.customer'
+        ];
+		return Order::with($relations)->find($id);
 	}
 
 	public function orderStore($data, $guard)
 	{
-        $responce = DB::transaction(function () use($data, $guard) {
-            $products = '';
+        if($guard == 'Admin'){
+            $customer = Customer::find($data['customer_id']);
+        }else{
             $customer = Auth::guard($guard)->user();
+        }
+        if($customer->carts()->count() == 0)
+        {
+            return false;
+        }
+        $responce = DB::transaction(function () use($data, $guard, $customer) {
+            $products = '';
             $order = $customer->orders()->create($data);
-            if (!is_null($data['buy_now'])) {
+            if (isset($data['buy_now']) && !is_null($data['buy_now'])) {
                 $product = Product::find($data['product_id']);
-                $order->details()->create([
+                $detail = $order->details()->create([
                     'product_id'=> $data['product_id'],
                     'quantity'  => 1,
                     'price'     => $product->price - $product->discount
                 ]);
                 $product->decrement('quantity');
+                $this->storeServices($detail->id, $product);
                 $products .= $product->name.' ( 1 Qty)';
             }else{
                 foreach($customer->carts as $row){
-                    $order->details()->create([
+                    $product = $row->product;
+                    $detail = $order->details()->create([
                         'product_id'=> $row->product_id,
                         'quantity'  => $row->quantity,
-                        'price'     => $row->product->price - $row->product->discount
+                        'price'     => $product->price - $product->discount
                     ]);
-                    $products .= $row->product->name.' ( '.$row->quantity.' Qty)';
-                    $row->product->decrement('quantity', $row->quantity);
+                    $products .= $product->name.' ( '.$row->quantity.' Qty)';
+                    $product->decrement('quantity', $row->quantity);
+                    $this->storeServices($detail->id, $product);
                     $row->delete();
                 }
             }
+            $order->operations()->create([
+                'actor_id'   => $guard == 'Admin' ? auth()->user()->id : $customer->id,
+                'actor_type' => $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer',
+                'action'     => 'Order Placed'
+            ]);
             if(settings('sale_order_whatsapp_notification') == 'Yes'){
                 $data = [$customer->name, $customer->mobile_number, $products];
                 $this->whatsAppService->sendMessage('purchase_order_placed', $data);
@@ -149,5 +197,27 @@ class SaleRepository implements SaleInterface
             return true;
         }
         return false;
+    }
+
+    public function storeServices($orderDetailId, $product)
+    {
+        if($product->maintenance > 0 && $product->warranty > 0){
+            $currentDate = now();
+            $endDate = now()->addMonths($product->warranty);
+            $intervalDays = $endDate->diffInDays($currentDate) / $product->maintenance;
+            while ($currentDate->lte($endDate)) {
+                OrderDetailService::create([
+                    'order_detail_id' => $orderDetailId,
+                    'date' => $currentDate->toDateString(),
+                    'status' => 'Pending'
+                ]);
+                $currentDate->addDays($intervalDays);
+            }
+        }
+    }
+
+    public function updateServices($id)
+    {
+        OrderDetailService::find($id)->update(['status' => 'Completed']);
     }
 }

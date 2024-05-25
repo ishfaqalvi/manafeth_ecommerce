@@ -132,17 +132,25 @@ class CustomerRepository implements CustomerInterface
     public function delete($id)
     {
         $customer = Customer::find($id);
+        if(count($customer->orders) > 0 || count($customer->rentRequests) > 0 || count($customer->maintenenceRequests) > 0 ){
+            return false;
+        }
+        $customer->addresses()->delete();
+        $customer->favouriteProducts()->delete();
+        $customer->carts()->delete();
+        $customer->coupons()->delete();
         $customer->tokens()->delete();
         $customer->delete();
+        return true;
     }
 
     public function checkEmail($data)
     {
+        $query = Customer::query();
         if (isset($data['id'])) {
-            $user = Customer::where('id','!=',$data['id'])->where('email', $data['email'])->first();
-        }else{
-            $user = Customer::where('email', $data['email'])->first();
+            $query->where('id','!=', $data['id']);
         }
+        $user = $query->where('email', $data['email'])->first();
         if($user && !empty($user->email_verified_at)){ return "false"; }else{ return "true";}
     }
 
@@ -186,5 +194,25 @@ class CustomerRepository implements CustomerInterface
     public function addressDelete($id)
     {
         Address::find($id)->delete();
+    }
+
+    public function list()
+    {
+        return Customer::paginate();
+    }
+
+    public function new()
+    {
+        return new Customer();
+    }
+
+    public function store($data)
+    {
+        return Customer::create($data);
+    }
+
+    public function find($id)
+    {
+        return Customer::find($id);
     }
 }

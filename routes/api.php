@@ -87,11 +87,11 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	    |--------------------------------------------------------------------------
 	    */
 	    Route::controller(OrderController::class)->prefix('orders')->group(function(){
-	        Route::get('list',             	'index'  );
-	        Route::post('create',      		'store'  );
-	        Route::post('cancel',      		'cancel' );
-	        Route::delete('delete/{id}',    'destroy');
-	        Route::post('reviews',      	'reviews');
+	        Route::get('list',             	'index'        );
+	        Route::post('create',      		'store'        );
+	        Route::post('cancel',      		'cancel'       );
+	        Route::delete('delete/{id}',    'destroy'      );
+	        Route::post('reviews',      	'reviews'      );
 	    });
 
 	    /*
@@ -148,6 +148,15 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	    Route::controller(CouponController::class)->prefix('coupons')->group(function(){
 	        Route::post('apply',            'apply'     );
 	        Route::get('discount',      	'discount'  );
+	    });
+
+        /*
+	    |--------------------------------------------------------------------------
+	    | Feedback Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(FeedbackController::class)->prefix('feedbacks')->group(function(){
+	        Route::post('create',            'store' );
 	    });
 	});
 });

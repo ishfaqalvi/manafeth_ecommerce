@@ -60,12 +60,14 @@ class PermissionSeeder extends Seeder
             'saleProducts-create',
             'saleProducts-edit',
             'saleProducts-delete',
+            'saleProducts-addToCart',
 
             'rentProducts-list',
             'rentProducts-view',
             'rentProducts-create',
             'rentProducts-edit',
             'rentProducts-delete',
+            'rentProducts-addToCart',
 
             'maintenanceProducts-list',
             'maintenanceProducts-view',
@@ -158,6 +160,12 @@ class PermissionSeeder extends Seeder
             'employees-create',
             'employees-edit',
             'employees-delete',
+
+            'feedbacks-list',
+            'feedbacks-view',
+            'feedbacks-create',
+            'feedbacks-edit',
+            'feedbacks-delete',
 
             'roles-list',
             'roles-view',

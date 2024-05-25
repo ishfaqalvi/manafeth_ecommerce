@@ -110,6 +110,7 @@
         </div>
     </div>
 </div>
+@include('admin.product.sale.addToCart')
 @endsection
 
 @section('script')
@@ -143,6 +144,38 @@
                 if (result.value === true)  $(this).closest("form").submit();
             });
         });
+        function getValidationSettings(additionalSettings) {
+            var commonSettings = {
+                errorClass: 'validation-invalid-label',
+                successClass: 'validation-valid-label',
+                validClass: 'validation-valid-label',
+                highlight: function(element, errorClass) {
+                    $(element).removeClass(errorClass);
+                    $(element).addClass('is-invalid');
+                    $(element).removeClass('is-valid');
+                },
+                unhighlight: function(element, errorClass) {
+                    $(element).removeClass(errorClass);
+                    $(element).removeClass('is-invalid');
+                    $(element).addClass('is-valid');
+                },
+                errorPlacement: function(error, element) {
+                    if (element.hasClass('select2-hidden-accessible')) {
+                        error.appendTo(element.parent());
+                    } else if (element.parents().hasClass('form-control-feedback') || element.parents().hasClass('form-check') || element.parents().hasClass('input-group')) {
+                        error.appendTo(element.parent().parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                }
+            };
+            return $.extend(commonSettings, additionalSettings);
+        }
+        $('.addToCart').click(function(){
+            $('#product-id').val($(this).data('id'));
+            $('#addToCart').modal('show');
+        });
+        $('.validateAddToCart').validate(getValidationSettings({}));
     });
 </script>
 @endsection

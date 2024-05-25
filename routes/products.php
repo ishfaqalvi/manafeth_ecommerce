@@ -16,6 +16,7 @@ Route::controller(SaleController::class)->prefix('sale')->as('products.sale.')->
 	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
 	Route::patch('update/{id}', 	 'update'	 )->name('update' 	 );
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
+	Route::post('add-to-cart',		 'addToCart' )->name('addToCart' );
 });
 
 /*
@@ -32,6 +33,7 @@ Route::controller(RentController::class)->prefix('rent')->as('products.rent.')->
 	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
 	Route::patch('update/{id}', 	 'update'	 )->name('update' 	 );
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
+    Route::post('add-to-cart',		 'addToCart' )->name('addToCart' );
 });
 
 /*

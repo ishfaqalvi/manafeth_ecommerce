@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Product;
+use App\Models\Customer;
 use App\Models\{User,Brand,Category};
 
 /**
@@ -20,7 +22,7 @@ function brands()
 function categories($type = null)
 {
     $query = Category::query();
-    
+
     if (!is_null($type)) {
         $query->where('type', $type);
     }
@@ -38,7 +40,21 @@ function users()
         $string = "{$user->name} ({$user->phone_number} )";
         return [$user->id => $string];
     })->toArray();
-    return $users; 
+    return $users;
+}
+
+/**
+ * Get listing of a resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function customers()
+{
+    $users = Customer::all()->mapWithKeys(function ($user) {
+        $string = "{$user->name} ({$user->mobile_number} )";
+        return [$user->id => $string];
+    })->toArray();
+    return $users;
 }
 
 /**
@@ -53,5 +69,33 @@ function topics()
     {
         $tpics[$topic] = $topic;
     }
-    return $tpics; 
+    return $tpics;
+}
+
+/**
+ * Get listing of a resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function productResourceTypes($productId)
+{
+    $product = Product::find($productId);
+    $resourceArray = [
+        'Basic Operation Documents' => 'Basic Operation Documents',
+        'Brochures' => 'Brochures',
+        'Spec Sheets' => 'Spec Sheets',
+        'Order Forms' => 'Order Forms',
+        'Owner Manuals' => 'Owner Manuals',
+        'Warranty Inserts' => 'Warranty Inserts',
+        'Quantum Videos' => 'Quantum Videos',
+        'IBPs(UK)' => 'IBPs(UK)'
+    ];
+
+    $usedResource = $product->resources()->pluck('type')->toArray();
+
+    $usedResources = array_filter($resourceArray, function ($key) use ($usedResource) {
+        return !in_array($key, $usedResource);
+    }, ARRAY_FILTER_USE_KEY);
+
+    return $usedResources;
 }

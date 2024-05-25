@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
 
-use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Contracts\CustomerInterface;
+use App\Http\Controllers\Controller;
 
 /**
  * Class CustomerController
@@ -12,13 +12,15 @@ use Illuminate\Http\Request;
  */
 class CustomerController extends Controller
 {
+    protected $customer;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
+    function __construct(CustomerInterface $customer)
     {
+        $this->customer = $customer;
         $this->middleware('permission:customers-list',  ['only' => ['index']]);
         $this->middleware('permission:customers-view',  ['only' => ['show']]);
         $this->middleware('permission:customers-create',['only' => ['create','store']]);
@@ -33,7 +35,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::paginate();
+        $customers = $this->customer->list();
 
         return view('admin.customer.index', compact('customers'));
     }
@@ -45,7 +47,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $customer = new Customer();
+        $customer = $this->customer->new();
         return view('admin.customer.create', compact('customer'));
     }
 
@@ -57,7 +59,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-       $customer = Customer::create($request->all());
+        $this->customer->store($request->all());
         return redirect()->route('customers.index')
             ->with('success', 'Customer created successfully.');
     }
@@ -70,7 +72,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $customer = Customer::find($id);
+        $customer = $this->customer->find($id);
 
         return view('admin.customer.show', compact('customer'));
     }
@@ -83,7 +85,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = Customer::find($id);
+        $customer = $this->customer->find($id);
 
         return view('admin.customer.edit', compact('customer'));
     }
@@ -95,9 +97,9 @@ class CustomerController extends Controller
      * @param  Customer $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Customer $customer)
+    public function update(Request $request, $customer)
     {
-        $customer->update($request->all());
+        $this->customer->update($request->all(), $customer);
 
         return redirect()->route('customers.index')
             ->with('success', 'Customer updated successfully');
@@ -110,10 +112,13 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $customer = Customer::find($id)->delete();
-
-        return redirect()->route('customers.index')
+        $responce = $this->customer->delete($id);
+        if($responce){
+            return redirect()->route('customers.index')
             ->with('success', 'Customer deleted successfully');
+        }
+        return redirect()->route('customers.index')
+            ->with('warning', 'Opps! this customer data exist.');
     }
 
     /**
@@ -123,12 +128,7 @@ class CustomerController extends Controller
      */
     public function checkEmail(Request $request)
     {
-        if ($request->id) {
-            $user = Customer::where('id','!=',$request->id)->whereEmail($request->email)->first();
-        }else{
-            $user = Customer::whereEmail($request->email)->first();
-        }
-
-        if($user){ echo "false"; }else{ echo "true";}
+        $responce = $this->customer->checkEmail($request->all());
+        echo $responce;
     }
 }

@@ -58,6 +58,8 @@ class Product extends Model implements Auditable
         'model',
         'thumbnail',
         'quantity',
+        'warranty',
+        'maintenance',
         'price',
         'discount',
         'type',
@@ -186,5 +188,13 @@ class Product extends Model implements Auditable
     public function images()
     {
         return $this->hasMany('App\Models\ProductImage', 'product_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\OrderDetail', 'product_id', 'id')->whereNotNull('star');
     }
 }

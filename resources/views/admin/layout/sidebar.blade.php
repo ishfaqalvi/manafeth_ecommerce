@@ -228,6 +228,14 @@
     </a>
 </li>
 @endcan
+@can('feedbacks-list')
+<li class="nav-item">
+    <a href="{{ route('feedbacks.index') }}" class="nav-link {{ request()->is('admin/feedbacks*') ? 'active' : ''}}">
+        <i class="ph-note"></i>
+        <span>Feedbacks</span>
+    </a>
+</li>
+@endcan
 @canany(['roles-list', 'users-list'])
 <li class="nav-item-header">
     <div class="text-uppercase fs-sm lh-sm opacity-50 sidebar-resize-hide">Access Management</div>

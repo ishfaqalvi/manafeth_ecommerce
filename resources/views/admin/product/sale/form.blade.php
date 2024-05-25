@@ -39,6 +39,43 @@
             {{ Form::number('price', $product->price, ['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Price','required']) }}
         </div>
         <div class="form-group col-lg-4 mb-3">
+            {{ Form::label('warranty') }}
+            {{ Form::select('warranty',
+            [
+                1 => '1 Month',
+                2 => '2 Month',
+                3 => '3 Month',
+                4 => '4 Month',
+                5 => '5 Month',
+                6 => '6 Month',
+                7 => '7 Month',
+                8 => '8 Month',
+                9 => '9 Month',
+                10 => '10 Month',
+                11 => '11 Month',
+                12 => '12 Month'
+            ], $product->warranty, ['class' => 'form-control form-select' . ($errors->has('warranty') ? ' is-invalid' : ''), 'placeholder' => '--Select--']) }}
+        </div>
+        <div class="form-group col-lg-4 mb-3">
+            {{ Form::label('maintenance') }}
+            {{ Form::select('maintenance',
+            [
+                1 => '1 Time',
+                2 => '2 Time',
+                3 => '3 Time',
+                4 => '4 Time',
+                5 => '5 Time',
+                6 => '6 Time',
+                7 => '7 Time',
+                8 => '8 Time',
+                9 => '9 Time',
+                10 => '10 Time',
+                11 => '11 Time',
+                12 => '12 Time',
+            ]
+            , $product->maintenance, ['class' => 'form-control form-select' . ($errors->has('maintenance') ? ' is-invalid' : ''), 'placeholder' => '--Select--', 'min' =>'0']) }}
+        </div>
+        <div class="form-group col-lg-4 mb-3">
             {{ Form::label('discount') }}
             {{ Form::number('discount', $product->discount, ['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Discount']) }}
         </div>

@@ -12,19 +12,19 @@ class ProductRepository implements ProductInterface
     //To view all sale products data
     public function saleAdminList($filter)
     {
-        return Product::filter($filter)->whereType('Sale')->with(['brand','category','subCategory'])->paginate();
+        return Product::filter($filter)->whereType('Sale')->with(['brand','category','subCategory','reviews.order.customer'])->paginate();
     }
 
 	//To view all sale products data
 	public function saleProductList($filter)
 	{
-		return Product::filter($filter)->whereType('Sale')->whereStatus('Publish')->with(['brand','category','subCategory'])->paginate();
+		return Product::filter($filter)->whereType('Sale')->whereStatus('Publish')->with(['brand','category','subCategory','reviews.order.customer'])->paginate();
 	}
 
 	//To view special sale products data
 	public function saleSpecial($filter)
 	{
-		return Product::filter($filter)->whereType('Sale')->whereStatus('Publish')->whereSpecial('Yes')->with(['brand','category','subCategory'])->paginate();
+		return Product::filter($filter)->whereType('Sale')->whereStatus('Publish')->whereSpecial('Yes')->with(['brand','category','subCategory','reviews.order.customer'])->paginate();
 	}
 
 	//To view category wise sale products data
