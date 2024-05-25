@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone_number');
             $table->string('address');
-            $table->enum('status',['Pending','Cancelled','Processing','Confirmed','On the way','Deliver']);
+            $table->foreignId('assign_to')->nullable()->references('id')->on('employees')->cascadeOnDelete();
+            $table->enum('status',['Pending','Cancelled','Processing','Confirmed','On the way','Delivered', 'Completed']);
             $table->timestamps();
         });
     }

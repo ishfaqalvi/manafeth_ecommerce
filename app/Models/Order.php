@@ -44,6 +44,7 @@ class Order extends Model implements Auditable
         'email',
         'phone_number',
         'address',
+        'assign_to',
         'status'
     ];
 

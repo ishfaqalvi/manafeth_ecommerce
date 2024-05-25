@@ -8,16 +8,6 @@
             <form action="{{ route('feedback.destroy',$feedback->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                @can('feedback-view')
-                    <a href="{{ route('feedback.show',$feedback->id) }}" class="dropdown-item">
-                        <i class="ph-eye me-2"></i>{{ __('Show') }}
-                    </a>
-                @endcan
-                @can('feedback-edit')
-                    <a href="{{ route('feedback.edit',$feedback->id) }}" class="dropdown-item">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Edit') }}
-                    </a>
-                @endcan
                 @can('feedback-delete')
                     <button type="submit" class="dropdown-item sa-confirm">
                         <i class="ph-trash me-2"></i>{{ __('Delete') }}

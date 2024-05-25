@@ -15,9 +15,10 @@ class EmployeeSeeder extends Seeder
     public function run(): void
     {
         $roles = ['Driver', 'Warehouse Boy', 'Maintenence Boy'];
-        $user = Employee::create([
+        Employee::create([
             'name'              => 'Test Emplyee',
             'email'             => 'testemployee@gmail.com',
+            'mobile_number'     => '+9230712345678',
             'password'          => 'password',
             'email_verified_at' => '2024-03-02 15:30:59',
             'roles'             => $roles,

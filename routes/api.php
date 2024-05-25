@@ -200,53 +200,29 @@ Route::group(['prefix'=>'employee', 'namespace'=>'App\Http\Controllers\API\Emplo
 	        Route::post('update',               'update'        );
 	        Route::get('logout',                'logout'        );
 	        Route::post('check_old_password',   'checkOldPass'  );
+
 	    });
 
         /*
-        |--------------------------------------------------------------------------
-        | Address Route
-        |--------------------------------------------------------------------------
-        */
-        Route::controller(AddressController::class)->prefix('address')->as('address.')->group(function () {
-            Route::get('list',			    'index'  )->name('index' );
-            Route::post('store',		    'store'  )->name('store' );
-            Route::post('update',	        'update' )->name('update');
-            Route::delete('delete/{id}',    'destroy')->name('delete');
-        });
-
-	    /*
 	    |--------------------------------------------------------------------------
-	    | Wishlist Route
+	    | Orders Route
 	    |--------------------------------------------------------------------------
 	    */
-	    Route::controller(FavouriteProductController::class)->prefix('favourite/products')->group(function(){
-	        Route::get('list',             	'index'  );
-	        Route::post('add',      		'store'  );
-	        Route::delete('delete/{id}',    'destroy');
+	    Route::controller(EmployeeController::class)->group(function(){
+	        Route::get('drivers',          'drivers');
 	    });
 
-	    /*
-	    |--------------------------------------------------------------------------
-	    | Cart Route
-	    |--------------------------------------------------------------------------
-	    */
-	    Route::controller(CartController::class)->prefix('cart/products')->group(function(){
-	        Route::get('list',             	'index'  );
-	        Route::post('create',      		'store'  );
-	        Route::patch('edit/{cart}',     'update' );
-	        Route::delete('delete/{id}',    'destroy');
-	    });
-
-	    /*
+        /*
 	    |--------------------------------------------------------------------------
 	    | Orders Route
 	    |--------------------------------------------------------------------------
 	    */
 	    Route::controller(OrderController::class)->prefix('orders')->group(function(){
 	        Route::get('list',             	'index'  );
-	        Route::post('create',      		'store'  );
-	        Route::delete('delete/{id}',    'destroy');
+	        Route::post('update',      		'update' );
 	    });
+
+
 
 	    /*
 	    |--------------------------------------------------------------------------
@@ -290,16 +266,6 @@ Route::group(['prefix'=>'employee', 'namespace'=>'App\Http\Controllers\API\Emplo
 	    Route::controller(FcmNotificationController::class)->prefix('fcm-notifications')->group(function(){
 	        Route::get('list',             	'index' );
 	        Route::get('read/{id}',      	'read'  );
-	    });
-
-        /*
-	    |--------------------------------------------------------------------------
-	    | Coupon Route
-	    |--------------------------------------------------------------------------
-	    */
-	    Route::controller(CouponController::class)->prefix('coupons')->group(function(){
-	        Route::post('apply',            'apply'     );
-	        Route::get('discount',      	'discount'  );
 	    });
 	});
 });
@@ -391,23 +357,4 @@ Route::group(['namespace'=>'App\Http\Controllers\API'], function(){
     Route::controller(TimeSlotController::class)->prefix('time-slots')->group(function(){
         Route::get('list',  'index' );
     });
-
-	/*
-	|--------------------------------------------------------------------------
-	| Protected Routes
-	|--------------------------------------------------------------------------
-	*/
-	Route::middleware('auth:sanctum')->group(function () {
-	    /*
-	    |--------------------------------------------------------------------------
-	    | Auth Route
-	    |--------------------------------------------------------------------------
-	    */
-	    Route::controller(AuthController::class)->prefix('auth')->group(function () {
-	        Route::get('view',              'view'   );
-	        Route::post('update',           'update' );
-	        Route::get('logout',            'logout' );
-	        Route::delete('delete/{id}',    'destroy');
-	    });
-	});
 });

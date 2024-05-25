@@ -4,23 +4,16 @@
             <form method="POST" action="{{ route('orders.update') }}" class="validate" role="form" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('Change Order Status') }}</h5>
+                    <h5 class="modal-title">{{ __('Assign Order') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         {{ Form::hidden('id', null,['id' => 'order-id']) }}
+                        {{ Form::hidden('status', 'Assign') }}
                         <div class="form-group">
-                            {{ Form::label('Status') }}
-                            {{ Form::select('status',
-                            [
-                                'Pending' => 'Pending',
-                                'Cancelled' => 'Cancelled',
-                                'Processing' => 'Processing',
-                                'Confirmed' => 'Confirmed',
-                                'On the way' => 'On the way',
-                                'Deliver' => 'Deliver'
-                            ], null, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required','id' => 'order-status']) }}
+                            {{ Form::label('assign_to','Warehouse Boys') }}
+                            {{ Form::select('assign_to', warehouseBosys(), null, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required','id' => 'order-status']) }}
                         </div>
                     </div>
                 </div>

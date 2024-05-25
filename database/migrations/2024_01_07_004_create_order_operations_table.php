@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('actor_id');
-            $table->enum('actor_type',['Customer', 'Employee', 'User']);
+            $table->string('actor_type');
             $table->string('action');
             $table->timestamp('performed_at')->useCurrent();
             $table->timestamps();

@@ -19,11 +19,11 @@ class FeedbackController extends Controller
      */
     function __construct()
     {
-        $this->middleware('permission:feedback-list',  ['only' => ['index']]);
-        $this->middleware('permission:feedback-view',  ['only' => ['show']]);
-        $this->middleware('permission:feedback-create',['only' => ['create','store']]);
-        $this->middleware('permission:feedback-edit',  ['only' => ['edit','update']]);
-        $this->middleware('permission:feedback-delete',['only' => ['destroy']]);
+        $this->middleware('permission:feedbacks-list',  ['only' => ['index']]);
+        $this->middleware('permission:feedbacks-view',  ['only' => ['show']]);
+        $this->middleware('permission:feedbacks-create',['only' => ['create','store']]);
+        $this->middleware('permission:feedbacks-edit',  ['only' => ['edit','update']]);
+        $this->middleware('permission:feedbacks-delete',['only' => ['destroy']]);
     }
 
     /**

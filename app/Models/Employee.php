@@ -39,7 +39,7 @@ class Employee extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['name','email','password','image','roles','fcm_token','status'];
+    protected $fillable = ['name','email','mobile_number','password','image','roles','fcm_token','status'];
 
     /**
      * The attributes that should be hidden for serialization.

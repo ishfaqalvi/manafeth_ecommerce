@@ -38,7 +38,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = $this->order->orderList(null, true);
+        $orders = $this->order->orderList(null, null, true);
 
         return view('admin.order.index', compact('orders'));
     }
@@ -92,7 +92,7 @@ class OrderController extends Controller
      */
     public function update(Request $request)
     {
-        $this->order->orderUpdate($request->all(), $request->id);
+        $this->order->orderUpdate($request->all(), $request->id, 'Admin');
 
         return redirect()->route('orders.index')
             ->with('success', 'Order updated successfully');

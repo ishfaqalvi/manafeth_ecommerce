@@ -59,11 +59,14 @@ class SaleRepository implements SaleInterface
 		Cart::find($id)->delete();
 	}
 
-	public function orderList($customer_id = null, $pagination = false)
+	public function orderList($customer_id = null, $employee_id = null,$pagination = false)
 	{
         $query = Order::query();
 		if (!is_null($customer_id)) {
             $query->whereCustomerId($customer_id);
+		}
+        if (!is_null($employee_id)) {
+            $query->whereAssignTo($employee_id);
 		}
         $relations = [
             'customer',
@@ -162,26 +165,161 @@ class SaleRepository implements SaleInterface
         return $responce;
 	}
 
-	public function orderUpdate($data, $id)
+	public function orderUpdate($data, $id, $guard)
 	{
-        DB::transaction(function () use($data, $id) {
+        // DB::transaction(function () use($data, $id) {
+        //     $order = Order::find($id);
+        //     if($data['status'] == 'Cancelled'){
+        //         foreach($order->details as $row){
+        //             $row->product->increment('quantity', $row->quantity);
+        //         }
+        //         $order->operations()->create([
+        //             'actor_id'   => $guard == 'Admin' ? auth()->user()->id : $order->customer->id,
+        //             'actor_type' => $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer',
+        //             'action'     => 'Order Cancelled'
+        //         ]);
+        //         $order->update($data);
+        //     }
+        //     if($data['status'] == 'Processing'){
+        //         $order->operations()->create([
+        //             'actor_id'   => auth()->user()->id,
+        //             'actor_type' => 'App\Models\User',
+        //             'action'     => 'Change Order Status to Processing'
+        //         ]);
+        //         $order->update($data);
+        //     }
+        //     if($data['status'] == 'Assign'){
+        //         $order->operations()->create([
+        //             'actor_id'   => auth()->user()->id,
+        //             'actor_type' => 'App\Models\User',
+        //             'action'     => 'Order assigned to warehouse boy.'
+        //         ]);
+        //         $data['status'] = 'Confirmed';
+        //         $order->update($data);
+        //     }
+        //     if($data['status'] == 'Ready for Pickup'){
+        //         $order->operations()->create([
+        //             'actor_id'   => Auth::guard('employee')->user()->id,
+        //             'actor_type' => 'App\Models\Employee',
+        //             'action'     => 'Order is ready for pickup by driver.'
+        //         ]);
+        //         $order->update(['assign_to' => $data['assign_to']]);
+        //     }
+        //     if($data['status'] == 'Picked Up'){
+        //         $order->operations()->create([
+        //             'actor_id'   => Auth::guard('employee')->user()->id,
+        //             'actor_type' => 'App\Models\Employee',
+        //             'action'     => 'Order picked up by driver.'
+        //         ]);
+        //         $order->update(['status' => 'On the Way']);
+        //     }
+        //     if($data['status'] == 'Delivered'){
+        //         $order->operations()->create([
+        //             'actor_id'   => Auth::guard('employee')->user()->id,
+        //             'actor_type' => 'App\Models\Employee',
+        //             'action'     => 'Order delivered to customer.'
+        //         ]);
+        //         $order->update($data);
+        //     }
+        //     if($data['status'] == 'Completed'){
+        //         $order->operations()->create([
+        //             'actor_id'   => auth()->user()->id,
+        //             'actor_type' => 'App\Models\User',
+        //             'action'     => 'Order completed by admin.'
+        //         ]);
+        //         $order->update($data);
+        //     }
+        //     if(settings('sale_order_fcm_notification') == 'Yes'){
+        //         $data = [
+        //             'title' => 'Order '. $data['status'],
+        //             'body' => 'Your order has been '.$data['status'].' successfully.',
+        //             'customer_id' => $order->customer->id
+        //         ];
+        //         $this->fcmNotification->store($data);
+        //     }
+        // });
+		// return true;
+        DB::transaction(function () use ($data, $id, $guard) {
             $order = Order::find($id);
-            if($data['status'] == 'Cancelled'){
-                foreach($order->details as $row){
-                    $row->product->increment('quantity', $row->quantity);
-                }
+            $actorId = $guard == 'Admin' ? auth()->user()->id : $order->customer->id;
+            $actorType = $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer';
+
+            switch ($data['status']) {
+                case 'Cancelled':
+                    foreach ($order->details as $row) {
+                        $row->product->increment('quantity', $row->quantity);
+                    }
+                    $order->operations()->create([
+                        'actor_id' => $actorId,
+                        'actor_type' => $actorType,
+                        'action' => 'Order Cancelled'
+                    ]);
+                    break;
+
+                case 'Processing':
+                    $order->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Change Order Status to Processing'
+                    ]);
+                    break;
+
+                case 'Assign':
+                    $order->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Order assigned to warehouse boy.'
+                    ]);
+                    $data['status'] = 'Confirmed';
+                    break;
+
+                case 'Ready for Pickup':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Order is ready for pickup by driver.'
+                    ]);
+                    $order->assign_to = $data['assign_to'];
+                    break;
+
+                case 'Picked Up':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Order picked up by driver.'
+                    ]);
+                    $data['status'] = 'On the Way';
+                    break;
+
+                case 'Delivered':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Order delivered to customer.'
+                    ]);
+                    break;
+
+                case 'Completed':
+                    $order->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Order completed by admin.'
+                    ]);
+                    break;
             }
-            if(settings('sale_order_fcm_notification') == 'Yes'){
-                $data = [
-                    'title' => 'Order '. $data['status'],
-                    'body' => 'Your order has been updated successfully.',
+
+            $order->update($data);
+
+            if (settings('sale_order_fcm_notification') == 'Yes') {
+                $fcmData = [
+                    'title' => 'Order ' . $data['status'],
+                    'body' => 'Your order has been ' . $data['status'] . ' successfully.',
                     'customer_id' => $order->customer->id
                 ];
-                $this->fcmNotification->store($data);
+                $this->fcmNotification->store($fcmData);
             }
-            $order->update($data);
         });
-		return true;
+        return true;
 	}
 
 	public function orderDelete($id)

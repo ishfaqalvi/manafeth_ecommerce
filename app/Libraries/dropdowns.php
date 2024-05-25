@@ -2,6 +2,7 @@
 
 use App\Models\Product;
 use App\Models\Customer;
+use App\Models\Employee;
 use App\Models\{User,Brand,Category};
 
 /**
@@ -51,6 +52,48 @@ function users()
 function customers()
 {
     $users = Customer::all()->mapWithKeys(function ($user) {
+        $string = "{$user->name} ({$user->mobile_number} )";
+        return [$user->id => $string];
+    })->toArray();
+    return $users;
+}
+
+/**
+ * Get listing of a resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function drivers()
+{
+    $users = Employee::where('roles', 'LIKE', '%Driver%')->get()->mapWithKeys(function ($user) {
+        $string = "{$user->name} ({$user->mobile_number} )";
+        return [$user->id => $string];
+    })->toArray();
+    return $users;
+}
+
+/**
+ * Get listing of a resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function warehouseBosys()
+{
+    $users = Employee::where('roles', 'LIKE', '%Warehouse Boy%')->get()->mapWithKeys(function ($user) {
+        $string = "{$user->name} ({$user->mobile_number} )";
+        return [$user->id => $string];
+    })->toArray();
+    return $users;
+}
+
+/**
+ * Get listing of a resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function maintenenceBosys()
+{
+    $users = Employee::where('roles', 'LIKE', '%Maintenence Boy%')->get()->mapWithKeys(function ($user) {
         $string = "{$user->name} ({$user->mobile_number} )";
         return [$user->id => $string];
     })->toArray();
