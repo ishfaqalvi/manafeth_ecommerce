@@ -84,7 +84,7 @@ class ProductRepository implements ProductInterface
 	//To view category wise maintence products data
 	public function viewDetail($id)
 	{
-		return Product::with(['brand','category','subCategory','specifications','resources','images'])->find($id);
+		return Product::with(['brand','category','subCategory','specifications','resources','images','reviews.order.customer'])->find($id);
 	}
 
 	//To create a new product
