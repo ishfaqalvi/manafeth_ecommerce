@@ -222,6 +222,16 @@ Route::group(['prefix'=>'employee', 'namespace'=>'App\Http\Controllers\API\Emplo
 	        Route::post('update',      		'update' );
 	    });
 
+        /*
+	    |--------------------------------------------------------------------------
+	    | Taska Route
+	    |--------------------------------------------------------------------------
+	    */
+	    Route::controller(TaskController::class)->prefix('tasks')->group(function(){
+	        Route::get('list',             	'index'  );
+	        Route::post('update',      		'update' );
+	    });
+
 
 
 	    /*

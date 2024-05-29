@@ -73,6 +73,14 @@ class Order extends Model implements Auditable
     }
 
     /**
+     * Get all of the employee's order operations.
+     */
+    public function task()
+    {
+        return $this->morphOne(Task::class, 'task')->orderBy('id', 'desc')->limit(1);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function details()

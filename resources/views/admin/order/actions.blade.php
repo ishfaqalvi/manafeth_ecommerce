@@ -15,15 +15,20 @@
                     <form action="{{ route('orders.update') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $order->id }}">
-                        <input type="hidden" name="status" value="Processing">
+                        <input type="hidden" name="status" value="Confirmed">
                         <a href="#" class="dropdown-item sa-update">
-                            <i class="ph-note-pencil me-2"></i>{{ __('Processing') }}
+                            <i class="ph-note-pencil me-2"></i>{{ __('Confirmed') }}
                         </a>
                     </form>
                 @endif
-                @if($order->status == 'Processing')
-                    <a href="#" class="dropdown-item changeStatus" data-id="{{ $order->id }}">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Assign') }}
+                @if($order->status == 'Confirmed')
+                    <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $order->id }}">
+                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
+                    </a>
+                @endif
+                @if($order->status == 'Processing' && $order->task->status == 'Complete')
+                    <a href="#" class="dropdown-item assignToDriver" data-id="{{ $order->id }}">
+                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
                     </a>
                 @endif
                 @if($order->status == 'Delivered')

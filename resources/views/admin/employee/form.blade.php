@@ -21,12 +21,17 @@
                 {{ Form::password('confirm_password', ['class' => 'form-control' . ($errors->has('confirm_password') ? ' is-invalid' : ''), 'placeholder' => 'Confirm Password','required']) }}
                 {!! $errors->first('confirm_password', '<div class="invalid-feedback">:message</div>') !!}
             </div>
-            <div class="form-group col-lg-4 mb-3">
+            <div class="form-group col-lg-6 mb-3">
                 {{ Form::label('status') }}
                 {{ Form::select('status', ['Active' => 'Active','Disable'=>'Disable','Block'=>'Block'], $employee->status, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
                 {!! $errors->first('status', '<div class="invalid-feedback">:message</div>') !!}
             </div>
-            <div class="form-group col-lg-8 mb-3">
+            <div class="form-group col-lg-6 mb-3">
+                {{ Form::label('mobile_number') }}
+                {{ Form::text('mobile_number', $employee->mobile_number, ['class' => 'form-control' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => 'Mobile Number','required']) }}
+                {!! $errors->first('mobile_number', '<div class="invalid-feedback">:message</div>') !!}
+            </div>
+            <div class="form-group col-lg-12 mb-3">
                 {{ Form::label('roles') }}
                 {{ Form::select('roles[]', ['Driver'=>'Driver', 'Warehouse Boy'=>'Warehouse Boy','Maintenence Boy'=>'Maintenence Boy'], $employee->roles, ['class' => 'form-control select' . ($errors->has('roles') ? ' is-invalid' : ''), 'data-placeholder' => '--Select--','required','multiple']) }}
                 {!! $errors->first('roles', '<div class="invalid-feedback">:message</div>') !!}
@@ -35,7 +40,7 @@
     </div>
     <div class="form-group col-lg-4 mb-3">
         {{ Form::label('image') }}
-        {{ Form::file('image', ['class' => 'form-control dropify' . ($errors->has('image') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','data-default-file' => isset($employee->image) ? $employee->image : '',isset($employee->image) ? '' : 'required', 'data-height' => '200']) }}
+        {{ Form::file('image', ['class' => 'form-control dropify' . ($errors->has('image') ? ' is-invalid' : ''), 'accept' => 'image/png,image/jpg,image/jpeg','data-default-file' => isset($employee->image) ? $employee->image : '',isset($employee->image) ? '' : 'required', 'data-height' => '270']) }}
         {!! $errors->first('image', '<div class="invalid-feedback">:message</div>') !!}
     </div>
 	<div class="col-md-12 d-flex justify-content-end align-items-center mt-3">

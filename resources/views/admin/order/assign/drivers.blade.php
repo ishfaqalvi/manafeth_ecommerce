@@ -1,19 +1,19 @@
-<div id="editOrder" class="modal fade" tabindex="-1">
+<div id="drivermodel" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="POST" action="{{ route('orders.update') }}" class="validate" role="form" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('Assign Order') }}</h5>
+                    <h5 class="modal-title">{{ __('Assign Order to Driver') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        {{ Form::hidden('id', null,['id' => 'order-id']) }}
-                        {{ Form::hidden('status', 'Assign') }}
+                        {{ Form::hidden('id', null,['id' => 'driver-order-id']) }}
+                        {{ Form::hidden('status', 'Assign To Driver') }}
                         <div class="form-group">
-                            {{ Form::label('assign_to','Warehouse Boys') }}
-                            {{ Form::select('assign_to', warehouseBosys(), null, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required','id' => 'order-status']) }}
+                            {{ Form::label('driver','Drivers') }}
+                            {{ Form::select('driver', drivers(true), null, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
                         </div>
                     </div>
                 </div>

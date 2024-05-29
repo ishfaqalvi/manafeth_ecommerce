@@ -41,6 +41,7 @@
 					<th>Phone Number</th>
 					<th>Date</th>
 					<th>Time</th>
+					<th>Task</th>
 					<th>Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -54,15 +55,17 @@
 					<td>{{ $order->phone_number }}</td>
 					<td>{{ Carbon\Carbon::parse($order->created_at)->toDateString() }}</td>
 					<td>{{ Carbon\Carbon::parse($order->created_at)->toTimeString() }}</td>
+                    <td>{{ $order->task->status ?? "" }}</td>
                     <td>{{ $order->status }}</td>
                     <td class="text-center">@include('admin.order.actions')</td>
                 </tr>
             @endforeach
-            </tbody>
+        </tbody>
         </table>
     </div>
 </div>
-@include('admin.order.status')
+@include('admin.order.assign.warehouseboy')
+@include('admin.order.assign.drivers')
 @endsection
 
 @section('script')
@@ -113,11 +116,26 @@
                 if (result.value === true)  $(this).closest("form").submit();
             });
         });
-        $(".changeStatus").click(function(){
-            $('#order-id').val($(this).data('id'));
-            $('#order-status').val($(this).data('status'));
-            $('#editOrder').modal('show');
+        $('.assignToWarehouseBoy').click(function(){
+            $('#warehouseboy-order-id').val($(this).data('id'));
+            $('#warehouseboymodel').modal('show');
         });
+        $('.assignToDriver').click(function(){
+            $('#driver-order-id').val($(this).data('id'));
+            $('#drivermodel').modal('show');
+        });
+        // $(".updateStatus").click(function(){
+        //     var type = $(this).data('type');
+        //     $('#order-id').val($(this).data('id'));
+        //     if(type == 'Assign'){
+        //         $('#driversDiv').hide();
+        //         $('#order-status').val('Assign');
+        //     }else{
+        //         $('#warehouseBoysDiv').hide();
+        //         $('#order-status').val('Ready for Pickup');
+        //     }
+        //     $('#editOrder').modal('show');
+        // });
     });
 </script>
 @endsection

@@ -63,12 +63,16 @@ function customers()
  *
  * @return \Illuminate\Http\Response
  */
-function drivers()
+function drivers($pluck = false)
 {
-    $users = Employee::where('roles', 'LIKE', '%Driver%')->get()->mapWithKeys(function ($user) {
-        $string = "{$user->name} ({$user->mobile_number} )";
-        return [$user->id => $string];
-    })->toArray();
+    if($pluck){
+        $users = Employee::where('roles', 'LIKE', '%Driver%')->get()->mapWithKeys(function ($user) {
+            $string = "{$user->name} ({$user->mobile_number} )";
+            return [$user->id => $string];
+        })->toArray();
+    }else{
+        $users = Employee::where('roles', 'LIKE', '%Driver%')->get();
+    }
     return $users;
 }
 
@@ -77,12 +81,16 @@ function drivers()
  *
  * @return \Illuminate\Http\Response
  */
-function warehouseBosys()
+function warehouseBoys($pluck = false)
 {
-    $users = Employee::where('roles', 'LIKE', '%Warehouse Boy%')->get()->mapWithKeys(function ($user) {
-        $string = "{$user->name} ({$user->mobile_number} )";
-        return [$user->id => $string];
-    })->toArray();
+    if($pluck){
+        $users = Employee::where('roles', 'LIKE', '%Warehouse Boy%')->get()->mapWithKeys(function ($user) {
+            $string = "{$user->name} ({$user->mobile_number} )";
+            return [$user->id => $string];
+        })->toArray();
+    }else{
+        $users = Employee::where('roles', 'LIKE', '%Warehouse Boy%')->get();
+    }
     return $users;
 }
 
@@ -91,12 +99,16 @@ function warehouseBosys()
  *
  * @return \Illuminate\Http\Response
  */
-function maintenenceBosys()
+function maintenenceBoys($pluck = false)
 {
-    $users = Employee::where('roles', 'LIKE', '%Maintenence Boy%')->get()->mapWithKeys(function ($user) {
-        $string = "{$user->name} ({$user->mobile_number} )";
-        return [$user->id => $string];
-    })->toArray();
+    if($pluck){
+        $users = Employee::where('roles', 'LIKE', '%Maintenence Boy%')->get()->mapWithKeys(function ($user) {
+            $string = "{$user->name} ({$user->mobile_number} )";
+            return [$user->id => $string];
+        })->toArray();
+    }else{
+        $users = Employee::where('roles', '%Maintenence Boy%')->get();
+    }
     return $users;
 }
 

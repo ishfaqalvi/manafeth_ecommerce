@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Task;
 use App\Models\OrderDetail;
 use App\Contracts\FcmInterface;
 use App\Contracts\SaleInterface;
@@ -256,21 +257,44 @@ class SaleRepository implements SaleInterface
                     ]);
                     break;
 
-                case 'Processing':
+                case 'Confirmed':
                     $order->operations()->create([
-                        'actor_id' => auth()->user()->id,
+                        'actor_id'   => auth()->user()->id,
                         'actor_type' => 'App\Models\User',
-                        'action' => 'Change Order Status to Processing'
+                        'action'     => 'Change Order Status to Confirmed'
                     ]);
                     break;
 
-                case 'Assign':
+                case 'Assign To Warehouse Boy':
                     $order->operations()->create([
                         'actor_id' => auth()->user()->id,
                         'actor_type' => 'App\Models\User',
                         'action' => 'Order assigned to warehouse boy.'
                     ]);
-                    $data['status'] = 'Confirmed';
+                    Task::create([
+                        'employee_id' => $data['warehouseboy'],
+                        'task_type'   => 'App\Models\Order',
+                        'task_id'     => $order->id,
+                        'status'      => 'Pending'
+                    ]);
+                    $data['status'] = 'Processing';
+                    $order->assign_to = $data['warehouseboy'];
+                    break;
+
+                case 'Assign To Driver':
+                    $order->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Order assigned to driver.'
+                    ]);
+                    Task::create([
+                        'employee_id' => $data['driver'],
+                        'task_type'   => 'App\Models\Order',
+                        'task_id'     => $order->id,
+                        'status'      => 'Pending'
+                    ]);
+                    $data['status'] = 'Processing';
+                    $order->assign_to = $data['driver'];
                     break;
 
                 case 'Ready for Pickup':
@@ -279,7 +303,7 @@ class SaleRepository implements SaleInterface
                         'actor_type' => 'App\Models\Employee',
                         'action' => 'Order is ready for pickup by driver.'
                     ]);
-                    $order->assign_to = $data['assign_to'];
+                    $data['status'] = 'On the way';
                     break;
 
                 case 'Picked Up':
@@ -307,9 +331,7 @@ class SaleRepository implements SaleInterface
                     ]);
                     break;
             }
-
             $order->update($data);
-
             if (settings('sale_order_fcm_notification') == 'Yes') {
                 $fcmData = [
                     'title' => 'Order ' . $data['status'],
