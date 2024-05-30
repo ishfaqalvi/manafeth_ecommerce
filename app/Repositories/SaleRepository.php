@@ -78,6 +78,7 @@ class SaleRepository implements SaleInterface
             'details.services',
             'details.product.brand',
             'details.product.category',
+            'details.product.resources',
             'details.product.subCategory',
             'details.product.reviews.order.customer'
         ];
@@ -100,6 +101,7 @@ class SaleRepository implements SaleInterface
             'details.services',
             'details.product.brand',
             'details.product.category',
+            'details.product.resources',
             'details.product.subCategory',
             'details.product.reviews.order.customer'
         ];
