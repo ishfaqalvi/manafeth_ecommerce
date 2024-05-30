@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+use App\Models\Task;
 use App\Mail\OTPMail;
 use App\Models\Token;
 use App\Models\Employee;
@@ -120,5 +121,36 @@ class EmployeeRepository implements EmployeeInterface
             $record->delete();
             return true;
         }
+    }
+
+    public function tasks($guard)
+    {
+        $orderRelations = [
+            'task',
+            'task.customer',
+            'task.timeSlot',
+            'task.details',
+            'task.operations',
+            'task.operations.actor',
+            'task.details.services',
+            'task.details.product.brand',
+            'task.details.product.category',
+            'task.details.product.subCategory',
+            'task.details.product.reviews.order.customer'
+        ];
+        return Task::whereEmployeeId(Auth::guard($guard)->user()->id)->with(function ($query) use($orderRelations){
+            if ($query->task_type == 'App\Models\Order')
+            {
+                return $query->with($orderRelations);
+            }
+            elseif ($query->task_type == 'details')
+            {
+                return $query->with('taskDetails');
+            }
+            else
+            {
+                return $query->with('employee');
+            }
+        })->get();
     }
 }

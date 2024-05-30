@@ -1,11 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\API\Employee;
-use App\Models\Task;
 
 use Illuminate\Http\Request;
-use App\Contracts\SaleInterface;
-use Illuminate\Support\Facades\Auth;
+use App\Contracts\EmployeeInterface;
 use App\Http\Controllers\API\BaseController;
 
 /**
@@ -14,10 +12,10 @@ use App\Http\Controllers\API\BaseController;
  */
 class TaskController extends BaseController
 {
-    protected $order;
+    protected $employee;
 
-    public function __construct(SaleInterface $order){
-        $this->order = $order;
+    public function __construct(EmployeeInterface $employee){
+        $this->employee = $employee;
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +25,7 @@ class TaskController extends BaseController
     public function index()
     {
         try {
-            $data = Task::where('employee_id',Auth::guard('employee')->user()->id)->with('task')->get();
+            $data = $this->employee->tasks('employee');
             return $this->sendResponse($data, 'Task list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

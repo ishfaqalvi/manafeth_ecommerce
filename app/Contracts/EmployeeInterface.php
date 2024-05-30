@@ -27,4 +27,6 @@ interface EmployeeInterface
     public function forgotPassword($data);
 
     public function resetPassword($data);
+
+    public function tasks($guard);
 }
