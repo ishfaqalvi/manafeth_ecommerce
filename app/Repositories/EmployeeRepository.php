@@ -152,7 +152,7 @@ class EmployeeRepository implements EmployeeInterface
         return Task::whereEmployeeId(Auth::guard($guard)->user()->id)->with($orderRelations)->get();
     }
 
-    public function taskUpdate($guard)
+    public function taskUpdate()
     {
         $orderRelations = [
             'task',
