@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Employee;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Contracts\EmployeeInterface;
 use App\Http\Controllers\API\BaseController;
@@ -25,7 +26,7 @@ class TaskController extends BaseController
     public function index()
     {
         try {
-            $data = $this->employee->tasks('employee');
+            $data = $this->employee->taskList('employee');
             return $this->sendResponse($data, 'Task list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

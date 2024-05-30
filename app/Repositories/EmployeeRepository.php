@@ -123,7 +123,36 @@ class EmployeeRepository implements EmployeeInterface
         }
     }
 
-    public function tasks($guard)
+    public function taskList($guard)
+    {
+        $orderRelations = [
+            'task',
+            'task.customer',
+            'task.timeSlot',
+            'task.details',
+            'task.operations',
+            'task.operations.actor',
+            'task.details.services',
+            'task.details.product.resources',
+            'task.details.product.brand',
+            'task.details.product.category',
+            'task.details.product.subCategory',
+            'task.details.product.reviews.order.customer'
+        ];
+        // return Task::whereEmployeeId(Auth::guard($guard)->user()->id)->with(function ($query) use($orderRelations){
+        //     if ($query->task_type == 'App\Models\Order')
+        //     {
+        //         return $query->with($orderRelations);
+        //     }
+        //     elseif ($query->task_type == 'details')
+        //     {
+        //         return $query->with('taskDetails');
+        //     }
+        // })->get();
+        return Task::whereEmployeeId(Auth::guard($guard)->user()->id)->with($orderRelations)->get();
+    }
+
+    public function taskUpdate($guard)
     {
         $orderRelations = [
             'task',
