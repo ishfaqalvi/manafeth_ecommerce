@@ -26,7 +26,7 @@
                         <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
                     </a>
                 @endif
-                @if($order->status == 'Processing' && !is_null($order->task) && $order->task->status == 'Complete')
+                @if($order->status == 'Processing' && !is_null($order->task) && $order->task->status == 'Completed')
                     <a href="#" class="dropdown-item assignToDriver" data-id="{{ $order->id }}">
                         <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
                     </a>
