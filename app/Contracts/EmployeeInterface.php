@@ -30,5 +30,5 @@ interface EmployeeInterface
 
     public function taskList($guard);
 
-    public function taskUpdate();
+    public function taskUpdate($data);
 }

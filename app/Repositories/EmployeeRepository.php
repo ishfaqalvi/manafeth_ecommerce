@@ -5,6 +5,7 @@ use App\Models\Task;
 use App\Mail\OTPMail;
 use App\Models\Token;
 use App\Models\Employee;
+use App\Contracts\SaleInterface;
 use App\Contracts\EmployeeInterface;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +13,12 @@ use Illuminate\Support\Facades\Mail;
 
 class EmployeeRepository implements EmployeeInterface
 {
+    protected $order;
+
+    public function __construct(SaleInterface $order){
+        $this->order = $order;
+    }
+
     public function list($filter = null, $pagination = false)
 	{
         $query = Employee::query();
@@ -152,32 +159,12 @@ class EmployeeRepository implements EmployeeInterface
         return Task::whereEmployeeId(Auth::guard($guard)->user()->id)->with($orderRelations)->get();
     }
 
-    public function taskUpdate()
+    public function taskUpdate($data)
     {
-        $orderRelations = [
-            'task',
-            'task.customer',
-            'task.timeSlot',
-            'task.details',
-            'task.operations',
-            'task.operations.actor',
-            'task.details.services',
-            'task.details.product.resources',
-            'task.details.product.brand',
-            'task.details.product.category',
-            'task.details.product.subCategory',
-            'task.details.product.reviews.order.customer'
-        ];
-        // return Task::whereEmployeeId(Auth::guard($guard)->user()->id)->with(function ($query) use($orderRelations){
-        //     if ($query->task_type == 'App\Models\Order')
-        //     {
-        //         return $query->with($orderRelations);
-        //     }
-        //     elseif ($query->task_type == 'details')
-        //     {
-        //         return $query->with('taskDetails');
-        //     }
-        // })->get();
-        return Task::whereEmployeeId(Auth::guard($guard)->user()->id)->with($orderRelations)->get();
+        $task = Task::find($data['id']);
+        $task->update($data);
+        if(isset($data['order_status'])){
+            $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
+        }
     }
 }

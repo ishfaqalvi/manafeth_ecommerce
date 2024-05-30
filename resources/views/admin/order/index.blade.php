@@ -55,7 +55,9 @@
 					<td>{{ $order->phone_number }}</td>
 					<td>{{ Carbon\Carbon::parse($order->created_at)->toDateString() }}</td>
 					<td>{{ Carbon\Carbon::parse($order->created_at)->toTimeString() }}</td>
-                    <td>{{ $order->task->status ?? "" }}</td>
+                    <td>
+                        @if
+                        {{ $order->task->status ?? "" }}</td>
                     <td>{{ $order->status }}</td>
                     <td class="text-center">@include('admin.order.actions')</td>
                 </tr>

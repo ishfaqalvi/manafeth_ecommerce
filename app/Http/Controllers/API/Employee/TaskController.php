@@ -43,11 +43,7 @@ class TaskController extends BaseController
     public function update(Request $request)
     {
         try {
-            $task = Task::find($request->id);
-            $task->update($request->all());
-            if(isset($request->order_status)){
-                $this->order->orderUpdate(['status' => $request->order_status], $task->task_id, 'employee');
-            }
+            $this->employee->taskUpdate($request->all());
             return $this->sendResponse('', 'Task updated successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
