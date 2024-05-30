@@ -24,7 +24,7 @@ class AuthController extends BaseController
     {
         try {
             $responce = $this->employee->login($request->all());
-            if ($responce == false) {
+            if ($responce['status'] == false) {
                 return $this->sendError('Unauthorised.', ['error' => $responce['message']]);
             }
             return $this->sendResponse($responce, 'Employee login successfully.');
