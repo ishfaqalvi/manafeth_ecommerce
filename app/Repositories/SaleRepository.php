@@ -233,7 +233,6 @@ class SaleRepository implements SaleInterface
                         'actor_type' => 'App\Models\Employee',
                         'action' => 'Order is ready for pickup by driver.'
                     ]);
-                    $data['status'] = 'On the way';
                     break;
 
                 case 'Picked Up':
@@ -263,9 +262,15 @@ class SaleRepository implements SaleInterface
             }
             $order->update($data);
             if (settings('sale_order_fcm_notification') == 'Yes') {
+                if($order->status == 'On the Way'){
+                    $driver = Auth::guard('employee')->user();
+                    $body = 'Your order is on the way! Your driver, '. $driver->name .', will deliver your order soon. You can contact them at '. $driver->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';
+                }else{
+                    $body = 'Your order has been ' . $data['status'] . ' successfully.';
+                }
                 $fcmData = [
                     'title' => 'Order ' . $data['status'],
-                    'body' => 'Your order has been ' . $data['status'] . ' successfully.',
+                    'body' => $body,
                     'customer_id' => $order->customer->id
                 ];
                 $this->fcmNotification->store($fcmData);
