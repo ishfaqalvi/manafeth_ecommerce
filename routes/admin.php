@@ -47,14 +47,13 @@ Route::controller(RentRequestController::class)->prefix('rent/request')->as('ren
 |--------------------------------------------------------------------------
 */
 Route::controller(MaintenenceRequestController::class)->prefix('maintenance/request')->as('maintenance.')->group(function () {
-	Route::get('list',				 'index'	 )->name('index'  	 );
-	Route::get('create',			 'create'	 )->name('create' 	 );
-	Route::post('store',			 'store'	 )->name('store'  	 );
-	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
-	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
-	Route::patch('update/{user}',    'update'	 )->name('update' 	 );
-	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
-	Route::post('check-email', 		 'checkEmail')->name('checkEmail');
+	Route::get('list',				 'index'	  )->name('index'  	   );
+	Route::get('create',			 'create'	  )->name('create' 	   );
+	Route::post('store',			 'store'	  )->name('store'  	   );
+	Route::get('show/{id}',			 'show'		  )->name('show'	   );
+	Route::post('update',            'update'	  )->name('update' 	   );
+	Route::delete('delete/{id}',	 'destroy'	  )->name('destroy'	   );
+	Route::get('get-products', 		 'getProducts')->name('getProducts');
 });
 
 /*

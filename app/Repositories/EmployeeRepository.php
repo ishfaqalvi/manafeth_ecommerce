@@ -1,22 +1,19 @@
 <?php
 
 namespace App\Repositories;
-use App\Models\Task;
 use App\Mail\OTPMail;
-use App\Models\Token;
-use App\Models\Employee;
-use App\Contracts\SaleInterface;
-use App\Contracts\EmployeeInterface;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
+use App\Models\{Token, Task, Employee};
+use Illuminate\Support\Facades{Auth, Hash, Mail};
+use App\Contracts\{EmployeeInterface, MaintenenceInterface, SaleInterface};
 
 class EmployeeRepository implements EmployeeInterface
 {
     protected $order;
+    protected $maintenence;
 
-    public function __construct(SaleInterface $order){
+    public function __construct(SaleInterface $order, MaintenenceInterface $maintenence){
         $this->order = $order;
+        $this->maintenence = $maintenence;
     }
 
     public function list($filter = null, $pagination = false)
@@ -146,25 +143,37 @@ class EmployeeRepository implements EmployeeInterface
             'task.details.product.subCategory',
             'task.details.product.reviews.order.customer'
         ];
-        // return Task::whereEmployeeId(Auth::guard($guard)->user()->id)->with(function ($query) use($orderRelations){
-        //     if ($query->task_type == 'App\Models\Order')
-        //     {
-        //         return $query->with($orderRelations);
-        //     }
-        //     elseif ($query->task_type == 'details')
-        //     {
-        //         return $query->with('taskDetails');
-        //     }
-        // })->get();
-        return Task::whereEmployeeId(Auth::guard($guard)->user()->id)->with($orderRelations)->get();
+
+        $maintenenceRelations = [
+            'task',
+            'task.customer',
+            'task.category',
+            'task.product',
+            'task.operations',
+            'task.operations.actor'
+        ];
+
+        $tasks = Task::whereEmployeeId(Auth::guard($guard)->user()->id)->get();
+
+        foreach ($tasks as $task) {
+            if ($task->task_type == 'App\Models\Order') {
+                $task->load($orderRelations);
+            } elseif ($task->task_type == 'App\Models\MaintenenceRequest') {
+                $task->load($maintenenceRelations);
+            }
+        }
+        return $tasks;
     }
 
     public function taskUpdate($data)
     {
         $task = Task::find($data['id']);
         $task->update($data);
-        if(isset($data['order_status'])){
+        if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
             $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
+        }
+        if($task->status == 'Completed' && $task->task_type == 'App\Models\MaintenenceRequest'){
+            $this->maintenence->update(['status' => $data['order_status']], $task->task_id, 'employee');
         }
     }
 }

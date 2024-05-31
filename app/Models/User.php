@@ -86,4 +86,20 @@ class User extends Authenticatable implements Auditable
     {
         return asset($image);
     }
+
+    /**
+     * Get all of the employee's order operations.
+     */
+    public function orderOperations()
+    {
+        return $this->morphMany(OrderOperation::class, 'actor');
+    }
+
+    /**
+     * Get all of the employee's order operations.
+     */
+    public function maintenenceOperations()
+    {
+        return $this->morphMany(MaintenenceOperation::class, 'actor');
+    }
 }

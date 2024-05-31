@@ -52,7 +52,7 @@
                 {{ $maintenenceRequest->address }}
             </div>
             <div class="form-group mb-3">
-                <strong>Category Id:</strong>
+                <strong>Category:</strong>
                 {{ $maintenenceRequest->category->name }}
             </div>
             <div class="form-group mb-3">

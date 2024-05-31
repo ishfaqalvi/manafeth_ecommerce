@@ -48,6 +48,8 @@ class MaintenenceRequest extends Model implements Auditable
         'address',
         'category_id',
         'product_id',
+        'payment',
+        'payment_received',
         'message',
         'images',
         'status'
@@ -126,5 +128,21 @@ class MaintenenceRequest extends Model implements Auditable
     public function product()
     {
         return $this->hasOne('App\Models\Product', 'id', 'product_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operations()
+    {
+        return $this->hasMany('App\Models\MaintenenceOperation', 'maintenence_request_id', 'id');
+    }
+
+    /**
+     * Get all of the employee's order operations.
+     */
+    public function task()
+    {
+        return $this->morphOne(Task::class, 'task')->orderBy('id', 'desc')->limit(1);
     }
 }

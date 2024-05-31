@@ -31,10 +31,10 @@
             <h5 class="mb-0">{{ __('Edit ') }} Maintenence Request </h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('maintenence-requests.update', $maintenenceRequest->id) }}" class="validate"   role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('maintenence.update', $maintenenceRequest->id) }}" class="validate"   role="form" enctype="multipart/form-data">
                 @csrf
                 {{ method_field('PATCH') }}
-                 @include('admin.maintenence-request.form')
+                @include('admin.maintenence-request.form')
             </form>
         </div>
     </div>
@@ -44,6 +44,7 @@
 @section('script')
 <script>
     $(function(){
+        $('.select').select2();
         $('.validate').validate({
             errorClass: 'validation-invalid-label',
             successClass: 'validation-valid-label',

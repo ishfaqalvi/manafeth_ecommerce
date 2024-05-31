@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 use App\Models\MaintenenceRequest;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Contracts\{ProductInterface, MaintenenceInterface};
 
 /**
  * Class MaintenenceRequestController
@@ -12,13 +13,17 @@ use Illuminate\Http\Request;
  */
 class MaintenenceRequestController extends Controller
 {
+    protected $maintenence;
+    protected $product;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
+    function __construct(MaintenenceInterface $maintenence, ProductInterface $product)
     {
+        $this->maintenence = $maintenence;
+        $this->product = $product;
         $this->middleware('permission:maintenenceRequests-list',  ['only' => ['index']]);
         $this->middleware('permission:maintenenceRequests-view',  ['only' => ['show']]);
         $this->middleware('permission:maintenenceRequests-create',['only' => ['create','store']]);
@@ -33,7 +38,7 @@ class MaintenenceRequestController extends Controller
      */
     public function index()
     {
-        $maintenenceRequests = MaintenenceRequest::get();
+        $maintenenceRequests = $this->maintenence->list(null, true);
 
         return view('admin.maintenence-request.index', compact('maintenenceRequests'));
     }
@@ -45,7 +50,7 @@ class MaintenenceRequestController extends Controller
      */
     public function create()
     {
-        $maintenenceRequest = new MaintenenceRequest();
+        $maintenenceRequest = $this->maintenence->create();
         return view('admin.maintenence-request.create', compact('maintenenceRequest'));
     }
 
@@ -57,8 +62,8 @@ class MaintenenceRequestController extends Controller
      */
     public function store(Request $request)
     {
-       $maintenenceRequest = MaintenenceRequest::create($request->all());
-        return redirect()->route('maintenence-requests.index')
+        $this->maintenence->store('Admin', $request->all());
+        return redirect()->route('maintenance.index')
             ->with('success', 'MaintenenceRequest created successfully.');
     }
 
@@ -70,22 +75,9 @@ class MaintenenceRequestController extends Controller
      */
     public function show($id)
     {
-        $maintenenceRequest = MaintenenceRequest::find($id);
+        $maintenenceRequest = $this->maintenence->find($id);
 
         return view('admin.maintenence-request.show', compact('maintenenceRequest'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $maintenenceRequest = MaintenenceRequest::find($id);
-
-        return view('admin.maintenence-request.edit', compact('maintenenceRequest'));
     }
 
     /**
@@ -95,12 +87,12 @@ class MaintenenceRequestController extends Controller
      * @param  MaintenenceRequest $maintenenceRequest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MaintenenceRequest $maintenenceRequest)
+    public function update(Request $request)
     {
-        $maintenenceRequest->update($request->all());
+        $this->maintenence->update($request->all(), $request->id, 'Admin');
 
-        return redirect()->route('maintenence-requests.index')
-            ->with('success', 'MaintenenceRequest updated successfully');
+        return redirect()->route('maintenance.index')
+            ->with('success', 'Maintenence Request updated successfully');
     }
 
     /**
@@ -114,5 +106,17 @@ class MaintenenceRequestController extends Controller
 
         return redirect()->route('maintenence-requests.index')
             ->with('success', 'MaintenenceRequest deleted successfully');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getProducts(Request $request)
+    {
+        $responce = $this->product->maintenanceCategoryWise($request->id);
+        echo $responce;
     }
 }

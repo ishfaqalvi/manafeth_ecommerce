@@ -37,9 +37,9 @@
                 <tr>
                     <th>No</th>
                     <th>Name</th>
-                    <th>Phone Number</th>
-                    <th>Address</th>
+                    <th>Phone #</th>
                     <th>Product</th>
+                    <th>Task</th>
                     <th>Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -50,8 +50,8 @@
                     <td>{{ ++$key }}</td>
                     <td>{{ $maintenenceRequest->first_name.' '.$maintenenceRequest->last_name }}</td>
                     <td>{{ $maintenenceRequest->phone_number }}</td>
-                    <td>{{ $maintenenceRequest->address }}</td>
                     <td>{{ $maintenenceRequest->product->name }}</td>
+                    <td>{{ $maintenenceRequest->task->status ?? "" }}</td>
                     <td>{{ $maintenenceRequest->status }}</td>
                     <td class="text-center">@include('admin.maintenence-request.actions')</td>
                 </tr>
@@ -60,6 +60,7 @@
         </table>
     </div>
 </div>
+@include('admin.maintenence-request.assign')
 @endsection
 
 @section('script')
@@ -91,6 +92,28 @@
             }).then((result) => {
                 if (result.value === true)  $(this).closest("form").submit();
             });
+        });
+        $(".sa-update").click(function (event) {
+            event.preventDefault();
+            swalInit.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, update it!',
+                cancelButtonText: 'No, cancel!',
+                buttonsStyling: false,
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                }
+            }).then((result) => {
+                if (result.value === true)  $(this).closest("form").submit();
+            });
+        });
+        $('.assignToMaintenenceBoy').click(function(){
+            $('#request-id').val($(this).data('id'));
+            $('#maintenenceboymodel').modal('show');
         });
     });
 </script>

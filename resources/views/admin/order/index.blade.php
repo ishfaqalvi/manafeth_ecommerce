@@ -126,18 +126,6 @@
             $('#driver-order-id').val($(this).data('id'));
             $('#drivermodel').modal('show');
         });
-        // $(".updateStatus").click(function(){
-        //     var type = $(this).data('type');
-        //     $('#order-id').val($(this).data('id'));
-        //     if(type == 'Assign'){
-        //         $('#driversDiv').hide();
-        //         $('#order-status').val('Assign');
-        //     }else{
-        //         $('#warehouseBoysDiv').hide();
-        //         $('#order-status').val('Ready for Pickup');
-        //     }
-        //     $('#editOrder').modal('show');
-        // });
     });
 </script>
 @endsection

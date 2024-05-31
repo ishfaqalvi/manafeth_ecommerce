@@ -12,7 +12,7 @@ interface MaintenenceInterface
 
 	public function find($id);
 
-	public function update($data, $id);
+	public function update($data, $id, $guard);
 
 	public function delete($id);
 }

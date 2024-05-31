@@ -1,19 +1,19 @@
 @extends('admin.layout.app')
 
 @section('title')
-{{ __('Create') }} Maintenence Request
+{{ __('Create') }} Maintenence Operation
 @endsection
 
 @section('header')
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">Maintenence Request Managment</span>
+            Home - <span class="fw-normal">Maintenence Operation Managment</span>
         </h4>
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <a href="{{ route('maintenance.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            <a href="{{ route('maintenence-operations.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-arrow-circle-left"></i>
                 </span>
@@ -28,12 +28,12 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">{{ __('Create') }} Maintenence Request</h5>
+            <h5 class="mb-0">{{ __('Create') }} Maintenence Operation</h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('maintenance.store') }}" class="validate" role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('maintenence-operations.store') }}" class="validate" role="form" enctype="multipart/form-data">
                 @csrf
-                @include('admin.maintenence-request.form')
+                @include('admin.maintenence-operation.form')
             </form>
         </div>
     </div>
@@ -43,7 +43,6 @@
 @section('script')
 <script>
     $(function(){
-        $('.select').select2();
         $('.validate').validate({
             errorClass: 'validation-invalid-label',
             successClass: 'validation-valid-label',
@@ -70,17 +69,6 @@
                     error.insertAfter(element);
                 }
             }
-        });
-        $('select[name=category_id]').change(function () {
-            let id = $(this).val();
-            $('select[name=product_id]').html('<option value="">--Select--</option>');
-            $('select[name=product_id]').attr('disabled',false);
-            $.get('/admin/maintenance/request/get-products', {id: id}).done(function (result) {
-                let data = JSON.parse(result);
-                $.each(data, function (i, val) {
-                    $('select[name=product_id]').append($('<option></option>').val(val.id).html(val.name));
-                })
-            });
         });
     });
 </script>

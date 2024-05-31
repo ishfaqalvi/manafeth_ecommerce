@@ -19,11 +19,13 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('phone_number');
             $table->string('address');
+            $table->integer('payment')->nullable();
+            $table->enum('payment_received',['Yes', 'No'])->default('No');
             $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnDelete();
             $table->foreignId('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->text('message');
             $table->string('images');
-            $table->enum('status',['Pending','Accepted','Assigned','Completed']);
+            $table->enum('status',['Pending','Accepted','Rejected','Assigned','Done','Closed']);
             $table->timestamps();
         });
     }
