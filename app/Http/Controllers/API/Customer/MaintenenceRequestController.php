@@ -51,6 +51,25 @@ class MaintenenceRequestController extends BaseController
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function cancel(Request $request)
+    {
+        try {
+            if ($this->maintenence->find($id)->status == 'Pending') {
+                $this->maintenence->update(['status' => 'Rejected'], $request->id, 'customerapi');
+                return $this->sendResponse('', 'Maintenence Request cancelled successfully.');
+            }
+            return $this->sendResponse('', 'Your request is under process.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+    }
+
+    /**
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
@@ -58,12 +77,12 @@ class MaintenenceRequestController extends BaseController
     public function destroy($id)
     {
         try {
-            if ($this->maintenence->find($id)->status == 'Pending') {
+            if ($this->maintenence->find($id)->status == 'Rejected') {
                 $this->maintenence->delete($id);
-                $data = $this->maintenence->list('customerapi');
+                $data = $this->maintenence->list('customerapi', false);
                 return $this->sendResponse($data, 'Maintenence Request deleted successfully.');
             }
-            return $this->sendResponse('', 'Your request is in under process.');
+            return $this->sendResponse('', 'Your can only delete rejected requests.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }

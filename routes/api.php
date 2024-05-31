@@ -127,6 +127,7 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	    Route::controller(MaintenenceRequestController::class)->prefix('maintenence/request')->group(function(){
 	        Route::get('list',             	'index'  );
 	        Route::post('create',      		'store'  );
+	        Route::post('cancel',      		'cancel'  );
 	        Route::delete('delete/{id}',    'destroy');
 	    });
 

@@ -61,6 +61,7 @@
     </div>
 </div>
 @include('admin.maintenence-request.assign')
+@include('admin.maintenence-request.add-payment')
 @endsection
 
 @section('script')
@@ -114,6 +115,10 @@
         $('.assignToMaintenenceBoy').click(function(){
             $('#request-id').val($(this).data('id'));
             $('#maintenenceboymodel').modal('show');
+        });
+        $('.addPayment').click(function(){
+            $('#maintenence-request-id').val($(this).data('id'));
+            $('#addpaymentmodel').modal('show');
         });
     });
 </script>

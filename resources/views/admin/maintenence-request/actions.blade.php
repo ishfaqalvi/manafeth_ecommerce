@@ -26,6 +26,11 @@
                         <i class="ph-note-pencil me-2"></i>{{ __('Assign') }}
                     </a>
                 @endif
+                @if($maintenenceRequest->status == 'Done' && $maintenenceRequest->payment_received == 'No')
+                    <a href="#" class="dropdown-item addPayment" data-id="{{ $maintenenceRequest->id }}">
+                        <i class="ph-note-pencil me-2"></i>{{ __('Add Payment') }}
+                    </a>
+                @endif
                 @if($maintenenceRequest->status != 'Rejected' && $maintenenceRequest->status != 'Done' && $maintenenceRequest->status != 'Closed')
                     <form action="{{ route('orders.update') }}" method="POST">
                         @csrf

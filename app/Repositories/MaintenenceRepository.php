@@ -87,19 +87,27 @@ class MaintenenceRepository implements MaintenenceInterface
             $actorType = $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer';
 
             switch ($data['status']) {
+                case 'Rejected':
+                    $request->operations()->create([
+                        'actor_id'   => $actorId,
+                        'actor_type' => $actorType,
+                        'action'     => 'Request Rejected'
+                    ]);
+                    break;
+
                 case 'Accepted':
                     $request->operations()->create([
-                        'actor_id' => $actorId,
-                        'actor_type' => $actorType,
-                        'action' => 'Request Accepted'
+                        'actor_id'   => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action'     => 'Request Accepted'
                     ]);
                     break;
 
                 case 'Assigned':
                     $request->operations()->create([
-                        'actor_id' => auth()->user()->id,
+                        'actor_id'   => auth()->user()->id,
                         'actor_type' => 'App\Models\User',
-                        'action' => 'Request assigned to maintenence boy.'
+                        'action'     => 'Request assigned to maintenence boy.'
                     ]);
                     Task::create([
                         'employee_id' => $data['maintenenceboy'],
@@ -108,37 +116,62 @@ class MaintenenceRepository implements MaintenenceInterface
                         'status'      => 'Pending'
                     ]);
                     break;
-                case 'Done':
+
+                case 'Ready to go':
                     $request->operations()->create([
-                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_id'   => Auth::guard('employee')->user()->id,
                         'actor_type' => 'App\Models\Employee',
-                        'action' => 'Request completed by maintenence boy.'
+                        'action'     => 'Request accepted by maintenence boy.'
                     ]);
                     break;
 
-                case 'Closed':
+                case 'Out for Maintenance':
+                    $request->operations()->create([
+                        'actor_id'   => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action'     => 'Maintenence boys is going for service.'
+                    ]);
+                    break;
+
+                case 'Done':
+                    $request->operations()->create([
+                        'actor_id'   => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action'     => 'Request completed by maintenence boy.'
+                    ]);
+                    break;
+
+                case 'Add Payment':
+                    $request->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Request payment added by admin.'
+                    ]);
                     $request->operations()->create([
                         'actor_id' => auth()->user()->id,
                         'actor_type' => 'App\Models\User',
                         'action' => 'Request closed by admin.'
                     ]);
+                    $data['status'] = 'Closed';
+                    $data['payment_received'] = 'Yes';
                     break;
             }
             $request->update($data);
-            // if (settings('sale_order_fcm_notification') == 'Yes') {
-            //     if($order->status == 'On the Way'){
-            //         $driver = Auth::guard('employee')->user();
-            //         $body = 'Your order is on the way! Your driver, '. $driver->name .', will deliver your order soon. You can contact them at '. $driver->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';
-            //     }else{
-            //         $body = 'Your order has been ' . $data['status'] . ' successfully.';
-            //     }
-            //     $fcmData = [
-            //         'title' => 'Order ' . $data['status'],
-            //         'body' => $body,
-            //         'customer_id' => $order->customer->id
-            //     ];
-            //     $this->fcmNotification->store($fcmData);
-            // }
+            if (settings('maintenence_request_fcm_notification') == 'Yes') {
+                if($request->status == 'Out for Maintenance'){
+                    $technician = Auth::guard('employee')->user();
+                    $body = 'Your maintenance request has been assigned! Our technician, '. $technician->name .', will address your issue soon. You can contact them at '. $technician->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';
+
+                }else{
+                    $body = 'Your reqeust has been ' . $data['status'] . ' successfully.';
+                }
+                $fcmData = [
+                    'title' => 'Maintenance Request ' . $data['status'],
+                    'body' => $body,
+                    'customer_id' => $request->customer->id
+                ];
+                $this->fcmNotification->store($fcmData);
+            }
         });
         return true;
     }
