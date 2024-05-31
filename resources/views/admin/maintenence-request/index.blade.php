@@ -39,6 +39,7 @@
                     <th>Name</th>
                     <th>Phone #</th>
                     <th>Product</th>
+                    <th>Payment</th>
                     <th>Task</th>
                     <th>Status</th>
                     <th class="text-center">Actions</th>
@@ -51,6 +52,7 @@
                     <td>{{ $maintenenceRequest->first_name.' '.$maintenenceRequest->last_name }}</td>
                     <td>{{ $maintenenceRequest->phone_number }}</td>
                     <td>{{ $maintenenceRequest->product->name }}</td>
+                    <td>{{ number_format($maintenenceRequest->payment) }}</td>
                     <td>{{ $maintenenceRequest->task->status ?? "" }}</td>
                     <td>{{ $maintenenceRequest->status }}</td>
                     <td class="text-center">@include('admin.maintenence-request.actions')</td>

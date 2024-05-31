@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreignId('product_id')->references('id')->on('products')->cascadeOnDelete();
             $table->text('message');
             $table->string('images');
-            $table->enum('status',['Pending','Accepted','Rejected','Assigned','Done','Closed']);
+            $table->enum('status',['Pending','Accepted','Rejected','Assigned','Out for Maintenance','Ready to go','Done','Closed']);
             $table->timestamps();
         });
     }

@@ -178,6 +178,8 @@ class MaintenenceRepository implements MaintenenceInterface
 
 	public function delete($id)
     {
-        return MaintenenceRequest::find($id)->delete();
+        $request = MaintenenceRequest::find($id);
+        $request->operations()->delete();
+        return $request->delete();
     }
 }

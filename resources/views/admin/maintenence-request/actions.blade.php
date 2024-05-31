@@ -32,7 +32,7 @@
                     </a>
                 @endif
                 @if($maintenenceRequest->status != 'Rejected' && $maintenenceRequest->status != 'Done' && $maintenenceRequest->status != 'Closed')
-                    <form action="{{ route('orders.update') }}" method="POST">
+                    <form action="{{ route('maintenance.update') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $maintenenceRequest->id }}">
                         <input type="hidden" name="status" value="Rejected">

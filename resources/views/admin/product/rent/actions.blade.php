@@ -8,6 +8,11 @@
             <form action="{{ route('products.rent.destroy',$product->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
+                @can('rentProducts-addToCart')
+                    <a href="#" data-id="{{ $product->id }}" class="dropdown-item addToCart">
+                        <i class="ph-shopping-cart me-2"></i>{{ __('Add To Cart') }}
+                    </a>
+                @endcan
                 @can('rentProducts-view')
                     <a href="{{ route('products.rent.show',$product->id) }}" class="dropdown-item">
                         <i class="ph-eye me-2"></i>{{ __('Show') }}

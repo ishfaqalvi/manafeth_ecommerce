@@ -102,10 +102,11 @@ class MaintenenceRequestController extends Controller
      */
     public function destroy($id)
     {
-        $maintenenceRequest = MaintenenceRequest::find($id)->delete();
-
-        return redirect()->route('maintenence-requests.index')
-            ->with('success', 'MaintenenceRequest deleted successfully');
+        if($this->maintenence->find($id)->status == 'Rejected'){
+            $this->maintenence->delete($id);
+            return redirect()->back()->with('success', 'Maintenence Request deleted successfully');
+        }
+        return redirect()->back()->with('warning', 'Only rejected requests deleted');
     }
 
     /**

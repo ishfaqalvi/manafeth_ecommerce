@@ -25,7 +25,7 @@ class MaintenenceRequestController extends BaseController
     public function index()
     {
         try {
-            $data = $this->maintenence->list('customerapi');
+            $data = $this->maintenence->list('customerapi', false);
             return $this->sendResponse($data, 'Maintenence Request list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -43,7 +43,7 @@ class MaintenenceRequestController extends BaseController
         try {
             $this->maintenence->store('customerapi', $request->all());
 
-            $data = $this->maintenence->list('customerapi');
+            $data = $this->maintenence->list('customerapi', false);
             return $this->sendResponse($data, 'Maintenence Request created successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
@@ -59,7 +59,7 @@ class MaintenenceRequestController extends BaseController
     public function cancel(Request $request)
     {
         try {
-            if ($this->maintenence->find($id)->status == 'Pending') {
+            if ($this->maintenence->find($request->id)->status == 'Pending') {
                 $this->maintenence->update(['status' => 'Rejected'], $request->id, 'customerapi');
                 return $this->sendResponse('', 'Maintenence Request cancelled successfully.');
             }

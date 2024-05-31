@@ -169,9 +169,17 @@ class EmployeeRepository implements EmployeeInterface
     {
         $task = Task::find($data['id']);
         $task->update($data);
+
         if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
             $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
         }
+        if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
+            $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
+        }
+        if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
+            $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
+        }
+
         if($task->status == 'Accept' && $task->task_type == 'App\Models\MaintenenceRequest'){
             $this->maintenence->update(['status' => 'Ready to go'], $task->task_id, 'employee');
         }
