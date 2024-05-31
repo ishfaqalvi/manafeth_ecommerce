@@ -3,7 +3,7 @@
 namespace App\Repositories;
 use App\Mail\OTPMail;
 use App\Models\{Token, Task, Employee};
-use Illuminate\Support\Facades{Auth, Hash, Mail};
+use Illuminate\Support\Facades\{Auth, Hash, Mail};
 use App\Contracts\{EmployeeInterface, MaintenenceInterface, SaleInterface};
 
 class EmployeeRepository implements EmployeeInterface

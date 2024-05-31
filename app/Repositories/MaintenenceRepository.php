@@ -116,11 +116,11 @@ class MaintenenceRepository implements MaintenenceInterface
                     ]);
                     break;
 
-                case 'Completed':
+                case 'Closed':
                     $request->operations()->create([
                         'actor_id' => auth()->user()->id,
                         'actor_type' => 'App\Models\User',
-                        'action' => 'Request completed by admin.'
+                        'action' => 'Request closed by admin.'
                     ]);
                     break;
             }
