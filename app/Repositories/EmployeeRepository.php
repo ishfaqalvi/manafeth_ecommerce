@@ -173,7 +173,7 @@ class EmployeeRepository implements EmployeeInterface
             $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
         }
         if($task->status == 'Completed' && $task->task_type == 'App\Models\MaintenenceRequest'){
-            $this->maintenence->update(['status' => $data['order_status']], $task->task_id, 'employee');
+            $this->maintenence->update(['status' => 'Done'], $task->task_id, 'employee');
         }
     }
 }
