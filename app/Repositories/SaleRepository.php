@@ -208,7 +208,6 @@ class SaleRepository implements SaleInterface
                         'status'      => 'Pending'
                     ]);
                     $data['status'] = 'Processing';
-                    $order->assign_to = $data['warehouseboy'];
                     break;
 
                 case 'Assign To Driver':
