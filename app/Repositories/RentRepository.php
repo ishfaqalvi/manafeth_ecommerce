@@ -287,6 +287,11 @@ class RentRepository implements RentInterface
                     break;
             }
             $order->update($data);
+            if($order->status == 'Collected' || $order->status == 'Cancelled'){
+                foreach($order->details as $row){
+                    $row->product->increment('quantity', $row->quantity);
+                }
+            }
             if (settings('rent_order_fcm_notification') == 'Yes') {
                 if($order->status == 'Out For Delivery'){
                     $driver = Auth::guard('employee')->user();
@@ -306,29 +311,13 @@ class RentRepository implements RentInterface
             }
         });
         return true;
-        DB::transaction(function () use($data, $id) {
-            $rentRequest = RentRequest::find($id);
-            if($data['status'] == 'Cancelled' || $data['status'] == 'Returned'){
-                foreach($rentRequest->details as $row){
-                    $row->product->increment('quantity', $row->quantity);
-                }
-            }
-            if(settings('rent_order_fcm_notification') == 'Yes'){
-                $data = [
-                    'title' => 'Rent Request '. $data['status'],
-                    'body' => 'Your rental request has been updated successfully.',
-                    'customer_id' => $rentRequest->customer->id
-                ];
-                $this->fcmNotification->store($data);
-            }
-            $rentRequest->update($data);
-        });
-		return true;
 	}
 
     public function orderDelete($id)
 	{
-		return RentRequest::find($id)->delete();
+        $request = RentRequest::find($id);
+        $request->details()->delete();
+		return $request->delete();
 	}
 
     public function orderReview($data)
