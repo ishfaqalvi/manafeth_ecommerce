@@ -127,7 +127,7 @@ class EmployeeRepository implements EmployeeInterface
         }
     }
 
-    public function taskList($guard)
+    public function taskList($type = null, $guard)
     {
         $orderRelations = [
             'task',
@@ -144,6 +144,15 @@ class EmployeeRepository implements EmployeeInterface
             'task.details.product.reviews.order.customer'
         ];
 
+        $rentRelations = [
+            'task',
+            'task.customer',
+            'task.category',
+            'task.product',
+            'task.operations',
+            'task.operations.actor'
+        ];
+
         $maintenenceRelations = [
             'task',
             'task.customer',
@@ -153,11 +162,18 @@ class EmployeeRepository implements EmployeeInterface
             'task.operations.actor'
         ];
 
-        $tasks = Task::whereEmployeeId(Auth::guard($guard)->user()->id)->get();
+        $query = Task::query();
+
+        if(!is_null($type)){
+            $query->whereTaskType($type);
+        }
+        $tasks = $query->whereEmployeeId(Auth::guard($guard)->user()->id)->get();
 
         foreach ($tasks as $task) {
             if ($task->task_type == 'App\Models\Order') {
                 $task->load($orderRelations);
+            } elseif ($task->task_type == 'App\Models\RentRequest') {
+                $task->load($rentRelations);
             } elseif ($task->task_type == 'App\Models\MaintenenceRequest') {
                 $task->load($maintenenceRelations);
             }

@@ -229,8 +229,12 @@ Route::group(['prefix'=>'employee', 'namespace'=>'App\Http\Controllers\API\Emplo
 	    |--------------------------------------------------------------------------
 	    */
 	    Route::controller(TaskController::class)->prefix('tasks')->group(function(){
-	        Route::get('list',             	'index'  );
-	        Route::post('update',      		'update' );
+	        Route::get('sale/list',             	'saleList'         );
+	        Route::post('sale/update',      		'saleUpdate'       );
+	        Route::get('rent/list',             	'rentList'         );
+	        Route::post('rent/update',      		'rentUpdate'       );
+	        Route::get('maintenence/list',          'maintenenceList'  );
+	        Route::post('maintenence/update',      	'maintenenceUpdate');
 	    });
 
 
