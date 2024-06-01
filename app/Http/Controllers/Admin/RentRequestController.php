@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
-
 use App\Models\RentRequest;
+
 use Illuminate\Http\Request;
+use App\Contracts\RentInterface;
+use App\Contracts\TimeSlotInterface;
+use App\Http\Controllers\Controller;
 
 /**
  * Class RentRequestController
@@ -12,13 +14,17 @@ use Illuminate\Http\Request;
  */
 class RentRequestController extends Controller
 {
+    protected $slot;
+    protected $rentRequest;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct()
+    function __construct(TimeSlotInterface $slot, RentInterface $rentRequest)
     {
+        $this->slot = $slot;
+        $this->rentRequest = $rentRequest;
         $this->middleware('permission:rentRequests-list',  ['only' => ['index']]);
         $this->middleware('permission:rentRequests-view',  ['only' => ['show']]);
         $this->middleware('permission:rentRequests-create',['only' => ['create','store']]);
@@ -33,7 +39,7 @@ class RentRequestController extends Controller
      */
     public function index()
     {
-        $rentRequests = RentRequest::get();
+        $rentRequests = $this->rentRequest->orderList();
 
         return view('admin.rent-request.index', compact('rentRequests'));
     }
@@ -45,7 +51,7 @@ class RentRequestController extends Controller
      */
     public function create()
     {
-        $rentRequest = new RentRequest();
+        $rentRequest = $this->rentRequest->orderNew();
         return view('admin.rent-request.create', compact('rentRequest'));
     }
 
@@ -57,9 +63,12 @@ class RentRequestController extends Controller
      */
     public function store(Request $request)
     {
-       $rentRequest = RentRequest::create($request->all());
-        return redirect()->route('rent-requests.index')
+        if($this->rentRequest->orderStore($request->all(), 'Admin')){
+            return redirect()->route('rent.index')
             ->with('success', 'RentRequest created successfully.');
+        }
+        return redirect()->route('rent.index')
+            ->with('warning', 'Rent cart is empty of this customer.');
     }
 
     /**
@@ -73,19 +82,6 @@ class RentRequestController extends Controller
         $rentRequest = RentRequest::find($id);
 
         return view('admin.rent-request.show', compact('rentRequest'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $rentRequest = RentRequest::find($id);
-
-        return view('admin.rent-request.edit', compact('rentRequest'));
     }
 
     /**
@@ -114,5 +110,18 @@ class RentRequestController extends Controller
 
         return redirect()->route('rent-requests.index')
             ->with('success', 'RentRequest deleted successfully');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function timeSlots(Request $request)
+    {
+        $slots = $this->slot->available($request->type, $request->date);
+
+        echo json_encode($slots);
     }
 }

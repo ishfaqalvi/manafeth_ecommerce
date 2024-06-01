@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
-use App\Http\Controllers\Controller;
-use App\Contracts\ProductInterface;
 use Illuminate\Http\Request;
+use App\Contracts\RentInterface;
+use App\Contracts\ProductInterface;
+use App\Http\Controllers\Controller;
 
 class RentController extends Controller
 {
     protected $product;
+    protected $order;
 
-    public function __construct(ProductInterface $product)
+    public function __construct(ProductInterface $product, RentInterface $order)
     {
         $this->product = $product;
-
+        $this->order = $order;
         $this->middleware('permission:rentProducts-list',  ['only' => ['index']]);
         $this->middleware('permission:rentProducts-view',  ['only' => ['show']]);
         $this->middleware('permission:rentProducts-create',['only' => ['create','store']]);
@@ -49,6 +51,18 @@ class RentController extends Controller
         $product = $this->product->store($request->all());
         return redirect()->route('products.maintenance.edit', $product->id)
             ->with('success', 'Product created successfully.');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function addToCart(Request $request)
+    {
+        $responce = $this->order->cartStoreItem($request->all(), 'Admin');
+        if($responce){
+            return redirect()->back()->with('success', 'Product added to cart successfully.');
+        }
+        return redirect()->back()->with('warning', 'Product is already exit in cart.');
     }
 
     /**

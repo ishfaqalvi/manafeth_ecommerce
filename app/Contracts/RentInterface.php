@@ -18,6 +18,8 @@ interface RentInterface
 
 	public function orderStore($data, $guard);
 
+    public function orderNew();
+
 	public function orderUpdate($data, $id);
 
 	public function orderDelete($id);

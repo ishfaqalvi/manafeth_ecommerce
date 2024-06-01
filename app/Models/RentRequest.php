@@ -41,10 +41,10 @@ class RentRequest extends Model implements Auditable
         'collection_date',
         'time_slot_id',
         'discount',
-        'full_name',
+        'name',
+        'email',
         'phone_number',
         'address',
-        'message',
         'status'
     ];
 
@@ -78,5 +78,13 @@ class RentRequest extends Model implements Auditable
     public function details()
     {
         return $this->hasMany('App\Models\RentRequestDetail', 'request_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operations()
+    {
+        return $this->hasMany('App\Models\RentRequestOperation', 'rent_request_id', 'id');
     }
 }

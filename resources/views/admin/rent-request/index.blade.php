@@ -11,10 +11,10 @@
             Home - <span class="fw-normal">Rent Request Managment</span>
         </h4>
     </div>
-    @can('rent-requests-create')
+    @can('rentRequests-create')
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <a href="{{ route('rent-requests.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            <a href="{{ route('rent.create') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-plus"></i>
                 </span>
@@ -36,14 +36,11 @@
             <thead class="thead">
                 <tr>
                     <th>No</th>
-                    
-										<th>Customer Id</th>
-										<th>First Name</th>
-										<th>Last Name</th>
-										<th>Phone Number</th>
-										<th>Address</th>
-										<th>Message</th>
-
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone #</th>
+                    <th>Task</th>
+                    <th>Status</th>
                     <th class="text-center">Actions</th>
                 </tr>
             </thead>
@@ -51,14 +48,11 @@
             @foreach ($rentRequests as $key => $rentRequest)
                 <tr>
                     <td>{{ ++$key }}</td>
-                    
-											<td>{{ $rentRequest->customer_id }}</td>
-											<td>{{ $rentRequest->first_name }}</td>
-											<td>{{ $rentRequest->last_name }}</td>
-											<td>{{ $rentRequest->phone_number }}</td>
-											<td>{{ $rentRequest->address }}</td>
-											<td>{{ $rentRequest->message }}</td>
-
+                    <td>{{ $rentRequest->name }}</td>
+                    <td>{{ $rentRequest->email }}</td>
+                    <td>{{ $rentRequest->phone_number }}</td>
+                    <td>{{ $rentRequest->task->status ?? "" }}</td>
+                    <td>{{ $rentRequest->status }}</td>
                     <td class="text-center">@include('admin.rent-request.actions')</td>
                 </tr>
             @endforeach

@@ -30,8 +30,12 @@ class RentRepository implements RentInterface
 
     public function cartStoreItem($data, $guard)
 	{
+        if($guard == 'Admin'){
+            $customer = Customer::find($data['customer_id']);
+        }else{
+            $customer = Auth::guard($guard)->user();
+        }
         $product = $data['product_id'];
-        $customer = Auth::guard($guard)->user();
         $data['customer_id'] = $customer->id;
         $checkProduct = $customer->rentCarts()->whereProductId($product)->first();
         if ($checkProduct) {
@@ -62,26 +66,35 @@ class RentRepository implements RentInterface
 		RentCart::find($id)->delete();
 	}
 
-	public function orderList($guard)
+	public function orderList($guard = null)
 	{
 		if ($guard) {
             $customer_id = Auth::guard($guard)->user()->id;
 			$orders = RentRequest::whereCustomerId($customer_id)->with(
-				['details','details.product.brand', 'details.product.category', 'details.product.subCategory']
+				['details','details.product.brand', 'details.product.category', 'details.product.subCategory','operations']
 			)->get();
 		}else{
 			$orders = RentRequest::with(
-				['details','details.product.brand', 'details.product.category', 'details.product.subCategory']
+				['details','details.product.brand', 'details.product.category', 'details.product.subCategory','operations']
 			)->get();
 		}
 		return $orders;
 	}
 
+    public function orderNew()
+    {
+        return new RentRequest();
+    }
+
     public function orderStore($data, $guard)
 	{
-        $responce = DB::transaction(function () use($data, $guard) {
+        $customer = $guard == 'Admin' ? Customer::find($data['customer_id']) : Auth::guard($guard)->user();
+        if($customer->rentCarts()->count() == 0)
+        {
+            return false;
+        }
+        $responce = DB::transaction(function () use($data, $guard, $customer) {
             $products = '';
-            $customer = Auth::guard($guard)->user();
             $order = $customer->rentRequests()->create($data);
             foreach($customer->rentCarts as $row){
                 $order->details()->create([
@@ -94,8 +107,13 @@ class RentRepository implements RentInterface
                 $products .= $row->product->name.' ( '.$row->quantity.' Qty)'.' (From: '. date('d M Y', $row->from).') (To: '.date('d M Y', $row->to).')';
                 $row->delete();
             }
+            $order->operations()->create([
+                'actor_id'   => $guard == 'Admin' ? auth()->user()->id : $customer->id,
+                'actor_type' => $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer',
+                'action'     => 'Rental Request Placed'
+            ]);
             if(settings('rent_order_whatsapp_notification') == 'Yes'){
-                $data = [$data['full_name'], $data['phone_number'], $products];
+                $data = [$data['name'], $data['phone_number'], $products];
                 $this->whatsAppService->sendMessage('renta_order_placed', $data);
             }
             if(settings('rent_order_fcm_notification') == 'Yes' && $guard == 'customerapi'){
@@ -113,7 +131,7 @@ class RentRepository implements RentInterface
 
 	public function orderFind($id)
 	{
-		return RentRequest::find($id);
+		return RentRequest::with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory','operations'])->find($id);
 	}
 
     public function orderUpdate($data, $id)

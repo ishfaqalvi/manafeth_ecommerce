@@ -1,19 +1,19 @@
 @extends('admin.layout.app')
 
 @section('title')
-{{ __('Create') }} Rent Request
+    {{ __('Update') }} Rent Request Operation
 @endsection
 
 @section('header')
 <div class="page-header-content d-lg-flex">
     <div class="d-flex">
         <h4 class="page-title mb-0">
-            Home - <span class="fw-normal">Rent Request Managment</span>
+            Home - <span class="fw-normal">Rent Request Operation Managment</span>
         </h4>
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <a href="{{ route('rent.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            <a href="{{ route('rent-request-operations.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-arrow-circle-left"></i>
                 </span>
@@ -28,12 +28,13 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <h5 class="mb-0">{{ __('Create') }} Rent Request</h5>
+            <h5 class="mb-0">{{ __('Edit ') }} Rent Request Operation </h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('rent.store') }}" class="validate" role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('rent-request-operations.update', $rentRequestOperation->id) }}" class="validate"   role="form" enctype="multipart/form-data">
                 @csrf
-                @include('admin.rent-request.form')
+                {{ method_field('PATCH') }}
+                 @include('admin.rent-request-operation.form')
             </form>
         </div>
     </div>
@@ -43,7 +44,6 @@
 @section('script')
 <script>
     $(function(){
-        $('.select').select2();
         $('.validate').validate({
             errorClass: 'validation-invalid-label',
             successClass: 'validation-valid-label',
@@ -58,6 +58,9 @@
                 $(element).removeClass('is-invalid');
                 $(element).addClass('is-valid');
             },
+            success: function(label) {
+                label.addClass('validation-valid-label').text('Success.');
+            },
             errorPlacement: function(error, element) {
                 if (element.hasClass('select2-hidden-accessible')) {
                     error.appendTo(element.parent());
@@ -67,30 +70,6 @@
                     error.insertAfter(element);
                 }
             }
-        });
-        ['.collection_date'].forEach(selector => {
-            const element = document.querySelector(selector);
-            if (element) {
-                new Datepicker(element, {
-                    container: '.content-inner',
-                    buttonClass: 'btn',
-                    prevArrow: document.dir == 'rtl' ? '&rarr;' : '&larr;',
-                    nextArrow: document.dir == 'rtl' ? '&larr;' : '&rarr;',
-                    autohide: true
-                });
-            }
-        });
-        $('select[name=collection_type]').change(function () {
-            let type = $(this).val();
-            var date = $('#collection_date').val();
-            $('select[name=time_slot_id]').html('<option value="">--Select--</option>');
-            $('select[name=sub_category_id]').attr('disabled',false);
-            $.get('/admin/rent/request/time-slots', {type: type, data:date}).done(function (result) {
-                let data = JSON.parse(result);
-                $.each(data, function (i, val) {
-                    $('select[name=time_slot_id]').append($('<option></option>').val(val.id).html(val.start_time +' / ' + val.end_time));
-                })
-            });
         });
     });
 </script>

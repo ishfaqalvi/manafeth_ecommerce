@@ -1,29 +1,69 @@
-@canany(['rent-requests-view', 'rent-requests-edit', 'rent-requests-delete'])
+@canany(['rentRequests-view', 'rentRequests-edit', 'rentRequests-delete'])
 <div class="d-inline-flex">
     <div class="dropdown">
         <a href="#" class="text-body" data-bs-toggle="dropdown">
             <i class="ph-list"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-end">
-            <form action="{{ route('rent-requests.destroy',$rentRequest->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                @can('rent-requests-view')
-                    <a href="{{ route('rent-requests.show',$rentRequest->id) }}" class="dropdown-item">
-                        <i class="ph-eye me-2"></i>{{ __('Show') }}
+            @can('rentRequests-view')
+                <a href="{{ route('rent.show',$rentRequest->id) }}" class="dropdown-item">
+                    <i class="ph-eye me-2"></i>{{ __('Show') }}
+                </a>
+            @endcan
+            @can('rentRequests-edit')
+                @if($order->status == 'Pending')
+                    <form action="{{ route('orders.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $order->id }}">
+                        <input type="hidden" name="status" value="Confirmed">
+                        <a href="#" class="dropdown-item sa-update">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Confirmed') }}
+                        </a>
+                    </form>
+                @endif
+                @if($order->status == 'Confirmed')
+                    <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $order->id }}">
+                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
                     </a>
-                @endcan
-                @can('rent-requests-edit')
-                    <a href="{{ route('rent-requests.edit',$rentRequest->id) }}" class="dropdown-item">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Edit') }}
+                @endif
+                @if($order->status == 'Processing' && !is_null($order->task) && $order->task->status == 'Completed')
+                    <a href="#" class="dropdown-item assignToDriver" data-id="{{ $order->id }}">
+                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
                     </a>
-                @endcan
-                @can('rent-requests-delete')
+                @endif
+                @if($order->status == 'Delivered')
+                    <form action="{{ route('orders.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $order->id }}">
+                        <input type="hidden" name="status" value="Completed">
+                        <a href="#" class="dropdown-item sa-update">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                        </a>
+                    </form>
+                @endif
+                @if($order->status != 'Cancelled' && $order->status != 'Delivered' && $order->status != 'Completed')
+                    <form action="{{ route('orders.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $order->id }}">
+                        <input type="hidden" name="status" value="Cancelled">
+                        <a href="#" class="dropdown-item sa-update">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Cancel') }}
+                        </a>
+                    </form>
+                @endif
+                <a href="{{ route('rent.edit',$rentRequest->id) }}" class="dropdown-item">
+                    <i class="ph-note-pencil me-2"></i>{{ __('Edit') }}
+                </a>
+            @endcan
+            @can('rentRequests-delete')
+                <form action="{{ route('rent.destroy',$rentRequest->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
                     <button type="submit" class="dropdown-item sa-confirm">
                         <i class="ph-trash me-2"></i>{{ __('Delete') }}
                     </button>
-                @endcan
-            </form>
+                </form>
+            @endcan
         </div>
     </div>
 </div>
