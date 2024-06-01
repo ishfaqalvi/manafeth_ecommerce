@@ -154,12 +154,12 @@ class EmployeeRepository implements EmployeeInterface
         ];
 
         $maintenenceRelations = [
-            'maintenanceRequest',
-            'maintenanceRequest.customer',
-            'maintenanceRequest.category',
-            'maintenanceRequest.product',
-            'maintenanceRequest.operations',
-            'maintenanceRequest.operations.actor'
+            'maintenenceRequest',
+            'maintenenceRequest.customer',
+            'maintenenceRequest.category',
+            'maintenenceRequest.product',
+            'maintenenceRequest.operations',
+            'maintenenceRequest.operations.actor'
         ];
 
         $query = Task::query();

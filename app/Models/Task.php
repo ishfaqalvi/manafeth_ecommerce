@@ -60,11 +60,11 @@ class Task extends Model implements Auditable
     }
 
     /**
-     * Define a relationship for MaintenanceRequest task details.
+     * Define a relationship for MaintenenceRequest task details.
      */
-    public function maintenanceRequest()
+    public function maintenenceRequest()
     {
-        return $this->hasOne('App\Models\MaintenanceRequest', 'id', 'task_id');
+        return $this->hasOne('App\Models\MaintenenceRequest', 'id', 'task_id');
     }
 
     /**
