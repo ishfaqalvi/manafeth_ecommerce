@@ -61,7 +61,7 @@ class RentRequestController extends BaseController
     {
         try {
             if ($this->order->orderFind($request->id)->status == 'Pending') {
-                $this->order->orderUpdate(['status' => 'Cancelled'], $request->id);
+                $this->order->orderUpdate(['status' => 'Cancelled'], $request->id, 'employee');
                 return $this->sendResponse('', 'Request cancelled successfully.');
             }
             return $this->sendError('Invalid Action', 'You can not cancel the under process request.');
@@ -78,7 +78,7 @@ class RentRequestController extends BaseController
     public function destroy($id)
     {
         try {
-            if ($this->order->orderFind($id)->status == 'Pending') {
+            if ($this->order->orderFind($id)->status == 'Cancelled') {
                 $this->order->orderDelete($id);
                 return $this->sendResponse('', 'Request deleted successfully.');
             }else{
