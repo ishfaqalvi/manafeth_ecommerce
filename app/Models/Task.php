@@ -50,4 +50,28 @@ class Task extends Model implements Auditable
     {
         return $this->morphTo();
     }
+
+    /**
+     * Define a relationship for Order task details.
+     */
+    public function order()
+    {
+        return $this->hasOne('App\Models\Order', 'id', 'task_id');
+    }
+
+    /**
+     * Define a relationship for MaintenanceRequest task details.
+     */
+    public function maintenanceRequest()
+    {
+        return $this->hasOne('App\Models\MaintenanceRequest', 'id', 'task_id');
+    }
+
+    /**
+     * Define a relationship for RentRequest task details.
+     */
+    public function rentRequest()
+    {
+        return $this->hasOne('App\Models\RentRequest', 'id', 'task_id');
+    }
 }

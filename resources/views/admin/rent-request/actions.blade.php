@@ -11,49 +11,46 @@
                 </a>
             @endcan
             @can('rentRequests-edit')
-                @if($order->status == 'Pending')
+                @if($rentRequest->status == 'Pending')
                     <form action="{{ route('orders.update') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $order->id }}">
+                        <input type="hidden" name="id" value="{{ $rentRequest->id }}">
                         <input type="hidden" name="status" value="Confirmed">
                         <a href="#" class="dropdown-item sa-update">
                             <i class="ph-note-pencil me-2"></i>{{ __('Confirmed') }}
                         </a>
                     </form>
                 @endif
-                @if($order->status == 'Confirmed')
-                    <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $order->id }}">
+                @if($rentRequest->status == 'Confirmed')
+                    <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $rentRequest->id }}">
                         <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
                     </a>
                 @endif
-                @if($order->status == 'Processing' && !is_null($order->task) && $order->task->status == 'Completed')
-                    <a href="#" class="dropdown-item assignToDriver" data-id="{{ $order->id }}">
+                @if($rentRequest->status == 'Processing' && !is_null($rentRequest->task) && $rentRequest->task->status == 'Completed')
+                    <a href="#" class="dropdown-item assignToDriver" data-id="{{ $rentRequest->id }}">
                         <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
                     </a>
                 @endif
-                @if($order->status == 'Delivered')
+                @if($rentRequest->status == 'Delivered')
                     <form action="{{ route('orders.update') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $order->id }}">
+                        <input type="hidden" name="id" value="{{ $rentRequest->id }}">
                         <input type="hidden" name="status" value="Completed">
                         <a href="#" class="dropdown-item sa-update">
                             <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
                         </a>
                     </form>
                 @endif
-                @if($order->status != 'Cancelled' && $order->status != 'Delivered' && $order->status != 'Completed')
+                @if($rentRequest->status != 'Cancelled' && $rentRequest->status != 'Delivered' && $rentRequest->status != 'Completed')
                     <form action="{{ route('orders.update') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $order->id }}">
+                        <input type="hidden" name="id" value="{{ $rentRequest->id }}">
                         <input type="hidden" name="status" value="Cancelled">
                         <a href="#" class="dropdown-item sa-update">
                             <i class="ph-note-pencil me-2"></i>{{ __('Cancel') }}
                         </a>
                     </form>
                 @endif
-                <a href="{{ route('rent.edit',$rentRequest->id) }}" class="dropdown-item">
-                    <i class="ph-note-pencil me-2"></i>{{ __('Edit') }}
-                </a>
             @endcan
             @can('rentRequests-delete')
                 <form action="{{ route('rent.destroy',$rentRequest->id) }}" method="POST">

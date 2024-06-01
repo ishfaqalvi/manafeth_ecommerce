@@ -79,7 +79,7 @@ class RentRequestController extends Controller
      */
     public function show($id)
     {
-        $rentRequest = RentRequest::find($id);
+        $rentRequest = $this->rentRequest->orderFind($id);
 
         return view('admin.rent-request.show', compact('rentRequest'));
     }
@@ -88,15 +88,15 @@ class RentRequestController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  RentRequest $rentRequest
+     * @param  Order $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RentRequest $rentRequest)
+    public function update(Request $request)
     {
-        $rentRequest->update($request->all());
+        $this->rentRequest->orderUpdate($request->all(), $request->id, 'Admin');
 
-        return redirect()->route('rent-requests.index')
-            ->with('success', 'RentRequest updated successfully');
+        return redirect()->route('orders.index')
+            ->with('success', 'Rent Request updated successfully');
     }
 
     /**
@@ -106,10 +106,13 @@ class RentRequestController extends Controller
      */
     public function destroy($id)
     {
-        $rentRequest = RentRequest::find($id)->delete();
-
-        return redirect()->route('rent-requests.index')
-            ->with('success', 'RentRequest deleted successfully');
+        if ($this->order->orderFind($id)->status == 'Cancelled') {
+            $this->order->orderDelete($id);
+            return redirect()->route('orders.index')
+            ->with('success', 'Rent Request deleted successfully');
+        }
+        return redirect()->route('orders.index')
+            ->with('warning', 'You can delete only cancelled rent request.');
     }
 
     /**

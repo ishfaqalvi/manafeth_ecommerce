@@ -130,36 +130,36 @@ class EmployeeRepository implements EmployeeInterface
     public function taskList($type = null, $guard)
     {
         $orderRelations = [
-            'task',
-            'task.customer',
-            'task.timeSlot',
-            'task.details',
-            'task.operations',
-            'task.operations.actor',
-            'task.details.services',
-            'task.details.product.resources',
-            'task.details.product.brand',
-            'task.details.product.category',
-            'task.details.product.subCategory',
-            'task.details.product.reviews.order.customer'
+            'order',
+            'order.customer',
+            'order.timeSlot',
+            'order.details',
+            'order.operations',
+            'order.operations.actor',
+            'order.details.services',
+            'order.details.product.resources',
+            'order.details.product.brand',
+            'order.details.product.category',
+            'order.details.product.subCategory',
+            'order.details.product.reviews.order.customer'
         ];
 
         $rentRelations = [
-            'task',
-            'task.customer',
-            'task.category',
-            'task.product',
-            'task.operations',
-            'task.operations.actor'
+            'rentRequest',
+            'rentRequest.customer',
+            'rentRequest.timeSlot',
+            'rentRequest.details',
+            'rentRequest.operations',
+            'rentRequest.operations.actor'
         ];
 
         $maintenenceRelations = [
-            'task',
-            'task.customer',
-            'task.category',
-            'task.product',
-            'task.operations',
-            'task.operations.actor'
+            'maintenanceRequest',
+            'maintenanceRequest.customer',
+            'maintenanceRequest.category',
+            'maintenanceRequest.product',
+            'maintenanceRequest.operations',
+            'maintenanceRequest.operations.actor'
         ];
 
         $query = Task::query();

@@ -24,6 +24,38 @@ class TaskController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+    public function index()
+    {
+        try {
+            $data = $this->employee->taskList(null, 'employee');
+            return $this->sendResponse($data, 'Task list get successfully.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Task $task
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        try {
+            $this->employee->taskUpdate($request->all());
+            return $this->sendResponse('', 'Task updated successfully.');
+        } catch (\Throwable $th) {
+            return $this->sendException($th->getMessage());
+        }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function saleList()
     {
         try {
