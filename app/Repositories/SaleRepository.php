@@ -124,10 +124,11 @@ class SaleRepository implements SaleInterface
             $order = $customer->orders()->create($data);
             if (isset($data['buy_now']) && !is_null($data['buy_now'])) {
                 $product = Product::find($data['product_id']);
+                $price = $product->discount > 0 ? $product->discount : $product->price;
                 $detail = $order->details()->create([
                     'product_id'=> $data['product_id'],
                     'quantity'  => 1,
-                    'price'     => $product->price - $product->discount
+                    'price'     => $price
                 ]);
                 $product->decrement('quantity');
                 $this->storeServices($detail->id, $product);
@@ -135,10 +136,11 @@ class SaleRepository implements SaleInterface
             }else{
                 foreach($customer->carts as $row){
                     $product = $row->product;
+                    $price = $product->discount > 0 ? $product->discount : $product->price;
                     $detail = $order->details()->create([
                         'product_id'=> $row->product_id,
                         'quantity'  => $row->quantity,
-                        'price'     => $product->price - $product->discount
+                        'price'     => $price
                     ]);
                     $products .= $product->name.' ( '.$row->quantity.' Qty)';
                     $product->decrement('quantity', $row->quantity);
