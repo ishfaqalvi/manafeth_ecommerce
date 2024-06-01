@@ -151,6 +151,12 @@ class EmployeeRepository implements EmployeeInterface
             'rentRequest.customer',
             'rentRequest.timeSlot',
             'rentRequest.details',
+            'rentRequest.details.product',
+            'rentRequest.details.product.brand',
+            'rentRequest.details.product.category',
+            'rentRequest.details.product.subCategory',
+            'rentRequest.details.product.resources',
+            'rentRequest.details.product.reviews.order.customer',
             'rentRequest.operations',
             'rentRequest.operations.actor'
         ];

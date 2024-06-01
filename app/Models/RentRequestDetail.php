@@ -38,18 +38,18 @@ class RentRequestDetail extends Model implements Auditable
     /**
      * Interact with the date.
      */
-    public function setFromAttribute($value)
-    {
-        $this->attributes['from'] = strtotime($value);
-    }
+    // public function setFromAttribute($value)
+    // {
+    //     $this->attributes['from'] = strtotime($value);
+    // }
 
     /**
      * Interact with the date.
      */
-    public function setToAttribute($value)
-    {
-        $this->attributes['to'] = strtotime($value);
-    }
+    // public function setToAttribute($value)
+    // {
+    //     $this->attributes['to'] = strtotime($value);
+    // }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
