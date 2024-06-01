@@ -20,7 +20,7 @@ interface RentInterface
 
     public function orderNew();
 
-	public function orderUpdate($data, $id);
+	public function orderUpdate($data, $id, $guard);
 
 	public function orderDelete($id);
 

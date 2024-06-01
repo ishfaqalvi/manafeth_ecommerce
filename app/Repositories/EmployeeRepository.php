@@ -4,15 +4,17 @@ namespace App\Repositories;
 use App\Mail\OTPMail;
 use App\Models\{Token, Task, Employee};
 use Illuminate\Support\Facades\{Auth, Hash, Mail};
-use App\Contracts\{EmployeeInterface, MaintenenceInterface, SaleInterface};
+use App\Contracts\{EmployeeInterface, MaintenenceInterface, SaleInterface, RentInterface};
 
 class EmployeeRepository implements EmployeeInterface
 {
     protected $order;
+    protected $rent;
     protected $maintenence;
 
-    public function __construct(SaleInterface $order, MaintenenceInterface $maintenence){
+    public function __construct(SaleInterface $order, MaintenenceInterface $maintenence, RentInterface $rent){
         $this->order = $order;
+        $this->rent = $rent;
         $this->maintenence = $maintenence;
     }
 
@@ -167,7 +169,7 @@ class EmployeeRepository implements EmployeeInterface
         if(!is_null($type)){
             $query->whereTaskType($type);
         }
-        $tasks = $query->whereEmployeeId(Auth::guard($guard)->user()->id)->get();
+        $tasks = $query->whereEmployeeId(Auth::guard($guard)->user()->id)->orderBy('id', 'desc')->get();
 
         foreach ($tasks as $task) {
             if ($task->task_type == 'App\Models\Order') {
@@ -189,12 +191,6 @@ class EmployeeRepository implements EmployeeInterface
         if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
             $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
         }
-        if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
-            $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
-        }
-        if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
-            $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
-        }
 
         if($task->status == 'Accept' && $task->task_type == 'App\Models\MaintenenceRequest'){
             $this->maintenence->update(['status' => 'Ready to go'], $task->task_id, 'employee');
@@ -204,6 +200,10 @@ class EmployeeRepository implements EmployeeInterface
         }
         if($task->status == 'Completed' && $task->task_type == 'App\Models\MaintenenceRequest'){
             $this->maintenence->update(['status' => 'Done'], $task->task_id, 'employee');
+        }
+
+        if(isset($data['order_status']) && $task->task_type == 'App\Models\RentRequest'){
+            $this->rent->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
         }
     }
 }

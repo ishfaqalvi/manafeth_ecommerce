@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('email');
             $table->string('phone_number');
             $table->string('address');
-            $table->foreignId('assign_to')->nullable()->references('id')->on('employees')->cascadeOnDelete();
             $table->enum('status',['Pending','Cancelled','Confirmed','Processing','Ready for Pickup','On the way','Delivered', 'Completed']);
             $table->timestamps();
         });

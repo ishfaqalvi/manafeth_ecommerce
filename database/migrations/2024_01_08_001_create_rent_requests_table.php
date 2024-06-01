@@ -19,11 +19,13 @@ return new class extends Migration
             $table->bigInteger('collection_date');
             $table->foreignId('time_slot_id')->references('id')->on('time_slots')->cascadeOnDelete();
             $table->integer('discount')->nullable();
+            $table->integer('payment')->nullable();
+            $table->enum('payment_received',['Yes', 'No'])->default('No');
             $table->string('name');
             $table->string('email');
             $table->string('phone_number');
             $table->string('address');
-            $table->enum('status',['Pending','Cancelled','Confirmed','Processing','Ready for Pickup','Out For Delivery','Delivered','Ready For Return','Out For Return','Returned','Collected','Completed']);
+            $table->enum('status',['Pending','Cancelled','Confirmed','Processing','Ready for Pickup','Out For Delivery','Delivered','Returning','Ready For Return','Out For Return','Returned','Collecting','Collected','Completed']);
             $table->timestamps();
         });
     }

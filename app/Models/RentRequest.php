@@ -41,6 +41,8 @@ class RentRequest extends Model implements Auditable
         'collection_date',
         'time_slot_id',
         'discount',
+        'payment',
+        'payment_received',
         'name',
         'email',
         'phone_number',
@@ -86,5 +88,13 @@ class RentRequest extends Model implements Auditable
     public function operations()
     {
         return $this->hasMany('App\Models\RentRequestOperation', 'rent_request_id', 'id');
+    }
+
+    /**
+     * Get all of the employee's order operations.
+     */
+    public function task()
+    {
+        return $this->morphOne(Task::class, 'task')->orderBy('id', 'desc')->limit(1);
     }
 }

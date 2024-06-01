@@ -95,7 +95,7 @@ class RentRequestController extends Controller
     {
         $this->rentRequest->orderUpdate($request->all(), $request->id, 'Admin');
 
-        return redirect()->route('orders.index')
+        return redirect()->route('rent.index')
             ->with('success', 'Rent Request updated successfully');
     }
 
@@ -108,10 +108,10 @@ class RentRequestController extends Controller
     {
         if ($this->order->orderFind($id)->status == 'Cancelled') {
             $this->order->orderDelete($id);
-            return redirect()->route('orders.index')
+            return redirect()->route('rent.index')
             ->with('success', 'Rent Request deleted successfully');
         }
-        return redirect()->route('orders.index')
+        return redirect()->route('rent.index')
             ->with('warning', 'You can delete only cancelled rent request.');
     }
 

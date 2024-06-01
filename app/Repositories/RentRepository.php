@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+use App\Models\Task;
 use App\Models\RentRequestDetail;
 use App\Services\WhatsAppService;
 use Illuminate\Support\Facades\DB;
@@ -134,8 +135,177 @@ class RentRepository implements RentInterface
 		return RentRequest::with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory','operations'])->find($id);
 	}
 
-    public function orderUpdate($data, $id)
+    public function orderUpdate($data, $id, $guard)
 	{
+        DB::transaction(function () use ($data, $id, $guard) {
+            $order = RentRequest::find($id);
+            $actorId = $guard == 'Admin' ? auth()->user()->id : $order->customer->id;
+            $actorType = $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer';
+
+            switch ($data['status']) {
+                case 'Cancelled':
+                    foreach ($order->details as $row) {
+                        $row->product->increment('quantity', $row->quantity);
+                    }
+                    $order->operations()->create([
+                        'actor_id' => $actorId,
+                        'actor_type' => $actorType,
+                        'action' => 'Order Cancelled'
+                    ]);
+                    break;
+
+                case 'Confirmed':
+                    $order->operations()->create([
+                        'actor_id'   => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action'     => 'Change Order Status to Confirmed'
+                    ]);
+                    break;
+
+                case 'Processing':
+                    $order->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Order assigned to warehouse boy.'
+                    ]);
+                    Task::create([
+                        'employee_id' => $data['warehouseboy'],
+                        'task_type'   => 'App\Models\RentRequest',
+                        'task_id'     => $order->id,
+                        'status'      => 'Pending'
+                    ]);
+                    break;
+
+                case 'Assign To Driver for deliver':
+                    $order->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Order assigned to driver for delivery.'
+                    ]);
+                    Task::create([
+                        'employee_id' => $data['driver'],
+                        'task_type'   => 'App\Models\RentRequest',
+                        'task_id'     => $order->id,
+                        'status'      => 'Pending'
+                    ]);
+                    $data['status'] = 'Processing';
+                    break;
+
+                case 'Ready for Pickup':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Order is ready for pickup by driver.'
+                    ]);
+                    break;
+
+                case 'Picked Up':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Order picked up by driver.'
+                    ]);
+                    $data['status'] = 'Out For Delivery';
+                    break;
+
+                case 'Delivered':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Order delivered to customer.'
+                    ]);
+                    break;
+
+                case 'Assign To Driver for return':
+                    $order->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Order assigned to driver to return product.'
+                    ]);
+                    Task::create([
+                        'employee_id' => $data['driver'],
+                        'task_type'   => 'App\Models\RentRequest',
+                        'task_id'     => $order->id,
+                        'status'      => 'Pending'
+                    ]);
+                    $data['status'] = 'Returning';
+                    break;
+
+                case 'Ready For Return':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Order is ready for return by driver.'
+                    ]);
+                    break;
+
+                case 'Out For Return':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Order picked up by driver.'
+                    ]);
+                    break;
+
+                case 'Returned':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Order return to warehoue by driver.'
+                    ]);
+                    break;
+
+                case 'Collecting':
+                    $order->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Warhouse boy collecting products.'
+                    ]);
+                    Task::create([
+                        'employee_id' => $data['warehouseboy'],
+                        'task_type'   => 'App\Models\RentRequest',
+                        'task_id'     => $order->id,
+                        'status'      => 'Pending'
+                    ]);
+                    break;
+
+                case 'Collected':
+                    $order->operations()->create([
+                        'actor_id' => Auth::guard('employee')->user()->id,
+                        'actor_type' => 'App\Models\Employee',
+                        'action' => 'Warhouse boy collected products.'
+                    ]);
+                    break;
+
+                case 'Completed':
+                    $order->operations()->create([
+                        'actor_id' => auth()->user()->id,
+                        'actor_type' => 'App\Models\User',
+                        'action' => 'Order status change to completed'
+                    ]);
+                    $data['payment_received'] = 'Yes';
+                    break;
+            }
+            $order->update($data);
+            if (settings('rent_order_fcm_notification') == 'Yes') {
+                if($order->status == 'Out For Delivery'){
+                    $driver = Auth::guard('employee')->user();
+                    $body = 'Your order is on the way! Your driver, '. $driver->name .', will deliver your order soon. You can contact them at '. $driver->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';
+                }elseif($order->status == 'Ready For Return'){
+                    $driver = Auth::guard('employee')->user();
+                    $body = 'Your rent period is end now its time to return the product! Your driver, '. $driver->name .', will picked up your order soon. You can contact them at '. $driver->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';
+                }else{
+                    $body = 'Your order has been ' . $data['status'] . ' successfully.';
+                }
+                $fcmData = [
+                    'title' => 'Rent Request ' . $data['status'],
+                    'body' => $body,
+                    'customer_id' => $order->customer->id
+                ];
+                $this->fcmNotification->store($fcmData);
+            }
+        });
+        return true;
         DB::transaction(function () use($data, $id) {
             $rentRequest = RentRequest::find($id);
             if($data['status'] == 'Cancelled' || $data['status'] == 'Returned'){
