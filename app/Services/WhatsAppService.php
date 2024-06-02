@@ -22,8 +22,9 @@ class WhatsAppService
         $this->to = settings('whatsapp_notification_number') ?? $this->config['default_number'];
     }
 
-    public function sendMessage($template, $data)
+    public function sendMessage($template, $data, $customer_number = null)
     {
+        $to = !is_null($customer_number) ? $customer_number : $this->to;
         $headers = [
             'Authorization' => 'Bearer ' . $this->config['access_token'],
             'Content-Type' => 'application/json'
@@ -37,7 +38,7 @@ class WhatsAppService
         }
         $body = json_encode([
             'messaging_product' => 'whatsapp',
-            'to' => $this->to,
+            'to' => $to,
             'type' => 'template',
             'template' => [
                 'name' => $template,
