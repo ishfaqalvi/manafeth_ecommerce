@@ -66,7 +66,7 @@ class SendRentalExpirationNotifications extends Command
                         date('d M Y', $detail->from),
                         date('d M Y', $detail->to)
                     ];
-                    $this->whatsAppService->sendMessage('to_cutomer_on_rental_expiring_on_day_before', $data, $customer->mobile_number);
+                    $this->whatsAppService->sendMessage('to_cutomer_on_rental_expiring_on_day_before', $data, $detail->rentRequest->phone_number);
                 }
             }
 
@@ -89,7 +89,7 @@ class SendRentalExpirationNotifications extends Command
                         date('d M Y', $detail->from),
                         date('d M Y', $detail->to)
                     ];
-                    $this->whatsAppService->sendMessage('to_customer_on_rental_collection_day', $data, $customer->mobile_number);
+                    $this->whatsAppService->sendMessage('to_customer_on_rental_collection_day', $data, $detail->rentRequest->phone_number);
                 }
             }
         }
