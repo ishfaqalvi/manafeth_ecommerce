@@ -26,7 +26,7 @@
                 <form method="POST" action="{{ route('settings.save') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
-                        <label class="col-lg-4 mb-3 col-form-label">Notification Receive Number  :</label>
+                        <label class="col-lg-4 mb-3 col-form-label">Admin Notification Receive Number  :</label>
                         <div class="col-lg-8 mb-3">
                             <input type="text" name="values[whatsapp_notification_number]" class="form-control" value="{{ settings('whatsapp_notification_number') }}">
                         </div>
@@ -56,6 +56,34 @@
                             <select name="values[rent_order_whatsapp_notification]" class="form-select">
                                 <option value="Yes" {{ settings('rent_order_whatsapp_notification') == 'Yes' ? 'selected' : ''}}>Yes</option>
                                 <option value="No" {{ settings('rent_order_whatsapp_notification') == 'No' ? 'selected' : ''}}>No</option>
+                            </select>
+                        </div>
+                        <label class="col-lg-4 mb-3 col-form-label">Rent Expire Date Admin Alert:</label>
+                        <div class="col-lg-8 mb-3">
+                            <select name="values[rent_expire_date_admin_alert]" class="form-select">
+                                <option value="Yes" {{ settings('rent_expire_date_admin_alert') == 'Yes' ? 'selected' : ''}}>Yes</option>
+                                <option value="No" {{ settings('rent_expire_date_admin_alert') == 'No' ? 'selected' : ''}}>No</option>
+                            </select>
+                        </div>
+                        <label class="col-lg-4 mb-3 col-form-label">Rent Expire Date Admin Notification:</label>
+                        <div class="col-lg-8 mb-3">
+                            <select name="values[rent_expire_date_admin_notification]" class="form-select">
+                                <option value="Yes" {{ settings('rent_expire_date_admin_notification') == 'Yes' ? 'selected' : ''}}>Yes</option>
+                                <option value="No" {{ settings('rent_expire_date_admin_notification') == 'No' ? 'selected' : ''}}>No</option>
+                            </select>
+                        </div>
+                        <label class="col-lg-4 mb-3 col-form-label">Rent Expire Date Customer Alert:</label>
+                        <div class="col-lg-8 mb-3">
+                            <select name="values[rent_expire_date_watsapp_customer_alert]" class="form-select">
+                                <option value="Yes" {{ settings('rent_expire_date_watsapp_customer_alert') == 'Yes' ? 'selected' : ''}}>Yes</option>
+                                <option value="No" {{ settings('rent_expire_date_watsapp_customer_alert') == 'No' ? 'selected' : ''}}>No</option>
+                            </select>
+                        </div>
+                        <label class="col-lg-4 mb-3 col-form-label">Rent Expire Date Customer Notification:</label>
+                        <div class="col-lg-8 mb-3">
+                            <select name="values[rent_expire_date_watsapp_customer_notification]" class="form-select">
+                                <option value="Yes" {{ settings('rent_expire_date_watsapp_customer_notification') == 'Yes' ? 'selected' : ''}}>Yes</option>
+                                <option value="No" {{ settings('rent_expire_date_watsapp_customer_notification') == 'No' ? 'selected' : ''}}>No</option>
                             </select>
                         </div>
                         <label class="col-lg-4 mb-3 col-form-label">Maintenence Request Notification  :</label>

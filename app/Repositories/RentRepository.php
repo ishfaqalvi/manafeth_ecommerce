@@ -329,4 +329,9 @@ class RentRepository implements RentInterface
         }
         return false;
     }
+
+    public function dateExtend($date, $id)
+    {
+        RentRequestDetail::find($id)->update(['to' => strtotime($date)]);
+    }
 }

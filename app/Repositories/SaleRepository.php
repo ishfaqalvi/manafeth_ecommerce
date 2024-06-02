@@ -115,7 +115,7 @@ class SaleRepository implements SaleInterface
         }else{
             $customer = Auth::guard($guard)->user();
         }
-        if($customer->carts()->count() == 0)
+        if($customer->carts()->count() == 0 && !isset($data['buy_now']))
         {
             return false;
         }
@@ -225,7 +225,6 @@ class SaleRepository implements SaleInterface
                         'status'      => 'Pending'
                     ]);
                     $data['status'] = 'Processing';
-                    $order->assign_to = $data['driver'];
                     break;
 
                 case 'Ready for Pickup':

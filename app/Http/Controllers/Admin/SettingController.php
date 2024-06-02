@@ -104,11 +104,6 @@ class SettingController extends Controller
                     $filenametostore = 'uploads/files/'. $filename;
                 }
 
-
-
-
-
-
                 // $filenamewithextension = $image->getClientOriginalName();
                 // $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
                 // $filenametostore = 'upload/images/settings/' . $filename . '_' . time() . '.webp';

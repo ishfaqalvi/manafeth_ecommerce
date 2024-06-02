@@ -100,6 +100,20 @@ class RentRequestController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Order $order
+     * @return \Illuminate\Http\Response
+     */
+    public function dateExtend(Request $request)
+    {
+        $this->rentRequest->dateExtend($request->to, $request->id);
+
+        return redirect()->back()->with('success', 'Rent Request date updated successfully');
+    }
+
+    /**
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception

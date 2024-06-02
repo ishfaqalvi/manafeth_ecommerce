@@ -37,6 +37,7 @@ Route::controller(RentRequestController::class)->prefix('rent/request')->as('ren
 	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
 	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
 	Route::post('update',            'update'	 )->name('update' 	 );
+	Route::post('date-extend',       'dateExtend')->name('dateExtend');
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
 	Route::get('time-slots',         'timeSlots' )->name('timeSlots' );
 });

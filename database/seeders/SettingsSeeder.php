@@ -54,6 +54,22 @@ class SettingsSeeder extends Seeder
                 'value' => 'No',
             ],
             [
+                'key' 	=> 'rent_expire_date_admin_alert',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'rent_expire_date_admin_notification',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'rent_expire_date_watsapp_customer_alert',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'rent_expire_date_watsapp_customer_notification',
+                'value' => 'No',
+            ],
+            [
                 'key' 	=> 'maintenence_request_whatsapp_notification',
                 'value' => 'No',
             ],
