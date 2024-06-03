@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Mpdf\Mpdf;
 use App\Models\Task;
 use App\Models\OrderDetail;
 use App\Contracts\FcmInterface;
@@ -10,6 +11,7 @@ use App\Services\WhatsAppService;
 use App\Models\OrderDetailService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Models\{Product,Cart,Order,Customer};
 
 class SaleRepository implements SaleInterface
@@ -290,6 +292,21 @@ class SaleRepository implements SaleInterface
                     'user_id'   => $employee
                 ];
                 $this->fcmNotification->store($fcmData);
+            }
+            if($order->status == 'Completed'){
+                $html = view('web.project.calculate', $order)->render();
+                // Create an instance of Mpdf
+                $mpdf = new Mpdf();
+                $mpdf->WriteHTML($html);
+
+                // Define the file path
+                $fileName = 'invoice_' . $order->id . '.pdf';
+                $filePath = public_path('uploads/orders/' . $fileName);
+                if (!File::exists(public_path('uploads/orders'))) {
+                    File::makeDirectory(public_path('uploads/orders'), 0755, true);
+                }
+                $mpdf->Output($filePath, 'F');
+                $order->update(['invoice' => 'uploads/orders/'.$fileName]);
             }
         });
         return true;
