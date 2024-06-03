@@ -69,16 +69,24 @@ class RentRepository implements RentInterface
 
 	public function orderList($guard = null)
 	{
-		if ($guard) {
+        $relations = [
+            'customer',
+            'timeSlot',
+            'details',
+            'details.product.brand',
+            'details.product.category',
+            'details.product.subCategory',
+            'details.product.resources',
+            'details.product.reviews.order.customer',
+            'operations',
+            'operations.actor'
+        ];
+        $query = RentRequest::query();
+		if (!is_null($guard)) {
             $customer_id = Auth::guard($guard)->user()->id;
-			$orders = RentRequest::whereCustomerId($customer_id)->with(
-				['details','details.product.brand', 'details.product.category', 'details.product.subCategory','operations']
-			)->get();
-		}else{
-			$orders = RentRequest::with(
-				['details','details.product.brand', 'details.product.category', 'details.product.subCategory','operations']
-			)->get();
+			$query->whereCustomerId($customer_id);
 		}
+		$orders = $query->with($relations)->get();
 		return $orders;
 	}
 
@@ -132,7 +140,19 @@ class RentRepository implements RentInterface
 
 	public function orderFind($id)
 	{
-		return RentRequest::with(['details','details.product.brand', 'details.product.category', 'details.product.subCategory','operations'])->find($id);
+        $relations = [
+            'customer',
+            'timeSlot',
+            'details',
+            'details.product.brand',
+            'details.product.category',
+            'details.product.subCategory',
+            'details.product.resources',
+            'details.product.reviews.order.customer',
+            'operations',
+            'operations.actor'
+        ];
+		return RentRequest::with($relations)->find($id);
 	}
 
     public function orderUpdate($data, $id, $guard)
