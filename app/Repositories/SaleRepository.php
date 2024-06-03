@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use Mpdf\Mpdf;
+use \Mpdf\Mpdf;
 use App\Models\Task;
 use App\Models\OrderDetail;
 use App\Contracts\FcmInterface;
