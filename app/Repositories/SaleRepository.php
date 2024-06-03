@@ -294,7 +294,8 @@ class SaleRepository implements SaleInterface
                 $this->fcmNotification->store($fcmData);
             }
             if($order->status == 'Completed'){
-                $html = view('admin.order.invoice', ['data' => $order])->render();
+                $data = ['order' => $order];
+                $html = view('admin.order.invoice', $data)->render();
                 // Create an instance of Mpdf
                 $mpdf = new Mpdf();
                 $mpdf->WriteHTML($html);
