@@ -138,7 +138,6 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => 'App\Models\Employee',
                         'action'     => 'Maintenence boys is going for service.'
                     ]);
-                    $fcm =
                     break;
 
                 case 'Done':
