@@ -57,6 +57,16 @@ class Order extends Model implements Auditable
     }
 
     /**
+     * The get attributes.
+     *
+     * @var array
+     */
+    public function getInvoiceAttribute($invoice)
+    {
+        return isset($invoice) ? asset($invoice) : '';
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function customer()
