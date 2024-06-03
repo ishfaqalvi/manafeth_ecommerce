@@ -30,7 +30,7 @@ class MaintenenceRepository implements MaintenenceInterface
         if (!is_null($guard)) {
             $query->whereCustomerId(Auth::guard($guard)->user()->id);
         }
-        $query->with(['customer','category','product','product.brand', 'product.category', 'product.subCategory','operations']);
+        $query->with(['customer','category','product','product.brand', 'product.category', 'product.subCategory','operations','operations.actor']);
         return $pagination ? $query->paginate() : $query->get();
     }
 
@@ -65,9 +65,10 @@ class MaintenenceRepository implements MaintenenceInterface
             }
             if(settings('maintenence_request_fcm_notification') == 'Yes' && $guard == 'customerapi'){
                 $data = [
-                    'title' => 'Maintenence Request',
-                    'body' => 'Your maintenence request has been submitted successfully.',
-                    'customer_id' => $customer->id
+                    'title'    => 'Maintenence Request',
+                    'body'     => 'Your maintenence request has been submitted successfully.',
+                    'user_type'=> 'App\Models\Customer',
+                    'user_id'  => $customer->id
                 ];
                 $this->fcmNotification->store($data);
             }
@@ -76,7 +77,7 @@ class MaintenenceRepository implements MaintenenceInterface
 
 	public function find($id)
     {
-        return MaintenenceRequest::with(['customer','category','product','product.brand', 'product.category', 'product.subCategory','operations'])->find($id);
+        return MaintenenceRequest::with(['customer','category','product','product.brand', 'product.category', 'product.subCategory','operations','operations.actor'])->find($id);
     }
 
 	public function update($data, $id, $guard)
@@ -85,7 +86,7 @@ class MaintenenceRepository implements MaintenenceInterface
             $request = MaintenenceRequest::find($id);
             $actorId = $guard == 'Admin' ? auth()->user()->id : $request->customer->id;
             $actorType = $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer';
-
+            $employeeFcm = false;
             switch ($data['status']) {
                 case 'Rejected':
                     $request->operations()->create([
@@ -93,6 +94,7 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => $actorType,
                         'action'     => 'Request Rejected'
                     ]);
+                    $fcm = $actorType == 'App\Models\Customer' ? true : false;
                     break;
 
                 case 'Accepted':
@@ -101,6 +103,7 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => 'App\Models\User',
                         'action'     => 'Request Accepted'
                     ]);
+                    $fcm = false;
                     break;
 
                 case 'Assigned':
@@ -115,6 +118,9 @@ class MaintenenceRepository implements MaintenenceInterface
                         'task_id'     => $request->id,
                         'status'      => 'Pending'
                     ]);
+                    $fcm = false;
+                    $employeeFcm = true;
+                    $employee = $data['maintenenceboy'];
                     break;
 
                 case 'Ready to go':
@@ -123,6 +129,7 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => 'App\Models\Employee',
                         'action'     => 'Request accepted by maintenence boy.'
                     ]);
+                    $fcm = true;
                     break;
 
                 case 'Out for Maintenance':
@@ -131,6 +138,7 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => 'App\Models\Employee',
                         'action'     => 'Maintenence boys is going for service.'
                     ]);
+                    $fcm =
                     break;
 
                 case 'Done':
@@ -166,9 +174,19 @@ class MaintenenceRepository implements MaintenenceInterface
                     $body = 'Your reqeust has been ' . $data['status'] . ' successfully.';
                 }
                 $fcmData = [
-                    'title' => 'Maintenance Request ' . $data['status'],
-                    'body' => $body,
-                    'customer_id' => $request->customer->id
+                    'title'     => 'Maintenance Request ' . $data['status'],
+                    'body'      => $body,
+                    'user_type' => 'App\Models\Customer',
+                    'user_id'   => $request->customer->id
+                ];
+                $this->fcmNotification->store($fcmData);
+            }
+            if (settings('employee_task_fcm_notification') == 'Yes' && $employeeFcm) {
+                $fcmData = [
+                    'title'     => 'Maintenence Request Assign',
+                    'body'      => 'New task assign to you check your task list',
+                    'user_type' => 'App\Models\Employee',
+                    'user_id'   => $employee
                 ];
                 $this->fcmNotification->store($fcmData);
             }

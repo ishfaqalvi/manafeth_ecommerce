@@ -127,9 +127,10 @@ class RentRepository implements RentInterface
             }
             if(settings('rent_order_fcm_notification') == 'Yes' && $guard == 'customerapi'){
                 $data = [
-                    'title' => 'Rent Request',
-                    'body' => 'Your rental request has been submitted successfully.',
-                    'customer_id' => $customer->id
+                    'title'     => 'Rent Request',
+                    'body'      => 'Your rental request has been submitted successfully.',
+                    'user_type' => 'App\Models\Customer',
+                    'user_id'   => $customer->id
                 ];
                 $this->fcmNotification->store($data);
             }
@@ -158,6 +159,7 @@ class RentRepository implements RentInterface
     public function orderUpdate($data, $id, $guard)
 	{
         DB::transaction(function () use ($data, $id, $guard) {
+            $employeeFcm = false;
             $order = RentRequest::find($id);
             $actorId = $guard == 'Admin' ? auth()->user()->id : $order->customer->id;
             $actorType = $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer';
@@ -194,6 +196,8 @@ class RentRepository implements RentInterface
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);
+                    $employeeFcm = true;
+                    $employee = $data['warehouseboy'];
                     break;
 
                 case 'Assign To Driver for deliver':
@@ -208,6 +212,8 @@ class RentRepository implements RentInterface
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);
+                    $employeeFcm = true;
+                    $employee = $data['driver'];
                     $data['status'] = 'Processing';
                     break;
 
@@ -249,6 +255,8 @@ class RentRepository implements RentInterface
                         'status'      => 'Pending'
                     ]);
                     $data['status'] = 'Returning';
+                    $employeeFcm = true;
+                    $employee = $data['driver'];
                     break;
 
                 case 'Ready For Return':
@@ -287,6 +295,8 @@ class RentRepository implements RentInterface
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);
+                    $employeeFcm = true;
+                    $employee = $data['warehouseboy'];
                     break;
 
                 case 'Collected':
@@ -323,9 +333,19 @@ class RentRepository implements RentInterface
                     $body = 'Your order has been ' . $data['status'] . ' successfully.';
                 }
                 $fcmData = [
-                    'title' => 'Rent Request ' . $data['status'],
-                    'body' => $body,
-                    'customer_id' => $order->customer->id
+                    'title'     => 'Rent Request ' . $data['status'],
+                    'body'      => $body,
+                    'user_type' => 'App\Models\Customer',
+                    'user_id'   => $order->customer->id
+                ];
+                $this->fcmNotification->store($fcmData);
+            }
+            if (settings('employee_task_fcm_notification') == 'Yes' && $employeeFcm) {
+                $fcmData = [
+                    'title'     => 'Rent Order Assign',
+                    'body'      => 'New task assign to you check your task list',
+                    'user_type' => 'App\Models\Employee',
+                    'user_id'   => $employee
                 ];
                 $this->fcmNotification->store($fcmData);
             }

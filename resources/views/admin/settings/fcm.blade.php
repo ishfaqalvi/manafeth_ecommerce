@@ -60,6 +60,27 @@
                                 <option value="No" {{ settings('maintenence_request_fcm_notification') == 'No' ? 'selected' : ''}}>No</option>
                             </select>
                         </div>
+                        <label class="col-lg-4 mb-3 col-form-label">Employee Task Notification :</label>
+                        <div class="col-lg-8 mb-3">
+                            <select name="values[employee_task_fcm_notification]" class="form-select">
+                                <option value="Yes" {{ settings('employee_task_fcm_notification') == 'Yes' ? 'selected' : ''}}>Yes</option>
+                                <option value="No" {{ settings('employee_task_fcm_notification') == 'No' ? 'selected' : ''}}>No</option>
+                            </select>
+                        </div>
+                        <label class="col-lg-4 mb-3 col-form-label">Customer Rental End One day before Alert :</label>
+                        <div class="col-lg-8 mb-3">
+                            <select name="values[customer_rental_end_fcm_alert]" class="form-select">
+                                <option value="Yes" {{ settings('customer_rental_end_fcm_alert') == 'Yes' ? 'selected' : ''}}>Yes</option>
+                                <option value="No" {{ settings('customer_rental_end_fcm_alert') == 'No' ? 'selected' : ''}}>No</option>
+                            </select>
+                        </div>
+                        <label class="col-lg-4 mb-3 col-form-label">Customer Rental End Notification :</label>
+                        <div class="col-lg-8 mb-3">
+                            <select name="values[customer_rental_end_fcm_notification]" class="form-select">
+                                <option value="Yes" {{ settings('customer_rental_end_fcm_notification') == 'Yes' ? 'selected' : ''}}>Yes</option>
+                                <option value="No" {{ settings('customer_rental_end_fcm_notification') == 'No' ? 'selected' : ''}}>No</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="text-end">
                         <button type="submit" class="btn btn-primary">Save Changes<i class="ph-paper-plane-tilt ms-2"></i></button>

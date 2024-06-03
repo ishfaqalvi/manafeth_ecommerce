@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('fcm_notifications', function (Blueprint $table) {
             $table->id();
+            $table->string('user_type');
+            $table->integer('user_id');
             $table->string('title');
             $table->string('body');
-            $table->string('topic')->nullable();
-            $table->boolean('is_read')->default(false);
             $table->string('image')->nullable();
-            $table->unsignedBigInteger('customer_id')->nullable();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->boolean('is_read')->default(false);
+            $table->string('topic')->nullable();
             $table->timestamps();
         });
     }

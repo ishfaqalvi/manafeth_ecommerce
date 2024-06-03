@@ -17,7 +17,6 @@ class FCMService
     {
         $this->httpClient    = new HttpClient();
         $this->projectID     = settings('firebase_project_id') ?? env('FIREBASE_PROJECT_ID');
-        $googleAppCredentialsSetting = settings('google_application_credentials');
         $this->appCredetials = settings('google_application_credentials') ? public_path(settings('google_application_credentials')) : '';
     }
 
@@ -95,12 +94,11 @@ class FCMService
                 'topic' => $topic,
                 'notification' => [
                     'title' => $title,
-                    'body' => $body,
+                    'body'  => $body,
                     'image' => $imageUrl,
                 ],
             ],
         ];
-        // dd($message);
         $headers = [
             'Authorization' => 'Bearer ' . $accessToken['access_token'],
             'Content-Type' => 'application/json',

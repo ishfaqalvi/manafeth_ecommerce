@@ -159,9 +159,10 @@ class SaleRepository implements SaleInterface
             }
             if(settings('sale_order_fcm_notification') == 'Yes' && $guard == 'customerapi'){
                 $data = [
-                    'title' => 'Order Placed',
-                    'body' => 'Your order has been placed successfully.',
-                    'customer_id' => $customer->id
+                    'title'     => 'Order Placed',
+                    'body'      => 'Your order has been placed successfully.',
+                    'user_type' => 'App\Models\Customer',
+                    'user_id'   => $customer->id
                 ];
                 $this->fcmNotification->store($data);
             }
@@ -173,6 +174,7 @@ class SaleRepository implements SaleInterface
 	public function orderUpdate($data, $id, $guard)
 	{
         DB::transaction(function () use ($data, $id, $guard) {
+            $employeeFcm = false;
             $order = Order::find($id);
             $actorId = $guard == 'Admin' ? auth()->user()->id : $order->customer->id;
             $actorType = $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer';
@@ -209,6 +211,8 @@ class SaleRepository implements SaleInterface
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);
+                    $employeeFcm = true;
+                    $employee = $data['warehouseboy'];
                     $data['status'] = 'Processing';
                     break;
 
@@ -224,6 +228,8 @@ class SaleRepository implements SaleInterface
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);
+                    $employeeFcm = true;
+                    $employee = $data['driver'];
                     $data['status'] = 'Processing';
                     break;
 
@@ -269,9 +275,19 @@ class SaleRepository implements SaleInterface
                     $body = 'Your order has been ' . $data['status'] . ' successfully.';
                 }
                 $fcmData = [
-                    'title' => 'Order ' . $data['status'],
-                    'body' => $body,
-                    'customer_id' => $order->customer->id
+                    'title'     => 'Order ' . $data['status'],
+                    'body'      => $body,
+                    'user_type' => 'App\Models\Customer',
+                    'user_id'   => $order->customer->id
+                ];
+                $this->fcmNotification->store($fcmData);
+            }
+            if (settings('employee_task_fcm_notification') == 'Yes' && $employeeFcm) {
+                $fcmData = [
+                    'title'     => 'Order Assign',
+                    'body'      => 'New task assign to you check your task list',
+                    'user_type' => 'App\Models\Employee',
+                    'user_id'   => $employee
                 ];
                 $this->fcmNotification->store($fcmData);
             }

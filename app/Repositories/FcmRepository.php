@@ -15,16 +15,27 @@ class FcmRepository implements FcmInterface
     }
 
     public function list($guard = null, $pagination = false)
-	{
+    {
         $query = FcmNotification::query();
+
         if (!is_null($guard)) {
-            $customer = Auth::guard($guard)->user();
-            $query->where('customer_id', $customer->id)->orWhere(function ($query) use ($customer) {
-                $query->whereNull('customer_id')->where('created_at', '>=', $customer->created_at);
-            });
+            $user = Auth::guard($guard)->user();
+
+            if ($guard == 'employee') {
+                $query->where('user_type', 'App\Models\Employee')->where('user_id', $user->id);
+            } else {
+                $query->where(function ($query) use ($user) {
+                    $query->where('user_type', 'App\Models\Customer')
+                        ->where('user_id', $user->id)
+                        ->orWhere(function ($query) use ($user) {
+                            $query->where('user_type', 'App\Models\User')->where('created_at', '>=', $user->created_at);
+                        });
+                });
+            }
         }
-        return $pagination ? $query->orderBy('created_at', 'desc')->paginate() : $query->orderBy('created_at', 'desc')->get();
-	}
+        $query->orderBy('created_at', 'desc');
+        return $pagination ? $query->paginate() : $query->get();
+    }
 
 	public function new()
 	{
@@ -38,9 +49,9 @@ class FcmRepository implements FcmInterface
         {
             $this->fcm->sendMessageToTopic($record->topic, $record->title, $record->body, $record->image);
         }
-        if(!is_null($record->customer_id))
+        if($record->user_type == 'App\Models\Customer' || $record->user_type == 'App\Models\Employee')
         {
-            $this->fcm->sendNotification($record->title, $record->body, $record->customer->fcm_token);
+            $this->fcm->sendNotification($record->title, $record->body, $record->user->fcm_token);
         }
 	}
 

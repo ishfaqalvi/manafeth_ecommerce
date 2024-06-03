@@ -112,11 +112,27 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
-     * Get all of the employee's order operations.
+     * Get all of the customer's order operations.
+     */
+    public function rentOperations()
+    {
+        return $this->morphMany(RentRequestOperation::class, 'actor');
+    }
+
+    /**
+     * Get all of the customer's order operations.
      */
     public function maintenenceOperations()
     {
         return $this->morphMany(MaintenenceOperation::class, 'actor');
+    }
+
+    /**
+     * Get all of the customer's fcm notifications
+     */
+    public function fcmNotifications()
+    {
+        return $this->morphMany(FcmNotification::class, 'user');
     }
 
     /**

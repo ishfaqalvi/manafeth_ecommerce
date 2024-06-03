@@ -96,10 +96,26 @@ class User extends Authenticatable implements Auditable
     }
 
     /**
+     * Get all of the user's order operations.
+     */
+    public function rentOperations()
+    {
+        return $this->morphMany(RentRequestOperation::class, 'actor');
+    }
+
+    /**
      * Get all of the employee's order operations.
      */
     public function maintenenceOperations()
     {
         return $this->morphMany(MaintenenceOperation::class, 'actor');
+    }
+
+    /**
+     * Get all of the user's fcm notifications
+     */
+    public function fcmNotifications()
+    {
+        return $this->morphMany(FcmNotification::class, 'user');
     }
 }

@@ -99,6 +99,18 @@ class SettingsSeeder extends Seeder
                 'key' 	=> 'maintenence_request_fcm_notification',
                 'value' => 'No',
             ],
+            [
+                'key' 	=> 'employee_task_fcm_notification',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'customer_rental_end_fcm_alert',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'customer_rental_end_fcm_notification',
+                'value' => 'No',
+            ],
         ]);
     }
 }

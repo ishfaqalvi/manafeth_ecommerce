@@ -30,7 +30,7 @@ class FcmNotification extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['title','body','topic','is_read','image','customer_id'];
+    protected $fillable = ['user_type','user_id','title','body','image','is_read','topic'];
 
     /**
      * The set attributes.
@@ -61,8 +61,8 @@ class FcmNotification extends Model implements Auditable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function customer()
+    public function user()
     {
-        return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
+        return $this->morphTo();
     }
 }

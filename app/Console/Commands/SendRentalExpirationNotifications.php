@@ -68,6 +68,15 @@ class SendRentalExpirationNotifications extends Command
                     ];
                     $this->whatsAppService->sendMessage('to_cutomer_on_rental_expiring_on_day_before', $data, $detail->rentRequest->phone_number);
                 }
+                if(settings('customer_rental_end_fcm_alert') == 'Yes'){
+                    $data = [
+                        'title'     => 'Rental Expired Soon',
+                        'body'      => 'Your rental period is about to expire.',
+                        'user_type' => 'App\Models\Customer',
+                        'user_id'   => $customer->id
+                    ];
+                    $this->fcmNotification->store($data);
+                }
             }
 
             if ($detail->to == $today) {
@@ -90,6 +99,15 @@ class SendRentalExpirationNotifications extends Command
                         date('d M Y', $detail->to)
                     ];
                     $this->whatsAppService->sendMessage('to_customer_on_rental_collection_day', $data, $detail->rentRequest->phone_number);
+                }
+                if(settings('customer_rental_end_fcm_notification') == 'Yes'){
+                    $data = [
+                        'title'     => 'Rental Expired',
+                        'body'      => 'Your rental period has expired.',
+                        'user_type' => 'App\Models\Customer',
+                        'user_id'   => $customer->id
+                    ];
+                    $this->fcmNotification->store($data);
                 }
             }
         }
