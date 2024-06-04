@@ -49,7 +49,7 @@ class FcmRepository implements FcmInterface
         {
             $this->fcm->sendMessageToTopic($record->topic, $record->title, $record->body, $record->image);
         }
-        if($record->user_type == 'App\Models\Customer' || $record->user_type == 'App\Models\Employee')
+        if(isset($record->user->fcm_token) && ($record->user_type == 'App\Models\Customer' || $record->user_type == 'App\Models\Employee'))
         {
             $this->fcm->sendNotification($record->title, $record->body, $record->user->fcm_token);
         }
