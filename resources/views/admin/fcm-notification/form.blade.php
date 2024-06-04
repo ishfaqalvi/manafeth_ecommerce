@@ -1,4 +1,6 @@
 <div class="row">
+    <input type="hidden" name="user_type" value="App\Models\User">
+    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
     <div class="col-md-6">
         <div class="form-group col-lg-12 mb-2">
             {{ Form::label('topic') }}

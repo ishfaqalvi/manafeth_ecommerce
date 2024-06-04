@@ -51,7 +51,7 @@
                         @if($fcmNotification->topic)
                             {{ $fcmNotification->topic }}
                         @else
-                        {{ $fcmNotification->customer->name }}
+                        {{ $fcmNotification->user->name }}
                         @endif
                     </td>
                     <td>{{ $fcmNotification->title }}</td>
