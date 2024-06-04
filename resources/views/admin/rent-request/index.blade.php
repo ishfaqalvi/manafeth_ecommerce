@@ -61,7 +61,6 @@
                                 {{ $rentRequest->task->status." By Driver" }}
                             @endif
                         @endif
-                        {{ $rentRequest->task->status ?? "" }}
                     </td>
                     <td>{{ $rentRequest->status }}</td>
                     <td class="text-center">@include('admin.rent-request.actions')</td>
