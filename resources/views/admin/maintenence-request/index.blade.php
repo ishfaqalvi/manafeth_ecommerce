@@ -53,7 +53,11 @@
                     <td>{{ $maintenenceRequest->phone_number }}</td>
                     <td>{{ $maintenenceRequest->product->name }}</td>
                     <td>{{ number_format($maintenenceRequest->payment) }}</td>
-                    <td>{{ $maintenenceRequest->task->status ?? "" }}</td>
+                    <td>
+                        @if (!is_null($maintenenceRequest->task))
+                            {{ $maintenenceRequest->task->status." By Warehouse Boy" }}
+                        @endif
+                    </td>
                     <td>{{ $maintenenceRequest->status }}</td>
                     <td class="text-center">@include('admin.maintenence-request.actions')</td>
                 </tr>

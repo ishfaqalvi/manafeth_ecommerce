@@ -53,7 +53,16 @@
                     <td>{{ $rentRequest->email }}</td>
                     <td>{{ $rentRequest->phone_number }}</td>
                     <td>{{ number_format($rentRequest->payment) }}</td>
-                    <td>{{ $rentRequest->task->status ?? "" }}</td>
+                    <td>
+                        @if (!is_null($rentRequest->task))
+                            @if(in_array($rentRequest->status, ['Processing','Collecting','Collected','Completed']))
+                                {{ $rentRequest->task->status." By Warehouse Boy" }}
+                            @else
+                                {{ $rentRequest->task->status." By Driver" }}
+                            @endif
+                        @endif
+                        {{ $rentRequest->task->status ?? "" }}
+                    </td>
                     <td>{{ $rentRequest->status }}</td>
                     <td class="text-center">@include('admin.rent-request.actions')</td>
                 </tr>
