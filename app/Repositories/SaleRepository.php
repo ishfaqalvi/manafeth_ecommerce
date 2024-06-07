@@ -3,28 +3,25 @@
 namespace App\Repositories;
 
 use \Mpdf\Mpdf;
-use App\Models\Task;
-use App\Models\OrderDetail;
-use App\Contracts\FcmInterface;
-use App\Contracts\SaleInterface;
-use App\Services\WhatsAppService;
-use App\Models\OrderDetailService;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
-use App\Models\{Product,Cart,Order,Customer};
+use Illuminate\Support\Facades\{DB,Auth,File};
+use App\Contracts\{FcmInterface,SaleInterface};
+use App\Services\{AdminNotifyService,WhatsAppService};
+use App\Models\{User,Task,Product,Cart,Order,Customer,OrderDetail,OrderDetailService};
 
 class SaleRepository implements SaleInterface
 {
     protected $whatsAppService;
     protected $fcmNotification;
+    protected $adminNotify;
 
     public function __construct(
         WhatsAppService $whatsAppService,
-        FcmInterface $fcmNotification
+        FcmInterface $fcmNotification,
+        AdminNotifyService $adminNotify
     ){
         $this->whatsAppService = $whatsAppService;
         $this->fcmNotification = $fcmNotification;
+        $this->adminNotify     = $adminNotify;
     }
 
 	public function cartItemList($guard)
@@ -159,7 +156,7 @@ class SaleRepository implements SaleInterface
                 $data = [$customer->name, $customer->mobile_number, $products];
                 $this->whatsAppService->sendMessage('purchase_order_placed', $data);
             }
-            if(settings('sale_order_fcm_notification') == 'Yes' && $guard == 'customerapi'){
+            if(settings('sale_order_fcm_notification_to_customer') == 'Yes' && $guard == 'customerapi'){
                 $data = [
                     'title'     => 'Order Placed',
                     'body'      => 'Your order has been placed successfully.',
@@ -167,6 +164,18 @@ class SaleRepository implements SaleInterface
                     'user_id'   => $customer->id
                 ];
                 $this->fcmNotification->store($data);
+            }
+            if(settings('sale_order_fcm_notification_to_admin') == 'Yes'){
+                $data = [
+                    'title'  => 'New Sale Order',
+                    'body'   => 'New sale order received from '. $customer->name,
+                    'type'   => 'Sale Order',
+                    'id'     => $order->id,
+                    'name'   => $customer->name,
+                    'image'  => $customer->image,
+                    'message'=> 'New sale order submit click on link to see detail',
+                ];
+                $this->adminNotify->sendNotification($data);
             }
             return $order;
         });
@@ -269,7 +278,7 @@ class SaleRepository implements SaleInterface
                     break;
             }
             $order->update($data);
-            if (settings('sale_order_fcm_notification') == 'Yes') {
+            if (settings('sale_order_fcm_notification_to_customer') == 'Yes') {
                 if($order->status == 'On the Way'){
                     $driver = Auth::guard('employee')->user();
                     $body = 'Your order is on the way! Your driver, '. $driver->name .', will deliver your order soon. You can contact them at '. $driver->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';
@@ -296,11 +305,8 @@ class SaleRepository implements SaleInterface
             if($order->status == 'Completed'){
                 $data = ['order' => $order];
                 $html = view('admin.order.invoice', $data)->render();
-                // Create an instance of Mpdf
                 $mpdf = new Mpdf();
                 $mpdf->WriteHTML($html);
-
-                // Define the file path
                 $fileName = 'invoice_' . $order->id . '.pdf';
                 $filePath = public_path('uploads/orders/' . $fileName);
                 if (!File::exists(public_path('uploads/orders'))) {

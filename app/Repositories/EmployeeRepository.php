@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 use App\Mail\OTPMail;
+use App\Services\AdminNotifyService;
 use App\Models\{Token, Task, Employee};
 use Illuminate\Support\Facades\{Auth, Hash, Mail};
 use App\Contracts\{EmployeeInterface, MaintenenceInterface, SaleInterface, RentInterface};
@@ -11,11 +12,13 @@ class EmployeeRepository implements EmployeeInterface
     protected $order;
     protected $rent;
     protected $maintenence;
+    protected $adminNotify;
 
-    public function __construct(SaleInterface $order, MaintenenceInterface $maintenence, RentInterface $rent){
-        $this->order = $order;
-        $this->rent = $rent;
+    public function __construct(SaleInterface $order, MaintenenceInterface $maintenence, RentInterface $rent, AdminNotifyService $adminNotify){
+        $this->order       = $order;
+        $this->rent        = $rent;
         $this->maintenence = $maintenence;
+        $this->adminNotify = $adminNotify;
     }
 
     public function list($filter = null, $pagination = false)
@@ -210,6 +213,19 @@ class EmployeeRepository implements EmployeeInterface
 
         if(isset($data['order_status']) && $task->task_type == 'App\Models\RentRequest'){
             $this->rent->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
+        }
+
+        if(settings('employee_task_update_fcm_notification_to_admin') == 'Yes'){
+            $data = [
+                'title'  => 'Task Update',
+                'body'   => 'Assigned Task updated from '. $task->employee->name,
+                'type'   => 'Sale Order',
+                'id'     => $task->id,
+                'name'   => $task->employee->name,
+                'image'  => $task->employee->image,
+                'message'=> 'Task updated click on link to see detail',
+            ];
+            $this->adminNotify->sendNotification($data);
         }
     }
 }

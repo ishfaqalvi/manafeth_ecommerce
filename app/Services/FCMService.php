@@ -53,7 +53,7 @@ class FCMService
             ]);
             Log::info('Received FCM response: Single user notification sent successfully!');
 
-        } catch (GuzzleHttp\Exception\RequestException $e) {
+        } catch (RequestException $e) {
             Log::error('Error with FCM service', ['error' => $e->getMessage()]);
         }
     }
@@ -81,7 +81,7 @@ class FCMService
             ]);
             Log::info('Received FCM response: Multiple user notification sent successfully!');
 
-        } catch (GuzzleHttp\Exception\RequestException $e) {
+        } catch (RequestException $e) {
             Log::error('Error with FCM service', ['error' => $e->getMessage()]);
         }
     }
@@ -110,7 +110,7 @@ class FCMService
             ]);
             Log::info('Received FCM response: Topic wise notification sent successfully!', ['file' => public_path('logs/fcm.log')]);
 
-        } catch (GuzzleHttp\Exception\RequestException $e) {
+        } catch (RequestException $e) {
             Log::error('Error with FCM service', ['error' => $e->getMessage(), 'file' => public_path('logs/fcm.log')]);
         }
     }

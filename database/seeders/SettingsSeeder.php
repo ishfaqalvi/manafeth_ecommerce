@@ -88,19 +88,11 @@ class SettingsSeeder extends Seeder
                 'value' => 'manafeth',
             ],
             [
-                'key' 	=> 'sale_order_fcm_notification',
+                'key' 	=> 'sale_order_fcm_notification_to_customer',
                 'value' => 'No',
             ],
             [
-                'key' 	=> 'rent_order_fcm_notification',
-                'value' => 'No',
-            ],
-            [
-                'key' 	=> 'maintenence_request_fcm_notification',
-                'value' => 'No',
-            ],
-            [
-                'key' 	=> 'employee_task_fcm_notification',
+                'key' 	=> 'rent_order_fcm_notification_to_customer',
                 'value' => 'No',
             ],
             [
@@ -111,6 +103,41 @@ class SettingsSeeder extends Seeder
                 'key' 	=> 'customer_rental_end_fcm_notification',
                 'value' => 'No',
             ],
+            [
+                'key' 	=> 'maintenence_request_fcm_notification_to_customer',
+                'value' => 'No',
+            ],
+
+            [
+                'key' 	=> 'sale_order_fcm_notification_to_admin',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'rent_order_fcm_notification_to_admin',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'admin_rental_end_fcm_alert',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'admin_rental_end_fcm_notification',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'maintenence_request_fcm_notification_to_admin',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'employee_task_update_fcm_notification_to_admin',
+                'value' => 'No',
+            ],
+
+            [
+                'key' 	=> 'employee_task_fcm_notification',
+                'value' => 'No',
+            ],
+
         ]);
     }
 }

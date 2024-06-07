@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>@yield('title')</title>
 
 <!-- Global stylesheets -->
@@ -28,6 +29,11 @@
 <script src="{{ asset('assets/js/vendor/uploaders/dropzone.min.js') }}"></script>
 <script src="{{ asset('assets/js/vendor/pickers/datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/demo/dropify/js/dropify.js') }}"></script>
+
+{{-- <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script> --}}
+<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
+{{-- <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-messaging.js"></script> --}}
+<script src="{{ asset('assets/js/firebase.js') }}"></script>
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/demo/pages/datatables_basic.js') }}"></script>

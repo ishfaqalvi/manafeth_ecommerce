@@ -22,7 +22,7 @@ class NotificationController extends Controller
      * @param  int  $id  Notification ID
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function read($id)
     {
         $notification = auth()->user()->notifications()->where('id', $id)->first();
 
@@ -31,6 +31,29 @@ class NotificationController extends Controller
             return redirect()->route('notifications.index')
             ->with('success', 'Notification mark as read successfully.');
         }
+    }
+
+    /**
+     * @param  int  $id  Notification ID
+     * @return \Illuminate\Http\Response
+     */
+    public function readAll()
+    {
+        foreach(auth()->user()->unreadNotifications as $notification){
+            $notification->markAsRead();
+        }
+        return redirect()->back()->with('success', 'All Notification mark as read successfully.');
+    }
+
+    /**
+     * @param  int  $id  Notification ID
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $notification = auth()->user()->notifications()->where('id', $id)->first();
+        $notification->markAsRead();
+        return view('admin.notification.show', compact('notification'));
     }
 
     /**

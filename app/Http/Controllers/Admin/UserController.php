@@ -185,6 +185,17 @@ class UserController extends Controller
     }
 
     /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function saveToken(Request $request)
+    {
+        auth()->user()->update(['fcm_token' => $request->token]);
+        return response()->json(['Token saved successfully.']);
+    }
+
+    /**
      * Validate a resource.
      *
      * @return \Illuminate\Http\Response

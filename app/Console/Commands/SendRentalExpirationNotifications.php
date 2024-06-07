@@ -6,19 +6,21 @@ use Carbon\Carbon;
 use App\Contracts\FcmInterface;
 use Illuminate\Console\Command;
 use App\Models\RentRequestDetail;
-use App\Services\WhatsAppService;
 use Illuminate\Support\Facades\Log;
+use App\Services\{AdminNotifyService,WhatsAppService};
 
 class SendRentalExpirationNotifications extends Command
 {
     protected $whatsAppService;
     protected $fcmNotification;
+    protected $adminNotify;
 
-    public function __construct(WhatsAppService $whatsAppService, FcmInterface $fcmNotification)
+    public function __construct(WhatsAppService $whatsAppService, FcmInterface $fcmNotification, AdminNotifyService $adminNotify)
     {
         parent::__construct();
         $this->whatsAppService = $whatsAppService;
         $this->fcmNotification = $fcmNotification;
+        $this->adminNotify     = $adminNotify;
     }
     /**
      * The name and signature of the console command.
@@ -77,6 +79,18 @@ class SendRentalExpirationNotifications extends Command
                     ];
                     $this->fcmNotification->store($data);
                 }
+                if(settings('admin_rental_end_fcm_alert') == 'Yes'){
+                    $data = [
+                        'title'  => 'Rental Expired Soon',
+                        'body'   => $customer->name. 'rental period is about to expire.',
+                        'type'   => 'Rent Request',
+                        'id'     => $detail->rentRequest->id,
+                        'name'   => $customer->name,
+                        'image'  => $customer->image,
+                        'message'=> 'Rental period is about to expire click on link to see detail',
+                    ];
+                    $this->adminNotify->sendNotification($data);
+                }
             }
 
             if ($detail->to == $today) {
@@ -108,6 +122,18 @@ class SendRentalExpirationNotifications extends Command
                         'user_id'   => $customer->id
                     ];
                     $this->fcmNotification->store($data);
+                }
+                if(settings('admin_rental_end_fcm_notification') == 'Yes'){
+                    $data = [
+                        'title'  => 'Rental Expired',
+                        'body'   => $customer->name. 'rental period has expired.',
+                        'type'   => 'Rent Request',
+                        'id'     => $detail->rentRequest->id,
+                        'name'   => $customer->name,
+                        'image'  => $customer->image,
+                        'message'=> 'Rental period is expired click on link to see detail',
+                    ];
+                    $this->adminNotify->sendNotification($data);
                 }
             }
         }

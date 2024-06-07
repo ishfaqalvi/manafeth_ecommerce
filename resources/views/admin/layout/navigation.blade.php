@@ -5,116 +5,51 @@
         </button>
     </div>
     <img src="{{ asset('assets/images/logo.png')}}" alt="" height="65px">
-    <ul class="nav flex-row">
-        <li class="nav-item d-lg-none">
-            <a href="#navbar_search" class="navbar-nav-link navbar-nav-link-icon rounded-pill" data-bs-toggle="collapse">
-                <i class="ph-magnifying-glass"></i>
-            </a>
-        </li>
-        <!-- <li class="nav-item nav-item-dropdown-lg dropdown">
+    <ul class="nav flex-row justify-content-end">
+        <li class="nav-item nav-item-dropdown-lg dropdown">
             <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                <i class="ph-chats"></i>
-                <span class="badge bg-yellow text-black position-absolute top-0 end-0 translate-middle-top zindex-1 rounded-pill mt-1 me-1">8</span>
+                <i class="ph-bell"></i>
+                <span class="badge bg-yellow text-black position-absolute top-0 end-0 translate-middle-top zindex-1 rounded-pill mt-1 me-1">
+                    {{count(auth()->user()->unreadNotifications)}}
+                </span>
             </a>
             <div class="dropdown-menu wmin-lg-400 p-0">
                 <div class="d-flex align-items-center p-3">
                     <h6 class="mb-0">Messages</h6>
-                    <div class="ms-auto">
-                        <a href="#" class="text-body">
-                            <i class="ph-plus-circle"></i>
-                        </a>
-                        <a href="#search_messages" class="collapsed text-body ms-2" data-bs-toggle="collapse">
-                            <i class="ph-magnifying-glass"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="collapse" id="search_messages">
-                    <div class="px-3 mb-2">
-                        <div class="form-control-feedback form-control-feedback-start">
-                            <input type="text" class="form-control" placeholder="Search messages">
-                            <div class="form-control-feedback-icon">
-                                <i class="ph-magnifying-glass"></i>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="dropdown-menu-scrollable pb-2">
-                    <a href="#" class="dropdown-item align-items-start text-wrap py-2">
+                    @foreach(auth()->user()->unreadNotifications as $notification)
+                    <a href="{{ route('notifications.show', $notification->id) }}" class="dropdown-item align-items-start text-wrap py-2">
                         <div class="status-indicator-container me-3">
-                            <img src="{{ asset('assets/images/demo/users/face10.jpg') }}" class="w-40px h-40px rounded-pill" alt="">
-                            <span class="status-indicator bg-warning"></span>
-                        </div>
-                        <div class="flex-1">
-                            <span class="fw-semibold">James Alexander</span>
-                            <span class="text-muted float-end fs-sm">04:58</span>
-                            <div class="text-muted">who knows, maybe that would be the best thing for me...</div>
-                        </div>
-                    </a>
-                    <a href="#" class="dropdown-item align-items-start text-wrap py-2">
-                        <div class="status-indicator-container me-3">
-                            <img src="{{ asset('assets/images/demo/users/face3.jpg') }}" class="w-40px h-40px rounded-pill" alt="">
+                            <img src="{{ $notification->data['image'] }}" class="w-40px h-40px rounded-pill" alt="">
                             <span class="status-indicator bg-success"></span>
                         </div>
                         <div class="flex-1">
-                            <span class="fw-semibold">Margo Baker</span>
-                            <span class="text-muted float-end fs-sm">12:16</span>
-                            <div class="text-muted">That was something he was unable to do because...</div>
+                            <span class="fw-semibold">{{ $notification->data['name'] }}</span>
+                            <span class="text-muted float-end fs-sm">{{ $notification->created_at->diffForHumans()}}</span>
+                            <div class="text-muted">{{ $notification->data['message'] }}</div>
                         </div>
                     </a>
-                    <a href="#" class="dropdown-item align-items-start text-wrap py-2">
-                        <div class="status-indicator-container me-3">
-                            <img src="{{ asset('assets/images/demo/users/face24.jpg') }}" class="w-40px h-40px rounded-pill" alt="">
-                            <span class="status-indicator bg-success"></span>
-                        </div>
-                        <div class="flex-1">
-                            <span class="fw-semibold">Jeremy Victorino</span>
-                            <span class="text-muted float-end fs-sm">22:48</span>
-                            <div class="text-muted">But that would be extremely strained and suspicious...</div>
-                        </div>
-                    </a>
-                    <a href="#" class="dropdown-item align-items-start text-wrap py-2">
-                        <div class="status-indicator-container me-3">
-                            <img src="{{ asset('assets/images/demo/users/face4.jpg') }}" class="w-40px h-40px rounded-pill" alt="">
-                            <span class="status-indicator bg-grey"></span>
-                        </div>
-                        <div class="flex-1">
-                            <span class="fw-semibold">Beatrix Diaz</span>
-                            <span class="text-muted float-end fs-sm">Tue</span>
-                            <div class="text-muted">What a strenuous career it is that I've chosen...</div>
-                        </div>
-                    </a>
-                    <a href="#" class="dropdown-item align-items-start text-wrap py-2">
-                        <div class="status-indicator-container me-3">
-                            <img src="{{ asset('assets/images/demo/users/face25.jpg') }}" class="w-40px h-40px rounded-pill" alt="">
-                            <span class="status-indicator bg-danger"></span>
-                        </div>
-                        <div class="flex-1">
-                            <span class="fw-semibold">Richard Vango</span>
-                            <span class="text-muted float-end fs-sm">Mon</span>
-                            <div class="text-muted">Other travelling salesmen live a life of luxury...</div>
-                        </div>
-                    </a>
+                    @endforeach
                 </div>
                 <div class="d-flex border-top py-2 px-3">
-                    <a href="#" class="text-body">
+                    @if(count(auth()->user()->unreadNotifications) > 0)
+                    <a href="{{ route('notifications.readAll') }}" class="text-body">
                         <i class="ph-checks me-1"></i>
                         Dismiss all
                     </a>
-                    <a href="#" class="text-body ms-auto">
+                    @else
+                        <span>Woohoo! You've read all notification.</span>
+                    @endif
+                    <a href="{{ route('notifications.index') }}" class="text-body ms-auto">
                         View all
                         <i class="ph-arrow-circle-right ms-1"></i>
                     </a>
                 </div>
             </div>
-        </li> -->
+        </li>
     </ul>
     <ul class="nav flex-row justify-content-end order-1 order-lg-2">
-        <!-- <li class="nav-item ms-lg-2">
-            <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill" data-bs-toggle="offcanvas" data-bs-target="#notifications">
-                <i class="ph-bell"></i>
-                <span class="badge bg-yellow text-black position-absolute top-0 end-0 translate-middle-top zindex-1 rounded-pill mt-1 me-1">2</span>
-            </a>
-        </li> -->
         <li class="nav-item nav-item-dropdown-lg dropdown ms-lg-2">
             <a href="#" class="navbar-nav-link align-items-center rounded-pill p-1" data-bs-toggle="dropdown">
                 <div class="status-indicator-container">
@@ -130,9 +65,9 @@
                 </a>
                 <form method="POST" action="{{ route('admin.logout') }}">
                     @csrf
-                    <a 
-                        href="{{ route('admin.logout') }}" 
-                        class="dropdown-item" 
+                    <a
+                        href="{{ route('admin.logout') }}"
+                        class="dropdown-item"
                         onclick="event.preventDefault(); this.closest('form').submit();">
                         <i class="ph-sign-out me-2"></i>
                         Logout

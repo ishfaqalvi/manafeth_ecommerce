@@ -210,6 +210,7 @@ Route::controller(UserController::class)->prefix('users')->as('users.')->group(f
     Route::post('profile',		 	'profileUpdate'	)->name('profileUpdate');
     Route::post('check_email', 	 	'checkEmail'	)->name('checkEmail'   );
     Route::post('check_password',	'checkPassword'	)->name('checkPassword');
+    Route::post('save-token',       'saveToken'     )->name('saveToken'    );
 });
 
 /*
@@ -220,6 +221,8 @@ Route::controller(UserController::class)->prefix('users')->as('users.')->group(f
 Route::controller(NotificationController::class)->prefix('notifications')->as('notifications.')->group(function () {
 	Route::get('index', 		  	'index'  )->name('index'  );
 	Route::get('show/{id}', 		'show'   )->name('show'	  );
+	Route::get('read/{id}', 		'read'   )->name('read'	  );
+	Route::get('read-all', 		    'readAll')->name('readAll');
 	Route::delete('destroy/{id}', 	'destroy')->name('destroy');
 });
 

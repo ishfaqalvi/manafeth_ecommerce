@@ -24,6 +24,7 @@
                     <th>No</th>
                     <th>Title</th>
                     <th>Message</th>
+                    <th>Detail</th>
                     <th>Time</th>
                     <th class="text-center">Actions</th>
                 </tr>
@@ -33,17 +34,33 @@
                     <tr>
                         <td>{{ ++$key }}</td>
                         @if($notification->read_at)
-                        <td>{{ ++$key }}</td>
                         <td>{{ $notification->data['title'] }}</td>
                         <td>{{ $notification->data['message'] }}</td>
+                        <td>
+                            @if($notification->data['type'] == 'Sale Order')
+                            <a href="{{ route('orders.show',$notification->data['id']) }}">View Detail</a>
+                            @elseif($notification->data['type'] == 'Rent Request')
+                            <a href="{{ route('rent.show',$notification->data['id']) }}">View Detail</a>
+                            @elseif($notification->data['type'] == 'Maintenence Request')
+                            <a href="{{ route('maintenance.show',$notification->data['id']) }}">View Detail</a>
+                            @endif
+                        </td>
                         <td>{{ $notification->created_at->diffForHumans()}}</td>
                         @else
-                        <td><dt>{{ ++$key }}</dt></td>
                         <td><dt>{{ $notification->data['title'] }}</dt></td>
                         <td><dt>{{ $notification->data['message'] }}</dt></td>
+                        <td>
+                            @if($notification->data['type'] == 'Sale Order')
+                                <a href="{{ route('orders.show',$notification->data['id']) }}">View Detail</a>
+                            @elseif($notification->data['type'] == 'Rent Request')
+                                <a href="{{ route('rent.show',$notification->data['id']) }}">View Detail</a>
+                            @elseif($notification->data['type'] == 'Maintenence Request')
+                                <a href="{{ route('maintenance.show',$notification->data['id']) }}">View Detail</a>
+                            @endif
+                        </td>
                         <td><dt>{{ $notification->created_at->diffForHumans()}}</dt></td>
                         @endif
-                        <td class="text-center">@include('admin.audit.actions')</td>
+                        <td class="text-center">@include('admin.notification.actions')</td>
                     </tr>
                 @endforeach
             </tbody>

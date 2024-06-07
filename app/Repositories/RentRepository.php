@@ -1,25 +1,26 @@
 <?php
 
 namespace App\Repositories;
-use App\Models\Task;
-use App\Models\RentRequestDetail;
-use App\Services\WhatsAppService;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\{DB,Auth};
 use App\Contracts\{FcmInterface,RentInterface};
-use App\Models\{RentCart,RentRequest,Customer};
+use App\Services\{AdminNotifyService,WhatsAppService};
+use App\Models\{Task,RentCart,RentRequestDetail,RentRequest,Customer};
 
 class RentRepository implements RentInterface
 {
     protected $whatsAppService;
     protected $fcmNotification;
+    protected $adminNotify;
 
     public function __construct(
         WhatsAppService $whatsAppService,
-        FcmInterface $fcmNotification
+        FcmInterface $fcmNotification,
+        AdminNotifyService $adminNotify
     ){
         $this->whatsAppService = $whatsAppService;
         $this->fcmNotification = $fcmNotification;
+        $this->adminNotify     = $adminNotify;
     }
 
 	public function cartItemList($guard)
@@ -125,7 +126,7 @@ class RentRepository implements RentInterface
                 $data = [$data['name'], $data['phone_number'], $products];
                 $this->whatsAppService->sendMessage('renta_order_placed', $data);
             }
-            if(settings('rent_order_fcm_notification') == 'Yes' && $guard == 'customerapi'){
+            if(settings('rent_order_fcm_notification_to_customer') == 'Yes' && $guard == 'customerapi'){
                 $data = [
                     'title'     => 'Rent Request',
                     'body'      => 'Your rental request has been submitted successfully.',
@@ -133,6 +134,18 @@ class RentRepository implements RentInterface
                     'user_id'   => $customer->id
                 ];
                 $this->fcmNotification->store($data);
+            }
+            if(settings('rent_order_fcm_notification_to_admin') == 'Yes'){
+                $data = [
+                    'title'  => 'New Rent Request',
+                    'body'   => 'New rent request received from '. $customer->name,
+                    'type'   => 'Rent Request',
+                    'id'     => $order->id,
+                    'name'   => $customer->name,
+                    'image'  => $customer->image,
+                    'message'=> 'New rent request submit click on link to see detail',
+                ];
+                $this->adminNotify->sendNotification($data);
             }
             return $order;
         });
@@ -322,7 +335,7 @@ class RentRepository implements RentInterface
                     $row->product->increment('quantity', $row->quantity);
                 }
             }
-            if (settings('rent_order_fcm_notification') == 'Yes') {
+            if (settings('rent_order_fcm_notification_to_customer') == 'Yes') {
                 if($order->status == 'Out For Delivery'){
                     $driver = Auth::guard('employee')->user();
                     $body = 'Your order is on the way! Your driver, '. $driver->name .', will deliver your order soon. You can contact them at '. $driver->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';

@@ -1,26 +1,26 @@
 <?php
 
 namespace App\Repositories;
-use App\Models\Task;
-use App\Models\Customer;
-use App\Contracts\FcmInterface;
-use App\Services\WhatsAppService;
-use App\Models\MaintenenceRequest;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use App\Contracts\MaintenenceInterface;
+
+use Illuminate\Support\Facades\{DB,Auth};
+use App\Models\{Task,Customer,MaintenenceRequest};
+use App\Contracts\{FcmInterface,MaintenenceInterface};
+use App\Services\{AdminNotifyService,WhatsAppService};
 
 class MaintenenceRepository implements MaintenenceInterface
 {
     protected $whatsAppService;
     protected $fcmNotification;
+    protected $adminNotify;
 
     public function __construct(
         WhatsAppService $whatsAppService,
-        FcmInterface $fcmNotification
+        FcmInterface $fcmNotification,
+        AdminNotifyService $adminNotify
     ){
         $this->whatsAppService = $whatsAppService;
         $this->fcmNotification = $fcmNotification;
+        $this->adminNotify     = $adminNotify;
     }
 
     public function list($guard = null, $pagination = false)
@@ -63,7 +63,7 @@ class MaintenenceRepository implements MaintenenceInterface
                 ];
                 $this->whatsAppService->sendMessage('maintenance_req_submitted', $data);
             }
-            if(settings('maintenence_request_fcm_notification') == 'Yes' && $guard == 'customerapi'){
+            if(settings('maintenence_request_fcm_notification_to_customer') == 'Yes' && $guard == 'customerapi'){
                 $data = [
                     'title'    => 'Maintenence Request',
                     'body'     => 'Your maintenence request has been submitted successfully.',
@@ -71,6 +71,18 @@ class MaintenenceRepository implements MaintenenceInterface
                     'user_id'  => $customer->id
                 ];
                 $this->fcmNotification->store($data);
+            }
+            if(settings('maintenence_request_fcm_notification_to_admin') == 'Yes'){
+                $data = [
+                    'title'  => 'New Maintenence Request',
+                    'body'   => 'New maintenence request received from '. $customer->name,
+                    'type'   => 'Maintenence Request',
+                    'id'     => $record->id,
+                    'name'   => $customer->name,
+                    'image'  => $customer->image,
+                    'message'=> 'New maintenence request submit click on link to see detail',
+                ];
+                $this->adminNotify->sendNotification($data);
             }
         });
     }
@@ -164,7 +176,7 @@ class MaintenenceRepository implements MaintenenceInterface
                     break;
             }
             $request->update($data);
-            if (settings('maintenence_request_fcm_notification') == 'Yes') {
+            if (settings('maintenence_request_fcm_notification_to_customer') == 'Yes') {
                 if($request->status == 'Out for Maintenance'){
                     $technician = Auth::guard('employee')->user();
                     $body = 'Your maintenance request has been assigned! Our technician, '. $technician->name .', will address your issue soon. You can contact them at '. $technician->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';
