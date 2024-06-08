@@ -32,44 +32,49 @@
         <div class="card-header">
             <h5 class="mb-0">Order</h5>
         </div>
-        <table class="table datatable-basic">
-            <thead class="thead">
-                <tr>
-                    <th>No</th>
-					<th>Name</th>
-					<th>Email</th>
-					<th>Phone Number</th>
-					<th>Date</th>
-					<th>Time</th>
-					<th>Task</th>
-					<th>Status</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($orders as $key => $order)
-                <tr>
-                    <td>{{ ++$key }}</td>
-					<td>{{ $order->name }}</td>
-					<td>{{ $order->email }}</td>
-					<td>{{ $order->phone_number }}</td>
-					<td>{{ Carbon\Carbon::parse($order->created_at)->toDateString() }}</td>
-					<td>{{ Carbon\Carbon::parse($order->created_at)->toTimeString() }}</td>
-                    <td>
-                        @if (!is_null($order->task))
-                            @if($order->status == 'Processing')
-                                {{ $order->task->status." By Warehouse Boy" }}
-                            @else
-                                {{ $order->task->status." By Driver" }}
+        <div class="table-responsive">
+            <table class="table text-nowrap">
+                <thead class="thead">
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Task</th>
+                        <th>Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($orders as $key => $order)
+                    <tr>
+                        <td>{{ ++$key }}</td>
+                        <td>{{ $order->name }}</td>
+                        <td>{{ $order->email }}</td>
+                        <td>{{ $order->phone_number }}</td>
+                        <td>{{ Carbon\Carbon::parse($order->created_at)->toDateString() }}</td>
+                        <td>{{ Carbon\Carbon::parse($order->created_at)->toTimeString() }}</td>
+                        <td>
+                            @if (!is_null($order->task))
+                                @if($order->status == 'Processing')
+                                    {{ $order->task->status." By Warehouse Boy" }}
+                                @else
+                                    {{ $order->task->status." By Driver" }}
+                                @endif
                             @endif
-                        @endif
-                    </td>
-                    <td>{{ $order->status }}</td>
-                    <td class="text-center">@include('admin.order.actions')</td>
-                </tr>
-            @endforeach
-        </tbody>
-        </table>
+                        </td>
+                        <td>{{ $order->status }}</td>
+                        <td class="text-center">@include('admin.order.actions')</td>
+                    </tr>
+                @endforeach
+            </tbody>
+            </table>
+            <div class="card-body">
+                {{ $orders->links('vendor.pagination.bootstrap-5') }}
+            </div>
+        </div>
     </div>
 </div>
 @include('admin.order.assign.warehouseboy')

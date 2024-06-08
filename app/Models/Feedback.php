@@ -24,8 +24,12 @@ class Feedback extends Model implements Auditable
 
     protected $table = 'feedbacks';
 
-    protected $perPage = 20;
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
 
+        $this->perPage = settings('per_page_items') ?: 15;
+    }
     /**
      * Attributes that should be mass-assignable.
      *

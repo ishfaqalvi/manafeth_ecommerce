@@ -24,9 +24,12 @@ class Coupon extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
-    
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
 
-    protected $perPage = 20;
+        $this->perPage = settings('per_page_items') ?: 15;
+    }
 
     /**
      * Attributes that should be mass-assignable.
@@ -43,7 +46,7 @@ class Coupon extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -51,6 +54,6 @@ class Coupon extends Model implements Auditable
     {
         return $this->hasOne('App\Models\PromoCode', 'id', 'promo_code_id');
     }
-    
+
 
 }

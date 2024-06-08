@@ -39,7 +39,7 @@ class RentRequestController extends Controller
      */
     public function index()
     {
-        $rentRequests = $this->rentRequest->orderList();
+        $rentRequests = $this->rentRequest->orderList(null, true);
 
         return view('admin.rent-request.index', compact('rentRequests'));
     }

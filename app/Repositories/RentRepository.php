@@ -68,7 +68,7 @@ class RentRepository implements RentInterface
 		RentCart::find($id)->delete();
 	}
 
-	public function orderList($guard = null)
+	public function orderList($guard = null, $pagination = false)
 	{
         $relations = [
             'customer',
@@ -87,8 +87,8 @@ class RentRepository implements RentInterface
             $customer_id = Auth::guard($guard)->user()->id;
 			$query->whereCustomerId($customer_id);
 		}
-		$orders = $query->with($relations)->get();
-		return $orders;
+        $query->with($relations)->orderBy('created_at', 'desc');
+		return $pagination ? $query->paginate() : $query->get();
 	}
 
     public function orderNew()

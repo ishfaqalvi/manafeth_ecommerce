@@ -30,7 +30,7 @@ class MaintenenceRepository implements MaintenenceInterface
         if (!is_null($guard)) {
             $query->whereCustomerId(Auth::guard($guard)->user()->id);
         }
-        $query->with(['customer','category','product','product.brand', 'product.category', 'product.subCategory','operations','operations.actor']);
+        $query->with(['customer','category','product','product.brand', 'product.category', 'product.subCategory','operations','operations.actor'])->orderBy('created_at', 'desc');
         return $pagination ? $query->paginate() : $query->get();
     }
 

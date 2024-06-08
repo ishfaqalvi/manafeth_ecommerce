@@ -32,38 +32,43 @@
         <div class="card-header">
             <h5 class="mb-0">Maintenence Request</h5>
         </div>
-        <table class="table datatable-basic">
-            <thead class="thead">
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Phone #</th>
-                    <th>Product</th>
-                    <th>Payment</th>
-                    <th>Task</th>
-                    <th>Status</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($maintenenceRequests as $key => $maintenenceRequest)
-                <tr>
-                    <td>{{ ++$key }}</td>
-                    <td>{{ $maintenenceRequest->first_name.' '.$maintenenceRequest->last_name }}</td>
-                    <td>{{ $maintenenceRequest->phone_number }}</td>
-                    <td>{{ $maintenenceRequest->product->name }}</td>
-                    <td>{{ number_format($maintenenceRequest->payment) }}</td>
-                    <td>
-                        @if (!is_null($maintenenceRequest->task))
-                            {{ $maintenenceRequest->task->status." By Warehouse Boy" }}
-                        @endif
-                    </td>
-                    <td>{{ $maintenenceRequest->status }}</td>
-                    <td class="text-center">@include('admin.maintenence-request.actions')</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table text-nowrap">
+                <thead class="thead">
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Phone #</th>
+                        <th>Product</th>
+                        <th>Payment</th>
+                        <th>Task</th>
+                        <th>Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($maintenenceRequests as $key => $maintenenceRequest)
+                    <tr>
+                        <td>{{ ++$key }}</td>
+                        <td>{{ $maintenenceRequest->first_name.' '.$maintenenceRequest->last_name }}</td>
+                        <td>{{ $maintenenceRequest->phone_number }}</td>
+                        <td>{{ $maintenenceRequest->product->name }}</td>
+                        <td>{{ number_format($maintenenceRequest->payment) }}</td>
+                        <td>
+                            @if (!is_null($maintenenceRequest->task))
+                                {{ $maintenenceRequest->task->status." By Warehouse Boy" }}
+                            @endif
+                        </td>
+                        <td>{{ $maintenenceRequest->status }}</td>
+                        <td class="text-center">@include('admin.maintenence-request.actions')</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+            <div class="card-body">
+                {{ $orders->links('vendor.pagination.bootstrap-5') }}
+            </div>
+        </div>
     </div>
 </div>
 @include('admin.maintenence-request.assign')

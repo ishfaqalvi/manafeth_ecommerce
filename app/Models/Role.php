@@ -22,13 +22,18 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Role extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    
+
     static $rules = [
 		'name' => 'required',
 		'guard_name' => 'required',
     ];
 
-    protected $perPage = 20;
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->perPage = settings('per_page_items') ?: 15;
+    }
 
     /**
      * Attributes that should be mass-assignable.
@@ -45,7 +50,7 @@ class Role extends Model implements Auditable
     {
         return $this->hasOne('App\Models\ModelHasRole', 'role_id', 'id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -53,6 +58,6 @@ class Role extends Model implements Auditable
     {
         return $this->hasMany('App\Models\RoleHasPermission', 'role_id', 'id');
     }
-    
+
 
 }

@@ -32,42 +32,47 @@
         <div class="card-header">
             <h5 class="mb-0">Rent Request</h5>
         </div>
-        <table class="table datatable-basic">
-            <thead class="thead">
-                <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone #</th>
-                    <th>Payment</th>
-                    <th>Task</th>
-                    <th>Status</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach ($rentRequests as $key => $rentRequest)
-                <tr>
-                    <td>{{ ++$key }}</td>
-                    <td>{{ $rentRequest->name }}</td>
-                    <td>{{ $rentRequest->email }}</td>
-                    <td>{{ $rentRequest->phone_number }}</td>
-                    <td>{{ number_format($rentRequest->payment) }}</td>
-                    <td>
-                        @if (!is_null($rentRequest->task))
-                            @if(in_array($rentRequest->status, ['Processing','Collecting','Collected','Completed']))
-                                {{ $rentRequest->task->status." By Warehouse Boy" }}
-                            @else
-                                {{ $rentRequest->task->status." By Driver" }}
+        <div class="table-responsive">
+            <table class="table text-nowrap">
+                <thead class="thead">
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone #</th>
+                        <th>Payment</th>
+                        <th>Task</th>
+                        <th>Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach ($rentRequests as $key => $rentRequest)
+                    <tr>
+                        <td>{{ ++$key }}</td>
+                        <td>{{ $rentRequest->name }}</td>
+                        <td>{{ $rentRequest->email }}</td>
+                        <td>{{ $rentRequest->phone_number }}</td>
+                        <td>{{ number_format($rentRequest->payment) }}</td>
+                        <td>
+                            @if (!is_null($rentRequest->task))
+                                @if(in_array($rentRequest->status, ['Processing','Collecting','Collected','Completed']))
+                                    {{ $rentRequest->task->status." By Warehouse Boy" }}
+                                @else
+                                    {{ $rentRequest->task->status." By Driver" }}
+                                @endif
                             @endif
-                        @endif
-                    </td>
-                    <td>{{ $rentRequest->status }}</td>
-                    <td class="text-center">@include('admin.rent-request.actions')</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+                        </td>
+                        <td>{{ $rentRequest->status }}</td>
+                        <td class="text-center">@include('admin.rent-request.actions')</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+            <div class="card-body">
+                {{ $rentRequests->links('vendor.pagination.bootstrap-5') }}
+            </div>
+        </div>
     </div>
 </div>
 @include('admin.rent-request.assign.warehouseboy')

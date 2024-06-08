@@ -25,7 +25,12 @@ class Cart extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
-    protected $perPage = 20;
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->perPage = settings('per_page_items') ?: 15;
+    }
 
     /**
      * Attributes that should be mass-assignable.
@@ -41,7 +46,7 @@ class Cart extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Customer', 'id', 'customer_id');
     }
-    
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

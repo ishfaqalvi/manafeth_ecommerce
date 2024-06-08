@@ -81,7 +81,8 @@ class SaleRepository implements SaleInterface
             'details.product.subCategory',
             'details.product.reviews.order.customer'
         ];
-		return $pagination ? $query->with($relations)->paginate() : $query->with($relations)->get();
+        $query->with($relations)->orderBy('created_at', 'desc');
+		return $pagination ? $query->paginate() : $query->get();
 	}
 
 	public function orderNew()

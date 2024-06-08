@@ -23,9 +23,12 @@ class ProductSpecification extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
-    
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
 
-    protected $perPage = 20;
+        $this->perPage = settings('per_page_items') ?: 15;
+    }
 
     /**
      * Attributes that should be mass-assignable.
@@ -42,6 +45,6 @@ class ProductSpecification extends Model implements Auditable
     {
         return $this->hasOne('App\Models\Product', 'id', 'product_id');
     }
-    
+
 
 }

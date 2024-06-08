@@ -16,6 +16,13 @@ class User extends Authenticatable implements Auditable
     use \OwenIt\Auditing\Auditable;
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->perPage = settings('per_page_items') ?: 15;
+    }
+
     private static $whiteListFilter = [
         'name',
         'email',
