@@ -66,7 +66,7 @@
                 </tbody>
             </table>
             <div class="card-body">
-                {{ $orders->links('vendor.pagination.bootstrap-5') }}
+                {{ $maintenenceRequests->links('vendor.pagination.bootstrap-5') }}
             </div>
         </div>
     </div>
