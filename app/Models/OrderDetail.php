@@ -37,7 +37,17 @@ class OrderDetail extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['order_id','product_id','quantity','price', 'star', 'remarks'];
+    protected $fillable = [
+        'serial_number',
+        'order_id',
+        'product_id',
+        'quantity',
+        'warranty',
+        'maintenance',
+        'price',
+        'star',
+        'remarks'
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

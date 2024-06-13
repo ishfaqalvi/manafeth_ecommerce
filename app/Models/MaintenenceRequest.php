@@ -45,6 +45,7 @@ class MaintenenceRequest extends Model implements Auditable
      */
     protected $fillable = [
         'request_no',
+        'serial_number',
         'customer_id',
         'first_name',
         'last_name',

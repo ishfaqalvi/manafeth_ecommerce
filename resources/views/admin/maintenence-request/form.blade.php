@@ -28,15 +28,20 @@
 </div>
 <div class="fw-bold border-bottom pb-2 mb-2">Request Detail</div>
 <div class="row">
-    <div class="form-group col-lg-6 mb-3">
+    <div class="form-group col-lg-5 mb-3">
         {{ Form::label('category_id','Category') }}
         {{ Form::select('category_id', categories(), $maintenenceRequest->category_id, ['class' => 'form-control select' . ($errors->has('category_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
         {!! $errors->first('category_id', '<div class="invalid-feedback">:message</div>') !!}
     </div>
-    <div class="form-group col-lg-6 mb-3">
+    <div class="form-group col-lg-5 mb-3">
         {{ Form::label('product_id', 'Product') }}
         {{ Form::select('product_id', [], $maintenenceRequest->product_id, ['class' => 'form-control select' . ($errors->has('product_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required','disabled']) }}
         {!! $errors->first('product_id', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+    <div class="form-group col-lg-2 mb-3">
+        {{ Form::label('serial_number', 'Serial Number') }}
+        {{ Form::text('serial_number', $maintenenceRequest->serial_number, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number','required']) }}
+        {!! $errors->first('serial_number', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="form-group col-lg-12 mb-3">
         {{ Form::label('message') }}

@@ -13,7 +13,7 @@
                         {{ Form::hidden('status', 'Add Payment') }}
                         <div class="form-group">
                             {{ Form::label('payment') }}
-                            {{ Form::number('payment', null, ['class' => 'form-control' . ($errors->has('payment') ? ' is-invalid' : ''), 'placeholder' => 'Payment','required','min' => '0']) }}
+                            {{ Form::number('payment', null, ['class' => 'form-control' . ($errors->has('payment') ? ' is-invalid' : ''), 'placeholder' => 'Payment','required','min' => '0','id' => 'maintenence-payment-id']) }}
                         </div>
                     </div>
                 </div>

@@ -20,13 +20,15 @@ interface SaleInterface
 
 	public function orderStore($data,$customer_id);
 
+	public function orderConfirm($data, $id);
+
 	public function orderUpdate($data, $id, $guard);
 
 	public function orderDelete($id);
 
     public function orderReview($data);
 
-    public function storeServices($orderDetailId, $product);
+    public function storeServices($orderDetailId);
 
     public function updateServices($id);
 }

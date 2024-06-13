@@ -19,7 +19,9 @@ Route::controller(OrderController::class)->prefix('orders')->as('orders.')->grou
 	Route::get('create',			 'create'	 )->name('create' 	 );
 	Route::post('store',			 'store'	 )->name('store'  	 );
 	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
+	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
 	Route::post('update',            'update'	 )->name('update' 	 );
+	Route::post('confirm',           'confirm'	 )->name('confirm' 	 );
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
     Route::post('services',          'services'	 )->name('services'  );
 	Route::get('time-slots',         'timeSlots' )->name('timeSlots' );

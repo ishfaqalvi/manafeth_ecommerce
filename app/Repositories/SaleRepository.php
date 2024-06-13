@@ -126,9 +126,11 @@ class SaleRepository implements SaleInterface
                 $product = Product::find($data['product_id']);
                 $price = $product->discount > 0 ? $product->discount : $product->price;
                 $detail = $order->details()->create([
-                    'product_id'=> $data['product_id'],
-                    'quantity'  => 1,
-                    'price'     => $price
+                    'product_id' => $data['product_id'],
+                    'quantity'   => 1,
+                    'price'      => $price,
+                    'warranty'   => $product->warranty,
+                    'maintenance'=> $product->maintenance
                 ]);
                 $product->decrement('quantity');
                 $this->storeServices($detail->id, $product);
@@ -138,13 +140,14 @@ class SaleRepository implements SaleInterface
                     $product = $row->product;
                     $price = $product->discount > 0 ? $product->discount : $product->price;
                     $detail = $order->details()->create([
-                        'product_id'=> $row->product_id,
-                        'quantity'  => $row->quantity,
-                        'price'     => $price
+                        'product_id' => $row->product_id,
+                        'quantity'   => $row->quantity,
+                        'price'      => $price,
+                        'warranty'   => $product->warranty,
+                        'maintenance'=> $product->maintenance
                     ]);
                     $products .= $product->name.' ( '.$row->quantity.' Qty)';
                     $product->decrement('quantity', $row->quantity);
-                    $this->storeServices($detail->id, $product);
                     $row->delete();
                 }
             }
@@ -183,6 +186,41 @@ class SaleRepository implements SaleInterface
         return $responce;
 	}
 
+    public function orderConfirm($data, $id)
+	{
+        $responce = DB::transaction(function () use($data, $id) {
+            $order = Order::find($id);
+            $order->update($data);
+            foreach($data['ids'] as $key => $id){
+                $detail = OrderDetail::find($id);
+                $detail->update([
+                    'price'         => $data['price'][$key],
+                    'warranty'      => $data['warranty'][$key],
+                    'maintenance'   => $data['maintenance'][$key],
+                    'serial_number' => $data['serial_number'][$key]
+                ]);
+                $this->storeServices($detail);
+            }
+            $order->operations()->create([
+                'actor_id'   => auth()->user()->id,
+                'actor_type' => 'App\Models\User',
+                'action'     => 'Change Order Status to Confirmed'
+            ]);
+
+            if (settings('sale_order_fcm_notification_to_customer') == 'Yes') {
+                $fcmData = [
+                    'title'     => 'Order Confirmed',
+                    'body'      => 'Your order has been confirmed successfully.',
+                    'user_type' => 'App\Models\Customer',
+                    'user_id'   => $order->customer->id
+                ];
+                $this->fcmNotification->store($fcmData);
+            }
+            return $order;
+        });
+        return $responce;
+	}
+
 	public function orderUpdate($data, $id, $guard)
 	{
         DB::transaction(function () use ($data, $id, $guard) {
@@ -200,14 +238,6 @@ class SaleRepository implements SaleInterface
                         'actor_id' => $actorId,
                         'actor_type' => $actorType,
                         'action' => 'Order Cancelled'
-                    ]);
-                    break;
-
-                case 'Confirmed':
-                    $order->operations()->create([
-                        'actor_id'   => auth()->user()->id,
-                        'actor_type' => 'App\Models\User',
-                        'action'     => 'Change Order Status to Confirmed'
                     ]);
                     break;
 
@@ -303,19 +333,19 @@ class SaleRepository implements SaleInterface
                 ];
                 $this->fcmNotification->store($fcmData);
             }
-            if($order->status == 'Completed'){
-                $data = ['order' => $order];
-                $html = view('admin.order.invoice', $data)->render();
-                $mpdf = new Mpdf();
-                $mpdf->WriteHTML($html);
-                $fileName = 'invoice_' . $order->id . '.pdf';
-                $filePath = public_path('uploads/orders/' . $fileName);
-                if (!File::exists(public_path('uploads/orders'))) {
-                    File::makeDirectory(public_path('uploads/orders'), 0755, true);
-                }
-                $mpdf->Output($filePath, 'F');
-                $order->update(['invoice' => 'uploads/orders/'.$fileName]);
-            }
+            // if($order->status == 'Completed'){
+            //     $data = ['order' => $order];
+            //     $html = view('admin.order.invoice', $data)->render();
+            //     $mpdf = new Mpdf();
+            //     $mpdf->WriteHTML($html);
+            //     $fileName = 'invoice_' . $order->id . '.pdf';
+            //     $filePath = public_path('uploads/orders/' . $fileName);
+            //     if (!File::exists(public_path('uploads/orders'))) {
+            //         File::makeDirectory(public_path('uploads/orders'), 0755, true);
+            //     }
+            //     $mpdf->Output($filePath, 'F');
+            //     $order->update(['invoice' => 'uploads/orders/'.$fileName]);
+            // }
         });
         return true;
 	}
@@ -335,15 +365,15 @@ class SaleRepository implements SaleInterface
         return false;
     }
 
-    public function storeServices($orderDetailId, $product)
+    public function storeServices($detail)
     {
-        if($product->maintenance > 0 && $product->warranty > 0){
+        if($detail->maintenance > 0 && $detail->warranty > 0){
             $currentDate = now();
-            $endDate = now()->addMonths($product->warranty);
-            $intervalDays = $endDate->diffInDays($currentDate) / $product->maintenance;
+            $endDate = now()->addYears($detail->warranty);
+            $intervalDays = $endDate->diffInDays($currentDate) / $detail->maintenance;
             while ($currentDate->lte($endDate)) {
                 OrderDetailService::create([
-                    'order_detail_id' => $orderDetailId,
+                    'order_detail_id' => $detail->id,
                     'date' => $currentDate->toDateString(),
                     'status' => 'Pending'
                 ]);

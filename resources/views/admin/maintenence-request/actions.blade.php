@@ -22,12 +22,12 @@
                     </form>
                 @endif
                 @if($maintenenceRequest->status == 'Accepted')
-                    <a href="#" class="dropdown-item assignToMaintenenceBoy" data-id="{{ $maintenenceRequest->id }}">
+                    <a href="#" class="dropdown-item assignToMaintenenceBoy" data-id="{{ $maintenenceRequest->id }}" data-serial="{{ $maintenenceRequest->serial_number }}">
                         <i class="ph-note-pencil me-2"></i>{{ __('Assign') }}
                     </a>
                 @endif
                 @if($maintenenceRequest->status == 'Done' && $maintenenceRequest->payment_received == 'No')
-                    <a href="#" class="dropdown-item addPayment" data-id="{{ $maintenenceRequest->id }}">
+                    <a href="#" class="dropdown-item addPayment" data-id="{{ $maintenenceRequest->id }}" data-payment="{{ $maintenenceRequest->payment }}">
                         <i class="ph-note-pencil me-2"></i>{{ __('Add Payment') }}
                     </a>
                 @endif

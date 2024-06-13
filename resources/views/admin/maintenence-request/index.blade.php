@@ -39,6 +39,7 @@
                         <th>No</th>
                         <th>Name</th>
                         <th>Phone #</th>
+                        <th>Serial #</th>
                         <th>Product</th>
                         <th>Payment</th>
                         <th>Task</th>
@@ -52,6 +53,7 @@
                         <td>{{ ++$key }}</td>
                         <td>{{ $maintenenceRequest->first_name.' '.$maintenenceRequest->last_name }}</td>
                         <td>{{ $maintenenceRequest->phone_number }}</td>
+                        <td>{{ $maintenenceRequest->serial_number }}</td>
                         <td>{{ $maintenenceRequest->product->name }}</td>
                         <td>{{ number_format($maintenenceRequest->payment) }}</td>
                         <td>
@@ -125,10 +127,12 @@
         });
         $('.assignToMaintenenceBoy').click(function(){
             $('#request-id').val($(this).data('id'));
+            $('#request-serial-number').val($(this).data('serial'));
             $('#maintenenceboymodel').modal('show');
         });
         $('.addPayment').click(function(){
             $('#maintenence-request-id').val($(this).data('id'));
+            $('#maintenence-payment-id').val($(this).data('payment'));
             $('#addpaymentmodel').modal('show');
         });
     });

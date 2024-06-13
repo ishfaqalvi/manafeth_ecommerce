@@ -38,6 +38,7 @@
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Amount</th>
+                        <th>Serial #</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,6 +65,7 @@
                         <td>{{ $row->quantity }}</td>
                         <td>{{ $row->price }}</td>
                         <td>{{ number_format($amount) }}</td>
+                        <td>{{ $row->serial_number }}</td>
                     </tr>
                     @endforeach
                     <tr class="table-light">
@@ -161,6 +163,10 @@
             <h5 class="mb-0">Order Info</h5>
         </div>
         <div class="card-body">
+            <div class="form-group mb-3">
+                <strong>Invoice #:</strong>
+                {{ $order->invoice_no }}
+            </div>
             <div class="form-group mb-3">
                 <strong>Payment Method:</strong>
                 {{ $order->payment_method }}

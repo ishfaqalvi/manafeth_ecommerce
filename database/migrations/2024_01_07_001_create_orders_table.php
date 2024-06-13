@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_no')->nullable();
             $table->foreignId('customer_id')->references('id')->on('customers')->cascadeOnDelete();
             $table->enum('payment_method',['Cash On Delivery']);
             $table->enum('collection_type',['Self Pickup','Home Delivery']);

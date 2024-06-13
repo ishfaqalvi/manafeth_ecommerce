@@ -106,7 +106,6 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => $actorType,
                         'action'     => 'Request Rejected'
                     ]);
-                    $fcm = $actorType == 'App\Models\Customer' ? true : false;
                     break;
 
                 case 'Accepted':
@@ -115,7 +114,6 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => 'App\Models\User',
                         'action'     => 'Request Accepted'
                     ]);
-                    $fcm = false;
                     break;
 
                 case 'Assigned':
@@ -130,7 +128,6 @@ class MaintenenceRepository implements MaintenenceInterface
                         'task_id'     => $request->id,
                         'status'      => 'Pending'
                     ]);
-                    $fcm = false;
                     $employeeFcm = true;
                     $employee = $data['maintenenceboy'];
                     break;

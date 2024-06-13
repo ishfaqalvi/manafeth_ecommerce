@@ -37,6 +37,7 @@
                 <thead class="thead">
                     <tr>
                         <th>No</th>
+                        <th>Invoice #</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone Number</th>
@@ -51,6 +52,7 @@
                 @foreach ($orders as $key => $order)
                     <tr>
                         <td>{{ ++$key }}</td>
+                        <td>{{ $order->invoice_no }}</td>
                         <td>{{ $order->name }}</td>
                         <td>{{ $order->email }}</td>
                         <td>{{ $order->phone_number }}</td>

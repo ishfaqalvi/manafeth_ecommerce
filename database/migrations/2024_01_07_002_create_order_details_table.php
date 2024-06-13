@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->references('id')->on('orders')->cascadeOnDelete();
             $table->foreignId('product_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->string('serial_number')->nullable();
             $table->integer('quantity')->default(1);
+            $table->integer('warranty')->default(0);
+            $table->integer('maintenance')->default(0);
             $table->integer('price');
             $table->integer('star')->nullable();
             $table->string('remarks')->nullable();

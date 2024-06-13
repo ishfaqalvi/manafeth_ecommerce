@@ -39,6 +39,7 @@ class Order extends Model implements Auditable
      * @var array
      */
     protected $fillable = [
+        'invoice_no',
         'customer_id',
         'payment_method',
         'collection_type',
@@ -54,11 +55,40 @@ class Order extends Model implements Auditable
     ];
 
     /**
+     * Attributes that should auto genereted.
+     *
+     * @var array
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($model) {
+            $model->invoice_no = '#-' . str_pad($model->id, 6, "0", STR_PAD_LEFT);
+            $model->save();
+        });
+    }
+
+    /**
      * Interact with the date.
      */
     public function setCollectionDateAttribute($value)
     {
         $this->attributes['collection_date'] = strtotime($value);
+    }
+
+    /**
+     * Interact with the date.
+     */
+    public function setInvoiceAttribute($file)
+    {
+        if($file){
+            $name = $file->getClientOriginalName();
+            $file->move('uploads/orders', $name);
+            $this->attributes['invoice'] = 'uploads/orders/'.$name;
+        }else{
+            unset($this->attributes['invoice']);
+        }
+
     }
 
     /**
