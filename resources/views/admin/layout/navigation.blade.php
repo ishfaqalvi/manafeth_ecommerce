@@ -4,7 +4,7 @@
             <i class="ph-list"></i>
         </button>
     </div>
-    {{-- <img src="{{ asset('assets/images/logo.png')}}" alt="" height="65px"> --}}
+    <img src="{{ asset('assets/images/logo.png')}}" alt="" height="65px">
     <ul class="nav flex-row justify-content-end">
         <li class="nav-item nav-item-dropdown-lg dropdown">
             <a href="#" class="navbar-nav-link navbar-nav-link-icon rounded-pill" data-bs-toggle="dropdown" data-bs-auto-close="outside">
