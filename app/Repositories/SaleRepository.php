@@ -133,7 +133,6 @@ class SaleRepository implements SaleInterface
                     'maintenance'=> $product->maintenance
                 ]);
                 $product->decrement('quantity');
-                $this->storeServices($detail->id, $product);
                 $products .= $product->name.' ( 1 Qty)';
             }else{
                 foreach($customer->carts as $row){

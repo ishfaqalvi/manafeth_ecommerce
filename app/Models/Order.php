@@ -59,14 +59,14 @@ class Order extends Model implements Auditable
      *
      * @var array
      */
-    protected static function boot()
-    {
-        parent::boot();
-        static::created(function ($model) {
-            $model->invoice_no = '#-' . str_pad($model->id, 6, "0", STR_PAD_LEFT);
-            $model->save();
-        });
-    }
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::created(function ($model) {
+    //         $model->invoice_no = '#-' . str_pad($model->id, 6, "0", STR_PAD_LEFT);
+    //         $model->save();
+    //     });
+    // }
 
     /**
      * Interact with the date.

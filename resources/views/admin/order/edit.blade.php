@@ -36,10 +36,15 @@
                 <input type="hidden" name="id" value="{{ $order->id }}">
                 <input type="hidden" name="status" value="Confirmed">
                 <div class="row">
-                    <div class="form-group col-lg-12 mb-3">
+                    <div class="form-group col-lg-6 mb-3">
                         {{ Form::label('invoice') }}
                         {{ Form::file('invoice', ['class' => 'form-control' . ($errors->has('invoice') ? ' is-invalid' : ''),'required']) }}
                         {!! $errors->first('invoice', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+                    <div class="form-group col-lg-6 mb-3">
+                        {{ Form::label('invoice_no') }}
+                        {{ Form::text('invoice_no', $order->invoice_no, ['class' => 'form-control' . ($errors->has('invoice_no') ? ' is-invalid' : ''),'required']) }}
+                        {!! $errors->first('invoice_no', '<div class="invalid-feedback">:message</div>') !!}
                     </div>
                     <div class="form-group col-lg-12 mb-3">
                         <table class="table text-nowrap">
