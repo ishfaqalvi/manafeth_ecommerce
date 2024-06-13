@@ -53,8 +53,8 @@
                                     <th colspan="2">Product name</th>
                                     <th>Quantity</th>
                                     <th>Price</th>
-                                    <th>Services(Year)</th>
-                                    <th>Maintenence</th>
+                                    <th>Warranty</th>
+                                    <th>Maintenance Services</th>
                                     <th>Serial Number</th>
                                 </tr>
                             </thead>

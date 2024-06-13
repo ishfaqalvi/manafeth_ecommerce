@@ -203,7 +203,7 @@ class SaleRepository implements SaleInterface
             $order->operations()->create([
                 'actor_id'   => auth()->user()->id,
                 'actor_type' => 'App\Models\User',
-                'action'     => 'Change Order Status to Confirmed'
+                'action'     => 'Change Order Status to Confirmed' 
             ]);
 
             if (settings('sale_order_fcm_notification_to_customer') == 'Yes') {
