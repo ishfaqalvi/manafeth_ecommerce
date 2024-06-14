@@ -69,7 +69,7 @@ class FCMService
             ],
         ];
         $headers = [
-            'Authorization' => 'Bearer ' . $accessToken['access_token'],
+            'Authorization' => 'key=AIzaSyC-Te1QdXMPBYG9cqY5wiUmW5IfBhl7NEQ',
             'Content-Type' => 'application/json',
         ];
         try {
