@@ -58,6 +58,32 @@ class FCMService
         }
     }
 
+    public function browserNotification($title, $body, $token)
+    {
+        $accessToken = $this->authenticate();
+        $message = [
+            'to' => $token,
+            'notification' => [
+                'title' => $title,
+                'body' => $body,
+            ],
+        ];
+        $headers = [
+            'Authorization' => 'Bearer ' . $accessToken['access_token'],
+            'Content-Type' => 'application/json',
+        ];
+        try {
+            $response = $this->httpClient->post("https://fcm.googleapis.com/fcm/send", [
+                'headers' => $headers,
+                'json' => $message
+            ]);
+            Log::info('Received FCM response: Admin user notification sent successfully!');
+
+        } catch (RequestException $e) {
+            Log::error('Error with FCM service', ['error' => $e->getMessage()]);
+        }
+    }
+
     public function notifyAllUsers($title, $body, $tokens)
     {
         $accessToken = $this->authenticate();
