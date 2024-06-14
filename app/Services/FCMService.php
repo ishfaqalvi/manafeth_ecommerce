@@ -146,7 +146,7 @@ class FCMService
             Log::info('Received FCM response: Admin user web notification sent successfully!');
 
         } catch (RequestException $e) {
-            Log::error('Error with FCM service', ['error' => $e->getMessage()]);
+            Log::error('Error with FCM web service', ['error' => $e->getMessage()]);
         }
     }
 }
