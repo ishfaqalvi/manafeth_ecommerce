@@ -37,8 +37,44 @@ class Task extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['employee_id','task_type','task_id','remarks','status'];
+    protected $fillable = ['employee_id','task_type','task_id','remarks','images','status'];
 
+    /**
+     * Set the images's.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setImagesAttribute($values) {
+        if($values) {
+            $images = array();
+            foreach($values as $file)
+            {
+                $name = $file->getClientOriginalName();
+                $file->move('images/task/', $name);
+                $images[] = $name;
+            }
+            $this->attributes['images'] = implode(',', $images);
+        }else{
+            unset($this->attributes['images']);
+        }
+    }
+
+    /**
+     * Get the image's.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function getImagesAttribute($values){
+        $images = array();
+        if ($values) {
+            foreach (explode(',', $values) as $key => $value) {
+                $images[] = asset('images/task/'.$value);
+            }
+        }
+        return $images;
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

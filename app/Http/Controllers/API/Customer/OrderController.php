@@ -63,7 +63,7 @@ class OrderController extends BaseController
     {
         try {
             if ($this->order->orderFind($request->id)->status == 'Pending') {
-                $this->order->orderUpdate(['status' => 'Cancelled'], $request->id);
+                $this->order->orderUpdate(['status' => 'Cancelled'], $request->id, 'customerapi');
                 return $this->sendResponse('', 'Order cancelled successfully.');
             }
             return $this->sendError('Invalid Action', 'You can not cancel the under process order.');
