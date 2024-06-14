@@ -30,9 +30,7 @@
 <script src="{{ asset('assets/js/vendor/pickers/datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/demo/dropify/js/dropify.js') }}"></script>
 
-{{-- <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script> --}}
 <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
-{{-- <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-messaging.js"></script> --}}
 <script src="{{ asset('assets/js/firebase.js') }}"></script>
 
 <script src="{{ asset('assets/js/app.js') }}"></script>

@@ -10,7 +10,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" type="text/css" href="{{ asset('admin/css/log.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/log.css') }}">
 
         <script>
             function initTheme() {
@@ -47,7 +47,7 @@
             // dark mode by https://github.com/coliff/dark-mode-switch
             const darkSwitch = document.getElementById('darkSwitch');
             // this is here so we can get the body dark mode before the page displays
-            // otherwise the page will be white for a second... 
+            // otherwise the page will be white for a second...
             initTheme();
             window.addEventListener('load', () => {
                 if (darkSwitch) {
