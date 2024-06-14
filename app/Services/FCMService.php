@@ -114,4 +114,39 @@ class FCMService
             Log::error('Error with FCM service', ['error' => $e->getMessage(), 'file' => public_path('logs/fcm.log')]);
         }
     }
+
+    public function browserNotification($title, $body, $firebaseToken)
+    {
+        $SERVER_API_KEY = 'AIzaSyC-Te1QdXMPBYG9cqY5wiUmW5IfBhl7NEQ';
+
+        $data = [
+            "registration_ids" => $firebaseToken,
+            "notification" => [
+                "title" => $title,
+                "body" => $body,
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+        try {
+            $ch = curl_init();
+
+            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+            $response = curl_exec($ch);
+            Log::info('Received FCM response: Admin user web notification sent successfully!');
+
+        } catch (RequestException $e) {
+            Log::error('Error with FCM service', ['error' => $e->getMessage()]);
+        }
+    }
 }
