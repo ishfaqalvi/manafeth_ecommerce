@@ -69,7 +69,7 @@
                     </tr>
                     @endforeach
                     <tr class="table-light">
-                        <td colspan="4" class="fw-semibold">Total Amount</td>
+                        <td colspan="5" class="fw-semibold">Total Amount</td>
                         <td class="text-end">{{ $total }}</td>
                     </tr>
                 </tbody>
@@ -166,6 +166,12 @@
             <div class="form-group mb-3">
                 <strong>Invoice #:</strong>
                 {{ $order->invoice_no }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Invoice:</strong>
+                @if(isset($order->invoice))
+                    <a href="{{ $order->invoice }}" target="_blank">View</a>
+                @endif
             </div>
             <div class="form-group mb-3">
                 <strong>Payment Method:</strong>

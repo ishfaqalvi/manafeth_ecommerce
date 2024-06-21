@@ -39,9 +39,9 @@
                         <th>No</th>
                         <th>Name</th>
                         <th>Phone #</th>
-                        <th>Serial #</th>
-                        <th>Product</th>
                         <th>Payment</th>
+                        <th>Date</th>
+                        <th>Time</th>
                         <th>Task</th>
                         <th>Status</th>
                         <th class="text-center">Actions</th>
@@ -53,12 +53,12 @@
                         <td>{{ ++$key }}</td>
                         <td>{{ $maintenenceRequest->first_name.' '.$maintenenceRequest->last_name }}</td>
                         <td>{{ $maintenenceRequest->phone_number }}</td>
-                        <td>{{ $maintenenceRequest->serial_number }}</td>
-                        <td>{{ $maintenenceRequest->product->name }}</td>
                         <td>{{ number_format($maintenenceRequest->payment) }}</td>
+                        <td>{{ Carbon\Carbon::parse($maintenenceRequest->created_at)->toDateString() }}</td>
+                        <td>{{ Carbon\Carbon::parse($maintenenceRequest->created_at)->toTimeString() }}</td>
                         <td>
                             @if (!is_null($maintenenceRequest->task))
-                                {{ $maintenenceRequest->task->status." By Warehouse Boy" }}
+                                {{ $maintenenceRequest->task->status." By Maintenance Boy" }}
                             @endif
                         </td>
                         <td>{{ $maintenenceRequest->status }}</td>

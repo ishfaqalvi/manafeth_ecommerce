@@ -39,7 +39,7 @@
         {!! $errors->first('product_id', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="form-group col-lg-2 mb-3">
-        {{ Form::label('serial_number', 'Serial Number') }}
+        {{ Form::label('serial_number', 'Serial Number(Optional)') }}
         {{ Form::text('serial_number', $maintenenceRequest->serial_number, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number','required']) }}
         {!! $errors->first('serial_number', '<div class="invalid-feedback">:message</div>') !!}
     </div>

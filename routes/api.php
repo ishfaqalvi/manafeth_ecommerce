@@ -212,4 +212,8 @@ Route::group(['namespace'=>'App\Http\Controllers\API'], function(){
     Route::controller(TimeSlotController::class)->prefix('time-slots')->group(function(){
         Route::get('list',  'index' );
     });
+
+    Route::controller(TaskController::class)->prefix('tasks')->group(function(){
+        Route::get('list',  'index' );
+    });
 });

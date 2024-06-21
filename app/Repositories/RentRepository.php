@@ -295,38 +295,12 @@ class RentRepository implements RentInterface
                         'action' => 'Order return to warehoue by driver.'
                     ]);
                     break;
-
-                case 'Collecting':
-                    $order->operations()->create([
-                        'actor_id' => auth()->user()->id,
-                        'actor_type' => 'App\Models\User',
-                        'action' => 'Warhouse boy collecting products.'
-                    ]);
-                    Task::create([
-                        'employee_id' => $data['warehouseboy'],
-                        'task_type'   => 'App\Models\RentRequest',
-                        'task_id'     => $order->id,
-                        'status'      => 'Pending'
-                    ]);
-                    $employeeFcm = true;
-                    $employee = $data['warehouseboy'];
-                    break;
-
-                case 'Collected':
-                    $order->operations()->create([
-                        'actor_id' => Auth::guard('employee')->user()->id,
-                        'actor_type' => 'App\Models\Employee',
-                        'action' => 'Warhouse boy collected products.'
-                    ]);
-                    break;
-
                 case 'Completed':
                     $order->operations()->create([
                         'actor_id' => auth()->user()->id,
                         'actor_type' => 'App\Models\User',
                         'action' => 'Order status change to completed'
                     ]);
-                    $data['payment_received'] = 'Yes';
                     break;
             }
             $order->update($data);
@@ -365,6 +339,22 @@ class RentRepository implements RentInterface
         });
         return true;
 	}
+
+    public function updatePayment($data, $id)
+    {
+        DB::transaction(function () use ($data, $id) {
+            $request = RentRequest::find($id);
+                $request->operations()->create([
+                    'actor_id' => auth()->user()->id,
+                    'actor_type' => 'App\Models\User',
+                    'action' => 'Request payment updated by admin.'
+                ]);
+                $data['payment_received'] = 'Yes';
+                unset($data['status']);
+            $request->update($data);
+        });
+        return true;
+    }
 
     public function orderDelete($id)
 	{

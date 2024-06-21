@@ -89,7 +89,12 @@ class MaintenenceRequestController extends Controller
      */
     public function update(Request $request)
     {
-        $this->maintenence->update($request->all(), $request->id, 'Admin');
+        if($request->status == 'Add Payment')
+        {
+            $this->maintenence->updatePayment($request->all(), $request->id);
+        }else{
+            $this->maintenence->update($request->all(), $request->id, 'Admin');
+        }
 
         return redirect()->route('maintenance.index')
             ->with('success', 'Maintenence Request updated successfully');

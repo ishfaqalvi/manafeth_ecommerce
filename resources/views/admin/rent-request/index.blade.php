@@ -38,9 +38,10 @@
                     <tr>
                         <th>No</th>
                         <th>Name</th>
-                        <th>Email</th>
                         <th>Phone #</th>
                         <th>Payment</th>
+                        <th>Date</th>
+                        <th>Time</th>
                         <th>Task</th>
                         <th>Status</th>
                         <th class="text-center">Actions</th>
@@ -51,9 +52,10 @@
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>{{ $rentRequest->name }}</td>
-                        <td>{{ $rentRequest->email }}</td>
                         <td>{{ $rentRequest->phone_number }}</td>
                         <td>{{ number_format($rentRequest->payment) }}</td>
+                        <td>{{ Carbon\Carbon::parse($rentRequest->created_at)->toDateString() }}</td>
+                        <td>{{ Carbon\Carbon::parse($rentRequest->created_at)->toTimeString() }}</td>
                         <td>
                             @if (!is_null($rentRequest->task))
                                 @if(in_array($rentRequest->status, ['Processing','Collecting','Collected','Completed']))
@@ -140,6 +142,7 @@
         });
         $('.addPayment').click(function(){
             $('#rent-request-id').val($(this).data('id'));
+            $('#rent-request-payment').val($(this).data('payment'));
             $('#addpaymentmodel').modal('show');
         });
     });

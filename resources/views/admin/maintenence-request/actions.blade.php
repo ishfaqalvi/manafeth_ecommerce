@@ -26,11 +26,6 @@
                         <i class="ph-note-pencil me-2"></i>{{ __('Assign') }}
                     </a>
                 @endif
-                @if($maintenenceRequest->status == 'Done' && $maintenenceRequest->payment_received == 'No')
-                    <a href="#" class="dropdown-item addPayment" data-id="{{ $maintenenceRequest->id }}" data-payment="{{ $maintenenceRequest->payment }}">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Add Payment') }}
-                    </a>
-                @endif
                 @if($maintenenceRequest->status != 'Rejected' && $maintenenceRequest->status != 'Done' && $maintenenceRequest->status != 'Closed')
                     <form action="{{ route('maintenance.update') }}" method="POST">
                         @csrf
@@ -41,6 +36,19 @@
                         </a>
                     </form>
                 @endif
+                @if($maintenenceRequest->status == 'Done')
+                    <form action="{{ route('maintenance.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $maintenenceRequest->id }}">
+                        <input type="hidden" name="status" value="Closed">
+                        <a href="#" class="dropdown-item sa-update">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Closed') }}
+                        </a>
+                    </form>
+                @endif
+                <a href="#" class="dropdown-item addPayment" data-id="{{ $maintenenceRequest->id }}" data-payment="{{ $maintenenceRequest->payment }}">
+                    <i class="ph-note-pencil me-2"></i>{{ __('Add Payment') }}
+                </a>
             @endcan
             @can('maintenenceRequests-delete')
                 <form action="{{ route('maintenance.destroy',$maintenenceRequest->id) }}" method="POST">

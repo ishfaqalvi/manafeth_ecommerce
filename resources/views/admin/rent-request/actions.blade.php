@@ -37,11 +37,6 @@
                     </a>
                 @endif
                 @if($rentRequest->status == 'Returned')
-                    <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $rentRequest->id }}" data-status="Collecting">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
-                    </a>
-                @endif
-                @if($rentRequest->status == 'Collected')
                     <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}">
                         <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
                     </a>
@@ -56,6 +51,9 @@
                         </a>
                     </form>
                 @endif
+                <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}" data-payment="{{ $rentRequest->payment }}">
+                    <i class="ph-note-pencil me-2"></i>{{ __('Add Payment') }}
+                </a>
             @endcan
             @can('rentRequests-delete')
                 <form action="{{ route('rent.destroy',$rentRequest->id) }}" method="POST">

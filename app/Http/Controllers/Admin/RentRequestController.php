@@ -93,7 +93,11 @@ class RentRequestController extends Controller
      */
     public function update(Request $request)
     {
-        $this->rentRequest->orderUpdate($request->all(), $request->id, 'Admin');
+        if($request->status == 'Add Payment'){
+            $this->rentRequest->updatePayment($request->all(), $request->id);
+        }else{
+            $this->rentRequest->orderUpdate($request->all(), $request->id, 'Admin');
+        }
 
         return redirect()->route('rent.index')
             ->with('success', 'Rent Request updated successfully');

@@ -138,7 +138,6 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => 'App\Models\Employee',
                         'action'     => 'Request accepted by maintenence boy.'
                     ]);
-                    $fcm = true;
                     break;
 
                 case 'Out for Maintenance':
@@ -156,20 +155,12 @@ class MaintenenceRepository implements MaintenenceInterface
                         'action'     => 'Request completed by maintenence boy.'
                     ]);
                     break;
-
-                case 'Add Payment':
-                    $request->operations()->create([
-                        'actor_id' => auth()->user()->id,
-                        'actor_type' => 'App\Models\User',
-                        'action' => 'Request payment added by admin.'
-                    ]);
+                case 'Closed':
                     $request->operations()->create([
                         'actor_id' => auth()->user()->id,
                         'actor_type' => 'App\Models\User',
                         'action' => 'Request closed by admin.'
                     ]);
-                    $data['status'] = 'Closed';
-                    $data['payment_received'] = 'Yes';
                     break;
             }
             $request->update($data);
@@ -198,6 +189,22 @@ class MaintenenceRepository implements MaintenenceInterface
                 ];
                 $this->fcmNotification->store($fcmData);
             }
+        });
+        return true;
+    }
+
+    public function updatePayment($data, $id)
+    {
+        DB::transaction(function () use ($data, $id) {
+            $request = MaintenenceRequest::find($id);
+                $request->operations()->create([
+                    'actor_id' => auth()->user()->id,
+                    'actor_type' => 'App\Models\User',
+                    'action' => 'Request payment updated by admin.'
+                ]);
+                $data['payment_received'] = 'Yes';
+                unset($data['status']);
+            $request->update($data);
         });
         return true;
     }

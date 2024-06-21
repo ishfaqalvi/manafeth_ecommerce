@@ -12,16 +12,12 @@
                         {{ Form::hidden('id', null,['id' => 'request-id']) }}
                         {{ Form::hidden('status', 'Assigned') }}
                         <div class="form-group">
-                            {{ Form::label('serial_number', 'Serial Number') }}
+                            {{ Form::label('serial_number', 'Serial Number(Optional)') }}
                             {{ Form::text('serial_number', null, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number','required','id' => 'request-serial-number']) }}
                         </div>
                         <div class="form-group mb-3">
                             {{ Form::label('maintenenceboy','Maintenence Boys') }}
                             {{ Form::select('maintenenceboy', maintenenceBoys(true), null, ['class' => 'form-control form-select' . ($errors->has('maintenenceboy') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
-                        </div>
-                        <div class="form-group">
-                            {{ Form::label('payment') }}
-                            {{ Form::number('payment', null, ['class' => 'form-control' . ($errors->has('payment') ? ' is-invalid' : ''), 'placeholder' => 'Payment','required','min' => '0']) }}
                         </div>
                     </div>
                 </div>

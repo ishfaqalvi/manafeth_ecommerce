@@ -10,10 +10,10 @@
                 <div class="modal-body">
                     <div class="row">
                         {{ Form::hidden('id', null,['id' => 'rent-request-id']) }}
-                        {{ Form::hidden('status', 'Completed') }}
+                        {{ Form::hidden('status', 'Add Payment') }}
                         <div class="form-group">
                             {{ Form::label('payment') }}
-                            {{ Form::number('payment', null, ['class' => 'form-control' . ($errors->has('payment') ? ' is-invalid' : ''), 'placeholder' => 'Payment','required','min' => '0']) }}
+                            {{ Form::number('payment', null, ['class' => 'form-control' . ($errors->has('payment') ? ' is-invalid' : ''), 'placeholder' => 'Payment','required','min' => '0', 'id' => 'rent-request-payment']) }}
                         </div>
                     </div>
                 </div>
