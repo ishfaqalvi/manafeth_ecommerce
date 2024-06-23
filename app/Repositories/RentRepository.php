@@ -26,7 +26,7 @@ class RentRepository implements RentInterface
 	public function cartItemList($guard)
 	{
 		return Auth::guard($guard)->user()->rentCarts()->with(
-			['product.brand', 'product.category', 'product.subCategory']
+			['productRent','product.brand', 'product.category', 'product.subCategory', 'product.rents']
 		)->get();
 	}
 
@@ -74,10 +74,12 @@ class RentRepository implements RentInterface
             'customer',
             'timeSlot',
             'details',
+            'details.productRent',
             'details.product.brand',
             'details.product.category',
             'details.product.subCategory',
             'details.product.resources',
+            'details.product.rents',
             'details.product.reviews.order.customer',
             'operations',
             'operations.actor'
@@ -107,11 +109,14 @@ class RentRepository implements RentInterface
             $products = '';
             $order = $customer->rentRequests()->create($data);
             foreach($customer->rentCarts as $row){
+                $product = $row->product;
                 $order->details()->create([
                     'product_id'=> $row->product_id,
+                    'product_rent_id'=> $row->product_rent_id,
                     'quantity'  => $row->quantity,
                     'from'      => $row->from,
-                    'to'        => $row->to
+                    'to'        => $row->to,
+                    'delivery_charges' => $product->delivery_charges
                 ]);
                 $row->product->decrement('quantity', $row->quantity);
                 $products .= $row->product->name.' ( '.$row->quantity.' Qty)'.' (From: '. date('d M Y', $row->from).') (To: '.date('d M Y', $row->to).')';
@@ -158,10 +163,12 @@ class RentRepository implements RentInterface
             'customer',
             'timeSlot',
             'details',
+            'details.productRent',
             'details.product.brand',
             'details.product.category',
             'details.product.subCategory',
             'details.product.resources',
+            'details.product.rents',
             'details.product.reviews.order.customer',
             'operations',
             'operations.actor'

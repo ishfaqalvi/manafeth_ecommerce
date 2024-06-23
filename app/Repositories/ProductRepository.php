@@ -36,19 +36,19 @@ class ProductRepository implements ProductInterface
 	//To view all rent products data
 	public function rentProductList($filter)
 	{
-		return Product::filter($filter)->whereStatus('Publish')->whereType('Rent')->with(['brand','category','subCategory'])->paginate();
+		return Product::filter($filter)->whereStatus('Publish')->whereType('Rent')->with(['brand','category','subCategory','rents'])->paginate();
 	}
 
     //To view all rent products data
 	public function rentAdminList($filter)
 	{
-		return Product::filter($filter)->whereType('Rent')->with(['brand','category','subCategory'])->paginate();
+		return Product::filter($filter)->whereType('Rent')->with(['brand','category','subCategory','rents'])->paginate();
 	}
 
 	//To view special rent products data
 	public function rentSpecial($filter)
 	{
-		return Product::filter($filter)->whereStatus('Publish')->whereType('Rent')->whereSpecial('Yes')->with(['brand','category','subCategory'])->paginate();
+		return Product::filter($filter)->whereStatus('Publish')->whereType('Rent')->whereSpecial('Yes')->with(['brand','category','subCategory','rents'])->paginate();
 	}
 
 	//To view category wise rent products data
@@ -84,7 +84,7 @@ class ProductRepository implements ProductInterface
 	//To view category wise maintence products data
 	public function viewDetail($id)
 	{
-		return Product::with(['brand','category','subCategory','specifications','resources','images','reviews.order.customer'])->find($id);
+		return Product::with(['brand','category','subCategory','specifications','resources','images','rents','reviews.order.customer'])->find($id);
 	}
 
 	//To create a new product

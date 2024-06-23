@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rent_carts', function (Blueprint $table) {
+        Schema::create('product_rents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->references('id')->on('customers')->cascadeOnDelete();
             $table->foreignId('product_id')->references('id')->on('products')->cascadeOnDelete();
-            $table->foreignId('product_rent_id')->references('id')->on('product_rents')->cascadeOnDelete();
-            $table->integer('quantity')->default(1);
-            $table->bigInteger('from');
-            $table->bigInteger('to');
+            $table->string('title');
+            $table->integer('days');
+            $table->bigInteger('amount');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rent_carts');
+        Schema::dropIfExists('product_rents');
     }
 };

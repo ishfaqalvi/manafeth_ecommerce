@@ -38,7 +38,7 @@ class RentCart extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['customer_id','product_id','quantity','from','to'];
+    protected $fillable = ['customer_id','product_id','product_rent_id','quantity','from','to'];
 
     /**
      * Interact with the date.
@@ -70,5 +70,13 @@ class RentCart extends Model implements Auditable
     public function product()
     {
         return $this->hasOne('App\Models\Product', 'id', 'product_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function productRent()
+    {
+        return $this->hasOne('App\Models\ProductRent', 'id', 'product_rent_id');
     }
 }

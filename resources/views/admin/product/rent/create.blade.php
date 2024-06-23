@@ -68,12 +68,8 @@
                         {{ Form::number('quantity', $product->quantity, ['class' => 'form-control' . ($errors->has('quantity') ? ' is-invalid' : ''), 'placeholder' => 'Quantity','min'=>'0','required']) }}
                     </div>
                     <div class="form-group col-lg-4 mb-3">
-                        {{ Form::label('price') }}
-                        {{ Form::number('price', $product->price, ['class' => 'form-control' . ($errors->has('price') ? ' is-invalid' : ''), 'placeholder' => 'Price','required']) }}
-                    </div>
-                    <div class="form-group col-lg-4 mb-3">
-                        {{ Form::label('discount') }}
-                        {{ Form::number('discount', $product->discount, ['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Discount']) }}
+                        {{ Form::label('delivery_charges') }}
+                        {{ Form::number('delivery_charges', $product->delivery_charges, ['class' => 'form-control' . ($errors->has('delivery_charges') ? ' is-invalid' : ''), 'placeholder' => 'Delivery Charges']) }}
                     </div>
                     <div class="form-group col-lg-4 mb-3">
                         {{ Form::label('status') }}

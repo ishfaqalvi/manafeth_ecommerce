@@ -38,7 +38,7 @@ class RentRequestDetail extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['request_id','product_id','quantity','from','to', 'star', 'remarks'];
+    protected $fillable = ['request_id','product_id','product_rent_id','quantity','from','to', 'delivery_charges', 'star', 'remarks'];
 
     /**
      * Interact with the date.
@@ -62,6 +62,14 @@ class RentRequestDetail extends Model implements Auditable
     public function product()
     {
         return $this->hasOne('App\Models\Product', 'id', 'product_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function productRent()
+    {
+        return $this->hasOne('App\Models\ProductRent', 'id', 'product_rent_id');
     }
 
     /**

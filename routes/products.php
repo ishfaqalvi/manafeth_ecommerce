@@ -94,3 +94,14 @@ Route::controller(ImageController::class)->prefix('images')->as('products.images
 	Route::post('store',			'store'	 	)->name('store'  	 );
 	Route::delete('delete/{id}',	'destroy'	)->name('destroy'	 );
 });
+
+/*
+|--------------------------------------------------------------------------
+| Product Rents Routes
+|--------------------------------------------------------------------------
+*/
+Route::controller(RentsController::class)->prefix('rents')->as('products.rents.')->group(function () {
+	Route::post('store',			'store'	 	)->name('store'  	 );
+	Route::post('update',			'update'	)->name('update'  	 );
+	Route::delete('delete/{id}',	'destroy'	)->name('destroy'	 );
+});

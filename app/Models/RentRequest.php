@@ -52,6 +52,8 @@ class RentRequest extends Model implements Auditable
         'email',
         'phone_number',
         'address',
+        'lat',
+        'long',
         'status'
     ];
 

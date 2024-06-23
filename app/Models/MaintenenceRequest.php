@@ -51,6 +51,8 @@ class MaintenenceRequest extends Model implements Auditable
         'last_name',
         'phone_number',
         'address',
+        'lat',
+        'long',
         'category_id',
         'product_id',
         'payment',
@@ -149,5 +151,13 @@ class MaintenenceRequest extends Model implements Auditable
     public function task()
     {
         return $this->morphOne(Task::class, 'task')->orderBy('id', 'desc')->limit(1);
+    }
+
+    /**
+     * Get all of the employee's order operations.
+     */
+    public function tasks()
+    {
+        return $this->morphMany(Task::class, 'task')->orderBy('id', 'desc');
     }
 }

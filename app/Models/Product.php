@@ -62,6 +62,7 @@ class Product extends Model implements Auditable
         'maintenance',
         'price',
         'discount',
+        'delivery_charges',
         'type',
         'special',
         'status',
@@ -188,6 +189,14 @@ class Product extends Model implements Auditable
     public function images()
     {
         return $this->hasMany('App\Models\ProductImage', 'product_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function rents()
+    {
+        return $this->hasMany('App\Models\ProductRent', 'product_id', 'id');
     }
 
     /**

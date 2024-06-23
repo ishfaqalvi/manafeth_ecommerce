@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('phone_number');
             $table->string('address');
+            $table->decimal('lat', 10, 7);
+            $table->decimal('long', 10, 7);
             $table->integer('payment')->nullable();
             $table->enum('payment_received',['Yes', 'No'])->default('No');
             $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnDelete();

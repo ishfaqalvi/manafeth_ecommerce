@@ -106,6 +106,37 @@
             </table>
         </div>
     </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Order Tasks</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-nowrap">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Remarks</th>
+                        <th>Attachment</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($maintenenceRequest->tasks as $key => $row)
+                    <tr>
+                        <td>{{ $row->employee->name }}</td>
+                        <td>{{ $row->remarks }}</td>
+                        <td>
+                            @foreach($row->images as $image)
+                                <a href="{{ $image }}" target="_blank">View File</a></br>
+                            @endforeach
+                        </td>
+                        <td>{{ $row->status }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <div class="col-md-4">
     <div class="card">

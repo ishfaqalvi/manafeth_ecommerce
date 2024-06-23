@@ -13,7 +13,7 @@
                         {{ Form::hidden('status', 'Assigned') }}
                         <div class="form-group">
                             {{ Form::label('serial_number', 'Serial Number(Optional)') }}
-                            {{ Form::text('serial_number', null, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number','required','id' => 'request-serial-number']) }}
+                            {{ Form::text('serial_number', null, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number','id' => 'request-serial-number']) }}
                         </div>
                         <div class="form-group mb-3">
                             {{ Form::label('maintenenceboy','Maintenence Boys') }}

@@ -62,6 +62,14 @@
                     </a>
                 </li>
                 @endcan
+                @can('productRent-list')
+                <li class="nav-item">
+                    <a href="#rents" class="nav-link" data-bs-toggle="tab">
+                        <i class="ph-file-image me-2"></i>
+                        {{ __('Rents') }}
+                    </a>
+                </li>
+                @endcan
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="detail">
@@ -75,6 +83,9 @@
                 </div>
                 <div class="tab-pane fade" id="images">
                     @include('admin.product.include.image.index')
+                </div>
+                <div class="tab-pane fade" id="rents">
+                    @include('admin.product.include.rent.index')
                 </div>
             </div>
         </div>
@@ -159,6 +170,13 @@
             $('#edit-name').val($(this).data('name'));
             $('#editResource').modal('show');
         });
+        $('.editRentRecord').click(function(){
+            $('#editRent-id').val($(this).data('id'));
+            $('#editRenttitle').val($(this).data('title'));
+            $('#editRentdays').val($(this).data('days'));
+            $('#editRentamount').val($(this).data('amount'));
+            $('#editRent').modal('show');
+        });
         function getValidationSettings(additionalSettings) {
             var commonSettings = {
                 errorClass: 'validation-invalid-label',
@@ -218,6 +236,7 @@
         $('.validateCreatResource').validate(getValidationSettings({}));
         $('.validateUpdateResource').validate(getValidationSettings({}));
         $('.validateImageCreate').validate(getValidationSettings({}));
+        $('.validateCreatRent').validate(getValidationSettings({}));
     });
 </script>
 @endsection

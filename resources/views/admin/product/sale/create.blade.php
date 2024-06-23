@@ -101,6 +101,10 @@
                         {{ Form::number('discount', $product->discount, ['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Discount']) }}
                     </div>
                     <div class="form-group col-lg-4 mb-3">
+                        {{ Form::label('delivery_charges') }}
+                        {{ Form::number('delivery_charges', $product->delivery_charges, ['class' => 'form-control' . ($errors->has('delivery_charges') ? ' is-invalid' : ''), 'placeholder' => 'Delivery Charges']) }}
+                    </div>
+                    <div class="form-group col-lg-4 mb-3">
                         {{ Form::label('status') }}
                         {{ Form::select('status', ['Publish' => 'Publish', 'Unpublish' => 'Unpublish'], $product->status, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
                     </div>

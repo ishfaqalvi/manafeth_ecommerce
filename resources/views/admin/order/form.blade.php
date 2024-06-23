@@ -1,4 +1,6 @@
 <div class="fw-bold border-bottom pb-2 mb-2">Order Detail</div>
+<input type="hidden" name="lat" value="34.123"/>
+<input type="hidden" name="long" value="74.123"/>
 <div class="row">
     <div class="form-group col-lg-4 mb-3">
         {{ Form::label('customer') }}

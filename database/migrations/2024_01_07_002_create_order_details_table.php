@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('warranty')->default(0);
             $table->integer('maintenance')->default(0);
             $table->integer('price');
+            $table->bigInteger('delivery_charges')->nullable();
             $table->integer('star')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();

@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('request_id')->references('id')->on('rent_requests')->cascadeOnDelete();
             $table->foreignId('product_id')->references('id')->on('products')->cascadeOnDelete();
+            $table->foreignId('product_rent_id')->references('id')->on('product_rents')->cascadeOnDelete();
             $table->integer('quantity')->default(1);
             $table->bigInteger('from');
             $table->bigInteger('to');
+            $table->bigInteger('delivery_charges')->nullable();
             $table->integer('star')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();

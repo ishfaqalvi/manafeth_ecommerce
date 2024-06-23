@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->integer('warranty')->default(0)->after('quantity');
-            $table->integer('maintenance')->default(0)->after('quantity');
+            $table->bigInteger('delivery_charges')->after('discount')->nullable();
         });
     }
 
@@ -23,8 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('warranty');
-            $table->dropColumn('maintenance');
+            $table->dropColumn('delivery_charges');
         });
     }
 };

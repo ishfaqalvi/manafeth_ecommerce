@@ -130,7 +130,8 @@ class SaleRepository implements SaleInterface
                     'quantity'   => 1,
                     'price'      => $price,
                     'warranty'   => $product->warranty,
-                    'maintenance'=> $product->maintenance
+                    'maintenance'=> $product->maintenance,
+                    'delivery_charges' => $product->delivery_charges
                 ]);
                 $product->decrement('quantity');
                 $products .= $product->name.' ( 1 Qty)';
@@ -143,7 +144,8 @@ class SaleRepository implements SaleInterface
                         'quantity'   => $row->quantity,
                         'price'      => $price,
                         'warranty'   => $product->warranty,
-                        'maintenance'=> $product->maintenance
+                        'maintenance'=> $product->maintenance,
+                        'delivery_charges' => $product->delivery_charges
                     ]);
                     $products .= $product->name.' ( '.$row->quantity.' Qty)';
                     $product->decrement('quantity', $row->quantity);
@@ -203,7 +205,7 @@ class SaleRepository implements SaleInterface
             $order->operations()->create([
                 'actor_id'   => auth()->user()->id,
                 'actor_type' => 'App\Models\User',
-                'action'     => 'Change Order Status to Confirmed' 
+                'action'     => 'Change Order Status to Confirmed'
             ]);
 
             if (settings('sale_order_fcm_notification_to_customer') == 'Yes') {

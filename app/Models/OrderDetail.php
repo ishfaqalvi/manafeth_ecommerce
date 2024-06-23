@@ -45,6 +45,7 @@ class OrderDetail extends Model implements Auditable
         'warranty',
         'maintenance',
         'price',
+        'delivery_charges',
         'star',
         'remarks'
     ];
