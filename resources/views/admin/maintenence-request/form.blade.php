@@ -8,21 +8,16 @@
         {!! $errors->first('customer_id', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="form-group col-lg-4 mb-3">
-        {{ Form::label('first_name') }}
-        {{ Form::text('first_name', $maintenenceRequest->first_name, ['class' => 'form-control' . ($errors->has('first_name') ? ' is-invalid' : ''), 'placeholder' => 'First Name','required']) }}
-        {!! $errors->first('first_name', '<div class="invalid-feedback">:message</div>') !!}
-    </div>
-    <div class="form-group col-lg-4 mb-3">
-        {{ Form::label('last_name') }}
-        {{ Form::text('last_name', $maintenenceRequest->last_name, ['class' => 'form-control' . ($errors->has('last_name') ? ' is-invalid' : ''), 'placeholder' => 'Last Name','required']) }}
-        {!! $errors->first('last_name', '<div class="invalid-feedback">:message</div>') !!}
+        {{ Form::label('full_name') }}
+        {{ Form::text('full_name', $maintenenceRequest->full_name, ['class' => 'form-control' . ($errors->has('full_name') ? ' is-invalid' : ''), 'placeholder' => 'Full Name','required']) }}
+        {!! $errors->first('full_name', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="form-group col-lg-4 mb-3">
         {{ Form::label('phone_number') }}
         {{ Form::text('phone_number', $maintenenceRequest->phone_number, ['class' => 'form-control' . ($errors->has('phone_number') ? ' is-invalid' : ''), 'placeholder' => 'Phone Number','required']) }}
         {!! $errors->first('phone_number', '<div class="invalid-feedback">:message</div>') !!}
     </div>
-    <div class="form-group col-lg-8 mb-3">
+    <div class="form-group col-lg-12 mb-3">
         {{ Form::label('address') }}
         {{ Form::text('address', $maintenenceRequest->address, ['class' => 'form-control' . ($errors->has('address') ? ' is-invalid' : ''), 'placeholder' => 'Address','required']) }}
         {!! $errors->first('address', '<div class="invalid-feedback">:message</div>') !!}

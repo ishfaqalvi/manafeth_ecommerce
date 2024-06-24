@@ -55,7 +55,7 @@ class MaintenenceRepository implements MaintenenceInterface
             ]);
             if(settings('maintenence_request_whatsapp_notification') == 'Yes'){
                 $data = [
-                    $data['first_name'].' '.$data['last_name'],
+                    $data['full_name'],
                     $data['phone_number'],
                     $record->category->name,
                     $record->product->name,

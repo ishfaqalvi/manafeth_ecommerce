@@ -184,7 +184,7 @@
         <div class="card-body">
             <div class="form-group mb-3">
                 <strong>Name:</strong>
-                {{ $maintenenceRequest->first_name .' '. $maintenenceRequest->last_name }}
+                {{ $maintenenceRequest->full_name }}
             </div>
             <div class="form-group mb-3">
                 <strong>Email:</strong>

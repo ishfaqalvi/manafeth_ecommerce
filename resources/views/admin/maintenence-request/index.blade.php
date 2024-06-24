@@ -51,7 +51,7 @@
                 @foreach ($maintenenceRequests as $key => $maintenenceRequest)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $maintenenceRequest->first_name.' '.$maintenenceRequest->last_name }}</td>
+                        <td>{{ $maintenenceRequest->full_name }}</td>
                         <td>{{ $maintenenceRequest->phone_number }}</td>
                         <td>{{ number_format($maintenenceRequest->payment) }}</td>
                         <td>{{ Carbon\Carbon::parse($maintenenceRequest->created_at)->toDateString() }}</td>
