@@ -128,6 +128,14 @@ class Order extends Model implements Auditable
     }
 
     /**
+     * Get all of the employee's order operations.
+     */
+    public function tasks()
+    {
+        return $this->morphMany(Task::class, 'task')->orderBy('id', 'desc');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function details()

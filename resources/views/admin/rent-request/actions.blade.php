@@ -21,25 +21,36 @@
                         </a>
                     </form>
                 @endif
-                @if($rentRequest->status == 'Confirmed')
-                    <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $rentRequest->id }}" data-status="Processing">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
-                    </a>
-                @endif
-                @if($rentRequest->status == 'Processing' && !is_null($rentRequest->task) && $rentRequest->task->status == 'Completed')
-                    <a href="#" class="dropdown-item assignToDriver" data-id="{{ $rentRequest->id }}" data-status="Assign To Driver for deliver">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
-                    </a>
-                @endif
-                @if($rentRequest->status == 'Delivered')
-                    <a href="#" class="dropdown-item assignToDriver" data-id="{{ $rentRequest->id }}" data-status="Assign To Driver for return">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
-                    </a>
-                @endif
-                @if($rentRequest->status == 'Returned')
-                    <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
-                    </a>
+                @if($rentRequest->collection_type == 'Home Delivery')
+                    @if($rentRequest->status == 'Confirmed' || ($rentRequest->status == 'Processing' && $rentRequest->task->status == 'Reject'))
+                        <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $rentRequest->id }}" data-status="Processing">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
+                        </a>
+                    @endif
+                    @if(
+                        ($rentRequest->status == 'Processing' && !is_null($rentRequest->task) && $rentRequest->task->status == 'Completed') ||
+                        ($rentRequest->status == 'Processing' && count($rentRequest->tasks->where('status', 'Completed')) > 0 && $rentRequest->task->status == 'Reject')
+                    )
+                        <a href="#" class="dropdown-item assignToDriver" data-id="{{ $rentRequest->id }}" data-status="Assign To Driver for deliver">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
+                        </a>
+                    @endif
+                    @if($rentRequest->status == 'Delivered' || ($rentRequest->status == 'Returning' && $rentRequest->task->status == 'Reject'))
+                        <a href="#" class="dropdown-item assignToDriver" data-id="{{ $rentRequest->id }}" data-status="Assign To Driver for return">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
+                        </a>
+                    @endif
+                    @if($rentRequest->status == 'Returned')
+                        <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                        </a>
+                    @endif
+                @else
+                    @if($rentRequest->status == 'Confirmed')
+                        <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                        </a>
+                    @endif
                 @endif
                 @if($rentRequest->status == 'Pending' || $rentRequest->status == 'Confirm')
                     <form action="{{ route('rent.update') }}" method="POST">

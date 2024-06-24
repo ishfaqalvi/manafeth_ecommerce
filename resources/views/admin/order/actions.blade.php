@@ -16,35 +16,51 @@
                         <i class="ph-note-pencil me-2"></i>{{ __('Confirmed') }}
                     </a>
                 @endif
-                @if($order->status == 'Confirmed')
-                    <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $order->id }}">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
-                    </a>
-                @endif
-                @if($order->status == 'Processing' && !is_null($order->task) && $order->task->status == 'Completed')
-                    <a href="#" class="dropdown-item assignToDriver" data-id="{{ $order->id }}">
-                        <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
-                    </a>
-                @endif
-                @if($order->status == 'Delivered')
-                    <form action="{{ route('orders.update') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $order->id }}">
-                        <input type="hidden" name="status" value="Completed">
-                        <a href="#" class="dropdown-item sa-update">
-                            <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                @if($order->collection_type == 'Home Delivery')
+                    @if($order->status == 'Confirmed' || ($order->status == 'Processing' && $order->task->status == 'Reject'))
+                        <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $order->id }}">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
                         </a>
-                    </form>
-                @endif
-                @if($order->status != 'Cancelled' && $order->status != 'Delivered' && $order->status != 'Completed')
-                    <form action="{{ route('orders.update') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" value="{{ $order->id }}">
-                        <input type="hidden" name="status" value="Cancelled">
-                        <a href="#" class="dropdown-item sa-update">
-                            <i class="ph-note-pencil me-2"></i>{{ __('Cancel') }}
+                    @endif
+                    @if(
+                    ($order->status == 'Processing' && !is_null($order->task) && $order->task->status == 'Completed') ||
+                    ($order->status == 'Processing' && count($order->tasks->where('status', 'Completed')) > 0 && $order->task->status == 'Reject')
+                    )
+                        <a href="#" class="dropdown-item assignToDriver" data-id="{{ $order->id }}">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Assign To Driver') }}
                         </a>
-                    </form>
+                    @endif
+                    @if($order->status == 'Delivered')
+                        <form action="{{ route('orders.update') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $order->id }}">
+                            <input type="hidden" name="status" value="Completed">
+                            <a href="#" class="dropdown-item sa-update">
+                                <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                            </a>
+                        </form>
+                    @endif
+                    @if($order->status != 'Cancelled' && $order->status != 'Delivered' && $order->status != 'Completed')
+                        <form action="{{ route('orders.update') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $order->id }}">
+                            <input type="hidden" name="status" value="Cancelled">
+                            <a href="#" class="dropdown-item sa-update">
+                                <i class="ph-note-pencil me-2"></i>{{ __('Cancel') }}
+                            </a>
+                        </form>
+                    @endif
+                @else
+                    @if($order->status == 'Confirmed')
+                        <form action="{{ route('orders.update') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $order->id }}">
+                            <input type="hidden" name="status" value="Completed">
+                            <a href="#" class="dropdown-item sa-update">
+                                <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                            </a>
+                        </form>
+                    @endif
                 @endif
             @endcan
             @can('orders-delete')

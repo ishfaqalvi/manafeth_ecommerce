@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 use App\Models\Task;
 
+use App\Models\Order;
+use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\API\BaseController;
 
 class TaskController extends BaseController
@@ -10,7 +12,7 @@ class TaskController extends BaseController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
             $orderRelations = [
@@ -55,17 +57,29 @@ class TaskController extends BaseController
                 'maintenenceRequest.operations.actor'
             ];
 
-            $tasks = Task::orderBy('id', 'desc')->get();
+            // $tasks = Task::orderBy('id', 'desc')->get();
 
-            foreach ($tasks as $task) {
-                if ($task->task_type == 'App\Models\Order') {
-                    $task->load($orderRelations);
-                } elseif ($task->task_type == 'App\Models\RentRequest') {
-                    $task->load($rentRelations);
-                } elseif ($task->task_type == 'App\Models\MaintenenceRequest') {
-                    $task->load($maintenenceRelations);
+            // foreach ($tasks as $task) {
+            //     if ($task->task_type == 'App\Models\Order') {
+            //         $task->load($orderRelations);
+            //     } elseif ($task->task_type == 'App\Models\RentRequest') {
+            //         $task->load($rentRelations);
+            //     } elseif ($task->task_type == 'App\Models\MaintenenceRequest') {
+            //         $task->load($maintenenceRelations);
+            //     }
+            // }
+            $serialNumber = $request->input('serial_number');
+
+            // Query to get tasks of type 'sale' and filter by product serial number
+            $tasks = Task::with($orderRelations)->whereHasMorph(
+                'taskable',
+                [Order::class],
+                function ($query) use ($serialNumber) {
+                    $query->whereHas('product', function ($productQuery) use ($serialNumber) {
+                        $productQuery->where('serial_number', $serialNumber);
+                    });
                 }
-            }
+            )->get();
             return $this->sendResponse($tasks, 'Task list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

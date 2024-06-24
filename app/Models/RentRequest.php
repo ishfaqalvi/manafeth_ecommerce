@@ -104,4 +104,12 @@ class RentRequest extends Model implements Auditable
     {
         return $this->morphOne(Task::class, 'task')->orderBy('id', 'desc')->limit(1);
     }
+
+    /**
+     * Get all of the employee's order operations.
+     */
+    public function tasks()
+    {
+        return $this->morphMany(Task::class, 'task')->orderBy('id', 'desc');
+    }
 }

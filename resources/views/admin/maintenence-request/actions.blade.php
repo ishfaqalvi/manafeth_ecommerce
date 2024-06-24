@@ -21,7 +21,7 @@
                         </a>
                     </form>
                 @endif
-                @if($maintenenceRequest->status == 'Accepted' || ($maintenenceRequest->status == 'Assigned' && $maintenenceRequest->task->status == 'Assigned'))
+                @if($maintenenceRequest->status == 'Accepted' || ($maintenenceRequest->status == 'Assigned' && $maintenenceRequest->task->status == 'Reject'))
                     <a href="#" class="dropdown-item assignToMaintenenceBoy" data-id="{{ $maintenenceRequest->id }}" data-serial="{{ $maintenenceRequest->serial_number }}">
                         <i class="ph-note-pencil me-2"></i>{{ __('Assign') }}
                     </a>
