@@ -4,7 +4,8 @@ namespace App\Http\Controllers\API;
 use App\Models\Task;
 
 use App\Models\Order;
-use Illuminate\Support\Facades\Request;
+
+use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController;
 
 class TaskController extends BaseController
@@ -68,15 +69,17 @@ class TaskController extends BaseController
             //         $task->load($maintenenceRelations);
             //     }
             // }
-            $serialNumber = $request->input('serial_number');
+            $serialNumber = $request->serial_number;
 
             // Query to get tasks of type 'sale' and filter by product serial number
             $tasks = Task::with($orderRelations)->whereHasMorph(
-                'taskable',
+                'task',
                 [Order::class],
                 function ($query) use ($serialNumber) {
-                    $query->whereHas('product', function ($productQuery) use ($serialNumber) {
-                        $productQuery->where('serial_number', $serialNumber);
+                    $query->whereHas('details', function ($detailQuery) use ($serialNumber) {
+                        $detailQuery->whereHas('product', function ($productQuery) use ($serialNumber) {
+                            $productQuery->where('serial_number', $serialNumber);
+                        });
                     });
                 }
             )->get();
