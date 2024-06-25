@@ -77,9 +77,7 @@ class TaskController extends BaseController
                 [Order::class],
                 function ($query) use ($serialNumber) {
                     $query->whereHas('details', function ($detailQuery) use ($serialNumber) {
-                        $detailQuery->whereHas('product', function ($productQuery) use ($serialNumber) {
-                            $productQuery->where('serial_number', $serialNumber);
-                        });
+                        $detailQuery->where('serial_number', $serialNumber);
                     });
                 }
             )->get();
