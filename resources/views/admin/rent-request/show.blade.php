@@ -38,6 +38,7 @@
                         <th>Quantity</th>
                         <th>From Date</th>
                         <th>To Date</th>
+                        <th>Rent Amount</th>
                         <th class="text-center" style="width: 20px;"><i class="ph-dots-three"></i></th>
                     </tr>
                 </thead>
@@ -63,6 +64,7 @@
                         <td>{{ $row->quantity }}</td>
                         <td>{{ date('d M Y', $row->from) }}</td>
                         <td>{{ date('d M Y', $row->to) }}</td>
+                        <td>{{ number_format($row->productRent->amount) }}</td>
                         <td>
                             <div class="d-inline-flex">
                                 <div class="dropdown">

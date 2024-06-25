@@ -60,11 +60,7 @@
                         <td>{{ Carbon\Carbon::parse($order->created_at)->toTimeString() }}</td>
                         <td>
                             @if (!is_null($order->task))
-                                @if($order->status == 'Processing')
-                                    {{ $order->task->status." By Warehouse Boy" }}
-                                @else
-                                    {{ $order->task->status." By Driver" }}
-                                @endif
+                                {{ $order->task->status." By ". $order->task->employee_service }}
                             @endif
                         </td>
                         <td>{{ $order->status }}</td>

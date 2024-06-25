@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\Order;
 
 use Illuminate\Http\Request;
+use App\Models\MaintenenceRequest;
 use App\Http\Controllers\API\BaseController;
 
 class TaskController extends BaseController
@@ -17,45 +18,32 @@ class TaskController extends BaseController
     {
         try {
             $orderRelations = [
-                'employee',
-                'order',
-                'order.customer',
-                'order.timeSlot',
-                'order.details',
-                'order.operations',
-                'order.operations.actor',
-                'order.details.services',
-                'order.details.product.resources',
-                'order.details.product.brand',
-                'order.details.product.category',
-                'order.details.product.subCategory',
-                'order.details.product.reviews.order.customer'
-            ];
-
-            $rentRelations = [
-                'employee',
-                'rentRequest',
-                'rentRequest.customer',
-                'rentRequest.timeSlot',
-                'rentRequest.details',
-                'rentRequest.details.product',
-                'rentRequest.details.product.brand',
-                'rentRequest.details.product.category',
-                'rentRequest.details.product.subCategory',
-                'rentRequest.details.product.resources',
-                'rentRequest.details.product.reviews.order.customer',
-                'rentRequest.operations',
-                'rentRequest.operations.actor'
+                'customer',
+                'timeSlot',
+                'details',
+                'operations',
+                'operations.actor',
+                'tasks',
+                'tasks.employee',
+                'details.services',
+                'details.product.brand',
+                'details.product.category',
+                'details.product.resources',
+                'details.product.subCategory',
+                'details.product.reviews.order.customer'
             ];
 
             $maintenenceRelations = [
-                'employee',
-                'maintenenceRequest',
-                'maintenenceRequest.customer',
-                'maintenenceRequest.category',
-                'maintenenceRequest.product',
-                'maintenenceRequest.operations',
-                'maintenenceRequest.operations.actor'
+                'customer',
+                'category',
+                'product',
+                'product.brand',
+                'product.category',
+                'product.subCategory',
+                'operations',
+                'operations.actor',
+                'tasks',
+                'tasks.employee'
             ];
 
             // $tasks = Task::orderBy('id', 'desc')->get();
@@ -71,16 +59,13 @@ class TaskController extends BaseController
             // }
             $serialNumber = $request->serial_number;
 
-            // Query to get tasks of type 'sale' and filter by product serial number
-            $tasks = Task::with($orderRelations)->whereHasMorph(
-                'task',
-                [Order::class],
-                function ($query) use ($serialNumber) {
-                    $query->whereHas('details', function ($detailQuery) use ($serialNumber) {
-                        $detailQuery->where('serial_number', $serialNumber);
-                    });
-                }
-            )->get();
+            $orders = Order::with($orderRelations)->whereHas('details', function ($detailQuery) use ($serialNumber) {
+                $detailQuery->where('serial_number', 'like', $serialNumber);
+            })->get();
+
+            $maintenenceRequests = MaintenenceRequest::where('serial_number', 'like', $serialNumber)->with($maintenenceRelations)->get();
+
+            $tasks = ['Sale Order' => $orders, 'Maintenence Requests' => $maintenenceRequests];
             return $this->sendResponse($tasks, 'Task list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

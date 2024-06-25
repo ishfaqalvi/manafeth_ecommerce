@@ -251,6 +251,7 @@ class SaleRepository implements SaleInterface
                     Task::create([
                         'employee_id' => $data['warehouseboy'],
                         'task_type'   => 'App\Models\Order',
+                        'employee_service' => $data['employee_service'],
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);
@@ -268,6 +269,7 @@ class SaleRepository implements SaleInterface
                     Task::create([
                         'employee_id' => $data['driver'],
                         'task_type'   => 'App\Models\Order',
+                        'employee_service' => $data['employee_service'],
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);

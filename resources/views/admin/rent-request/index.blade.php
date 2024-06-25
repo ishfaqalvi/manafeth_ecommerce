@@ -58,11 +58,7 @@
                         <td>{{ Carbon\Carbon::parse($rentRequest->created_at)->toTimeString() }}</td>
                         <td>
                             @if (!is_null($rentRequest->task))
-                                @if(in_array($rentRequest->status, ['Processing','Collecting','Collected','Completed']))
-                                    {{ $rentRequest->task->status." By Warehouse Boy" }}
-                                @else
-                                    {{ $rentRequest->task->status." By Driver" }}
-                                @endif
+                                {{ $rentRequest->task->status." By ". $rentRequest->task->employee_service }}
                             @endif
                         </td>
                         <td>{{ $rentRequest->status }}</td>

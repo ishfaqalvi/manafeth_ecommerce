@@ -11,6 +11,7 @@
                     <div class="row">
                         {{ Form::hidden('id', null,['id' => 'warehouseboy-order-id']) }}
                         {{ Form::hidden('status', 'Assign To Warehouse Boy') }}
+                        {{ Form::hidden('employee_service', 'Warehouse Boy') }}
                         <div class="form-group">
                             {{ Form::label('warehouseboy','Warehouse Boys') }}
                             {{ Form::select('warehouseboy', warehouseBoys(true), null, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}

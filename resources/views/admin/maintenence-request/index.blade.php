@@ -58,7 +58,7 @@
                         <td>{{ Carbon\Carbon::parse($maintenenceRequest->created_at)->toTimeString() }}</td>
                         <td>
                             @if (!is_null($maintenenceRequest->task))
-                                {{ $maintenenceRequest->task->status." By Maintenance Boy" }}
+                                {{ $maintenenceRequest->task->status." By ". $maintenenceRequest->task->employee_service }}
                             @endif
                         </td>
                         <td>{{ $maintenenceRequest->status }}</td>

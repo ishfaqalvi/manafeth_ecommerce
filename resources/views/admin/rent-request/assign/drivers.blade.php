@@ -11,6 +11,7 @@
                     <div class="row">
                         {{ Form::hidden('id', null,['id' => 'driver-order-id']) }}
                         {{ Form::hidden('status', null, ['id' => 'driver-order-status']) }}
+                        {{ Form::hidden('employee_service', 'Driver') }}
                         <div class="form-group">
                             {{ Form::label('driver','Drivers') }}
                             {{ Form::select('driver', drivers(true), null, ['class' => 'form-control form-select' . ($errors->has('status') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}

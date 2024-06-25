@@ -213,6 +213,7 @@ class RentRepository implements RentInterface
                     Task::create([
                         'employee_id' => $data['warehouseboy'],
                         'task_type'   => 'App\Models\RentRequest',
+                        'employee_service' => $data['employee_service'],
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);
@@ -229,6 +230,7 @@ class RentRepository implements RentInterface
                     Task::create([
                         'employee_id' => $data['driver'],
                         'task_type'   => 'App\Models\RentRequest',
+                        'employee_service' => $data['employee_service'],
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);
@@ -271,6 +273,7 @@ class RentRepository implements RentInterface
                     Task::create([
                         'employee_id' => $data['driver'],
                         'task_type'   => 'App\Models\RentRequest',
+                        'employee_service' => $data['employee_service'],
                         'task_id'     => $order->id,
                         'status'      => 'Pending'
                     ]);

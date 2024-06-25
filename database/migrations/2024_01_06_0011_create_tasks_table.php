@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained()->onDelete('cascade');
             $table->string('task_type');
+            $table->string('employee_service');
             $table->unsignedBigInteger('task_id');
             $table->string('remarks')->nullable();
             $table->string('images')->nullable();

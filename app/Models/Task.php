@@ -37,7 +37,7 @@ class Task extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['employee_id','task_type','task_id','remarks','images','status'];
+    protected $fillable = ['employee_id','task_type','employee_service','task_id','remarks','images','status'];
 
     /**
      * Set the images's.

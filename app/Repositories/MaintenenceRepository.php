@@ -125,6 +125,7 @@ class MaintenenceRepository implements MaintenenceInterface
                     Task::create([
                         'employee_id' => $data['maintenenceboy'],
                         'task_type'   => 'App\Models\MaintenenceRequest',
+                        'employee_service' => $data['employee_service'],
                         'task_id'     => $request->id,
                         'status'      => 'Pending'
                     ]);

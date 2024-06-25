@@ -11,6 +11,7 @@
                     <div class="row">
                         {{ Form::hidden('id', null,['id' => 'request-id']) }}
                         {{ Form::hidden('status', 'Assigned') }}
+                        {{ Form::hidden('employee_service', 'Maintenence Boy') }}
                         <div class="form-group">
                             {{ Form::label('serial_number', 'Serial Number(Optional)') }}
                             {{ Form::text('serial_number', null, ['class' => 'form-control' . ($errors->has('serial_number') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number','id' => 'request-serial-number']) }}
