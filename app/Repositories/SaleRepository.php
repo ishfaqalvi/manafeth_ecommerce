@@ -226,10 +226,10 @@ class SaleRepository implements SaleInterface
 	{
         DB::transaction(function () use ($data, $id, $guard) {
             $employeeFcm = false;
+            $customerFcm = false;
             $order = Order::find($id);
             $actorId = $guard == 'Admin' ? auth()->user()->id : $order->customer->id;
             $actorType = $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer';
-
             switch ($data['status']) {
                 case 'Cancelled':
                     foreach ($order->details as $row) {
@@ -240,6 +240,7 @@ class SaleRepository implements SaleInterface
                         'actor_type' => $actorType,
                         'action' => 'Order Cancelled'
                     ]);
+                    $customerFcm = true;
                     break;
 
                 case 'Assign To Warehouse Boy':
@@ -256,6 +257,7 @@ class SaleRepository implements SaleInterface
                         'status'      => 'Pending'
                     ]);
                     $employeeFcm = true;
+                    $customerFcm = true;
                     $employee = $data['warehouseboy'];
                     $data['status'] = 'Processing';
                     break;
@@ -293,6 +295,7 @@ class SaleRepository implements SaleInterface
                         'action' => 'Order picked up by driver.'
                     ]);
                     $data['status'] = 'On the Way';
+                    $customerFcm = true;
                     break;
 
                 case 'Delivered':
@@ -301,6 +304,7 @@ class SaleRepository implements SaleInterface
                         'actor_type' => 'App\Models\Employee',
                         'action' => 'Order delivered to customer.'
                     ]);
+                    $customerFcm = true;
                     break;
 
                 case 'Completed':
@@ -312,7 +316,7 @@ class SaleRepository implements SaleInterface
                     break;
             }
             $order->update($data);
-            if (settings('sale_order_fcm_notification_to_customer') == 'Yes') {
+            if (settings('sale_order_fcm_notification_to_customer') == 'Yes' && $customerFcm) {
                 if($order->status == 'On the Way'){
                     $driver = Auth::guard('employee')->user();
                     $body = 'Your order is on the way! Your driver, '. $driver->name .', will deliver your order soon. You can contact them at '. $driver->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';

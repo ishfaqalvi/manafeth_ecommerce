@@ -99,6 +99,7 @@ class MaintenenceRepository implements MaintenenceInterface
             $actorId = $guard == 'Admin' ? auth()->user()->id : $request->customer->id;
             $actorType = $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer';
             $employeeFcm = false;
+            $customerFcm = false;
             switch ($data['status']) {
                 case 'Rejected':
                     $request->operations()->create([
@@ -106,6 +107,7 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => $actorType,
                         'action'     => 'Request Rejected'
                     ]);
+                    $customerFcm = true;
                     break;
 
                 case 'Accepted':
@@ -114,6 +116,7 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => 'App\Models\User',
                         'action'     => 'Request Accepted'
                     ]);
+                    $customerFcm = true;
                     break;
 
                 case 'Assigned':
@@ -129,6 +132,7 @@ class MaintenenceRepository implements MaintenenceInterface
                         'task_id'     => $request->id,
                         'status'      => 'Pending'
                     ]);
+                    $customerFcm = true;
                     $employeeFcm = true;
                     $employee = $data['maintenenceboy'];
                     break;
@@ -147,6 +151,7 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => 'App\Models\Employee',
                         'action'     => 'Maintenence boys is going for service.'
                     ]);
+                    $customerFcm = true;
                     break;
 
                 case 'Done':
@@ -155,6 +160,7 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => 'App\Models\Employee',
                         'action'     => 'Request completed by maintenence boy.'
                     ]);
+                    $customerFcm = true;
                     break;
                 case 'Closed':
                     $request->operations()->create([
@@ -165,7 +171,7 @@ class MaintenenceRepository implements MaintenenceInterface
                     break;
             }
             $request->update($data);
-            if (settings('maintenence_request_fcm_notification_to_customer') == 'Yes') {
+            if (settings('maintenence_request_fcm_notification_to_customer') == 'Yes' && $customerFcm) {
                 if($request->status == 'Out for Maintenance'){
                     $technician = Auth::guard('employee')->user();
                     $body = 'Your maintenance request has been assigned! Our technician, '. $technician->name .', will address your issue soon. You can contact them at '. $technician->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';

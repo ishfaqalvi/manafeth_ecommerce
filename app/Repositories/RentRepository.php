@@ -180,6 +180,7 @@ class RentRepository implements RentInterface
 	{
         DB::transaction(function () use ($data, $id, $guard) {
             $employeeFcm = false;
+            $customerFcm = false;
             $order = RentRequest::find($id);
             $actorId = $guard == 'Admin' ? auth()->user()->id : $order->customer->id;
             $actorType = $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer';
@@ -194,6 +195,7 @@ class RentRepository implements RentInterface
                         'actor_type' => $actorType,
                         'action' => 'Order Cancelled'
                     ]);
+                    $customerFcm = true;
                     break;
 
                 case 'Confirmed':
@@ -202,6 +204,7 @@ class RentRepository implements RentInterface
                         'actor_type' => 'App\Models\User',
                         'action'     => 'Change Order Status to Confirmed'
                     ]);
+                    $customerFcm = true;
                     break;
 
                 case 'Processing':
@@ -218,6 +221,7 @@ class RentRepository implements RentInterface
                         'status'      => 'Pending'
                     ]);
                     $employeeFcm = true;
+                    $customerFcm = true;
                     $employee = $data['warehouseboy'];
                     break;
 
@@ -235,6 +239,7 @@ class RentRepository implements RentInterface
                         'status'      => 'Pending'
                     ]);
                     $employeeFcm = true;
+                    $customerFcm = true;
                     $employee = $data['driver'];
                     $data['status'] = 'Processing';
                     break;
@@ -253,6 +258,7 @@ class RentRepository implements RentInterface
                         'actor_type' => 'App\Models\Employee',
                         'action' => 'Order picked up by driver.'
                     ]);
+                    $customerFcm = true;
                     $data['status'] = 'Out For Delivery';
                     break;
 
@@ -262,6 +268,7 @@ class RentRepository implements RentInterface
                         'actor_type' => 'App\Models\Employee',
                         'action' => 'Order delivered to customer.'
                     ]);
+                    $customerFcm = true;
                     break;
 
                 case 'Assign To Driver for return':
@@ -279,6 +286,7 @@ class RentRepository implements RentInterface
                     ]);
                     $data['status'] = 'Returning';
                     $employeeFcm = true;
+                    $customerFcm = true;
                     $employee = $data['driver'];
                     break;
 
@@ -304,6 +312,7 @@ class RentRepository implements RentInterface
                         'actor_type' => 'App\Models\Employee',
                         'action' => 'Order return to warehoue by driver.'
                     ]);
+                    $customerFcm = true;
                     break;
                 case 'Completed':
                     $order->operations()->create([
@@ -319,7 +328,7 @@ class RentRepository implements RentInterface
                     $row->product->increment('quantity', $row->quantity);
                 }
             }
-            if (settings('rent_order_fcm_notification_to_customer') == 'Yes') {
+            if (settings('rent_order_fcm_notification_to_customer') == 'Yes' && $customerFcm) {
                 if($order->status == 'Out For Delivery'){
                     $driver = Auth::guard('employee')->user();
                     $body = 'Your order is on the way! Your driver, '. $driver->name .', will deliver your order soon. You can contact them at '. $driver->mobile_number.' if you have any questions or concerns. Thank you for choosing us!';
