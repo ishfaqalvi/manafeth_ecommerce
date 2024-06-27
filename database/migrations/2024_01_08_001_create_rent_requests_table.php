@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone_number');
-            $table->string('address')->nullable();
+            $table->text('address')->nullable();
             $table->decimal('lat', 10, 7)->nullable();
             $table->decimal('long', 10, 7)->nullable();
             $table->enum('status',['Pending','Cancelled','Confirmed','Processing','Ready for Pickup','Out For Delivery','Delivered','Returning','Ready For Return','Out For Return','Returned','Collecting','Collected','Completed']);

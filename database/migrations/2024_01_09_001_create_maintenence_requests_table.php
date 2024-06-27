@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->references('id')->on('customers')->cascadeOnDelete();
             $table->string('full_name');
             $table->string('phone_number');
-            $table->string('address');
+            $table->text('address');
             $table->decimal('lat', 10, 7);
             $table->decimal('long', 10, 7);
             $table->integer('payment')->nullable();
