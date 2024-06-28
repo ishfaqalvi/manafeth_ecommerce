@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
+use App\Models\ProductRent;
 use Illuminate\Http\Request;
 use App\Contracts\RentInterface;
 use App\Contracts\ProductInterface;
@@ -101,5 +102,15 @@ class RentController extends Controller
         $product = $this->product->delete($id);
         return redirect()->route('products.rent.index')
             ->with('success', 'Product deleted successfully.');
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function getRents(Request $request)
+    {
+        $rents = ProductRent::whereProductId($request->product_id)->get();
+
+        echo json_encode($rents);
     }
 }

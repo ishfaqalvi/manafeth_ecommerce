@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('from');
             $table->bigInteger('to');
             $table->bigInteger('delivery_charges')->nullable();
+            $table->bigInteger('discount')->nullable();
             $table->integer('star')->nullable();
             $table->string('remarks')->nullable();
             $table->timestamps();

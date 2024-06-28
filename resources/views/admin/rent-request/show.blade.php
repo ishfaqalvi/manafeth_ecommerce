@@ -39,6 +39,8 @@
                         <th>From Date</th>
                         <th>To Date</th>
                         <th>Rent Amount</th>
+                        <th>Delivery Charges</th>
+                        <th>Discount</th>
                         <th class="text-center" style="width: 20px;"><i class="ph-dots-three"></i></th>
                     </tr>
                 </thead>
@@ -65,6 +67,8 @@
                         <td>{{ date('d M Y', $row->from) }}</td>
                         <td>{{ date('d M Y', $row->to) }}</td>
                         <td>{{ number_format($row->productRent->amount) }}</td>
+                        <td>{{ number_format($row->deliver_charges) }}</td>
+                        <td>{{ number_format($row->discount) }}</td>
                         <td>
                             <div class="d-inline-flex">
                                 <div class="dropdown">

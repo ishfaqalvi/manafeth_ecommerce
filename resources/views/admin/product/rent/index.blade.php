@@ -171,8 +171,20 @@
             };
             return $.extend(commonSettings, additionalSettings);
         }
-        $('.addToCart').click(function(){
-            $('#product-id').val($(this).data('id'));
+        $('.addToCart').click(function() {
+            var productId = $(this).data('id');
+            var rentsDropdown = $('#product-rents');
+            $('#product-id').val(productId);
+
+            rentsDropdown.html('<option>--Select--</option>');
+            $.get("{{ route('products.rent.getRents') }}", {product_id: productId}).done(function (result) {
+                let data = JSON.parse(result);
+                $.each(data, function(index, rent) {
+                    rentsDropdown.append('<option value="' + rent.id + '">' + rent.title + ' (' + rent.amount + ')</option>');
+                })
+            }).fail(function (error) {
+                console.log(error);
+            });
             $('#addToCart').modal('show');
         });
         $('.validateAddToCart').validate(getValidationSettings({}));

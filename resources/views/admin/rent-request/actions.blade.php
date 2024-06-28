@@ -12,14 +12,17 @@
             @endcan
             @can('rentRequests-edit')
                 @if($rentRequest->status == 'Pending')
-                    <form action="{{ route('rent.update') }}" method="POST">
+                <a href="{{ route('rent.edit',$rentRequest->id) }}" class="dropdown-item">
+                    <i class="ph-note-pencil me-2"></i>{{ __('Confirmed') }}
+                </a>
+                    {{-- <form action="{{ route('rent.update') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $rentRequest->id }}">
                         <input type="hidden" name="status" value="Confirmed">
                         <a href="#" class="dropdown-item sa-update">
                             <i class="ph-note-pencil me-2"></i>{{ __('Confirmed') }}
                         </a>
-                    </form>
+                    </form> --}}
                 @endif
                 @if($rentRequest->collection_type == 'Home Delivery')
                     @if($rentRequest->status == 'Confirmed' || ($rentRequest->status == 'Processing' && $rentRequest->task->status == 'Reject'))

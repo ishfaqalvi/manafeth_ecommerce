@@ -5,6 +5,7 @@ use App\Models\RentRequest;
 
 use Illuminate\Http\Request;
 use App\Contracts\RentInterface;
+use App\Models\RentRequestDetail;
 use App\Contracts\TimeSlotInterface;
 use App\Http\Controllers\Controller;
 
@@ -85,6 +86,19 @@ class RentRequestController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $rentRequest = $this->rentRequest->orderFind($id);
+
+        return view('admin.rent-request.edit', compact('rentRequest'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -96,6 +110,17 @@ class RentRequestController extends Controller
         if($request->status == 'Add Payment'){
             $this->rentRequest->updatePayment($request->all(), $request->id);
         }else{
+            if($request->status == 'Confirmed'){
+                foreach($request->ids as $key => $id){
+                    RentRequestDetail::find($id)->update([
+                        'product_rent_id' => $request->product_rent_id[$key],
+                        'from'            => strtotime($request->from[$key]),
+                        'to'              => strtotime($request->to[$key]),
+                        'delivery_charges'=> $request->delivery_charges[$key],
+                        'discount'        => $request->discounts[$key]
+                    ]);
+                }
+            }
             $this->rentRequest->orderUpdate($request->all(), $request->id, 'Admin');
         }
 

@@ -95,8 +95,11 @@ class FCMService
                 'notification' => [
                     'title' => $title,
                     'body'  => $body,
-                    'image' => $imageUrl,
+                    'image' => $imageUrl
                 ],
+                'data' => [
+                    'image' => $imageUrl
+                ]
             ],
         ];
         $headers = [

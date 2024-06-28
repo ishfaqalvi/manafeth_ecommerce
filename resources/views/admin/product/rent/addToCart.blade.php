@@ -14,6 +14,10 @@
                             {{ Form::label('customer') }}
                             {{ Form::select('customer_id', customers(), null, ['class' => 'form-control select' . ($errors->has('customer_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required']) }}
                         </div>
+                        <div class="form-group mb-3">
+                            {{ Form::label('product_rent_id','Rents') }}
+                            {{ Form::select('product_rent_id', [], null, ['class' => 'form-control select' . ($errors->has('product_rent_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required', 'id' => 'product-rents']) }}
+                        </div>
                         <div class="form-group col-lg-6 mb-3">
                             {{ Form::label('from', 'From Date') }}
                             {{ Form::date('from', null, ['class' => 'form-control' . ($errors->has('from') ? ' is-invalid' : '') ,'required']) }}

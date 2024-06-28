@@ -13,7 +13,7 @@
     </div>
     <div class="d-lg-block my-lg-auto ms-lg-auto">
         <div class="d-sm-flex align-items-center mb-3 mb-lg-0 ms-lg-3">
-            <a href="{{ route('rent-requests.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
+            <a href="{{ route('rent.index') }}" class="btn btn-outline-primary btn-labeled btn-labeled-start rounded-pill">
                 <span class="btn-labeled-icon bg-primary text-white rounded-pill">
                     <i class="ph-arrow-circle-left"></i>
                 </span>
@@ -31,10 +31,42 @@
             <h5 class="mb-0">{{ __('Edit ') }} Rent Request </h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('rent-requests.update', $rentRequest->id) }}" class="validate"   role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('rent.update') }}" class="validate"   role="form" enctype="multipart/form-data">
                 @csrf
-                {{ method_field('PATCH') }}
-                 @include('admin.rent-request.form')
+                <input type="hidden" name="id" value="{{ $rentRequest->id }}">
+                <input type="hidden" name="status" value="Confirmed">
+                @foreach($rentRequest->details as $detail)
+                    @php($product = $detail->product)
+                    <input type="hidden" name="ids[]" value="{{ $detail->id }}">
+                    <div class="fw-bold border-bottom pb-2 mb-2">{{ $product->name }}</div>
+                    <div class="row">
+                        <div class="form-group col-lg-4 mb-3">
+                            {{ Form::label('product_rent_id', 'Rent') }}
+                            {{ Form::select('product_rent_id[]', $product->rents()->pluck('title', 'id'), $detail->product_rent_id, ['class' => 'form-control form-select' . ($errors->has('product_rent_id') ? ' is-invalid' : ''),'required', '--Select--']) }}
+                        </div>
+                        <div class="form-group col-lg-4 mb-3">
+                            {{ Form::label('from','From Date') }}
+                            {{ Form::date('from[]', date('Y-m-d', $detail->from), ['class' => 'form-control' . ($errors->has('from') ? ' is-invalid' : ''), 'placeholder' => 'From','required']) }}
+                        </div>
+                        <div class="form-group col-lg-4 mb-3">
+                            {{ Form::label('to','To Date') }}
+                            {{ Form::date('to[]', date('Y-m-d', $detail->to), ['class' => 'form-control' . ($errors->has('to') ? ' is-invalid' : ''), 'placeholder' => 'To','required']) }}
+                        </div>
+                        <div class="form-group col-lg-4 mb-3">
+                            {{ Form::label('delivery_charges') }}
+                            {{ Form::number('delivery_charges[]', $detail->delivery_charges, ['class' => 'form-control' . ($errors->has('delivery_charges') ? ' is-invalid' : ''), 'placeholder' => 'Delivery Charges', 'min' => '0']) }}
+                        </div>
+                        <div class="form-group col-lg-4 mb-3">
+                            {{ Form::label('discount') }}
+                            {{ Form::number('discounts[]', $detail->discount, ['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Discount', 'min' => '0']) }}
+                        </div>
+                    </div>
+                @endforeach
+                <div class="col-md-12 d-flex justify-content-end align-items-center mt-3">
+                    <button type="submit" class="btn btn-primary ms-3">
+                        Submit <i class="ph-paper-plane-tilt ms-2"></i>
+                    </button>
+                </div>
             </form>
         </div>
     </div>
@@ -57,9 +89,6 @@
                 $(element).removeClass(errorClass);
                 $(element).removeClass('is-invalid');
                 $(element).addClass('is-valid');
-            },
-            success: function(label) {
-                label.addClass('validation-valid-label').text('Success.');
             },
             errorPlacement: function(error, element) {
                 if (element.hasClass('select2-hidden-accessible')) {

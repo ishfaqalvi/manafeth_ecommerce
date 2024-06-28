@@ -34,6 +34,7 @@ Route::controller(RentController::class)->prefix('rent')->as('products.rent.')->
 	Route::patch('update/{id}', 	 'update'	 )->name('update' 	 );
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
     Route::post('add-to-cart',		 'addToCart' )->name('addToCart' );
+    Route::get('get-rents',		     'getRents'  )->name('getRents'   );
 });
 
 /*
