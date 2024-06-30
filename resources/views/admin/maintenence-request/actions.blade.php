@@ -26,7 +26,7 @@
                         <i class="ph-note-pencil me-2"></i>{{ __('Assign') }}
                     </a>
                 @endif
-                @if($maintenenceRequest->status != 'Rejected' && $maintenenceRequest->status != 'Done' && $maintenenceRequest->status != 'Closed')
+                {{-- @if($maintenenceRequest->status != 'Rejected' && $maintenenceRequest->status != 'Done' && $maintenenceRequest->status != 'Closed')
                     <form action="{{ route('maintenance.update') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $maintenenceRequest->id }}">
@@ -35,7 +35,15 @@
                             <i class="ph-note-pencil me-2"></i>{{ __('Reject') }}
                         </a>
                     </form>
-                @endif
+                @endif --}}
+                <form action="{{ route('maintenance.update') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $maintenenceRequest->id }}">
+                    <input type="hidden" name="status" value="Rejected">
+                    <a href="#" class="dropdown-item sa-update">
+                        <i class="ph-note-pencil me-2"></i>{{ __('Reject') }}
+                    </a>
+                </form>
                 @if($maintenenceRequest->status == 'Done')
                     <form action="{{ route('maintenance.update') }}" method="POST">
                         @csrf

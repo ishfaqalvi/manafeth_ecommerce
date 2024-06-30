@@ -240,6 +240,9 @@ class SaleRepository implements SaleInterface
                         'actor_type' => $actorType,
                         'action' => 'Order Cancelled'
                     ]);
+                    if($task = $order->runningTask){
+                        $task->update(['status' => 'Cancelled']);
+                    }
                     $customerFcm = true;
                     break;
 

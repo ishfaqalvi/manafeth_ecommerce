@@ -195,6 +195,9 @@ class RentRepository implements RentInterface
                         'actor_type' => $actorType,
                         'action' => 'Order Cancelled'
                     ]);
+                    if($task = $order->runningTask){
+                        $task->update(['status' => 'Cancelled']);
+                    }
                     $customerFcm = true;
                     break;
 

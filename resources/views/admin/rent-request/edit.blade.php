@@ -42,7 +42,11 @@
                     <div class="row">
                         <div class="form-group col-lg-4 mb-3">
                             {{ Form::label('product_rent_id', 'Rent') }}
-                            {{ Form::select('product_rent_id[]', $product->rents()->pluck('title', 'id'), $detail->product_rent_id, ['class' => 'form-control form-select' . ($errors->has('product_rent_id') ? ' is-invalid' : ''),'required', '--Select--']) }}
+                            <select class="form-control form-select" name="product_rent_id[]" required>
+                                @foreach($product->rents as $row)
+                                    <option value="{{ $row->id}}" {{ $row->id == $detail->product_rent_id ? 'selected' : ''}}>{{ $row->title .' ('. $row->amount.')' }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group col-lg-4 mb-3">
                             {{ Form::label('from','From Date') }}

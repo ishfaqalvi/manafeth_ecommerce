@@ -107,6 +107,9 @@ class MaintenenceRepository implements MaintenenceInterface
                         'actor_type' => $actorType,
                         'action'     => 'Request Rejected'
                     ]);
+                    if($task = $request->runningTask){
+                        $task->update(['status' => 'Cancelled']);
+                    }
                     $customerFcm = true;
                     break;
 

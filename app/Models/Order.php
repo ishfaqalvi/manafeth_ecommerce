@@ -46,6 +46,7 @@ class Order extends Model implements Auditable
         'collection_date',
         'time_slot_id',
         'discount',
+        'payment',
         'name',
         'email',
         'phone_number',
@@ -125,6 +126,14 @@ class Order extends Model implements Auditable
     public function task()
     {
         return $this->morphOne(Task::class, 'task')->orderBy('id', 'desc')->limit(1);
+    }
+
+    /**
+     * Get all of the employee's order operations.
+     */
+    public function runningTask()
+    {
+        return $this->morphOne(Task::class, 'task')->whereIn('status', ['Pending','Accepted','Ongoing'])->limit(1);
     }
 
     /**

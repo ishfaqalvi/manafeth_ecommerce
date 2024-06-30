@@ -18,11 +18,16 @@ class AdminNotifyService
 
     public function sendNotification($data)
     {
+        $tokens = [];
         try {
             foreach(User::whereNotNull('fcm_token')->get() as $user)
             {
-                $this->fcm->browserNotification($data['title'], $data['body'], $user->fcm_token);
                 Notification::send($user, new OrderNotification($data));
+                $tokens[] = $user->fcm_token;
+                // $this->fcm->sendNotification($data['title'], $data['body'], $user->fcm_token);
+            }
+            if(count($tokens) > 0 ){
+                $this->fcm->browserNotification($data['title'], $data['body'], $tokens);
             }
             Log::info('Admin FCM response: Admin user notification sent successfully!');
 

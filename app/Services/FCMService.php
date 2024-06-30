@@ -118,16 +118,14 @@ class FCMService
         }
     }
 
-    public function browserNotification($title, $body, $firebaseToken)
+    public function browserNotification($title, $body, $firebaseTokens)
     {
-        $SERVER_API_KEY = 'AIzaSyC-Te1QdXMPBYG9cqY5wiUmW5IfBhl7NEQ';
+        $SERVER_API_KEY = "AIzaSyC-Te1QdXMPBYG9cqY5wiUmW5IfBhl7NEQ";
 
-        $data = [
-            "registration_ids" => $firebaseToken,
-            "notification" => [
-                "title" => $title,
-                "body" => $body,
-            ]
+        $data = is_array($firebaseTokens) ? ["registration_ids" => $firebaseTokens] : ["to" => $firebaseTokens];
+        $data['notification'] = [
+            "title" => $title,
+            "body" => $body,
         ];
         $dataString = json_encode($data);
 
@@ -146,7 +144,26 @@ class FCMService
             curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
             $response = curl_exec($ch);
-            Log::info('Received FCM response: Admin user web notification sent successfully!');
+
+            if (curl_errno($ch)) {
+                Log::error('Curl error: ' . curl_error($ch));
+            }
+
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            Log::info('HTTP Code: ' . $httpCode);
+
+            if ($httpCode == 200) {
+                $responseDecoded = json_decode($response, true);
+                if (isset($responseDecoded['success']) && $responseDecoded['success'] > 0) {
+                    Log::info('Received FCM response: Admin user web notification sent successfully!');
+                } else {
+                    Log::warning('Received FCM response but no success: ' . $response);
+                }
+            } else {
+                Log::error('Error in FCM response: ' . $response);
+            }
+
+            curl_close($ch);
 
         } catch (RequestException $e) {
             Log::error('Error with FCM web service', ['error' => $e->getMessage()]);

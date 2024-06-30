@@ -40,7 +40,7 @@
                             </a>
                         </form>
                     @endif
-                    @if($order->status != 'Cancelled' && $order->status != 'Delivered' && $order->status != 'Completed')
+                    {{-- @if($order->status != 'Cancelled' && $order->status != 'Delivered' && $order->status != 'Completed')
                         <form action="{{ route('orders.update') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $order->id }}">
@@ -49,7 +49,15 @@
                                 <i class="ph-note-pencil me-2"></i>{{ __('Cancel') }}
                             </a>
                         </form>
-                    @endif
+                    @endif --}}
+                    <form action="{{ route('orders.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $order->id }}">
+                        <input type="hidden" name="status" value="Cancelled">
+                        <a href="#" class="dropdown-item sa-update">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Cancel') }}
+                        </a>
+                    </form>
                 @else
                     @if($order->status == 'Confirmed')
                         <form action="{{ route('orders.update') }}" method="POST">

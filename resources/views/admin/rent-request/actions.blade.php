@@ -55,7 +55,7 @@
                         </a>
                     @endif
                 @endif
-                @if($rentRequest->status == 'Pending' || $rentRequest->status == 'Confirm')
+                {{-- @if($rentRequest->status == 'Pending' || $rentRequest->status == 'Confirm')
                     <form action="{{ route('rent.update') }}" method="POST">
                         @csrf
                         <input type="hidden" name="id" value="{{ $rentRequest->id }}">
@@ -64,7 +64,15 @@
                             <i class="ph-note-pencil me-2"></i>{{ __('Cancel') }}
                         </a>
                     </form>
-                @endif
+                @endif --}}
+                <form action="{{ route('rent.update') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" value="{{ $rentRequest->id }}">
+                    <input type="hidden" name="status" value="Cancelled">
+                    <a href="#" class="dropdown-item sa-update">
+                        <i class="ph-note-pencil me-2"></i>{{ __('Cancel') }}
+                    </a>
+                </form>
                 <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}" data-payment="{{ $rentRequest->payment }}">
                     <i class="ph-note-pencil me-2"></i>{{ __('Add Payment') }}
                 </a>

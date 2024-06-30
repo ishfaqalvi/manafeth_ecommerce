@@ -200,7 +200,13 @@ class EmployeeRepository implements EmployeeInterface
         $task->update($data);
 
         if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
-            $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
+            if($task->status == 'Completed' && (isset($data['payment']) && isset($data['payment_method'])))
+            {
+                $update = ['payment' => $data['payment'], 'payment_method' => $data['payment_method'], 'status' => $data['order_status']];
+            }else{
+                $update = ['status' => $data['order_status']];
+            }
+            $this->order->orderUpdate($update, $task->task_id, 'employee');
         }
 
         if($task->status == 'Accept' && $task->task_type == 'App\Models\MaintenenceRequest'){
@@ -210,11 +216,17 @@ class EmployeeRepository implements EmployeeInterface
             $this->maintenence->update(['status' => 'Out for Maintenance'], $task->task_id, 'employee');
         }
         if($task->status == 'Completed' && $task->task_type == 'App\Models\MaintenenceRequest'){
-            $this->maintenence->update(['status' => 'Done'], $task->task_id, 'employee');
+            $this->maintenence->update(['status' => 'Done', 'payment' => $data['payment'], 'payment_method' => $data['payment_method']], $task->task_id, 'employee');
         }
 
         if(isset($data['order_status']) && $task->task_type == 'App\Models\RentRequest'){
-            $this->rent->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
+            if($task->status == 'Completed' && (isset($data['payment']) && isset($data['payment_method'])))
+            {
+                $update = ['payment' => $data['payment'], 'payment_method' => $data['payment_method'], 'status' => $data['order_status']];
+            }else{
+                $update = ['status' => $data['order_status']];
+            }
+            $this->rent->orderUpdate($update, $task->task_id, 'employee');
         }
 
         if(settings('employee_task_update_fcm_notification_to_admin') == 'Yes'){
