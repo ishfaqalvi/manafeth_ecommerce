@@ -153,6 +153,14 @@
                 {{ $maintenenceRequest->category->name }}
             </div>
             <div class="form-group mb-3">
+                <strong>Payment:</strong>
+                {{ $maintenenceRequest->payment }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Payment Method:</strong>
+                {{ $maintenenceRequest->payment_method }}
+            </div>
+            <div class="form-group mb-3">
                 <strong>Message:</strong>
                 {{ $maintenenceRequest->message }}
             </div>
