@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('lat', 10, 7);
             $table->decimal('long', 10, 7);
             $table->string('payment_method')->nullable();
+            $table->string('on_delivery_payment_method')->nullable();
             $table->integer('payment')->nullable();
             $table->enum('payment_received',['Yes', 'No'])->default('No');
             $table->foreignId('category_id')->references('id')->on('categories')->cascadeOnDelete();

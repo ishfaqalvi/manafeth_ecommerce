@@ -42,6 +42,7 @@ class RentRequest extends Model implements Auditable
     protected $fillable = [
         'customer_id',
         'payment_method',
+        'on_delivery_payment_method',
         'collection_type',
         'collection_date',
         'time_slot_id',

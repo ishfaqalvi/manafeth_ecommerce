@@ -200,9 +200,9 @@ class EmployeeRepository implements EmployeeInterface
         $task->update($data);
 
         if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
-            if($task->status == 'Completed' && (isset($data['payment']) && isset($data['payment_method'])))
+            if($task->status == 'Completed' && (isset($data['payment']) && isset($data['on_delivery_payment_method'])))
             {
-                $update = ['payment' => $data['payment'], 'payment_method' => $data['payment_method'], 'status' => $data['order_status']];
+                $update = ['payment' => $data['payment'], 'on_delivery_payment_method' => $data['on_delivery_payment_method'], 'status' => $data['order_status']];
             }else{
                 $update = ['status' => $data['order_status']];
             }
@@ -216,13 +216,13 @@ class EmployeeRepository implements EmployeeInterface
             $this->maintenence->update(['status' => 'Out for Maintenance'], $task->task_id, 'employee');
         }
         if($task->status == 'Completed' && $task->task_type == 'App\Models\MaintenenceRequest'){
-            $this->maintenence->update(['status' => 'Done', 'payment' => $data['payment'], 'payment_method' => $data['payment_method']], $task->task_id, 'employee');
+            $this->maintenence->update(['status' => 'Done', 'payment' => $data['payment'], 'on_delivery_payment_method' => $data['on_delivery_payment_method']], $task->task_id, 'employee');
         }
 
         if(isset($data['order_status']) && $task->task_type == 'App\Models\RentRequest'){
-            if($task->status == 'Completed' && (isset($data['payment']) && isset($data['payment_method'])))
+            if($task->status == 'Completed' && (isset($data['payment']) && isset($data['on_delivery_payment_method'])))
             {
-                $update = ['payment' => $data['payment'], 'payment_method' => $data['payment_method'], 'status' => $data['order_status']];
+                $update = ['payment' => $data['payment'], 'on_delivery_payment_method' => $data['on_delivery_payment_method'], 'status' => $data['order_status']];
             }else{
                 $update = ['status' => $data['order_status']];
             }

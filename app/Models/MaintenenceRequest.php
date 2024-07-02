@@ -56,6 +56,7 @@ class MaintenenceRequest extends Model implements Auditable
         'product_id',
         'payment',
         'payment_method',
+        'on_delivery_payment_method',
         'payment_received',
         'message',
         'images',

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('invoice_no')->nullable();
             $table->foreignId('customer_id')->references('id')->on('customers')->cascadeOnDelete();
             $table->enum('payment_method',['Cash On Delivery']);
+            $table->string('on_delivery_payment_method')->nullable();
             $table->enum('collection_type',['Self Pickup','Home Delivery']);
             $table->bigInteger('collection_date');
             $table->foreignId('time_slot_id')->references('id')->on('time_slots')->cascadeOnDelete();
