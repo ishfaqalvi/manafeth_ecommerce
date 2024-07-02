@@ -215,7 +215,7 @@ class EmployeeRepository implements EmployeeInterface
         if($task->status == 'Ongoing' && $task->task_type == 'App\Models\MaintenenceRequest'){
             $this->maintenence->update(['status' => 'Out for Maintenance'], $task->task_id, 'employee');
         }
-        if($task->status == 'Completed' && $task->task_type == 'App\Models\MaintenenceRequest'){
+        if($task->status == 'Completed' && $task->task_type == 'App\Models\MaintenenceRequest' && (isset($data['payment']) && isset($data['on_delivery_payment_method']))){
             $this->maintenence->update(['status' => 'Done', 'payment' => $data['payment'], 'on_delivery_payment_method' => $data['on_delivery_payment_method']], $task->task_id, 'employee');
         }
 
