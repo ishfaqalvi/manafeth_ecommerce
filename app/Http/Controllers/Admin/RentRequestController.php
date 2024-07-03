@@ -110,22 +110,31 @@ class RentRequestController extends Controller
         if($request->status == 'Add Payment'){
             $this->rentRequest->updatePayment($request->all(), $request->id);
         }else{
-            if($request->status == 'Confirmed'){
-                foreach($request->ids as $key => $id){
-                    RentRequestDetail::find($id)->update([
-                        'product_rent_id' => $request->product_rent_id[$key],
-                        'from'            => strtotime($request->from[$key]),
-                        'to'              => strtotime($request->to[$key]),
-                        'delivery_charges'=> $request->delivery_charges[$key],
-                        'discount'        => $request->discounts[$key]
-                    ]);
-                }
-            }
             $this->rentRequest->orderUpdate($request->all(), $request->id, 'Admin');
         }
 
         return redirect()->route('rent.index')
             ->with('success', 'Rent Request updated successfully');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Order $order
+     * @return \Illuminate\Http\Response
+     */
+    public function updateDetail(Request $request)
+    {
+        RentRequestDetail::find($request->id)->update([
+            'product_rent_id' => $request->product_rent_id,
+            'from'            => strtotime($request->from),
+            'to'              => strtotime($request->to),
+            'quantity'        => $request->quantity,
+            'delivery_charges'=> $request->delivery_charges,
+            'discount'        => $request->discounts
+        ]);
+        return redirect()->back()->with('success', 'Rent updated successfully');
     }
 
     /**
