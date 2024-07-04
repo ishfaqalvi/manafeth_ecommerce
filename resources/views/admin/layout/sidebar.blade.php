@@ -14,6 +14,7 @@
     <a class="nav-link {{ request()->is('admin/orders*') ? 'active' : ''}}" href="{{ route('orders.index') }}">
         <i class="ph-shopping-cart"></i>
         <span>Orders</span>
+        <span class="badge bg-primary align-self-center rounded-pill ms-auto">{{ ordersCount()['sale'] }}</span>
     </a>
 </li>
 @endcan
@@ -22,6 +23,7 @@
     <a class="nav-link {{ request()->is('admin/rent/request*') ? 'active' : ''}}" href="{{ route('rent.index') }}">
         <i class="ph-buildings"></i>
         <span>Rent Requests</span>
+        <span class="badge bg-primary align-self-center rounded-pill ms-auto">{{ ordersCount()['rent'] }}</span>
     </a>
 </li>
 @endcan
@@ -30,6 +32,7 @@
     <a class="nav-link {{ request()->is('admin/maintenance/request*') ? 'active' : ''}}" href="{{ route('maintenance.index') }}">
         <i class="ph-lifebuoy"></i>
         <span>Maintenence Requests</span>
+        <span class="badge bg-primary align-self-center rounded-pill ms-auto">{{ ordersCount()['maintenence'] }}</span>
     </a>
 </li>
 @endcan

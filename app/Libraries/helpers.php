@@ -1,9 +1,11 @@
 <?php
 
-
+use App\Models\Order;
 use App\Models\Setting;
 use Spatie\Image\Image;
+use App\Models\RentRequest;
 use Spatie\Image\Manipulations;
+use App\Models\MaintenenceRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -49,4 +51,19 @@ function cartSummary()
         $subTotal += $amount;
     }
     return $subTotal;
+}
+
+/**
+ * Get listing of a resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function ordersCount()
+{
+    $data = [
+        'sale' => Order::whereStatus('Pending')->count(),
+        'rent' => RentRequest::whereStatus('Pending')->count(),
+        'maintenence' => MaintenenceRequest::whereStatus('Pending')->count(),
+    ];
+    return $data;
 }
