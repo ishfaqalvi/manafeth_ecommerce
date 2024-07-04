@@ -84,7 +84,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <strong>Grand Total------------------:</strong>
-                            {{ $sTotal + $detail->delivery_charges ?? 0 - $detail->discount ?? 0 }}
+                            {{ ($sTotal + ($detail->delivery_charges ?? 0)) - ($detail->discount ?? 0) }}
                         </div>
                     </div>
                     <div class="col-md-12 d-flex">
