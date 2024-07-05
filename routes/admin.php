@@ -38,6 +38,7 @@ Route::controller(RentRequestController::class)->prefix('rent/request')->as('ren
 	Route::post('store',			 'store'	    )->name('store'  	    );
 	Route::get('edit/{id}',			 'edit'		    )->name('edit'	  	    );
 	Route::get('show/{id}',			 'show'		    )->name('show'	  	    );
+	Route::get('get-rents',			 'getRents'		)->name('getRents'	  	);
 	Route::post('update',            'update'	    )->name('update' 	    );
 	Route::post('update-detail',     'updateDetail'	)->name('updateDetail'  );
 	Route::post('date-extend',       'dateExtend'   )->name('dateExtend'    );

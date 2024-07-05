@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Models\RentRequest;
+use App\Models\ProductRent;
 
+use App\Models\RentRequest;
 use Illuminate\Http\Request;
 use App\Contracts\RentInterface;
 use App\Models\RentRequestDetail;
@@ -146,7 +147,7 @@ class RentRequestController extends Controller
      */
     public function dateExtend(Request $request)
     {
-        $this->rentRequest->dateExtend($request->to, $request->id);
+        $this->rentRequest->dateExtend($request->all());
 
         return redirect()->back()->with('success', 'Rent Request date updated successfully');
     }
@@ -178,5 +179,15 @@ class RentRequestController extends Controller
         $slots = $this->slot->available($request->type, $request->date);
 
         echo json_encode($slots);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function getRents(Request $request)
+    {
+        $rents = ProductRent::whereProductId($request->product_id)->get();
+
+        echo json_encode($rents);
     }
 }

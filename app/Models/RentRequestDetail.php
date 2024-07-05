@@ -38,7 +38,7 @@ class RentRequestDetail extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['request_id','product_id','product_rent_id','quantity','from','to', 'delivery_charges','discount', 'star', 'remarks'];
+    protected $fillable = ['request_id','product_id','product_rent_id','quantity','from','to', 'delivery_charges','discount', 'star', 'remarks','date_extend'];
 
     /**
      * Interact with the date.

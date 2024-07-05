@@ -36,11 +36,11 @@
                     <tr>
                         <th colspan="2">Product name</th>
                         <th>Quantity</th>
-                        <th>From Date</th>
-                        <th>To Date</th>
+                        <th>Period</th>
                         <th>Rent Amount</th>
                         <th>Delivery Charges</th>
                         <th>Discount</th>
+                        <th>Sub Total</th>
                         <th class="text-center" style="width: 20px;"><i class="ph-dots-three"></i></th>
                     </tr>
                 </thead>
@@ -48,6 +48,8 @@
                     @php($total = 0)
                     @foreach($rentRequest->details as $key => $row)
                     @php($product = $row->product)
+                    @php($subTotal = ($row->productRent->amount * $row->quantity) + ($row->deliver_charges ?? 0) - ($row->discount ?? 0))
+                    @php($total += $subTotal)
                     <tr>
                         <td class="pe-0" style="width: 45px;">
                             <a href="{{ route('products.sale.show',$product->id) }}">
@@ -64,27 +66,33 @@
                             </div>
                         </td>
                         <td>{{ $row->quantity }}</td>
-                        <td>{{ date('d M Y', $row->from) }}</td>
-                        <td>{{ date('d M Y', $row->to) }}</td>
+                        <td>{{ date('d M Y', $row->from) .' => '.date('d M Y', $row->to) }}</td>
                         <td>{{ number_format($row->productRent->amount) }}</td>
                         <td>{{ number_format($row->deliver_charges) }}</td>
                         <td>{{ number_format($row->discount) }}</td>
+                        <td>{{ number_format($subTotal) }}</td>
                         <td>
+                            @if(is_null($row->date_extend))
                             <div class="d-inline-flex">
                                 <div class="dropdown">
                                     <a href="#" class="text-body" data-bs-toggle="dropdown">
                                         <i class="ph-list"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a href="#" data-id="{{ $row->id }}" data-date="{{ date('Y-m-d', $row->to) }}" class="dropdown-item extendDate">
+                                        <a href="#" data-id="{{ $row->id }}" data-date="{{ date('Y-m-d', $row->to) }}" data-productid="{{ $row->product_id }}" class="dropdown-item extendDate">
                                             <i class="ph-calendar-check me-2"></i>{{ __('Date Extend') }}
                                         </a>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
+                    <tr class="table-light">
+                        <td colspan="8" class="fw-semibold">Total Amount</td>
+                        <td class="text-end">{{ $total }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -196,9 +204,17 @@
                 <div class="modal-body">
                     <div class="row">
                         {{ Form::hidden('id', null, ['id' => 'row-id']) }}
+                        <div class="form-group mb-3">
+                            {{ Form::label('product_rent_id','Rents') }}
+                            {{ Form::select('product_rent_id', [], null, ['class' => 'form-control select' . ($errors->has('product_rent_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required', 'id' => 'product-rents']) }}
+                        </div>
                         <div class="form-group col-lg-12 mb-3">
                             {{ Form::label('to', 'To Date') }}
                             {{ Form::date('to', null, ['class' => 'form-control' . ($errors->has('from') ? ' is-invalid' : '') ,'required','id' =>'order-to-id']) }}
+                        </div>
+                        <div class="form-group col-lg-12">
+                            {{ Form::label('discount') }}
+                            {{ Form::number('discounts', 0, ['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Discount', 'min' => '0']) }}
                         </div>
                     </div>
                 </div>
@@ -245,6 +261,16 @@
         $('.extendDate').click(function(){
             $('#row-id').val($(this).data('id'));
             $('#order-to-id').val($(this).data('date'));
+            var productId = $(this).data('productid');
+            var rentsDropdown = $('#product-rents');
+            $('#product-id').val(productId);
+            rentsDropdown.html('<option>--Select--</option>');
+            $.get("{{ route('rent.getRents') }}", {product_id: productId}).done(function (result) {
+                let data = JSON.parse(result);
+                $.each(data, function(index, rent) {
+                    rentsDropdown.append('<option value="' + rent.id + '">' + rent.title + ' (' + rent.amount + ')</option>');
+                })
+            });
             $('#extendDate').modal('show');
         });
         $('.validate').validate(getValidationSettings({}));

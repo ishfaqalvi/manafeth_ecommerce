@@ -395,8 +395,18 @@ class RentRepository implements RentInterface
         return false;
     }
 
-    public function dateExtend($date, $id)
+    public function dateExtend($data)
     {
-        RentRequestDetail::find($id)->update(['to' => strtotime($date)]);
+        $oldRecord = RentRequestDetail::find($data['id']);
+
+        $newRecord = $oldRecord->replicate();
+
+        $newRecord->from = strtotime('+1 day', $oldRecord->to);
+        $newRecord->to = strtotime($data['to']);
+        $newRecord->delivery_charges = null;
+        $newRecord->discount = $data['discounts'];
+        $newRecord->save();
+
+        $oldRecord->update(['date_extend' => 'Yes']);
     }
 }

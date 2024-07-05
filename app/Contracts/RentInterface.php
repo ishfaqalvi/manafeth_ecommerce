@@ -28,5 +28,5 @@ interface RentInterface
 
     public function orderReview($data);
 
-    public function dateExtend($date, $id);
+    public function dateExtend($data);
 }

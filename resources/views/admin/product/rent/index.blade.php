@@ -47,7 +47,6 @@
                         <th colspan="2">Product name</th>
                         <th>Category</th>
                         <th>Quantity</th>
-                        <th>Price</th>
                         <th>Status</th>
                         <th>Tags</th>
                         <th class="text-center" style="width: 20px;"><i class="ph-dots-three"></i></th>
@@ -81,7 +80,6 @@
                             </div>
                         </td>
                         <td>{{ $product->quantity }}</td>
-                        <td>{{ $product->price }}</td>
                         <td>{{ $product->status }}</td>
                         <td>
                             <div>

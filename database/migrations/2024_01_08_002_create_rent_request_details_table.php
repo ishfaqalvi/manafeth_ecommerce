@@ -23,6 +23,7 @@ return new class extends Migration
             $table->bigInteger('discount')->nullable();
             $table->integer('star')->nullable();
             $table->string('remarks')->nullable();
+            $table->string('date_extend')->nullable();
             $table->timestamps();
         });
     }
