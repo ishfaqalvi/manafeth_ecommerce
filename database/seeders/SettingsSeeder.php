@@ -70,6 +70,10 @@ class SettingsSeeder extends Seeder
                 'value' => 'No',
             ],
             [
+                'key' 	=> 'rent_end_date_extend_watsapp_customer_notification',
+                'value' => 'No',
+            ],
+            [
                 'key' 	=> 'maintenence_request_whatsapp_notification',
                 'value' => 'No',
             ],
@@ -114,6 +118,10 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' 	=> 'rent_order_fcm_notification_to_admin',
+                'value' => 'No',
+            ],
+            [
+                'key' 	=> 'rent_end_date_extend_fcm_notification',
                 'value' => 'No',
             ],
             [

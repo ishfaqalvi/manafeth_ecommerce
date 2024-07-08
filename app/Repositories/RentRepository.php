@@ -408,5 +408,32 @@ class RentRepository implements RentInterface
         $newRecord->save();
 
         $oldRecord->update(['date_extend' => 'Yes']);
+        $oldRecord->rentRequest->operations()->create([
+            'actor_id' => auth()->user()->id,
+            'actor_type' => 'App\Models\User',
+            'action' => 'Admin extended the rental date from '. date('d M Y', $oldRecord->to) .' to date'.date('d M Y', $newRecord->to)
+        ]);
+        if (settings('rent_end_date_extend_fcm_notification') == 'Yes') {
+            $fcmData = [
+                'title'     => 'Rent End Date Extend',
+                'body'      => 'Your rental end date exend by admin',
+                'user_type' => 'App\Models\Customer',
+                'user_id'   => $newRecord->rentRequest->customer_id
+            ];
+            $this->fcmNotification->store($fcmData);
+        }
+        if(settings('rent_end_date_extend_watsapp_customer_notification') == 'Yes'){
+            $data = [
+                $newRecord->rentRequest->customer->name,
+                $newRecord->request_id,
+                date('d M Y', $newRecord->from),
+                date('d M Y', $newRecord->to),
+                date('d M Y', $oldRecord->from),
+                date('d M Y', $oldRecord->to),
+                $newRecord->product->name
+            ];
+            $this->whatsAppService->sendMessage('rental_date_extended', $data);
+        }
     }
 }
+

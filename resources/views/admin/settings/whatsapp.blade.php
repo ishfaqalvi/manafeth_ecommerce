@@ -22,7 +22,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-lg-10 offset-lg-1">
+            <div class="col-lg-11 offset-lg-1">
                 <form method="POST" action="{{ route('settings.save') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
@@ -84,6 +84,13 @@
                             <select name="values[rent_expire_date_watsapp_customer_notification]" class="form-select">
                                 <option value="Yes" {{ settings('rent_expire_date_watsapp_customer_notification') == 'Yes' ? 'selected' : ''}}>Yes</option>
                                 <option value="No" {{ settings('rent_expire_date_watsapp_customer_notification') == 'No' ? 'selected' : ''}}>No</option>
+                            </select>
+                        </div>
+                        <label class="col-lg-4 mb-3 col-form-label">Rent End Date End Customer Notification:</label>
+                        <div class="col-lg-8 mb-3">
+                            <select name="values[rent_end_date_extend_watsapp_customer_notification]" class="form-select">
+                                <option value="Yes" {{ settings('rent_end_date_extend_watsapp_customer_notification') == 'Yes' ? 'selected' : ''}}>Yes</option>
+                                <option value="No" {{ settings('rent_end_date_extend_watsapp_customer_notification') == 'No' ? 'selected' : ''}}>No</option>
                             </select>
                         </div>
                         <label class="col-lg-4 mb-3 col-form-label">Maintenence Request Notification  :</label>
