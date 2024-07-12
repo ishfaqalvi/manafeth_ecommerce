@@ -39,7 +39,8 @@ class User extends Authenticatable implements Auditable
         'email',
         'password',
         'image',
-        'fcm_token'
+        'fcm_token',
+        'player_id'
     ];
 
     /**

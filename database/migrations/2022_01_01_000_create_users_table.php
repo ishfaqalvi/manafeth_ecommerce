@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('image')->default('images/profile/avatar.jpg');
             $table->rememberToken();
             $table->string('fcm_token')->nullable();
+            $table->string('player_id')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });

@@ -196,6 +196,17 @@ class UserController extends Controller
     }
 
     /**
+     * Write code on Method
+     *
+     * @return response()
+     */
+    public function savePlayerId(Request $request)
+    {
+        auth()->user()->update(['player_id' => $request->player_id]);
+        return response()->json(['Player ID saved successfully.']);
+    }
+
+    /**
      * Validate a resource.
      *
      * @return \Illuminate\Http\Response

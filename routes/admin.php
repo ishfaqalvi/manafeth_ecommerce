@@ -215,6 +215,7 @@ Route::controller(UserController::class)->prefix('users')->as('users.')->group(f
     Route::post('check_email', 	 	'checkEmail'	)->name('checkEmail'   );
     Route::post('check_password',	'checkPassword'	)->name('checkPassword');
     Route::post('save-token',       'saveToken'     )->name('saveToken'    );
+    Route::post('save-player-id',   'savePlayerId'  )->name('savePlayerId' );
 });
 
 /*

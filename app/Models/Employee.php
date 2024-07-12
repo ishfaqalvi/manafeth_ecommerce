@@ -30,7 +30,7 @@ use Laravel\Sanctum\HasApiTokens;
 class Employee extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use HasApiTokens;
+    use HasApiTokens; 
 
     public function __construct(array $attributes = [])
     {

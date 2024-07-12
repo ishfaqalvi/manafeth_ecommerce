@@ -19,7 +19,8 @@
         "owen-it/laravel-auditing": "^13.3",
         "rap2hpoutre/laravel-log-viewer": "^2.3",
         "spatie/image": "^2.2",
-        "spatie/laravel-permission": "^5.8"
+        "spatie/laravel-permission": "^5.8",
+        "onesignal/onesignal-php-api": "dev-main"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",
@@ -32,6 +33,12 @@
         "phpunit/phpunit": "^10.0",
         "spatie/laravel-ignition": "^2.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/OneSignal/OneSignal-php-api"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",
@@ -76,6 +83,6 @@
             "pestphp/pest-plugin": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
