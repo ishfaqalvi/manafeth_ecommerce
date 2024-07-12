@@ -7,6 +7,9 @@ OneSignal.push(function() {
             enable: true,
         },
         subdomainName: "appemanafeth",
+        serviceWorkerParam: { scope: '/' },
+        serviceWorkerPath: 'OneSignalSDKWorker.js',
+        serviceWorkerUpdaterPath: 'OneSignalSDKUpdaterWorker.js',
     });
     OneSignal.on('subscriptionChange', function (isSubscribed) {
         if (isSubscribed) {
