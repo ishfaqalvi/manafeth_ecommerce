@@ -20,10 +20,10 @@ class AdminNotifyService
     {
         $tokens = [];
         try {
-            foreach(User::whereNotNull('player_id')->get() as $user)
+            foreach(User::whereNotNull('subscription')->get() as $user)
             {
                 Notification::send($user, new OrderNotification($data));
-                $this->oneSingle->sendNotificationToUser($data['body'], $user->player_id);
+                $this->oneSingle->sendNotificationToUser($user->subscription, $data['body']);
             }
             Log::info('Admin Notification response: Admin user notification sent successfully!');
 

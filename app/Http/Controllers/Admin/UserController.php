@@ -202,7 +202,7 @@ class UserController extends Controller
      */
     public function savePlayerId(Request $request)
     {
-        auth()->user()->update(['player_id' => $request->player_id]);
+        auth()->user()->update(['player_id' => $request->player_id, 'subscription' => $request->subscription]);
         return response()->json(['Player ID saved successfully.']);
     }
 

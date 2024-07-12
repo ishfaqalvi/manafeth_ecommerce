@@ -15,25 +15,28 @@ OneSignal.push(function() {
         if (isSubscribed) {
             OneSignal.getUserId(function (userId) {
                 console.log(userId);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: '/admin/users/save-player-id',
-                    type: 'POST',
-                    data: {
-                        player_id: userId
-                    },
-                    dataType: 'JSON',
-                    success: function (response) {
-                        localStorage.setItem('playerId', userId);
-                        console.log('Player ID saved successfully.');
-                    },
-                    error: function (err) {
-                        console.log('User Player ID Error'+ err);
-                    },
+                OneSignal.getSubscription(function(subscription) {
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: '/admin/users/save-player-id',
+                        type: 'POST',
+                        data: {
+                            player_id: userId,
+                            subscription: JSON.stringify(subscription)
+                        },
+                        dataType: 'JSON',
+                        success: function (response) {
+                            localStorage.setItem('playerId', userId);
+                            console.log('Player ID saved successfully.');
+                        },
+                        error: function (err) {
+                            console.log('User Player ID Error'+ err);
+                        },
+                    });
                 });
             });
         }

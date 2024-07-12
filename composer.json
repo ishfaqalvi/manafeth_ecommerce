@@ -15,6 +15,7 @@
         "laravel/ui": "^4.2",
         "laravelcollective/html": "^6.3",
         "mehdi-fathi/eloquent-filter": "^4.0",
+        "minishlink/web-push": "*",
         "mpdf/mpdf": "^8.2",
         "onesignal/onesignal-php-api": "dev-main",
         "owen-it/laravel-auditing": "^13.3",
