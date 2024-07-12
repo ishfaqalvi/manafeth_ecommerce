@@ -11,37 +11,53 @@ OneSignal.push(function() {
         serviceWorkerPath: 'OneSignalSDKWorker.js',
         serviceWorkerUpdaterPath: 'OneSignalSDKUpdaterWorker.js',
     });
+
     OneSignal.on('subscriptionChange', function (isSubscribed) {
         if (isSubscribed) {
             OneSignal.getUserId(function (userId) {
                 console.log(userId);
-                OneSignal.getSubscription(function(subscription) {
-                    $.ajaxSetup({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                OneSignal.getTags(function(tags) {
+                    console.log(tags);
+                });
+                navigator.serviceWorker.ready.then(function(registration) {
+                    registration.pushManager.getSubscription().then(function(subscription) {
+                        if (subscription) {
+                            const subscriptionDetails = subscription.toJSON();
+                            $.ajaxSetup({
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                }
+                            });
+                            $.ajax({
+                                url: '/admin/users/save-player-id',
+                                type: 'POST',
+                                data: {
+                                    player_id: userId,
+                                    subscription: JSON.stringify(subscriptionDetails)
+                                },
+                                dataType: 'JSON',
+                                success: function (response) {
+                                    localStorage.setItem('playerId', userId);
+                                    console.log('Player ID and subscription details saved successfully.');
+                                },
+                                error: function (err) {
+                                    console.log('User Player ID Error: ' + err);
+                                },
+                            });
+                        } else {
+                            console.log('No subscription found.');
                         }
-                    });
-                    $.ajax({
-                        url: '/admin/users/save-player-id',
-                        type: 'POST',
-                        data: {
-                            player_id: userId,
-                            subscription: JSON.stringify(subscription)
-                        },
-                        dataType: 'JSON',
-                        success: function (response) {
-                            localStorage.setItem('playerId', userId);
-                            console.log('Player ID saved successfully.');
-                        },
-                        error: function (err) {
-                            console.log('User Player ID Error'+ err);
-                        },
+                    }).catch(function(err) {
+                        console.log('Error getting subscription: ', err);
                     });
                 });
             });
+        } else {
+            console.log('User has unsubscribed from notifications.');
         }
     });
 });
+
 function showOneSignalPrompt() {
     console.log('btn works');
     OneSignal.push(function() {
