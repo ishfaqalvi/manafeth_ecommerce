@@ -16,11 +16,11 @@
         "laravelcollective/html": "^6.3",
         "mehdi-fathi/eloquent-filter": "^4.0",
         "mpdf/mpdf": "^8.2",
+        "onesignal/onesignal-php-api": "dev-main",
         "owen-it/laravel-auditing": "^13.3",
         "rap2hpoutre/laravel-log-viewer": "^2.3",
         "spatie/image": "^2.2",
-        "spatie/laravel-permission": "^5.8",
-        "onesignal/onesignal-php-api": "dev-main"
+        "spatie/laravel-permission": "^5.8"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.0",

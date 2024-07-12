@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use OneSignal\Config;
-use OneSignal\OneSignal;
-use OneSignal\Notifications;
+use OneSignal\Client as OneSignalClient;
 use Illuminate\Support\Facades\Log;
 
 class OneSignalService
@@ -13,22 +11,21 @@ class OneSignalService
 
     public function __construct()
     {
-        $config = new Config(
+        $this->client = new OneSignalClient(
             config('onesignal.app_id'),
             config('onesignal.rest_api_key'),
             config('onesignal.user_auth_key')
         );
-
-        $this->client = new OneSignal($config);
     }
 
     public function sendNotificationToUser($playerId, $message)
     {
-        $notification = new Notifications();
-        $notification->setIncludePlayerIds([$playerId]);
-        $notification->setContents([
-            'en' => $message,
-        ]);
+        $notification = [
+            'include_player_ids' => [$playerId],
+            'contents' => [
+                'en' => $message,
+            ],
+        ];
         try {
             $response = $this->client->notifications->add($notification);
             Log::info('Notification sent to admin user successfully!', ['response' => $response]);
@@ -41,11 +38,12 @@ class OneSignalService
 
     public function sendNotificationToAll($message)
     {
-        $notification = new Notifications();
-        $notification->setIncludedSegments(['All']);
-        $notification->setContents([
-            'en' => $message,
-        ]);
+        $notification = [
+            'included_segments' => ['All'],
+            'contents' => [
+                'en' => $message,
+            ],
+        ];
 
         try {
             $response = $this->client->notifications->add($notification);
