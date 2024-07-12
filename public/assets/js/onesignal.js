@@ -42,3 +42,9 @@ OneSignal.push(function() {
         }
     });
 });
+function showOneSignalPrompt() {
+    console.log('btn works');
+    OneSignal.push(function() {
+        OneSignal.showSlidedownPrompt();
+    });
+}
