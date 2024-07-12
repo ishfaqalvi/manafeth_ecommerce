@@ -3,36 +3,32 @@
 namespace App\Services;
 
 use App\Models\User;
-use App\Services\FCMService;
+use App\Services\OneSignalService;
 use Illuminate\Support\Facades\Log;
 use App\Notifications\OrderNotification;
 use Illuminate\Support\Facades\Notification;
 
 class AdminNotifyService
 {
-    protected $fcm;
+    protected $oneSingle;
 
-    public function __construct(FCMService $fcm){
-        $this->fcm = $fcm;
+    public function __construct(OneSignalService $oneSingle){
+        $this->oneSingle = $oneSingle;
     }
 
     public function sendNotification($data)
     {
         $tokens = [];
         try {
-            foreach(User::whereNotNull('fcm_token')->get() as $user)
+            foreach(User::whereNotNull('player_id')->get() as $user)
             {
                 Notification::send($user, new OrderNotification($data));
-                $tokens[] = $user->fcm_token;
-                // $this->fcm->sendNotification($data['title'], $data['body'], $user->fcm_token);
+                $this->oneSingle->sendNotificationToUser($data['body'], $user->player_id);
             }
-            if(count($tokens) > 0 ){
-                $this->fcm->browserNotification($data['title'], $data['body'], $tokens);
-            }
-            Log::info('Admin FCM response: Admin user notification sent successfully!');
+            Log::info('Admin Notification response: Admin user notification sent successfully!');
 
         } catch (\Throwable $e) {
-            Log::error('Error with Admin FCM service', ['error' => $e->getMessage()]);
+            Log::error('Error with Admin OneSignal service', ['error' => $e->getMessage()]);
         }
     }
 }
