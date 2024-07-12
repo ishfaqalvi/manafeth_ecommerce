@@ -298,7 +298,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <button class="nav-link" onclick="OneSignal.push(['registerForPushNotifications']);">
+    <button class="nav-link" onclick="OneSignal.showSlidedownPrompt();">
         <i class="ph-bell"></i>
         <span>Push Notifications</span>
     </button>
