@@ -57,7 +57,28 @@
                 await OneSignal.init({
                     appId: "56de06b7-4138-4bff-801c-47ba922f4d92",
                 });
-                console.log(OneSignal.User);
+                var userId = OneSignal.User.PushSubscription.id;
+                console.log(userId);
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: '/admin/users/save-player-id',
+                    type: 'POST',
+                    data: {
+                        player_id: userId
+                    },
+                    dataType: 'JSON',
+                    success: function (response) {
+                        localStorage.setItem('playerId', userId);
+                        console.log('Player ID saved successfully.');
+                    },
+                    error: function (err) {
+                        console.log('User Player ID Error: ' + err);
+                    },
+                });
             });
         </script>
     </body>

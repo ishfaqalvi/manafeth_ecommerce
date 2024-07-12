@@ -18,15 +18,17 @@ class AdminNotifyService
 
     public function sendNotification($data)
     {
-        $tokens = [];
+        $ids = [];
         try {
-            foreach(User::whereNotNull('subscription')->get() as $user)
+            foreach(User::whereNotNull('player_id')->get() as $user)
             {
                 Notification::send($user, new OrderNotification($data));
-                $this->oneSingle->sendNotificationToUser($user->subscription, $data['body']);
+                $ids[] = $user->player_id;
+            }
+            if(count($ids) > 0){
+                $this->oneSingle->sendNotificationToUser($ids, $data['body']);
             }
             Log::info('Admin Notification response: Admin user notification sent successfully!');
-
         } catch (\Throwable $e) {
             Log::error('Error with Admin OneSignal service', ['error' => $e->getMessage()]);
         }
