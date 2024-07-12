@@ -50,5 +50,15 @@
         <div class="offcanvas offcanvas-end" tabindex="-1" id="demo_config">
             @include('admin.layout.configuration')
         </div>
+        <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+        <script>
+            window.OneSignalDeferred = window.OneSignalDeferred || [];
+            OneSignalDeferred.push(async function(OneSignal) {
+                await OneSignal.init({
+                    appId: "56de06b7-4138-4bff-801c-47ba922f4d92",
+                });
+                console.log(OneSignal.User);
+            });
+        </script>
     </body>
 </html>

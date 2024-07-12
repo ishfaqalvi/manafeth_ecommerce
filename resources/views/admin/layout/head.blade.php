@@ -30,11 +30,11 @@
 <script src="{{ asset('assets/js/vendor/pickers/datepicker.min.js') }}"></script>
 <script src="{{ asset('assets/demo/dropify/js/dropify.js') }}"></script>
 
-<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
-<script src="{{ asset('assets/js/firebase.js') }}"></script>
+{{-- <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
+<script src="{{ asset('assets/js/firebase.js') }}"></script> --}}
 
-<script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
-<script src="{{ asset('assets/js/onesignal.js') }}"></script>
+{{-- <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+<script src="{{ asset('assets/js/onesignal.js') }}"></script> --}}
 
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/demo/pages/datatables_basic.js') }}"></script>

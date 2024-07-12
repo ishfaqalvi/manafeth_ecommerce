@@ -214,6 +214,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'EloquentFilter' => eloquentFilter\Facade\EloquentFilter::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'OneSignal' => Berkayk\OneSignal\OneSignalFacade::class,
     ])->toArray(),
 
 ];
