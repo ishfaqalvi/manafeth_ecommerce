@@ -127,13 +127,31 @@ class SettingController extends Controller
      */
     public function testNotification()
     {
-        OneSignal::sendNotificationToAll(
-            "Some Message",
-            $url = null,
-            $data = null,
-            $buttons = null,
-            $schedule = null
-        );
+        try {
+            OneSignal::sendNotificationToAll(
+                "Some Message for all users",
+                $url = null,
+                $data = null,
+                $buttons = null,
+                $schedule = null
+            );
+            Log::info('Notification sent all successfully.');
+        } catch (\Exception $e) {
+            Log::error('Error sending notification all: ', ['error' => $e->getMessage()]);
+        }
+        try {
+            OneSignal::sendNotificationToUser(
+                "Some Message for specific user",
+                "4b8e9bb6-3a99-4d11-bde3-212bf6d872d1",
+                $url = null,
+                $data = null,
+                $buttons = null,
+                $schedule = null
+            );
+            Log::info('Notification sent to specific user successfully.');
+        } catch (\Exception $e) {
+            Log::error('Error sending notification specific user: ', ['error' => $e->getMessage()]);
+        }
         return redirect()->back()->with('success', 'Notification send successfully.');
     }
 }
