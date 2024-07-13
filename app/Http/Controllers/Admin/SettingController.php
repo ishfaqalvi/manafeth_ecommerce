@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Setting;
 use Image;
 use OneSignal;
-
+use Illuminate\Support\Facades\Log;
 
 class SettingController extends Controller
 {
