@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Http\Request;
 use App\Models\Setting;
 use Image;
+use OneSignal;
 
 
 class SettingController extends Controller
@@ -117,5 +118,22 @@ class SettingController extends Controller
         }
         Setting::set($data);
         return redirect()->back()->with('success', 'Setting updated successfully.');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function testNotification()
+    {
+        OneSignal::sendNotificationToAll(
+            "Some Message",
+            $url = null,
+            $data = null,
+            $buttons = null,
+            $schedule = null
+        );
+        return redirect()->back()->with('success', 'Notification send successfully.');
     }
 }

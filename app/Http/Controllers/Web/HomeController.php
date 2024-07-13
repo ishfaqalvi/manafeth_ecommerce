@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Exception\RequestException;
 use App\Contracts\{BlogInterface,BannerInterface,ProductInterface};
 use App\Services\WhatsAppService;
-use OneSignal;
+
 class HomeController extends Controller
 {
     protected $banner;
@@ -48,24 +48,5 @@ class HomeController extends Controller
     public function sendWatsap()
     {
         return $this->whatsAppService->sendMessage('sale_product_added_to_cart', "*Heading*\nThis is a description under the heading. Here is some _italic_ text, and here is some ~strikethrough~ text. You can also use ```monospace``` for things like code.");
-    }
-
-    public function notification()
-    {
-        OneSignal::sendNotificationToAll(
-            "Some Message",
-            $url = null,
-            $data = null,
-            $buttons = null,
-            $schedule = null
-        );
-        // OneSignal::sendNotificationToSegment(
-        //     "Test message with custom heading and subtitle",
-        //     "Testers",
-        //     null, null, null, null,
-        //     "Custom Heading",
-        //     "Custom subtitle"
-        // );
-        return "Yes ho gya";
     }
 }

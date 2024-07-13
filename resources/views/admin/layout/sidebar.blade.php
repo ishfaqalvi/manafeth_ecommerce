@@ -298,9 +298,9 @@
     </a>
 </li>
 <li class="nav-item">
-    <button class="nav-link" onclick="showOneSignalPrompt();">
+    <a class="nav-link {{ request()->routeIs('settings*') ? 'active' : ''}}" href="{{ route('settings.testNotification') }}">
         <i class="ph-bell"></i>
-        <span>Push Notifications</span>
-    </button>
+        <span>Test Notifications</span>
+    </a>
 </li>
 

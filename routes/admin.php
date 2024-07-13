@@ -253,6 +253,7 @@ Route::controller(SettingController::class)->prefix('settings')->as('settings.')
 	Route::get('fcm', 		    'fcm'		)->name('fcm'		  );
 	Route::get('clear-cache', 	'clearCache')->name('clear-cache' );
 	Route::post('save', 		'save'		)->name('save'		  );
+	Route::get('test-notification', 'testNotification')->name('testNotification');
 });
 
 /*
