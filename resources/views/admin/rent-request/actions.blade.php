@@ -25,7 +25,7 @@
                     </form> --}}
                 @endif
                 @if($rentRequest->collection_type == 'Home Delivery')
-                    @if($rentRequest->status == 'Confirmed' || ($rentRequest->status == 'Processing' && $rentRequest->task->status == 'Reject'))
+                    @if($rentRequest->status == 'Confirmed' || ($rentRequest->status == 'Processing' && !is_null($rentRequest->task) && $rentRequest->task->status == 'Reject'))
                         <a href="#" class="dropdown-item assignToWarehouseBoy" data-id="{{ $rentRequest->id }}" data-status="Processing">
                             <i class="ph-note-pencil me-2"></i>{{ __('Assign To Warehouse Boy') }}
                         </a>

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('warranty')->default(0);
             $table->integer('maintenance')->default(0);
-            $table->bigInteger('price');
+            $table->bigInteger('price')->nullable();
             $table->bigInteger('discount')->nullable();
             $table->enum('type',['Rent','Sale','Maintenance']);
             $table->string('special')->nullable();
