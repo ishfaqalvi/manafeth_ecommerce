@@ -68,21 +68,24 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	        Route::post('cancel',      		'cancel'       );
 	        Route::delete('delete/{id}',    'destroy'      );
 	        Route::post('reviews',      	'reviews'      );
+	        Route::post('add-payment',      'addPayment'   );
 	    });
 
 	    Route::controller(RentCartController::class)->prefix('rent-cart/products')->group(function(){
-	        Route::get('list',             	'index'  );
-	        Route::post('create',      		'store'  );
-	        Route::patch('edit/{cart}',     'update' );
-	        Route::delete('delete/{id}',    'destroy');
+	        Route::get('list',             	'index'     );
+	        Route::post('create',      		'store'     );
+	        Route::patch('edit/{cart}',     'update'    );
+	        Route::delete('delete/{id}',    'destroy'   );
+            Route::post('add-payment',      'addPayment');
 	    });
 
 	    Route::controller(RentRequestController::class)->prefix('rent/request')->group(function(){
-	        Route::get('list',             	'index'  );
-	        Route::post('create',      		'store'  );
-            Route::post('cancel',      		'cancel' );
-	        Route::delete('delete/{id}',    'destroy');
-            Route::post('reviews',      	'reviews');
+	        Route::get('list',             	'index'     );
+	        Route::post('create',      		'store'     );
+            Route::post('cancel',      		'cancel'    );
+	        Route::delete('delete/{id}',    'destroy'   );
+            Route::post('reviews',      	'reviews'   );
+            Route::post('add-payment',      'addPayment');
 	    });
 
 	    Route::controller(MaintenenceRequestController::class)->prefix('maintenence/request')->group(function(){
@@ -156,6 +159,11 @@ Route::group(['prefix'=>'employee', 'namespace'=>'App\Http\Controllers\API\Emplo
 	        Route::get('read/{id}',      	'read'  );
 	    });
 
+        Route::controller(PaymentController::class)->prefix('payments')->group(function(){
+	        Route::post('sale',             	'sale'       );
+	        Route::post('rent',             	'rent'       );
+	        Route::post('maintenence',          'maintenence');
+	    });
 	});
 });
 

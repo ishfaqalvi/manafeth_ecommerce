@@ -1,19 +1,25 @@
 <div id="addpaymentmodel" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="{{ route('maintenance.update') }}" class="validate" role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('maintenance.addPayment') }}" class="validate" role="form" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('Add Request Payment') }}</h5>
+                    <h5 class="modal-title">{{ __('Request Payment Collection') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        {{ Form::hidden('id', null,['id' => 'maintenence-request-id']) }}
-                        {{ Form::hidden('status', 'Add Payment') }}
+                        {{ Form::hidden('orderable_id', null,['id' => 'maintenence-request-id']) }}
+                        {{ Form::hidden('orderable_type', 'App\Models\MaintenenceRequest') }}
+                        {{ Form::hidden('collectable_id', auth()->user()->id) }}
+                        {{ Form::hidden('collectable_type', 'App\Models\User') }}
+                        <div class="form-group mb-3">
+                            {{ Form::label('payment_method') }}
+                            {{ Form::select('payment_method',['Online Transfer' => 'Online Transfer', 'Cash' => 'Cash'], null, ['class' => 'form-control form-select' . ($errors->has('payment_method') ? ' is-invalid' : ''), 'placeholder' => '--Select--', 'required']) }}
+                        </div>
                         <div class="form-group">
-                            {{ Form::label('payment') }}
-                            {{ Form::number('payment', null, ['class' => 'form-control' . ($errors->has('payment') ? ' is-invalid' : ''), 'placeholder' => 'Payment','required','min' => '0','id' => 'maintenence-payment-id']) }}
+                            {{ Form::label('amount') }}
+                            {{ Form::number('amount', null, ['class' => 'form-control' . ($errors->has('amount') ? ' is-invalid' : ''), 'placeholder' => 'Amount', 'required', 'min' => '0']) }}
                         </div>
                     </div>
                 </div>

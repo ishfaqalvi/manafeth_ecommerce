@@ -37,6 +37,7 @@
                         <th colspan="2">Product name</th>
                         <th>Category</th>
                         <th>Serial #</th>
+                        <th>Charges</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,6 +59,7 @@
                         </td>
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->serial_number }}</td>
+                        <td>{{ number_format($maintenenceRequest->payment) }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -78,6 +80,43 @@
             </div>
         </div>
         @endforeach
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Collected Payments</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-nowrap">
+                <thead>
+                    <tr>
+                        <th>Collected By</th>
+                        <th>Collector Name</th>
+                        <th>Payment Method</th>
+                        <th>Amount</th>
+                        <th>Performed At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php($total_amount = 0)
+                    @foreach($maintenenceRequest->payments as $key => $row)
+                    <tr>
+                        <td>{{ substr($row->collectable_type, 11) }}</td>
+                        <td>{{ $row->collectable->name }}</td>
+                        <td>{{ $row->payment_method }}</td>
+                        <td>{{ number_format($row->amount) }}</td>
+                        <td>{{ $row->created_at }}</td>
+                    </tr>
+                        @php($total_amount +=$row->amount )
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4">Total Amount</th>
+                        <th>{{ number_format($total_amount) }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
     <div class="card">
         <div class="card-header">
@@ -151,14 +190,6 @@
             <div class="form-group mb-3">
                 <strong>Category:</strong>
                 {{ $maintenenceRequest->category->name }}
-            </div>
-            <div class="form-group mb-3">
-                <strong>Payment:</strong>
-                {{ $maintenenceRequest->payment }}
-            </div>
-            <div class="form-group mb-3">
-                <strong>Payment Method:</strong>
-                {{ $maintenenceRequest->payment_method }}
             </div>
             <div class="form-group mb-3">
                 <strong>Message:</strong>

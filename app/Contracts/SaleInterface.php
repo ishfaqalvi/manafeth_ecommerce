@@ -24,6 +24,8 @@ interface SaleInterface
 
 	public function orderUpdate($data, $id, $guard);
 
+    public function addPayment($data);
+
 	public function orderDelete($id);
 
     public function orderReview($data);

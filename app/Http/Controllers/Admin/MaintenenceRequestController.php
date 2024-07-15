@@ -89,15 +89,22 @@ class MaintenenceRequestController extends Controller
      */
     public function update(Request $request)
     {
-        if($request->status == 'Add Payment')
-        {
-            $this->maintenence->updatePayment($request->all(), $request->id);
-        }else{
-            $this->maintenence->update($request->all(), $request->id, 'Admin');
-        }
+        $this->maintenence->update($request->all(), $request->id, 'Admin');
+        return redirect()->route('maintenance.index')->with('success', 'Maintenence Request updated successfully');
+    }
 
-        return redirect()->route('maintenance.index')
-            ->with('success', 'Maintenence Request updated successfully');
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  MaintenenceRequest $maintenenceRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function addPayment(Request $request)
+    {
+        $this->maintenence->addPayment($request->all(), $request->id);
+
+        return redirect()->back()->with('success', 'Maintenence Request payment added successfully');
     }
 
     /**

@@ -127,4 +127,12 @@ class User extends Authenticatable implements Auditable
     {
         return $this->morphMany(FcmNotification::class, 'user');
     }
+
+    /**
+     * Get all of the user payments.
+     */
+    public function createdPayments()
+    {
+        return $this->morphMany(Payment::class, 'collectable');
+    }
 }

@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\{DB,Auth};
-use App\Models\{Task,Customer,MaintenenceRequest};
+use App\Models\{Task,Customer,MaintenenceRequest,Payment};
 use App\Contracts\{FcmInterface,MaintenenceInterface};
 use App\Services\{AdminNotifyService,WhatsAppService};
 
@@ -203,18 +203,16 @@ class MaintenenceRepository implements MaintenenceInterface
         return true;
     }
 
-    public function updatePayment($data, $id)
+    public function addPayment($data)
     {
-        DB::transaction(function () use ($data, $id) {
-            $request = MaintenenceRequest::find($id);
-                $request->operations()->create([
-                    'actor_id' => auth()->user()->id,
-                    'actor_type' => 'App\Models\User',
-                    'action' => 'Request payment updated by admin.'
-                ]);
-                $data['payment_received'] = 'Yes';
-                unset($data['status']);
-            $request->update($data);
+        DB::transaction(function () use ($data) {
+            Payment::create($data);
+            $request = MaintenenceRequest::find($data['orderable_id']);
+            $request->operations()->create([
+                'actor_id'   => $data['collectable_id'],
+                'actor_type' => $data['collectable_type'],
+                'action'     => 'Request payment added.'
+            ]);
         });
         return true;
     }

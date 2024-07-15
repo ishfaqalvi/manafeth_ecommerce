@@ -6,7 +6,7 @@ use \Mpdf\Mpdf;
 use Illuminate\Support\Facades\{DB,Auth,File};
 use App\Contracts\{FcmInterface,SaleInterface};
 use App\Services\{AdminNotifyService,WhatsAppService};
-use App\Models\{User,Task,Product,Cart,Order,Customer,OrderDetail,OrderDetailService};
+use App\Models\{User,Task,Product,Cart,Order,Customer,OrderDetail,OrderDetailService,Payment};
 
 class SaleRepository implements SaleInterface
 {
@@ -359,6 +359,20 @@ class SaleRepository implements SaleInterface
         });
         return true;
 	}
+
+    public function addPayment($data)
+    {
+        DB::transaction(function () use ($data) {
+            Payment::create($data);
+            $order = Order::find($data['orderable_id']);
+            $order->operations()->create([
+                'actor_id'   => $data['collectable_id'],
+                'actor_type' => $data['collectable_type'],
+                'action'     => 'Rent payment added.'
+            ]);
+        });
+        return true;
+    }
 
 	public function orderDelete($id)
 	{

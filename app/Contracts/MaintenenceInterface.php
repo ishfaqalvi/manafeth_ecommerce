@@ -14,7 +14,7 @@ interface MaintenenceInterface
 
 	public function update($data, $id, $guard);
 
-    public function updatePayment($data, $id);
+    public function addPayment($data);
 
 	public function delete($id);
 }

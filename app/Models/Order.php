@@ -160,4 +160,12 @@ class Order extends Model implements Auditable
     {
         return $this->hasMany('App\Models\OrderOperation', 'order_id', 'id');
     }
+
+    /**
+     * Get all of the payments.
+     */
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'orderable');
+    }
 }

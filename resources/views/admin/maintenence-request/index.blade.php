@@ -39,7 +39,8 @@
                         <th>No</th>
                         <th>Name</th>
                         <th>Phone #</th>
-                        <th>Payment</th>
+                        <th>Charges</th>
+                        <th>Collected</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Task</th>
@@ -54,6 +55,7 @@
                         <td>{{ $maintenenceRequest->full_name }}</td>
                         <td>{{ $maintenenceRequest->phone_number }}</td>
                         <td>{{ number_format($maintenenceRequest->payment) }}</td>
+                        <td>{{ number_format($maintenenceRequest->payments()->sum('amount')) }}</td>
                         <td>{{ Carbon\Carbon::parse($maintenenceRequest->created_at)->toDateString() }}</td>
                         <td>{{ Carbon\Carbon::parse($maintenenceRequest->created_at)->toTimeString() }}</td>
                         <td>
@@ -73,6 +75,7 @@
         </div>
     </div>
 </div>
+@include('admin.maintenence-request.accept')
 @include('admin.maintenence-request.assign')
 @include('admin.maintenence-request.add-payment')
 @endsection
@@ -124,6 +127,10 @@
             }).then((result) => {
                 if (result.value === true)  $(this).closest("form").submit();
             });
+        });
+        $('.accept').click(function(){
+            $('#request-id').val($(this).data('id'));
+            $('#acceptmodel').modal('show');
         });
         $('.assignToMaintenenceBoy').click(function(){
             $('#request-id').val($(this).data('id'));

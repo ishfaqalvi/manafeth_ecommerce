@@ -8,6 +8,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Employee
@@ -30,7 +31,8 @@ use Laravel\Sanctum\HasApiTokens;
 class Employee extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
-    use HasApiTokens; 
+    use HasApiTokens;
+    use HasFactory;
 
     public function __construct(array $attributes = [])
     {
@@ -139,5 +141,13 @@ class Employee extends Model implements Auditable
     public function fcmNotifications()
     {
         return $this->morphMany(FcmNotification::class, 'user');
+    }
+
+    /**
+     * Get all of the employee's payments.
+     */
+    public function createdPayments()
+    {
+        return $this->morphMany(Payment::class, 'created_by');
     }
 }

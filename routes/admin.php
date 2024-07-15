@@ -25,6 +25,7 @@ Route::controller(OrderController::class)->prefix('orders')->as('orders.')->grou
 	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
     Route::post('services',          'services'	 )->name('services'  );
 	Route::get('time-slots',         'timeSlots' )->name('timeSlots' );
+    Route::post('add-payment',		 'addPayment')->name('addPayment');
 });
 
 /*
@@ -44,6 +45,7 @@ Route::controller(RentRequestController::class)->prefix('rent/request')->as('ren
 	Route::post('date-extend',       'dateExtend'   )->name('dateExtend'    );
 	Route::delete('delete/{id}',	 'destroy'	    )->name('destroy'	    );
 	Route::get('time-slots',         'timeSlots'    )->name('timeSlots'     );
+    Route::post('add-payment',		 'addPayment'   )->name('addPayment'    );
 });
 
 /*
@@ -59,6 +61,7 @@ Route::controller(MaintenenceRequestController::class)->prefix('maintenance/requ
 	Route::post('update',            'update'	  )->name('update' 	   );
 	Route::delete('delete/{id}',	 'destroy'	  )->name('destroy'	   );
 	Route::get('get-products', 		 'getProducts')->name('getProducts');
+    Route::post('add-payment',		 'addPayment' )->name('addPayment' );
 });
 
 /*

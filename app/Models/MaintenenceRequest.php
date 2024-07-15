@@ -169,4 +169,12 @@ class MaintenenceRequest extends Model implements Auditable
     {
         return $this->morphMany(Task::class, 'task')->orderBy('id', 'desc');
     }
+
+    /**
+     * Get all of the payments.
+     */
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'orderable');
+    }
 }

@@ -5,7 +5,7 @@ namespace App\Repositories;
 use Illuminate\Support\Facades\{DB,Auth};
 use App\Contracts\{FcmInterface,RentInterface};
 use App\Services\{AdminNotifyService,WhatsAppService};
-use App\Models\{Task,RentCart,RentRequestDetail,RentRequest,Customer};
+use App\Models\{Task,RentCart,RentRequestDetail,RentRequest,Customer,Payment};
 
 class RentRepository implements RentInterface
 {
@@ -362,18 +362,16 @@ class RentRepository implements RentInterface
         return true;
 	}
 
-    public function updatePayment($data, $id)
+    public function addPayment($data)
     {
-        DB::transaction(function () use ($data, $id) {
-            $request = RentRequest::find($id);
-                $request->operations()->create([
-                    'actor_id' => auth()->user()->id,
-                    'actor_type' => 'App\Models\User',
-                    'action' => 'Request payment updated by admin.'
-                ]);
-                $data['payment_received'] = 'Yes';
-                unset($data['status']);
-            $request->update($data);
+        DB::transaction(function () use ($data) {
+            Payment::create($data);
+            $request = RentRequest::find($data['orderable_id']);
+            $request->operations()->create([
+                'actor_id'   => $data['collectable_id'],
+                'actor_type' => $data['collectable_type'],
+                'action'     => 'Rent payment added.'
+            ]);
         });
         return true;
     }
