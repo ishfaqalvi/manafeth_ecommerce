@@ -141,6 +141,20 @@ class OrderController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  MaintenenceRequest $maintenenceRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function addPayment(Request $request)
+    {
+        $this->order->addPayment($request->all());
+
+        return redirect()->back()->with('success', 'Order payment added successfully');
+    }
+
+    /**
      * @param int $id
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception

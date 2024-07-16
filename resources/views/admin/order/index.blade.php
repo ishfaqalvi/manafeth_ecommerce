@@ -39,7 +39,6 @@
                         <th>No</th>
                         <th>Invoice #</th>
                         <th>Name</th>
-                        <th>Email</th>
                         <th>Phone Number</th>
                         <th>Date</th>
                         <th>Time</th>
@@ -54,7 +53,6 @@
                         <td>{{ ++$key }}</td>
                         <td>{{ $order->invoice_no }}</td>
                         <td>{{ $order->name }}</td>
-                        <td>{{ $order->email }}</td>
                         <td>{{ $order->phone_number }}</td>
                         <td>{{ Carbon\Carbon::parse($order->created_at)->toDateString() }}</td>
                         <td>{{ Carbon\Carbon::parse($order->created_at)->toTimeString() }}</td>
@@ -75,6 +73,7 @@
         </div>
     </div>
 </div>
+@include('admin.order.assign.add-payment')
 @include('admin.order.assign.warehouseboy')
 @include('admin.order.assign.drivers')
 @endsection
@@ -134,6 +133,10 @@
         $('.assignToDriver').click(function(){
             $('#driver-order-id').val($(this).data('id'));
             $('#drivermodel').modal('show');
+        });
+        $('.addPayment').click(function(){
+            $('#order-id').val($(this).data('id'));
+            $('#addpaymentmodel').modal('show');
         });
     });
 </script>

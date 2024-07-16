@@ -44,15 +44,25 @@
                         </a>
                     @endif
                     @if($rentRequest->status == 'Returned')
-                        <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}">
-                            <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
-                        </a>
+                        <form action="{{ route('rent.update') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $rentRequest->id }}">
+                            <input type="hidden" name="status" value="Completed">
+                            <a href="#" class="dropdown-item sa-update">
+                                <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                            </a>
+                        </form>
                     @endif
                 @else
                     @if($rentRequest->status == 'Confirmed')
-                        <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}">
-                            <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
-                        </a>
+                        <form action="{{ route('rent.update') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $rentRequest->id }}">
+                            <input type="hidden" name="status" value="Completed">
+                            <a href="#" class="dropdown-item sa-update">
+                                <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                            </a>
+                        </form>
                     @endif
                 @endif
                 {{-- @if($rentRequest->status == 'Pending' || $rentRequest->status == 'Confirm')
@@ -73,9 +83,11 @@
                         <i class="ph-note-pencil me-2"></i>{{ __('Cancel') }}
                     </a>
                 </form>
-                <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}" data-payment="{{ $rentRequest->payment }}">
+                @if($rentRequest->status != 'Cancelled' && $rentRequest->status != 'Pending')
+                <a href="#" class="dropdown-item addPayment" data-id="{{ $rentRequest->id }}">
                     <i class="ph-note-pencil me-2"></i>{{ __('Add Payment') }}
                 </a>
+                @endif
             @endcan
             @can('rentRequests-delete')
                 <form action="{{ route('rent.destroy',$rentRequest->id) }}" method="POST">

@@ -39,7 +39,6 @@
                         <th>No</th>
                         <th>Name</th>
                         <th>Phone #</th>
-                        <th>Payment</th>
                         <th>Date</th>
                         <th>Time</th>
                         <th>Task</th>
@@ -53,7 +52,6 @@
                         <td>{{ ++$key }}</td>
                         <td>{{ $rentRequest->name }}</td>
                         <td>{{ $rentRequest->phone_number }}</td>
-                        <td>{{ number_format($rentRequest->payment) }}</td>
                         <td>{{ Carbon\Carbon::parse($rentRequest->created_at)->toDateString() }}</td>
                         <td>{{ Carbon\Carbon::parse($rentRequest->created_at)->toTimeString() }}</td>
                         <td>
@@ -137,8 +135,7 @@
             $('#drivermodel').modal('show');
         });
         $('.addPayment').click(function(){
-            $('#rent-request-id').val($(this).data('id'));
-            $('#rent-request-payment').val($(this).data('payment'));
+            $('#rent-id').val($(this).data('id'));
             $('#addpaymentmodel').modal('show');
         });
     });

@@ -108,14 +108,9 @@ class RentRequestController extends Controller
      */
     public function update(Request $request)
     {
-        if($request->status == 'Add Payment'){
-            $this->rentRequest->updatePayment($request->all(), $request->id);
-        }else{
-            $this->rentRequest->orderUpdate($request->all(), $request->id, 'Admin');
-        }
+        $this->rentRequest->orderUpdate($request->all(), $request->id, 'Admin');
 
-        return redirect()->route('rent.index')
-            ->with('success', 'Rent Request updated successfully');
+        return redirect()->route('rent.index')->with('success', 'Rent Request updated successfully');
     }
 
     /**
@@ -142,6 +137,20 @@ class RentRequestController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     * @param  MaintenenceRequest $maintenenceRequest
+     * @return \Illuminate\Http\Response
+     */
+    public function addPayment(Request $request)
+    {
+        $this->rentRequest->addPayment($request->all());
+
+        return redirect()->back()->with('success', 'Rent Request payment added successfully');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
      * @param  Order $order
      * @return \Illuminate\Http\Response
      */
@@ -159,8 +168,8 @@ class RentRequestController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->order->orderFind($id)->status == 'Cancelled') {
-            $this->order->orderDelete($id);
+        if ($this->rentRequest->orderFind($id)->status == 'Cancelled') {
+            $this->rentRequest->orderDelete($id);
             return redirect()->route('rent.index')
             ->with('success', 'Rent Request deleted successfully');
         }

@@ -30,7 +30,18 @@ class MaintenenceRepository implements MaintenenceInterface
         if (!is_null($guard)) {
             $query->whereCustomerId(Auth::guard($guard)->user()->id);
         }
-        $query->with(['customer','category','product','product.brand', 'product.category', 'product.subCategory','operations','operations.actor'])->orderBy('created_at', 'desc');
+        $query->with([
+            'customer',
+            'category',
+            'product',
+            'product.brand',
+            'product.category',
+            'product.subCategory',
+            'payments',
+            'payments.collectable',
+            'operations',
+            'operations.actor'
+        ])->orderBy('created_at', 'desc');
         return $pagination ? $query->paginate() : $query->get();
     }
 
@@ -89,7 +100,18 @@ class MaintenenceRepository implements MaintenenceInterface
 
 	public function find($id)
     {
-        return MaintenenceRequest::with(['customer','category','product','product.brand', 'product.category', 'product.subCategory','operations','operations.actor'])->find($id);
+        return MaintenenceRequest::with([
+            'customer',
+            'category',
+            'product',
+            'product.brand',
+            'product.category',
+            'product.subCategory',
+            'payments',
+            'payments.collectable',
+            'operations',
+            'operations.actor'
+            ])->find($id);
     }
 
 	public function update($data, $id, $guard)

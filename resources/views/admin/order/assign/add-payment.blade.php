@@ -1,16 +1,16 @@
 <div id="addpaymentmodel" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="{{ route('rent.addPayment') }}" class="validate" role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('orders.addPayment') }}" class="validate" role="form" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title">{{ __('Rent Payment Collection') }}</h5>
+                    <h5 class="modal-title">{{ __('Order Payment Collection') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        {{ Form::hidden('orderable_id', null,['id' => 'rent-id']) }}
-                        {{ Form::hidden('orderable_type', 'App\Models\RentRequest') }}
+                        {{ Form::hidden('orderable_id', null,['id' => 'order-id']) }}
+                        {{ Form::hidden('orderable_type', 'App\Models\Order') }}
                         {{ Form::hidden('collectable_id', auth()->user()->id) }}
                         {{ Form::hidden('collectable_type', 'App\Models\User') }}
                         <div class="form-group mb-3">

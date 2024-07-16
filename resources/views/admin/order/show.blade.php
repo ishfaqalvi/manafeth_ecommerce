@@ -78,6 +78,43 @@
     </div>
     <div class="card">
         <div class="card-header">
+            <h5 class="mb-0">Collected Payments</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-nowrap">
+                <thead>
+                    <tr>
+                        <th>Collected By</th>
+                        <th>Collector Name</th>
+                        <th>Payment Method</th>
+                        <th>Amount</th>
+                        <th>Performed At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php($total_amount = 0)
+                    @foreach($order->payments as $key => $row)
+                    <tr>
+                        <td>{{ substr($row->collectable_type, 11) }}</td>
+                        <td>{{ $row->collectable->name }}</td>
+                        <td>{{ $row->payment_method }}</td>
+                        <td>{{ number_format($row->amount) }}</td>
+                        <td>{{ $row->created_at }}</td>
+                    </tr>
+                        @php($total_amount +=$row->amount )
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4">Total Amount</th>
+                        <th>{{ number_format($total_amount) }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
             <h5 class="mb-0">Order Action Logs</h5>
         </div>
         <div class="table-responsive">

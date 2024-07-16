@@ -139,7 +139,6 @@
         });
         $('.addPayment').click(function(){
             $('#maintenence-request-id').val($(this).data('id'));
-            $('#maintenence-payment-id').val($(this).data('payment'));
             $('#addpaymentmodel').modal('show');
         });
     });

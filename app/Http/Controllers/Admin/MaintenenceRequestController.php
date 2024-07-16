@@ -102,7 +102,7 @@ class MaintenenceRequestController extends Controller
      */
     public function addPayment(Request $request)
     {
-        $this->maintenence->addPayment($request->all(), $request->id);
+        $this->maintenence->addPayment($request->all());
 
         return redirect()->back()->with('success', 'Maintenence Request payment added successfully');
     }
