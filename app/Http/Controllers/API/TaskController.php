@@ -23,6 +23,8 @@ class TaskController extends BaseController
                 'details',
                 'operations',
                 'operations.actor',
+                'payments',
+                'payments.collectable',
                 'tasks',
                 'tasks.employee',
                 'details.services',
@@ -42,6 +44,8 @@ class TaskController extends BaseController
                 'product.subCategory',
                 'operations',
                 'operations.actor',
+                'payments',
+                'payments.collectable',
                 'tasks',
                 'tasks.employee'
             ];
