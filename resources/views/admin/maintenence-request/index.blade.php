@@ -129,7 +129,7 @@
             });
         });
         $('.accept').click(function(){
-            $('#request-id').val($(this).data('id'));
+            $('#request-id').val($(this).data('id')); 
             $('#acceptmodel').modal('show');
         });
         $('.assignToMaintenenceBoy').click(function(){

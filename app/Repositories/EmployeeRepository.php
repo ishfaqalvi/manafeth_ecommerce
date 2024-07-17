@@ -141,6 +141,8 @@ class EmployeeRepository implements EmployeeInterface
             'order.details',
             'order.operations',
             'order.operations.actor',
+            'order.payments',
+            'order.payments.collectable',
             'order.details.services',
             'order.details.product.resources',
             'order.details.product.brand',
@@ -162,6 +164,8 @@ class EmployeeRepository implements EmployeeInterface
             'rentRequest.details.product.resources',
             'rentRequest.details.product.rents',
             'rentRequest.details.product.reviews.order.customer',
+            'rentRequest.payments',
+            'rentRequest.payments.collectable',
             'rentRequest.operations',
             'rentRequest.operations.actor'
         ];
@@ -171,6 +175,8 @@ class EmployeeRepository implements EmployeeInterface
             'maintenenceRequest.customer',
             'maintenenceRequest.category',
             'maintenenceRequest.product',
+            'maintenenceRequest.payments',
+            'maintenenceRequest.payments.collectable',
             'maintenenceRequest.operations',
             'maintenenceRequest.operations.actor'
         ];

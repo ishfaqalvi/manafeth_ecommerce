@@ -68,7 +68,6 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	        Route::post('cancel',      		'cancel'       );
 	        Route::delete('delete/{id}',    'destroy'      );
 	        Route::post('reviews',      	'reviews'      );
-	        Route::post('add-payment',      'addPayment'   );
 	    });
 
 	    Route::controller(RentCartController::class)->prefix('rent-cart/products')->group(function(){
@@ -76,7 +75,6 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
 	        Route::post('create',      		'store'     );
 	        Route::patch('edit/{cart}',     'update'    );
 	        Route::delete('delete/{id}',    'destroy'   );
-            Route::post('add-payment',      'addPayment');
 	    });
 
 	    Route::controller(RentRequestController::class)->prefix('rent/request')->group(function(){
@@ -85,7 +83,6 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
             Route::post('cancel',      		'cancel'    );
 	        Route::delete('delete/{id}',    'destroy'   );
             Route::post('reviews',      	'reviews'   );
-            Route::post('add-payment',      'addPayment');
 	    });
 
 	    Route::controller(MaintenenceRequestController::class)->prefix('maintenence/request')->group(function(){
