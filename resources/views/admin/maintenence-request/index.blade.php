@@ -129,11 +129,11 @@
             });
         });
         $('.accept').click(function(){
-            $('#request-id').val($(this).data('id')); 
+            $('#request-id').val($(this).data('id'));
             $('#acceptmodel').modal('show');
         });
         $('.assignToMaintenenceBoy').click(function(){
-            $('#request-id').val($(this).data('id'));
+            $('#request-assign-id').val($(this).data('id'));
             $('#request-serial-number').val($(this).data('serial'));
             $('#maintenenceboymodel').modal('show');
         });

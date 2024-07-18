@@ -50,7 +50,7 @@
         <div class="offcanvas offcanvas-end" tabindex="-1" id="demo_config">
             @include('admin.layout.configuration')
         </div>
-        <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+        {{-- <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
         <script>
             window.OneSignalDeferred = window.OneSignalDeferred || [];
             OneSignalDeferred.push(async function(OneSignal) {
@@ -80,6 +80,6 @@
                     },
                 });
             });
-        </script>
+        </script> --}}
     </body>
 </html>

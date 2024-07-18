@@ -9,7 +9,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        {{ Form::hidden('id', null,['id' => 'request-id']) }}
+                        {{ Form::hidden('id', null,['id' => 'request-assign-id']) }}
                         {{ Form::hidden('status', 'Assigned') }}
                         {{ Form::hidden('employee_service', 'Maintenence Boy') }}
                         <div class="form-group">
