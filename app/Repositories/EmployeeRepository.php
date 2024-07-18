@@ -206,13 +206,7 @@ class EmployeeRepository implements EmployeeInterface
         $task->update($data);
 
         if(isset($data['order_status']) && $task->task_type == 'App\Models\Order'){
-            if($task->status == 'Completed' && (isset($data['payment']) && isset($data['on_delivery_payment_method'])))
-            {
-                $update = ['payment' => $data['payment'], 'on_delivery_payment_method' => $data['on_delivery_payment_method'], 'status' => $data['order_status']];
-            }else{
-                $update = ['status' => $data['order_status']];
-            }
-            $this->order->orderUpdate($update, $task->task_id, 'employee');
+            $this->order->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
         }
 
         if($task->status == 'Accept' && $task->task_type == 'App\Models\MaintenenceRequest'){
@@ -221,18 +215,12 @@ class EmployeeRepository implements EmployeeInterface
         if($task->status == 'Ongoing' && $task->task_type == 'App\Models\MaintenenceRequest'){
             $this->maintenence->update(['status' => 'Out for Maintenance'], $task->task_id, 'employee');
         }
-        if($task->status == 'Completed' && $task->task_type == 'App\Models\MaintenenceRequest' && (isset($data['payment']) && isset($data['on_delivery_payment_method']))){
-            $this->maintenence->update(['status' => 'Done', 'payment' => $data['payment'], 'on_delivery_payment_method' => $data['on_delivery_payment_method']], $task->task_id, 'employee');
+        if($task->status == 'Completed' && $task->task_type == 'App\Models\MaintenenceRequest'){
+            $this->maintenence->update(['status' => 'Done'], $task->task_id, 'employee');
         }
 
         if(isset($data['order_status']) && $task->task_type == 'App\Models\RentRequest'){
-            if($task->status == 'Completed' && (isset($data['payment']) && isset($data['on_delivery_payment_method'])))
-            {
-                $update = ['payment' => $data['payment'], 'on_delivery_payment_method' => $data['on_delivery_payment_method'], 'status' => $data['order_status']];
-            }else{
-                $update = ['status' => $data['order_status']];
-            }
-            $this->rent->orderUpdate($update, $task->task_id, 'employee');
+            $this->rent->orderUpdate(['status' => $data['order_status']], $task->task_id, 'employee');
         }
 
         if(settings('employee_task_update_fcm_notification_to_admin') == 'Yes'){
