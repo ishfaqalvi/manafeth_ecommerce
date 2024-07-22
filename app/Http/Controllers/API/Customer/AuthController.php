@@ -23,9 +23,8 @@ class AuthController extends BaseController
     public function register(Request $request)
     {
         try {
-            $customer = $this->customer->register($request->all());
-            $message = 'Your account has been created successfully. Check your email for account verification.';
-            return $this->sendResponse($customer, $message);
+            $respnce = $this->customer->register($request->all());
+            return $this->sendResponse($respnce['customer'], $respnce['message']);
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
@@ -120,7 +119,7 @@ class AuthController extends BaseController
     public function resetPass(Request $request)
     {
         try {
-            $responce = $this->customer->resetPassword($request->all()); 
+            $responce = $this->customer->resetPassword($request->all());
             if($responce == true){
                 return $this->sendResponse('', 'Password has been reset successfully.');
             }

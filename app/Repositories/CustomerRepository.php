@@ -18,8 +18,9 @@ class CustomerRepository implements CustomerInterface
         }
         if(isset($data['verification_by']) && $data['verification_by'] == 'Phone')
         {
-            $customer->email_verified_at = now();
-            $customer->save();
+            $row = Customer::find($customer->id);
+            $row->update(['email_verified_at' => now()]);
+            $message = 'Your account has been created successfully.';
         }else{
             $otp = rand(1000, 9999);
             Mail::to($data['email'])->send(new OTPMail($otp, 'Account Varification'));
@@ -29,8 +30,9 @@ class CustomerRepository implements CustomerInterface
                 'expiry_time'=> now()->addMinutes(10),
                 'used'       => false
             ]);
+            $message = 'Your account has been created successfully. Check your email for account verification.';
         }
-        return $customer;
+        return ['customer' => $customer, 'message' => $message];
     }
 
     public function verifyOTP($data)
