@@ -16,14 +16,20 @@ class CustomerRepository implements CustomerInterface
         }else{
             $customer = Customer::create($data);
         }
-        $otp = rand(1000, 9999);
-        Mail::to($data['email'])->send(new OTPMail($otp, 'Account Varification'));
-        Token::updateOrCreate(['email' => $data['email']], [
-            'email'      => $data['email'],
-            'otp'        => $otp,
-            'expiry_time'=> now()->addMinutes(10),
-            'used'       => false
-        ]);
+        if($request->verification_by == 'Email')
+        {
+            $otp = rand(1000, 9999);
+            Mail::to($data['email'])->send(new OTPMail($otp, 'Account Varification'));
+            Token::updateOrCreate(['email' => $data['email']], [
+                'email'      => $data['email'],
+                'otp'        => $otp,
+                'expiry_time'=> now()->addMinutes(10),
+                'used'       => false
+            ]);
+        }else{
+            $customer->email_verified_at = now();
+            $customer->save();
+        }
         return $customer;
     }
 
