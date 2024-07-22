@@ -16,8 +16,11 @@ class CustomerRepository implements CustomerInterface
         }else{
             $customer = Customer::create($data);
         }
-        if($request->verification_by == 'Email')
+        if($request->verification_by == 'Phone')
         {
+            $customer->email_verified_at = now();
+            $customer->save();
+        }else{
             $otp = rand(1000, 9999);
             Mail::to($data['email'])->send(new OTPMail($otp, 'Account Varification'));
             Token::updateOrCreate(['email' => $data['email']], [
@@ -26,9 +29,6 @@ class CustomerRepository implements CustomerInterface
                 'expiry_time'=> now()->addMinutes(10),
                 'used'       => false
             ]);
-        }else{
-            $customer->email_verified_at = now();
-            $customer->save();
         }
         return $customer;
     }
