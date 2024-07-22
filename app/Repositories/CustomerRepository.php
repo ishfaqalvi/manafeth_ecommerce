@@ -16,7 +16,7 @@ class CustomerRepository implements CustomerInterface
         }else{
             $customer = Customer::create($data);
         }
-        if($data['verification_by'] == 'Phone')
+        if(isset($data['verification_by']) && $data['verification_by'] == 'Phone')
         {
             $customer->email_verified_at = now();
             $customer->save();
