@@ -72,7 +72,12 @@ class CustomerRepository implements CustomerInterface
 
     public function appLogin($data)
     {
-        $customer = Customer::where('email', $data['email'])->whereNotNull('email_verified_at')->first();
+        if(isset($data['email'])){
+            $customer = Customer::where('email', $data['email'])->whereNotNull('email_verified_at')->first();
+        }
+        if(isset($data['mobile_number'])){
+            $customer = Customer::where('mobile_number', $data['mobile_number'])->whereNotNull('email_verified_at')->first();
+        }
         if (!$customer || !Hash::check($data['password'], $customer->password)) {
             return false;
         }else{
