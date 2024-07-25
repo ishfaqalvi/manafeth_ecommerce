@@ -195,14 +195,13 @@ class SaleRepository implements SaleInterface
 	{
         $responce = DB::transaction(function () use($data, $id) {
             $order = Order::find($id);
-            $order->update($data);
+            $order->update(['status' => 'Confirmed']);
             foreach($data['ids'] as $key => $id){
                 $detail = OrderDetail::find($id);
                 $detail->update([
                     'price'         => $data['price'][$key],
                     'warranty'      => $data['warranty'][$key],
-                    'maintenance'   => $data['maintenance'][$key],
-                    'serial_number' => $data['serial_number'][$key]
+                    'maintenance'   => $data['maintenance'][$key]
                 ]);
                 $this->storeServices($detail);
             }
@@ -216,6 +215,34 @@ class SaleRepository implements SaleInterface
                 $fcmData = [
                     'title'     => 'Order Confirmed',
                     'body'      => 'Your order has been confirmed successfully.',
+                    'user_type' => 'App\Models\Customer',
+                    'user_id'   => $order->customer->id
+                ];
+                $this->fcmNotification->store($fcmData);
+            }
+            return $order;
+        });
+        return $responce;
+	}
+
+    public function orderComplete($data, $id)
+	{
+        $responce = DB::transaction(function () use($data, $id) {
+            $order = Order::find($id);
+            $order->update($data);
+            foreach($data['ids'] as $key => $id){
+                $detail = OrderDetail::find($id);
+                $detail->update(['serial_number' => $data['serial_number'][$key]]);
+            }
+            $order->operations()->create([
+                'actor_id' => auth()->user()->id,
+                'actor_type' => 'App\Models\User',
+                'action' => 'Order completed by admin.'
+            ]);
+            if (settings('sale_order_fcm_notification_to_customer') == 'Yes') {
+                $fcmData = [
+                    'title'     => 'Order Completed',
+                    'body'      => 'Your order has been completed successfully.',
                     'user_type' => 'App\Models\Customer',
                     'user_id'   => $order->customer->id
                 ];
@@ -312,14 +339,6 @@ class SaleRepository implements SaleInterface
                         'action' => 'Order delivered to customer.'
                     ]);
                     $customerFcm = true;
-                    break;
-
-                case 'Completed':
-                    $order->operations()->create([
-                        'actor_id' => auth()->user()->id,
-                        'actor_type' => 'App\Models\User',
-                        'action' => 'Order completed by admin.'
-                    ]);
                     break;
             }
             $order->update($data);

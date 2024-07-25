@@ -31,20 +31,28 @@
             <h5 class="mb-0">{{ __('Update') }} Order</h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('orders.confirm') }}" class="validate" role="form" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('orders.completed') }}" class="validate" role="form" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="id" value="{{ $order->id }}">
-                <input type="hidden" name="status" value="Confirmed">
+                <input type="hidden" name="status" value="Completed">
                 <div class="row">
+                    <div class="form-group col-lg-6 mb-3">
+                        {{ Form::label('invoice') }}
+                        {{ Form::file('invoice', ['class' => 'form-control' . ($errors->has('invoice') ? ' is-invalid' : ''),'required']) }}
+                        {!! $errors->first('invoice', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
+                    <div class="form-group col-lg-6 mb-3">
+                        {{ Form::label('invoice_no') }}
+                        {{ Form::text('invoice_no', $order->invoice_no, ['class' => 'form-control' . ($errors->has('invoice_no') ? ' is-invalid' : ''),'required']) }}
+                        {!! $errors->first('invoice_no', '<div class="invalid-feedback">:message</div>') !!}
+                    </div>
                     <div class="form-group col-lg-12 mb-3">
                         <table class="table text-nowrap">
                             <thead>
                                 <tr>
                                     <th colspan="2">Product name</th>
                                     <th>Quantity</th>
-                                    <th>Price</th>
-                                    <th>Warranty</th>
-                                    <th>Maintenance Services</th>
+                                    <th>Serial Number</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,31 +76,7 @@
                                         </td>
                                         <td class="p-1">{{ $detail->quantity }}</td>
                                         <td class="p-1">
-                                            {{ Form::number('price[]', $detail->price, ['class' => 'form-control' . ($errors->has('invoice') ? ' is-invalid' : ''),'required']) }}
-                                        </td>
-                                        <td class="p-1">
-                                            {{ Form::select('warranty[]',
-                                                [
-                                                    0 => '--Select--',
-                                                    1 => '1 Year',
-                                                    2 => '2 Year',
-                                                    3 => '3 Year',
-                                                    4 => '4 Year',
-                                                    5 => '5 Year',
-                                                    6 => '6 Year',
-                                                    7 => '7 Year',
-                                                    8 => '8 Year',
-                                                    9 => '9 Year',
-                                                    10 => '10 Year',
-                                                    11 => '11 Year',
-                                                    12 => '12 Year',
-                                                    13 => '13 Year',
-                                                    14 => '14 Year',
-                                                    15 => '15 Year'
-                                                ], $detail->warranty, ['class' => 'form-control form-select' . ($errors->has('warranty') ? ' is-invalid' : ''),'required']) }}
-                                        </td>
-                                        <td class="p-1">
-                                            {{ Form::number('maintenance[]', $detail->maintenance, ['class' => 'form-control' . ($errors->has('maintenance') ? ' is-invalid' : ''), 'placeholder' => 'Maintenance', 'min' =>'0','required']) }}
+                                            {{ Form::text('serial_number[]', $detail->serial_number, ['class' => 'form-control' . ($errors->has('maintenance') ? ' is-invalid' : ''), 'placeholder' => 'Serial Number','required']) }}
                                         </td>
                                     </tr>
                                 @endforeach

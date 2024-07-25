@@ -31,14 +31,9 @@
                         </a>
                     @endif
                     @if($order->status == 'Delivered')
-                        <form action="{{ route('orders.update') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $order->id }}">
-                            <input type="hidden" name="status" value="Completed">
-                            <a href="#" class="dropdown-item sa-update">
-                                <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
-                            </a>
-                        </form>
+                        <a href="{{ route('orders.complete',$order->id) }}" class="dropdown-item">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                        </a>
                     @endif
                     <form action="{{ route('orders.update') }}" method="POST">
                         @csrf
@@ -50,14 +45,9 @@
                     </form>
                 @else
                     @if($order->status == 'Confirmed')
-                        <form action="{{ route('orders.update') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" value="{{ $order->id }}">
-                            <input type="hidden" name="status" value="Completed">
-                            <a href="#" class="dropdown-item sa-update">
-                                <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
-                            </a>
-                        </form>
+                        <a href="{{ route('orders.complete',$order->id) }}" class="dropdown-item">
+                            <i class="ph-note-pencil me-2"></i>{{ __('Completed') }}
+                        </a>
                     @endif
                 @endif
                 @if($order->status != 'Cancelled' && $order->status != 'Pending')

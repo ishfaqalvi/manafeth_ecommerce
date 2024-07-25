@@ -103,27 +103,42 @@ class RentRepository implements RentInterface
     public function orderStore($data, $guard)
 	{
         $customer = $guard == 'Admin' ? Customer::find($data['customer_id']) : Auth::guard($guard)->user();
-        if($customer->rentCarts()->count() == 0)
+        if($customer->rentCarts()->count() == 0 && !isset($data['rent_now']))
         {
             return false;
         }
         $responce = DB::transaction(function () use($data, $guard, $customer) {
             $products = '';
             $order = $customer->rentRequests()->create($data);
-            foreach($customer->rentCarts as $row){
-                $product = $row->product;
+            if (isset($data['rent_now']) && !is_null($data['rent_now'])) {
+                $product = Product::find($data['product_id']);
                 $order->details()->create([
-                    'product_id'=> $row->product_id,
-                    'product_rent_id'=> $row->product_rent_id,
-                    'quantity'  => $row->quantity,
-                    'from'      => $row->from,
-                    'to'        => $row->to,
+                    'product_id'=> $data['product_id'],
+                    'product_rent_id'=> $data['product_rent_id'],
+                    'quantity'  => 1,
+                    'from'      => strtotime($data['from']),
+                    'to'        => strtotime($data['to']),
                     'delivery_charges' => $product->delivery_charges
                 ]);
-                $row->product->decrement('quantity', $row->quantity);
-                $products .= $row->product->name.' ( '.$row->quantity.' Qty)'.' (From: '. date('d M Y', $row->from).') (To: '.date('d M Y', $row->to).')';
-                $row->delete();
+                $product->decrement('quantity');
+                $products .= $product->name.' (1 Qty) (From: '. date('d M Y', $data['from']).') (To: '.date('d M Y', $data['to']).')';
+            }else{
+                foreach($customer->rentCarts as $row){
+                    $product = $row->product;
+                    $order->details()->create([
+                        'product_id'=> $row->product_id,
+                        'product_rent_id'=> $row->product_rent_id,
+                        'quantity'  => $row->quantity,
+                        'from'      => $row->from,
+                        'to'        => $row->to,
+                        'delivery_charges' => $product->delivery_charges
+                    ]);
+                    $row->product->decrement('quantity', $row->quantity);
+                    $products .= $row->product->name.' ( '.$row->quantity.' Qty)'.' (From: '. date('d M Y', $row->from).') (To: '.date('d M Y', $row->to).')';
+                    $row->delete();
+                }
             }
+
             $order->operations()->create([
                 'actor_id'   => $guard == 'Admin' ? auth()->user()->id : $customer->id,
                 'actor_type' => $guard == 'Admin' ? 'App\Models\User' : 'App\Models\Customer',

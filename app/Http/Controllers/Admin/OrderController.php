@@ -112,6 +112,34 @@ class OrderController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function complete($id)
+    {
+        $order = $this->order->orderFind($id);
+
+        return view('admin.order.complete', compact('order'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  Order $order
+     * @return \Illuminate\Http\Response
+     */
+    public function completed(Request $request)
+    {
+        $this->order->orderComplete($request->all(), $request->id);
+
+        return redirect()->route('orders.index')
+            ->with('success', 'Order completed successfully');
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
