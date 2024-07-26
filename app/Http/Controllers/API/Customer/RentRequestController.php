@@ -41,11 +41,11 @@ class RentRequestController extends BaseController
     public function store(Request $request)
     {
         try {
-            if (count($this->order->cartItemList('customerapi')) == 0) {
-                return $this->sendResponse('No Record Found', 'Your cart is empty.');
+            $responce = $this->order->orderStore($request->all(), 'customerapi');
+            if($responce){
+                return $this->sendResponse($responce, 'Rent Request created successfully.');
             }
-            $data = $this->order->orderStore($request->all(), 'customerapi');
-            return $this->sendResponse($data, 'Rent Request created successfully.');
+            return $this->sendResponse('No Record Found', 'Your cart is empty.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }
