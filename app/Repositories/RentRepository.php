@@ -122,7 +122,7 @@ class RentRepository implements RentInterface
                     'delivery_charges' => $product->delivery_charges
                 ]);
                 $product->decrement('quantity');
-                $products .= $product->name.' (1 Qty) (From: '. date('d M Y', $data['from']).') (To: '.date('d M Y', $data['to']).')';
+                $products .= $product->name.' (1 Qty) (From: '. $data['from'].') (To: '.$data['to'].')';
             }else{
                 foreach($customer->rentCarts as $row){
                     $product = $row->product;
