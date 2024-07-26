@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Product;
 use Illuminate\Support\Facades\{DB,Auth};
 use App\Contracts\{FcmInterface,RentInterface};
 use App\Services\{AdminNotifyService,WhatsAppService};
