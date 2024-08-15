@@ -3,6 +3,7 @@
 use App\Models\Order;
 use App\Models\Setting;
 use Spatie\Image\Image;
+use App\Models\Category;
 use App\Models\RentRequest;
 use Spatie\Image\Manipulations;
 use App\Models\MaintenenceRequest;
@@ -66,4 +67,19 @@ function ordersCount()
         'maintenence' => MaintenenceRequest::whereStatus('Pending')->count(),
     ];
     return $data;
+}
+
+/**
+ * Get listing of a resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function categoriesList($type = null)
+{
+    $query = Category::query();
+
+    if (!is_null($type)) {
+        $query->where('type', $type);
+    }
+    return $query->get();
 }
