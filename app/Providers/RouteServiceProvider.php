@@ -57,6 +57,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace('App\Http\Controllers\Admin\Category')
                 ->group(base_path('routes/categories.php'));
 
+            Route::middleware(['web','auth'])
+                ->prefix('admin/rent')
+                ->namespace('App\Http\Controllers\Admin\Rent')
+                ->group(base_path('routes/rent.php'));
+
             Route::middleware(['web','customer'])
                 ->prefix('customer')
                 ->namespace('App\Http\Controllers\Web\Customer')

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Rent;
 use App\Models\ProductRent;
 
 use App\Models\RentRequest;
@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
  * Class RentRequestController
  * @package App\Http\Controllers
  */
-class RentRequestController extends Controller
+class RentChartController extends Controller
 {
     protected $slot;
     protected $rentRequest;
@@ -27,11 +27,8 @@ class RentRequestController extends Controller
     {
         $this->slot = $slot;
         $this->rentRequest = $rentRequest;
-        $this->middleware('permission:rentRequests-list',  ['only' => ['index']]);
-        $this->middleware('permission:rentRequests-view',  ['only' => ['show']]);
-        $this->middleware('permission:rentRequests-create',['only' => ['create','store']]);
-        $this->middleware('permission:rentRequests-edit',  ['only' => ['edit','update']]);
-        $this->middleware('permission:rentRequests-delete',['only' => ['destroy']]);
+        $this->middleware('permission:rentChart-list',  ['only' => ['index']]);
+        $this->middleware('permission:rentChart-view',  ['only' => ['show']]);
     }
 
     /**
@@ -43,7 +40,7 @@ class RentRequestController extends Controller
     {
         $rentRequests = $this->rentRequest->orderList(null, true);
 
-        return view('admin.rent-request.index', compact('rentRequests'));
+        return view('admin.rent.chart.index', compact('rentRequests'));
     }
 
     /**
@@ -54,7 +51,7 @@ class RentRequestController extends Controller
     public function create()
     {
         $rentRequest = $this->rentRequest->orderNew();
-        return view('admin.rent-request.create', compact('rentRequest'));
+        return view('admin.rent.order.create', compact('rentRequest'));
     }
 
     /**
@@ -83,7 +80,7 @@ class RentRequestController extends Controller
     {
         $rentRequest = $this->rentRequest->orderFind($id);
 
-        return view('admin.rent-request.show', compact('rentRequest'));
+        return view('admin.rent.order.show', compact('rentRequest'));
     }
 
     /**
@@ -96,7 +93,7 @@ class RentRequestController extends Controller
     {
         $rentRequest = $this->rentRequest->orderFind($id);
 
-        return view('admin.rent-request.edit', compact('rentRequest'));
+        return view('admin.rent.order.edit', compact('rentRequest'));
     }
 
     /**

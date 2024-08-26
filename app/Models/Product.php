@@ -206,4 +206,12 @@ class Product extends Model implements Auditable
     {
         return $this->hasMany('App\Models\OrderDetail', 'product_id', 'id')->whereNotNull('star');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function rentDetails()
+    {
+        return $this->hasMany('App\Models\RentRequestDetail', 'product_id', 'id');
+    }
 }

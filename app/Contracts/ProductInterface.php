@@ -14,7 +14,7 @@ interface ProductInterface
 
 	public function rentAdminList($filter);
 
-	public function rentProductList($filter);
+	public function rentProductList($filter, $paginaton);
 
 	public function rentSpecial($filter);
 

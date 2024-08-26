@@ -3,10 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\Product;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\{DB,Auth};
 use App\Contracts\{FcmInterface,RentInterface};
 use App\Services\{AdminNotifyService,WhatsAppService};
-use App\Models\{Task,RentCart,RentRequestDetail,RentRequest,Customer,Payment};
+use App\Models\{Task,RentCart,RentRequestDetail,RentRequest,Customer,Payment,RentLink};
 
 class RentRepository implements RentInterface
 {
@@ -452,6 +453,47 @@ class RentRepository implements RentInterface
             ];
             $this->whatsAppService->sendMessage('rental_date_extended', $data);
         }
+    }
+
+    public function linkList()
+    {
+        return RentLink::paginate();
+    }
+
+	public function linkCreate()
+    {
+        return new RentLink();
+    }
+
+	public function linkStore($data)
+    {
+        $data['token'] = Str::random(32);
+        return RentLink::create($data);
+    }
+
+	public function linkFind($id)
+    {
+        return RentLink::find($id);
+    }
+
+    public function linkSearch($columns)
+    {
+        $query = RentLink::query();
+        foreach($columns as $column => $value)
+        {
+            $query->where($column, $value);
+        }
+        return $query->first();
+    }
+
+	public function linkUpdate($data, $link)
+    {
+        return $link->update($data);
+    }
+
+	public function linkDelete($id)
+    {
+        return RentLink::find($id)->delete();
     }
 }
 

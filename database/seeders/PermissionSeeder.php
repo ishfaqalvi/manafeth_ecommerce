@@ -49,6 +49,15 @@ class PermissionSeeder extends Seeder
             'rentRequests-edit',
             'rentRequests-delete',
 
+            'rentChart-list',
+            'rentChart-view',
+
+            'rentLinks-list',
+            'rentLinks-view',
+            'rentLinks-create',
+            'rentLinks-edit',
+            'rentLinks-delete',
+
             'customers-list',
             'customers-view',
             'customers-create',

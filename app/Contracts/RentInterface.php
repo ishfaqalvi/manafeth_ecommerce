@@ -29,4 +29,19 @@ interface RentInterface
     public function orderReview($data);
 
     public function dateExtend($data);
+
+    public function linkList();
+
+	public function linkCreate();
+
+	public function linkStore($data);
+
+	public function linkFind($id);
+
+    public function linkSearch($colums);
+
+	public function linkUpdate($data, $link);
+
+	public function linkDelete($id);
+
 }

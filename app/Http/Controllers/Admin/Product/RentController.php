@@ -41,6 +41,7 @@ class RentController extends Controller
     public function create()
     {
         $product = $this->product->create();
+
         return view('admin.product.rent.create', compact('product'));
     }
 

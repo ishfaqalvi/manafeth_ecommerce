@@ -80,6 +80,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
         Route::get('rent',             'rent'        )->name('rent'       );
         Route::get('maintenance',      'maintenance' )->name('maintenance');
         Route::get('show/{id}',        'show'        )->name('show'       );
+        Route::get('link/{id}',        'link'        )->name('link'       );
     });
 
     /*
@@ -88,6 +89,16 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
 	|--------------------------------------------------------------------------
 	*/
     Route::controller(BlogController::class)->prefix('blogs')->as('web.blogs.')->group(function () {
+        Route::get('list',          'index'  )->name('index');
+        Route::get('show/{id}',     'show'  )->name('show');
+    });
+
+    /*
+	|--------------------------------------------------------------------------
+	| Blog Routes
+	|--------------------------------------------------------------------------
+	*/
+    Route::controller(Walk::class)->prefix('blogs')->as('web.blogs.')->group(function () {
         Route::get('list',          'index'  )->name('index');
         Route::get('show/{id}',     'show'  )->name('show');
     });

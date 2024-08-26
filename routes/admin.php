@@ -32,26 +32,6 @@ Route::controller(OrderController::class)->prefix('orders')->as('orders.')->grou
 
 /*
 |--------------------------------------------------------------------------
-| Rent Requests Routes
-|--------------------------------------------------------------------------
-*/
-Route::controller(RentRequestController::class)->prefix('rent/request')->as('rent.')->group(function () {
-	Route::get('list',				 'index'	    )->name('index'  	    );
-	Route::get('create',			 'create'	    )->name('create' 	    );
-	Route::post('store',			 'store'	    )->name('store'  	    );
-	Route::get('edit/{id}',			 'edit'		    )->name('edit'	  	    );
-	Route::get('show/{id}',			 'show'		    )->name('show'	  	    );
-	Route::get('get-rents',			 'getRents'		)->name('getRents'	  	);
-	Route::post('update',            'update'	    )->name('update' 	    );
-	Route::post('update-detail',     'updateDetail'	)->name('updateDetail'  );
-	Route::post('date-extend',       'dateExtend'   )->name('dateExtend'    );
-	Route::delete('delete/{id}',	 'destroy'	    )->name('destroy'	    );
-	Route::get('time-slots',         'timeSlots'    )->name('timeSlots'     );
-    Route::post('add-payment',		 'addPayment'   )->name('addPayment'    );
-});
-
-/*
-|--------------------------------------------------------------------------
 | Maintenence Requests Routes
 |--------------------------------------------------------------------------
 */
@@ -114,7 +94,7 @@ Route::controller(BrandController::class)->prefix('brands')->as('brands.')->grou
 
 /*
 |--------------------------------------------------------------------------
-| Brands Routes
+| Top Search Routes
 |--------------------------------------------------------------------------
 */
 Route::controller(TopSearchController::class)->prefix('top-searches')->as('top-searches.')->group(function () {
@@ -129,29 +109,7 @@ Route::controller(TopSearchController::class)->prefix('top-searches')->as('top-s
 
 /*
 |--------------------------------------------------------------------------
-| Categories Routes
-|--------------------------------------------------------------------------
-*/
-Route::controller(CategoryController::class)->prefix('categories')->as('categories.')->group(function () {
-	Route::get('list',					'index'			)->name('all.index'		);
-	Route::post('list',					'index'			)->name('all.filter'	);
-	Route::get('create',				'create'		)->name('all.create'	);
-	Route::post('store',				'store'			)->name('store'		 	);
-	Route::get('edit/{id}',				'edit'			)->name('all.edit'		);
-	Route::get('show/{id}',				'show'			)->name('all.show'		);
-	Route::patch('update/{category}',	'update'		)->name('update'	 	);
-	Route::delete('delete/{id}',		'destroy'		)->name('destroy'	 	);
-	Route::get('sub/list',				'sub'			)->name('sub.index'	 	);
-	Route::post('sub/list',				'sub'			)->name('sub.filter'	);
-	Route::post('sub/store',			'subStore'		)->name('sub.store'  	);
-	Route::post('sub/update',			'subUpdate'		)->name('sub.update'  	);
-	Route::delete('sub/delete/{id}',	'subDestroy'	)->name('sub.destroy'	);
-	Route::get('sub-categories',    	'subCategories' );
-});
-
-/*
-|--------------------------------------------------------------------------
-| Categories Routes
+| Blog Routes
 |--------------------------------------------------------------------------
 */
 Route::controller(BlogController::class)->prefix('blogs')->as('blogs.')->group(function () {

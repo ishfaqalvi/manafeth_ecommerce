@@ -34,9 +34,16 @@ class ProductRepository implements ProductInterface
 	}
 
 	//To view all rent products data
-	public function rentProductList($filter)
+	public function rentProductList($filter = null, $pagination = true)
 	{
-		return Product::filter($filter)->whereStatus('Publish')->whereType('Rent')->with(['brand','category','subCategory','rents'])->paginate();
+        $query = Product::query();
+        if(isset($filters))
+        {
+            $query->filter($filter)->whereStatus('Publish')->whereType('Rent')->with(['brand','category','subCategory','rents']);
+        }
+        $query->whereStatus('Publish')->whereType('Rent')->with(['brand','category','subCategory','rents']);
+
+		return $pagination ? $query->paginate() : $query->get();
 	}
 
     //To view all rent products data

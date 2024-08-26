@@ -85,6 +85,44 @@ class Category extends Model implements Auditable
     }
 
     /**
+     * The get attributes.
+     *
+     * @var array
+     */
+    public function getRentedProductsCountAttribute()
+    {
+        return $this->products()
+            ->whereHas('rentDetails', function($query) {
+                $query->where('to', '>=', strtotime(now()));
+            })
+        ->sum('quantity');
+    }
+
+    /**
+     * The get attributes.
+     *
+     * @var array
+     */
+    public function getAvailableProductsCountAttribute()
+    {
+        return $this->products()->sum('quantity');
+    }
+
+    /**
+     * The get attributes.
+     *
+     * @var array
+     */
+    public function getRentalEndingSoonProductsCountAttribute()
+    {
+        return $this->products()
+            ->whereHas('rentDetails', function($query) {
+                $query->where('to', strtotime(now()->addDays(2)));
+            })
+        ->sum('quantity');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function subCategories()

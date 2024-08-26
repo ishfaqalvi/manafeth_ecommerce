@@ -3,16 +3,17 @@
 namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
-use App\Contracts\ProductInterface;
 use App\Http\Controllers\Controller;
+use App\Contracts\{ProductInterface,RentInterface};
 
 class ProductController extends Controller
 {
-    protected $product;
+    protected $product, $rent;
 
-    public function __construct(ProductInterface $product)
+    public function __construct(ProductInterface $product, RentInterface $rent)
     {
         $this->product = $product;
+        $this->rent = $rent;
     }
 
     /**
@@ -29,7 +30,7 @@ class ProductController extends Controller
      */
     public function rent(Request $request)
     {
-        $products = $this->product->rentProductList($request->all());
+        $products = $this->product->rentProductList($request->all(), true);
         return view('web.product.sale', compact('products'));
     }
 
@@ -49,5 +50,15 @@ class ProductController extends Controller
     {
         $product = $this->product->show($id);
         return view('web.product.show', compact('product'));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function link(string $token)
+    {
+        $link = $this->rent->linkSearch(['token' => $token]);
+
+        return view('web.product.link', compact('link'));
     }
 }

@@ -18,15 +18,6 @@
     </a>
 </li>
 @endcan
-@can('rentRequests-list')
-<li class="nav-item">
-    <a class="nav-link {{ request()->is('admin/rent/request*') ? 'active' : ''}}" href="{{ route('rent.index') }}">
-        <i class="ph-buildings"></i>
-        <span>Rent Requests</span>
-        <span class="badge bg-primary align-self-center rounded-pill ms-auto">{{ ordersCount()['rent'] }}</span>
-    </a>
-</li>
-@endcan
 @can('maintenenceRequests-list')
 <li class="nav-item">
     <a class="nav-link {{ request()->is('admin/maintenance/request*') ? 'active' : ''}}" href="{{ route('maintenance.index') }}">
@@ -44,6 +35,44 @@
     </a>
 </li>
 @endcan
+@canany(['rentRequests-list','rentChart-list','rentLinks-list'])
+<li class="nav-item nav-item-submenu {{ request()->is('admin/rent*') ? 'nav-item-open' : ''}}">
+    <a href="#" class="nav-link">
+        <i class="ph-buildings"></i>
+        <span>Rent</span>
+    </a>
+    <ul class="nav-group-sub collapse {{ request()->is('admin/rent*') ? 'show' : ''}}">
+        @can('rentRequests-list')
+            <li class="nav-item">
+                <a
+                    href ="{{ route('rent.index') }}"
+                    class="nav-link {{ request()->routeIs('rent.*') ? 'active' : ''}}">
+                    Orders
+                    <span class="badge bg-primary align-self-center rounded-pill ms-auto">{{ ordersCount()['rent'] }}</span>
+                </a>
+            </li>
+        @endcan
+        @can('rentChart-list')
+            <li class="nav-item">
+                <a
+                    href="{{ route('chart.index') }}"
+                    class="nav-link {{ request()->routeIs('chart.*') ? 'active' : ''}}">
+                    Chart
+                </a>
+            </li>
+        @endcan
+        @can('rentLinks-list')
+            <li class="nav-item">
+                <a
+                    href="{{ route('links.index') }}"
+                    class="nav-link {{ request()->routeIs('links*') ? 'active' : ''}}">
+                    Links
+                </a>
+            </li>
+        @endcan
+    </ul>
+</li>
+@endcanany
 @canany(['saleCategories-list','rentCategories-list'])
 <li class="nav-item nav-item-submenu {{ request()->is('admin/categories/main*') ? 'nav-item-open' : ''}}">
     <a href="#" class="nav-link">

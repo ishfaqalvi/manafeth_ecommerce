@@ -1,52 +1,20 @@
-<div class="col-sm-12 rental-chart pb-5">
-    <div class="tree text-center">
-        <ul>
-            <li>
-                <a href="#" class="btn btn-info">
-                    Rental Chart
-                </a>
-                @if(count(categoriesList('Rent')) > 0)
-                    <ul>
-                        @foreach (categoriesList('Rent') as $category)
-                            <li>
-                                <div style="width: 150px;" class="mx-auto">
-                                    <div class="card mb-0">
-                                        <div class="bg-yellow card-header d-flex align-items-center justify-content-center p-1">
-                                            {{-- <a href="#" data-parentid="" class="text-white addFramework">
-                                                <i class="ph-plus-circle"></i>
-                                            </a> --}}
-                                            <div class="fw-bold">{{ $category->name }}</div>
-                                        </div>
-                                        {{-- <div class="card-body p-1">
-                                            <div class="fw-bold"> {{ $category->name }}</div>
-                                        </div> --}}
-                                    </div>
-                                </div>
-                                @if ($category->products->count() > 0)
-                                    <ul>
-                                        @foreach ($category->products as $product)
-                                        @if($product->serial_number)
-                                        <li>
-                                            <div style="width: 150px;" class="mx-auto">
-                                                <div class="card mb-0">
-                                                    <div class="bg-yellow card-header d-flex align-items-center justify-content-center p-1">
-                                                        {{-- <a href="#" data-parentid="" class="text-white addFramework">
-                                                            <i class="ph-plus-circle"></i>
-                                                        </a> --}}
-                                                        <div class="fw-bold">{{ $product->serial_number }}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        @endif
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </li>
-                        @endforeach
-                    </ul>
-                @endif
-            </li>
-        </ul>
+<div class="col-md-12">
+    <div class="row p-3">
+        @foreach (categoriesList('Rent') as $category)
+            <div class="col-md-4 mb-3">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active">{{ $category->name }}</a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex">
+                        Active <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $category->rented_products_count }}</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex">
+                        Available <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $category->available_products_count }}</span>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action d-flex">
+                        Ending Renting <span class="badge border border-teal text-teal rounded-pill ms-auto">{{ $category->rental_ending_soon_products_count }}</span>
+                    </a>
+                </div>
+            </div>
+        @endforeach
     </div>
 </div>
