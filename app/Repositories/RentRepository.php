@@ -455,9 +455,17 @@ class RentRepository implements RentInterface
         }
     }
 
-    public function linkList()
+    public function linkList($guard, $pagination = true)
     {
-        return RentLink::paginate();
+        $quary = RentLink::query();
+        if($guard == 'customerapi')
+        {
+            $quary->where('linkable_type', 'App\Models\Customer')->where('linkable_id', auth($guard)->user()->id);
+        }else{
+            $quary->where('linkable_type', 'App\Models\User');
+        }
+        $quary->with(['product.brand', 'product.category', 'product.subCategory', 'product.rents', 'product.images', 'productRent']);
+        return $pagination ? $quary->paginate() : $quary->get();
     }
 
 	public function linkCreate()
@@ -465,15 +473,17 @@ class RentRepository implements RentInterface
         return new RentLink();
     }
 
-	public function linkStore($data)
+	public function linkStore($data, $user)
     {
-        $data['token'] = Str::random(32);
-        return RentLink::create($data);
+        $data['token'] = Str::random(16);
+        $newLink = $user->rentLinks()->create($data);
+
+        return $newLink;
     }
 
 	public function linkFind($id)
     {
-        return RentLink::find($id);
+        return RentLink::with(['product.brand', 'product.category', 'product.subCategory', 'product.rents', 'product.images', 'productRent'])->find($id);
     }
 
     public function linkSearch($columns)

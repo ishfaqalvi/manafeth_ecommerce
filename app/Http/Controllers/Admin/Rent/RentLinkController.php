@@ -37,7 +37,7 @@ class RentLinkController extends Controller
      */
     public function index()
     {
-        $rentLinks = $this->rentLink->linkList();
+        $rentLinks = $this->rentLink->linkList('User');
 
         return view('admin.rent.link.index', compact('rentLinks'));
     }
@@ -65,7 +65,8 @@ class RentLinkController extends Controller
      */
     public function store(Request $request)
     {
-        $rentLink = $this->rentLink->linkStore($request->all());
+        $user = auth()->user();
+        $rentLink = $this->rentLink->linkStore($request->all(), $user);
         return redirect()->route('links.index')->with('success', 'Rent Link created successfully.');
     }
 

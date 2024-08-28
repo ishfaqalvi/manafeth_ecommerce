@@ -47,7 +47,7 @@
                     <td>{{ ++$key }}</td>
                     <td>{{ $rentLink->title }}</td>
                     <td>
-                        <button type="button" class="btn btn-link copy-link-btn" data-link="{{ route('web.products.link',$rentLink->token) }}">
+                        <button type="button" class="btn btn-link copy-link-btn" data-link="{{ $rentLink->web_page_url }}">
                             <i class="ph-link me-1"></i>
                             Copy Link
                         </button>

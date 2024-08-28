@@ -135,4 +135,12 @@ class User extends Authenticatable implements Auditable
     {
         return $this->morphMany(Payment::class, 'collectable');
     }
+
+    /**
+     * Get all of the user links.
+     */
+    public function rentLinks()
+    {
+        return $this->morphMany(RentLink::class, 'linkable');
+    }
 }

@@ -20,6 +20,8 @@ return new class extends Migration
             $table->bigInteger('from');
             $table->bigInteger('to');
             $table->string('token')->unique();
+            // Polymorphic relation columns
+            $table->morphs('linkable');
             $table->timestamps();
         });
     }

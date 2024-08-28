@@ -196,6 +196,14 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
+     * Get all of the user links.
+     */
+    public function rentLinks()
+    {
+        return $this->morphMany(RentLink::class, 'linkable');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function coupons()

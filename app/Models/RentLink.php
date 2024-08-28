@@ -27,6 +27,8 @@ class RentLink extends Model implements Auditable
 {
     use \OwenIt\Auditing\Auditable;
 
+    protected $appends = ['web_page_url'];
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -40,6 +42,16 @@ class RentLink extends Model implements Auditable
      * @var array
      */
     protected $fillable = ['title','product_id','product_rent_id','quantity','from','to','token'];
+
+    /**
+     * The get attributes.
+     *
+     * @var array
+     */
+    public function getWebPageUrlAttribute()
+    {
+        return route("web.products.link", $this->token);
+    }
 
     /**
      * Interact with the date.

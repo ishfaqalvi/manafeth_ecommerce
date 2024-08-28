@@ -85,6 +85,14 @@ Route::group(['prefix'=>'customer', 'namespace'=>'App\Http\Controllers\API\Custo
             Route::post('reviews',      	'reviews'   );
 	    });
 
+		Route::controller(RentLinkController::class)->prefix('rent/links')->group(function(){
+	        Route::get('list',             	'index'     );
+	        Route::post('create',      		'store'     );
+            Route::get('view/{id}',      	'show'    	);
+			Route::patch('edit/{link}',     'update' 	);
+	        Route::delete('delete/{id}',    'destroy'   );
+	    });
+
 	    Route::controller(MaintenenceRequestController::class)->prefix('maintenence/request')->group(function(){
 	        Route::get('list',             	'index'  );
 	        Route::post('create',      		'store'  );
