@@ -183,27 +183,6 @@ class ProductRepository implements ProductInterface
 	}
 
 	//To get filters of a products
-	// public function filters($type = null)
-	// {
-	//     $query = Product::query();
-
-	//     if (!empty($type)) {
-	//         $query->where('type', $type);
-	//     }
-
-	//     $minPrice = $query->min('price');
-	//     $maxPrice = $query->max('price');
-
-	//     return [
-	//         'categories'      => Category::get(['id','name']),
-	//         'sub_categories'  => SubCategory::get(['id','name']),
-	//         'brands'          => Brand::get(['id','name']),
-	//         'products'        => [
-	//             'minPrice' => $minPrice,
-	//             'maxPrice' => $maxPrice
-	//         ]
-	//     ];
-	// }
     public function filters($type = null, $categoryId = null, $subCategoryId = null)
     {
         $query = Product::query();

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Contracts\{ProductInterface,RentInterface};
+use App\Contracts\{ProductInterface, RentInterface};
 
 class ProductController extends Controller
 {
@@ -58,7 +58,17 @@ class ProductController extends Controller
     public function link(string $token)
     {
         $link = $this->rent->linkSearch(['token' => $token]);
+        if ($link) {
+            return view('web.product.link', compact('link'));
+        }
+        return view('web.product.invalid_link');
+    }
 
-        return view('web.product.link', compact('link'));
+    /**
+     * Display the specified resource.
+     */
+    public function order()
+    {
+        return view('web.product.success');
     }
 }
