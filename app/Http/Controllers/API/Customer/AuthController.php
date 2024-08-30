@@ -23,8 +23,14 @@ class AuthController extends BaseController
     public function register(Request $request)
     {
         try {
-            $respnce = $this->customer->register($request->all());
-            return $this->sendResponse($respnce['customer'], $respnce['message']);
+            $input = $request->all();
+            $input['type'] = 'Registered';
+            $respnce = $this->customer->register($input);
+            if ($respnce['status']) {
+                return $this->sendResponse($respnce['customer'], $respnce['message']);
+            } else {
+                return $this->sendError('Already record Exist.', ['error' => $respnce['message']]);
+            }
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());
         }

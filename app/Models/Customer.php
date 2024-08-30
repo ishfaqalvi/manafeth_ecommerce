@@ -45,6 +45,7 @@ class Customer extends Authenticatable implements Auditable
      * @var array
      */
     protected $fillable = [
+        'type',
         'name',
         'email',
         'mobile_number',
@@ -141,7 +142,8 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOMany     */
+     * @return \Illuminate\Database\Eloquent\Relations\HasOMany     
+     * */
     public function addresses()
     {
         return $this->hasMany('App\Models\Address', 'customer_id', 'id');

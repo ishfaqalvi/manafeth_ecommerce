@@ -22,7 +22,7 @@ class WhatsAppService
         $this->to = settings('whatsapp_notification_number') ?? $this->config['default_number'];
     }
 
-    public function sendMessage($template, $data, $customer_number = null)
+    public function sendMessage($template, $data = [], $customer_number = null)
     {
         $to = !is_null($customer_number) ? $customer_number : $this->to;
         $headers = [

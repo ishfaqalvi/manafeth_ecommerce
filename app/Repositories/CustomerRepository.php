@@ -10,29 +10,70 @@ class CustomerRepository implements CustomerInterface
 {
 	public function register($data)
     {
-    	$checkUser = Customer::whereEmail($data['email'])->first();
-        if ($checkUser) {
-            $customer = $checkUser->update($data);
-        }else{
+        // Initialize response variables
+        $customer = null;
+        $message = '';
+        $status = false;
+
+        // Check if the customer is registering as 'Registered'
+        if ($data['type'] === 'Registered') {
+            // Check if the customer already exists by email or mobile number
+            $checkUser = Customer::where('email', $data['email'])
+                                ->orWhere('mobile_number', $data['mobile_number'])
+                                ->first();
+
+            if ($checkUser) {
+                // If the customer exists and is a Guest, update to Registered
+                if ($checkUser->type === 'Guest') {
+                    $checkUser->update($data);
+                    $customer = $checkUser;
+                    $message = 'Your account has been updated to a registered account.';
+                    $status = true;
+                } else {
+                    // If the customer is already Registered, return an error message
+                    return [
+                        'status' => false,
+                        'message' => 'Already registered an account against this email or mobile number.'
+                    ];
+                }
+            } else {
+                // If no existing customer is found, create a new Registered customer
+                $customer = Customer::create($data);
+                $message = 'Your account has been created successfully.';
+                $status = true;
+            }
+
+            // Post-registration verification for Registered users only
+            if ($customer) {
+                if (isset($data['verification_by']) && $data['verification_by'] === 'Phone') {
+                    // Mark the email as verified if registered by phone
+                    $customer->update(['email_verified_at' => now()]);
+                    $message .= ' Your account has been verified by phone.';
+                } else {
+                    // Send OTP to email for verification
+                    $otp = rand(1000, 9999);
+                    Mail::to($data['email'])->send(new OTPMail($otp, 'Account Verification'));
+                    Token::updateOrCreate(['email' => $data['email']], [
+                        'email'       => $data['email'],
+                        'otp'         => $otp,
+                        'expiry_time' => now()->addMinutes(10),
+                        'used'        => false
+                    ]);
+                    $message .= ' Check your email for account verification.';
+                }
+            }
+        } else {
+            // If the customer is a Guest, create a simple guest account with no verification
             $customer = Customer::create($data);
+            $message = 'Guest account created successfully.';
+            $status = true;
         }
-        if(isset($data['verification_by']) && $data['verification_by'] == 'Phone')
-        {
-            $row = Customer::find($customer->id);
-            $row->update(['email_verified_at' => now()]);
-            $message = 'Your account has been created successfully.';
-        }else{
-            $otp = rand(1000, 9999);
-            Mail::to($data['email'])->send(new OTPMail($otp, 'Account Varification'));
-            Token::updateOrCreate(['email' => $data['email']], [
-                'email'      => $data['email'],
-                'otp'        => $otp,
-                'expiry_time'=> now()->addMinutes(10),
-                'used'       => false
-            ]);
-            $message = 'Your account has been created successfully. Check your email for account verification.';
-        }
-        return ['customer' => $customer, 'message' => $message];
+
+        return [
+            'status' => $status,
+            'message' => $message,
+            'customer' => $customer
+        ];
     }
 
     public function verifyOTP($data)

@@ -163,7 +163,7 @@ class SaleRepository implements SaleInterface
             ]);
             if(settings('sale_order_whatsapp_notification') == 'Yes'){
                 $data = [$customer->name, $customer->mobile_number, $products];
-                $this->whatsAppService->sendMessage('purchase_order_placed', $data);
+                $this->whatsAppService->sendMessage('purchase_order_placed', $data); 
             }
             if(settings('sale_order_fcm_notification_to_customer') == 'Yes' && $guard == 'customerapi'){
                 $data = [
