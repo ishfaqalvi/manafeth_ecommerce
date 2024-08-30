@@ -150,16 +150,195 @@
                         </div>
                         <div class="col-md-4">
                             <label for="quantity" class="form-label">Quantity:</label>
-                            <input type="number" class="form-control" name="quantity" placeholder="Enter quanitity" value="{{ $link->quantity }}" id="quantity">
+                            <input type="number" class="form-control" name="quantity" placeholder="Enter quanitity"
+                                value="{{ $link->quantity }}" id="quantity">
                         </div>
                         <div class="col-md-12 proceed-section my-3">
-                            <button type="button" class="btn">Confirm & Proceed</button>
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Confirm
+                                & Proceed</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="confirm_proceed">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Verify Your Identity</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary">Save changes</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+    <script>
+        const config = {
+            spinnerContent: `
+            <div class="text-center text-success">
+                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden"></span>
+                </div>
+            </div>
+            `,
+            sendOtpBtnContent: '<button type="submit" class="btn btn-lg btn-primary btn-block">Send OTP</button>',
+            verifyOtpBtnContent: '<button type="submit" class="btn btn-lg btn-primary btn-block">Verify OTP</button>',
+        };
+        var firebaseConfig = {
+            apiKey: "AIzaSyB66H6E356R3eiuB7hF9DzPPEPo_X3Xhks",
+            authDomain: "e-manafeth-9bd48.firebaseapp.com",
+            projectId: "e-manafeth-9bd48",
+            storageBucket: "e-manafeth-9bd48.appspot.com",
+            messagingSenderId: "928927421004",
+            appId: "1:928927421004:web:d8e3cc954768cb36e35ae9",
+            measurementId: "G-2M9S1WTXDV",
+
+            // databaseURL: "https://sakoon-ed0db.firebaseio.com"
+        };
+        firebase.initializeApp(firebaseConfig);
+        window.onload = function () {
+            render();
+        };
+        function render() {
+            window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+                'size': 'invisible',
+                'callback': (response) => {
+                    // onSignInSubmit();
+                }
+            });
+        }
+        function sendOTP(phone)
+        {
+            $('#sendOtpBtnContainer').html(config.spinnerContent);
+            firebase.auth().signInWithPhoneNumber(phone, window.recaptchaVerifier)
+                .then(function (confirmationResult) {
+                    window.confirmationResult = confirmationResult;
+                    coderesult = confirmationResult;
+                    $("#send-otp-form").addClass('d-none');
+                    $("#verify-otp-form").removeClass('d-none');
+                    toastr.success('Message sent successfully! Check your phone.');
+                }).catch(function (error) {
+                    toastr.error(error.message);
+                    console.log(error.message);
+                }).finally(() => {
+                    $('#sendOtpBtnContainer').html(config.sendOtpBtnContent);
+                });
+        }
+        function verify(code) {
+            $('#verifyOtpBtnContainer').html(config.spinnerContent);
+            coderesult.confirm(code).then(function (result) {
+                var user = result.user;
+                sendFormData()
+            }).catch(function (error) {
+                $("#send-otp-form").removeClass('d-none');
+                $("#verify-otp-form").addClass('d-none');
+                toastr.error('Something went wrong please try again!.');
+                console.log(error.message);
+            }).finally(() => {
+                $('#verifyOtpBtnContainer').html(config.verifyOtpBtnContent);
+            });
+        }
+        function sendFormData() {
+            $.ajax({
+                url: "{{ route('web.login') }}",
+                type: 'POST',
+                data: {
+                    name: $("#name").val(),
+                    phone_number: $("#phone_number").val(),
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    toastr.success(response.message);
+                    location.reload();
+                },
+                error: function (xhr, error) {
+                    toastr.error('Something went wrong please try again!.');
+                }
+            });
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $.validator.addMethod("pakistaniPhoneNumber", function(value, element) {
+                return this.optional(element) || /^((\+92)|(0092))-{0,1}3[0-9]{2}-{0,1}[0-9]{7}$|^03[0-9]{2}-[0-9]{7}$/.test(value);
+            }, "Please enter a valid phone number");
+            $('#send-otp-form').validate({
+                errorElement: "div",
+                errorPlacement: function(error, element) {
+                    error.addClass("invalid-feedback");
+                    error.insertAfter(element);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                },
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+                    formData = $(form).serializeArray();
+                    var phone = $("input[name='phone_number']").val();
+                    sendOTP(phone);
+                },
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    phone_number: {
+                        required: true,
+                        pakistaniPhoneNumber: true
+                    }
+                },
+                messages: {
+                    name:{
+                        required: "Please enter your name"
+                    },
+                    phone_number:{
+                        required: "Please enter your valid phone number"
+                    }
+                }
+            });
+            $('#verify-otp-form').validate({
+                errorElement: "div",
+                errorPlacement: function(error, element) {
+                    error.addClass("invalid-feedback");
+                    error.insertAfter(element);
+                },
+                highlight: function(element, errorClass, validClass) {
+                    $(element).addClass("is-invalid").removeClass("is-valid");
+                },
+                unhighlight: function(element, errorClass, validClass) {
+                    $(element).addClass("is-valid").removeClass("is-invalid");
+                },
+                submitHandler: function (form, event) {
+                    event.preventDefault();
+                    formData = $(form).serializeArray();
+                    var otp = $("input[name='otp']").val();
+                    verify(otp);
+                },
+                rules: {
+                    otp: {
+                        required: true
+                    }
+                },
+                messages: {
+                    otp:{
+                        required: "Please enter otp send on your phone number"
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
 
 @section('script')
