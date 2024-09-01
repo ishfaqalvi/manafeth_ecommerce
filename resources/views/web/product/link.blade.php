@@ -109,6 +109,8 @@
                         @endforeach
                     </div>
                 </div>
+                <input type="hidden" name="product_id" value="{{ $link->product_id }}" id="product_id">
+                <input type="hidden" name="link" value="{{ $link->web_page_url }}" id="web_page_url">
                 <div class="col-md-7 category-section">
                     <div class="row">
                         <div class="col">
@@ -131,12 +133,19 @@
                         <ul class="nav nav-tabs" role="tablist">
                             @foreach ($link->product->rents as $rent)
                                 <li class="nav-item">
-                                    <a class="nav-link {{ $rent->id == $link->product_rent_id ? 'active' : '' }}"
-                                        data-bs-toggle="tab" href="#{{ 'tab' . $rent->id }}">{{ $rent->title }}</a>
+                                    <a
+                                        class="nav-link {{ $rent->id == $link->product_rent_id ? 'active' : '' }}"
+                                        data-bs-toggle="tab"
+                                        href="#{{ 'tab' . $rent->id }}"
+                                        data-rent-id="{{ $rent->id }}"
+                                        >
+                                        {{ $rent->title }}
+                                    </a>
                                 </li>
                             @endforeach
                         </ul>
                     </div>
+                    <input type="hidden" id="product_rent_id" name="product_rent_id" value="{{ $link->product_rent_id }}">
                     <div class="row mt-4">
                         <div class="col-md-4">
                             <label for="fromDate" class="form-label">From:</label>
@@ -153,6 +162,7 @@
                         <div class="col-md-12 proceed-section my-3">
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Get This On Rent Now</button>
                         </div>
+                        <a href="#" id="test-order">Test Order</a>
                     </div>
                 </div>
             </div>
@@ -172,14 +182,24 @@
                             @csrf
                             <div class="form-group mb-3">
                                 {{ Form::label('name') }}
-                                {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name','required']) }}
+                                {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name','required', 'id' => 'name']) }}
                             </div>
                             <div class="form-group mb-3">
                                 {{ Form::label('mobile_number','Mobile Number') }}
-                                {{ Form::text('mobile_number', null, ['class' => 'form-control', 'placeholder' => 'Mobile Number','required']) }}
+                                {{ Form::text('mobile_number', null, ['class' => 'form-control', 'placeholder' => 'Mobile Number','required', 'id' => 'mobile_number']) }}
                             </div>
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-secondary">Send OTP</button>
+                            </div>
+                        </form>
+                        <form id="verify-otp-form" method="Post" class="d-none">
+                            @csrf
+                            <div class="form-group mb-3">
+                                {{ Form::label('otp','OTP') }}
+                                {{ Form::text('otp', null, ['class' => 'form-control', 'placeholder' => 'OTP','required']) }}
+                            </div>
+                            <div class="form-group mb-3">
+                                <button type="submit" class="btn btn-secondary">Confirm & Proceed</button>
                             </div>
                         </form>
                     </div>
@@ -201,6 +221,10 @@
                 autoplay: true,
                 autoplaySpeed: 3000,
                 arrows: true,
+            });
+            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
+                var rentId = $(e.target).data('rent-id');
+                $('#product_rent_id').val(rentId);
             });
             $('#fromDate').on('change', function() {
                 var fromDate = $(this).val();
@@ -251,7 +275,7 @@
                     window.confirmationResult = confirmationResult;
                     coderesult = confirmationResult;
                     $("#send-otp-form").addClass('d-none');
-                    // $("#verify-otp-form").removeClass('d-none');
+                    $("#verify-otp-form").removeClass('d-none');
                     toastr.success('Message sent successfully! Check your phone.');
                 }).catch(function (error) {
                     toastr.error(error.message);
@@ -262,7 +286,6 @@
                 });
         }
         function verify(code) {
-            $('#verifyOtpBtnContainer').html(config.spinnerContent);
             coderesult.confirm(code).then(function (result) {
                 var user = result.user;
                 sendFormData()
@@ -272,24 +295,31 @@
                 toastr.error('Something went wrong please try again!.');
                 console.log(error.message);
             }).finally(() => {
-                $('#verifyOtpBtnContainer').html(config.verifyOtpBtnContent);
+                $("#overlay").hide('slow');
+                $('body').removeClass('body-lock');
             });
         }
         function sendFormData() {
             $.ajax({
-                url: "{{ route('web.login') }}",
+                url: "{{ route('web.products.checkout') }}",
                 type: 'POST',
                 data: {
                     name: $("#name").val(),
-                    phone_number: $("#phone_number").val(),
+                    mobile_number: $("#mobile_number").val(),
+                    product_id : $('#product_id').val(),
+                    product_rent_id : $('#product_rent_id').val(),
+                    quantity : $('#quantity').val(),
+                    from : $('#fromDate').val(),
+                    to : $('#toDate').val(),
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
                     toastr.success(response.message);
-                    location.reload();
+                    window.location.href = "{{ route('web.products.order') }}";
                 },
                 error: function (xhr, error) {
                     toastr.error('Something went wrong please try again!.');
+                    window.location.href = $('#web_page_url').val();
                 }
             });
         }
@@ -320,7 +350,7 @@
                 rules: {
                     mobile_number: {
                         required: true,
-                        pakistaniPhoneNumber: true
+                        // pakistaniPhoneNumber: true
                     }
                 },
                 messages: {
@@ -348,6 +378,8 @@
                     event.preventDefault();
                     formData = $(form).serializeArray();
                     var otp = $("input[name='otp']").val();
+                    $("#overlay").show('slow');
+                    $('body').addClass('body-lock');
                     verify(otp);
                 },
                 rules: {
