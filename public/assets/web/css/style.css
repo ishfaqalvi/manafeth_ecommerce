@@ -182,7 +182,7 @@ input.success {
   float: left;
   text-align: center;
   padding-top: 15%;
-  opacity: .80;
+  /* opacity: .80; */
 }
 .spinner {
   margin: 0 auto;
@@ -1302,7 +1302,7 @@ input.success {
 }
 
 /*--------------------------------------------------------------
-  # Mobility Landing - Products - List View 
+  # Mobility Landing - Products - List View
   # Mobility Landing - Products - Grid View
   --------------------------------------------------------------*/
 

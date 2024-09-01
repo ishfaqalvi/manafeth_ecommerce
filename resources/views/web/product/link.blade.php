@@ -140,22 +140,18 @@
                     <div class="row mt-4">
                         <div class="col-md-4">
                             <label for="fromDate" class="form-label">From:</label>
-                            <input type="date" class="form-control" id="fromDate" name="fromDate"
-                                placeholder="Select start date" value="{{ date('Y-m-d', $link->from) }}">
+                            <input type="date" class="form-control" id="fromDate" name="fromDate" placeholder="Select start date" value="{{ date('Y-m-d', $link->from) }}">
                         </div>
                         <div class="col-md-4">
                             <label for="toDate" class="form-label">To:</label>
-                            <input type="date" class="form-control" id="toDate" name="toDate"
-                                placeholder="Select end date" value="{{ date('Y-m-d', $link->to) }}">
+                            <input type="date" class="form-control" id="toDate" name="toDate" placeholder="Select end date" value="{{ date('Y-m-d', $link->to) }}">
                         </div>
                         <div class="col-md-4">
                             <label for="quantity" class="form-label">Quantity:</label>
-                            <input type="number" class="form-control" name="quantity" placeholder="Enter quanitity"
-                                value="{{ $link->quantity }}" id="quantity">
+                            <input type="number" class="form-control" name="quantity" placeholder="Enter quanitity" value="{{ $link->quantity }}" id="quantity">
                         </div>
                         <div class="col-md-12 proceed-section my-3">
-                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Confirm
-                                & Proceed</button>
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Get This On Rent Now</button>
                         </div>
                     </div>
                 </div>
@@ -166,34 +162,66 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Verify Your Identity</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary">Save changes</button>
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    <div class="row">
+                        <form id="send-otp-form" method="Post">
+                            @csrf
+                            <div class="form-group mb-3">
+                                {{ Form::label('name') }}
+                                {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name','required']) }}
+                            </div>
+                            <div class="form-group mb-3">
+                                {{ Form::label('mobile_number','Mobile Number') }}
+                                {{ Form::text('mobile_number', null, ['class' => 'form-control', 'placeholder' => 'Mobile Number','required']) }}
+                            </div>
+                            <div class="form-group mb-3">
+                                <button type="submit" class="btn btn-secondary">Send OTP</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div id="recaptcha-container"></div>
+@endsection
+
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('.slider').slick({
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: true,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                arrows: true,
+            });
+            $('#fromDate').on('change', function() {
+                var fromDate = $(this).val();
+                $('#toDate').attr('min', fromDate);
+
+                if ($('#toDate').val() && $('#toDate').val() < fromDate) {
+                    $('#toDate').val('');
+                }
+            });
+            $('#toDate').on('change', function() {
+                var toDate = $(this).val();
+                $('#fromDate').attr('max', toDate);
+
+                if ($('#fromDate').val() && $('#fromDate').val() > toDate) {
+                    $('#fromDate').val('');
+                }
+            });
+        });
+    </script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
     <script>
-        const config = {
-            spinnerContent: `
-            <div class="text-center text-success">
-                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="visually-hidden"></span>
-                </div>
-            </div>
-            `,
-            sendOtpBtnContent: '<button type="submit" class="btn btn-lg btn-primary btn-block">Send OTP</button>',
-            verifyOtpBtnContent: '<button type="submit" class="btn btn-lg btn-primary btn-block">Verify OTP</button>',
-        };
         var firebaseConfig = {
             apiKey: "AIzaSyB66H6E356R3eiuB7hF9DzPPEPo_X3Xhks",
             authDomain: "e-manafeth-9bd48.firebaseapp.com",
@@ -201,9 +229,7 @@
             storageBucket: "e-manafeth-9bd48.appspot.com",
             messagingSenderId: "928927421004",
             appId: "1:928927421004:web:d8e3cc954768cb36e35ae9",
-            measurementId: "G-2M9S1WTXDV",
-
-            // databaseURL: "https://sakoon-ed0db.firebaseio.com"
+            measurementId: "G-2M9S1WTXDV"
         };
         firebase.initializeApp(firebaseConfig);
         window.onload = function () {
@@ -219,19 +245,20 @@
         }
         function sendOTP(phone)
         {
-            $('#sendOtpBtnContainer').html(config.spinnerContent);
+
             firebase.auth().signInWithPhoneNumber(phone, window.recaptchaVerifier)
                 .then(function (confirmationResult) {
                     window.confirmationResult = confirmationResult;
                     coderesult = confirmationResult;
                     $("#send-otp-form").addClass('d-none');
-                    $("#verify-otp-form").removeClass('d-none');
+                    // $("#verify-otp-form").removeClass('d-none');
                     toastr.success('Message sent successfully! Check your phone.');
                 }).catch(function (error) {
                     toastr.error(error.message);
                     console.log(error.message);
                 }).finally(() => {
-                    $('#sendOtpBtnContainer').html(config.sendOtpBtnContent);
+                    $("#overlay").hide('slow');
+                    $('body').removeClass('body-lock');
                 });
         }
         function verify(code) {
@@ -266,8 +293,6 @@
                 }
             });
         }
-    </script>
-    <script>
         $(document).ready(function() {
             $.validator.addMethod("pakistaniPhoneNumber", function(value, element) {
                 return this.optional(element) || /^((\+92)|(0092))-{0,1}3[0-9]{2}-{0,1}[0-9]{7}$|^03[0-9]{2}-[0-9]{7}$/.test(value);
@@ -287,14 +312,13 @@
                 submitHandler: function (form, event) {
                     event.preventDefault();
                     formData = $(form).serializeArray();
-                    var phone = $("input[name='phone_number']").val();
+                    var phone = $("input[name='mobile_number']").val();
+                    $("#overlay").show('slow');
+                    $('body').addClass('body-lock');
                     sendOTP(phone);
                 },
                 rules: {
-                    name: {
-                        required: true
-                    },
-                    phone_number: {
+                    mobile_number: {
                         required: true,
                         pakistaniPhoneNumber: true
                     }
@@ -303,7 +327,7 @@
                     name:{
                         required: "Please enter your name"
                     },
-                    phone_number:{
+                    mobile_number:{
                         required: "Please enter your valid phone number"
                     }
                 }
@@ -335,39 +359,6 @@
                     otp:{
                         required: "Please enter otp send on your phone number"
                     }
-                }
-            });
-        });
-    </script>
-@endsection
-
-@section('script')
-    <script>
-        $(document).ready(function() {
-            $('.slider').slick({
-                infinite: true,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                dots: true,
-                autoplay: true,
-                autoplaySpeed: 3000,
-                arrows: true,
-            });
-            $('#fromDate').on('change', function() {
-                var fromDate = $(this).val();
-                $('#toDate').attr('min', fromDate);
-
-                if ($('#toDate').val() && $('#toDate').val() < fromDate) {
-                    $('#toDate').val('');
-                }
-            });
-
-            $('#toDate').on('change', function() {
-                var toDate = $(this).val();
-                $('#fromDate').attr('max', toDate);
-
-                if ($('#fromDate').val() && $('#fromDate').val() > toDate) {
-                    $('#fromDate').val('');
                 }
             });
         });
