@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('customers', function (Blueprint $table) {
             // Adding a new 'type' column to distinguish between registered and guest users
-            $table->enum('type', ['Registered', 'Guest'])->default('Guest')->after('id');
+            $table->enum('type', ['Registered', 'Guest'])->default('Registered')->after('id');
 
             // Making 'name' field nullable for guest users
             $table->string('name')->nullable()->change();
