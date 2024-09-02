@@ -52,7 +52,7 @@ class CustomerRepository implements CustomerInterface
                 } else {
                     // Send OTP to email for verification
                     $otp = rand(1000, 9999);
-                    Mail::to($data['email'])->send(new OTPMail($otp, 'Account Verification'));
+                    Mail::to($data['email'])->send(new OTPMail($otp, 'Account Verification')); 
                     Token::updateOrCreate(['email' => $data['email']], [
                         'email'       => $data['email'],
                         'otp'         => $otp,

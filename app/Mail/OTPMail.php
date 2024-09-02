@@ -31,10 +31,10 @@ class OTPMail extends Mailable
      */
     public function build()
     {
-        if($this->type == 'Account Varification')
+        if($this->type == 'Account Verification')
         {
-            $subject = 'Account Varification';
-            $view = 'email.email_varification';
+            $subject = 'Account Verification';
+            $view = 'email.email_verification';
         }
         elseif($this->type == 'Forgot Password')
         {
