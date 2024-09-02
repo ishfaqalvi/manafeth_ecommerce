@@ -63,10 +63,16 @@ class CustomerRepository implements CustomerInterface
                 }
             }
         } else {
-            // If the customer is a Guest, create a simple guest account with no verification
-            $customer = Customer::create($data);
-            $message = 'Guest account created successfully.';
-            $status = true;
+            $checkUser = Customer::where('mobile_number', $data['mobile_number'])->first();
+            if ($checkUser) {
+                $customer = $checkUser;
+                $message = 'User already exists.';
+                $status = true;
+            } else {
+                $customer = Customer::create($data);
+                $message = 'Guest account created successfully.';
+                $status = true;
+            }
         }
 
         return [

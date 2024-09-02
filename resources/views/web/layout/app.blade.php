@@ -42,7 +42,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <!-- Custom Js File -->
-    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    {{-- <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
     <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function(OneSignal) {
@@ -50,7 +50,7 @@
                 appId: "56de06b7-4138-4bff-801c-47ba922f4d92",
             });
         });
-    </script>
+    </script> --}}
     <script src="{{ asset('assets/web/js/ajax.js') }}"></script>
     <script src="{{ asset('assets/web/js/custom.js') }}"></script>
     @yield('script')
