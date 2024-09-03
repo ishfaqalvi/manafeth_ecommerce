@@ -1,4 +1,5 @@
 <div class="row">
+    <div class="fw-bold border-bottom pb-2 mb-3">Order Details</div>
     <div class="form-group col-lg-12 mb-3">
         {{ Form::label('title') }}
         {{ Form::text('title', $rentLink->title, ['class' => 'form-control' . ($errors->has('title') ? ' is-invalid' : ''), 'placeholder' => 'Title','required']) }}
@@ -29,6 +30,28 @@
         {{ Form::text('to', $rentLink->to, ['class' => 'form-control to_date' . ($errors->has('to') ? ' is-invalid' : ''), 'placeholder' => 'To','required']) }}
         {!! $errors->first('to', '<div class="invalid-feedback">:message</div>') !!}
     </div>
+    <div class="fw-bold border-bottom pb-2 mb-3">Delivery Details</div>
+    <div class="form-group col-lg-4 mb-3">
+        {{ Form::label('collection_date') }}
+        {{ Form::text('collection_date', $rentLink->collection_date, ['class' => 'form-control collection_date' . ($errors->has('to') ? ' is-invalid' : ''), 'placeholder' => 'Collection Date','required','id' => 'collection_date']) }}
+        {!! $errors->first('collection_date', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+    <div class="form-group col-lg-4 mb-3">
+        {{ Form::label('collection_type') }}
+        {{ Form::select('collection_type', ['Self Pickup' => 'Self Pickup','Home Delivery' => 'Home Delivery'], $rentLink->collection_type, ['class' => 'form-control select', 'placeholder' => '--Select--','required']) }}
+    </div>
+    <div class="form-group col-lg-4 mb-3">
+        {{ Form::label('time_slot_id', 'Time Slot') }}
+        {{ Form::select('time_slot_id', [], $rentLink->time_slot_id, ['class' => 'form-control select' . ($errors->has('time_slot_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required', 'id' => 'time_slot_select', 'default' => $rentLink->time_slot_id]) }}
+        {!! $errors->first('time_slot_id', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+    <div class="form-group col-lg-12 mb-3">
+        {{ Form::label('address') }}
+        {{ Form::text('address', $rentLink->address, ['class' => 'form-control' . ($errors->has('address') ? ' is-invalid' : ''), 'placeholder' => 'Address','required']) }}
+        {!! $errors->first('address', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+    {{ Form::hidden('lat', null, ['id' => 'lat']) }}
+    {{ Form::hidden('long', null, ['id' => 'long']) }}
 	<div class="col-md-12 d-flex justify-content-end align-items-center mt-3">
 		<button type="submit" class="btn btn-primary ms-3">
 			Submit <i class="ph-paper-plane-tilt ms-2"></i>

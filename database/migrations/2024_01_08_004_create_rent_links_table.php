@@ -19,6 +19,12 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->bigInteger('from');
             $table->bigInteger('to');
+            $table->enum('collection_type',['Self Pickup','Home Delivery']);
+            $table->bigInteger('collection_date');
+            $table->foreignId('time_slot_id')->references('id')->on('time_slots')->cascadeOnDelete();
+            $table->text('address')->nullable();
+            $table->decimal('lat', 10, 7)->nullable();
+            $table->decimal('long', 10, 7)->nullable();
             $table->string('token')->unique();
             // Polymorphic relation columns
             $table->morphs('linkable');

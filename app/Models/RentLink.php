@@ -41,7 +41,21 @@ class RentLink extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['title','product_id','product_rent_id','quantity','from','to','token'];
+    protected $fillable = [
+        'title',
+        'product_id',
+        'product_rent_id',
+        'quantity',
+        'from',
+        'to',
+        'collection_type',
+        'collection_date',
+        'time_slot_id',
+        'address',
+        'lat',
+        'long',
+        'token'
+    ];
 
     /**
      * The get attributes.
@@ -70,6 +84,14 @@ class RentLink extends Model implements Auditable
     }
 
     /**
+     * Interact with the date.
+     */
+    public function setCollectionDateAttribute($value)
+    {
+        $this->attributes['collection_date'] = strtotime($value);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function productRent()
@@ -83,5 +105,13 @@ class RentLink extends Model implements Auditable
     public function product()
     {
         return $this->hasOne('App\Models\Product', 'id', 'product_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function timeSlot()
+    {
+        return $this->hasOne('App\Models\TimeSlot', 'id', 'time_slot_id');
     }
 }

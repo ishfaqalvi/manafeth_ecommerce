@@ -46,4 +46,5 @@ Route::controller(RentLinkController::class)->prefix('links')->as('links.')->gro
 	Route::patch('update/{link}',    'update'	    )->name('update' 	    );
 	Route::delete('delete/{id}',	 'destroy'	    )->name('destroy'	    );
     Route::get('get-rents',			 'getRents'		)->name('getRents'	  	);
+    Route::get('time-slots',         'timeSlots'    )->name('timeSlots'     );
 });

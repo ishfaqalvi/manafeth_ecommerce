@@ -68,7 +68,7 @@
                 }
             }
         });
-        ['.from_date','.to_date'].forEach(selector => {
+        ['.from_date','.to_date', '.collection_date'].forEach(selector => {
             const element = document.querySelector(selector);
             if (element) {
                 new Datepicker(element, {
@@ -91,6 +91,18 @@
                 let data = JSON.parse(result);
                 $.each(data, function(index, rent) {
                     $rentSelect.append('<option value="' + rent.id + '">' + rent.title + ' (' + rent.amount + ')</option>');
+                })
+            });
+        });
+        $('select[name=collection_type]').change(function () {
+            let type = $(this).val();
+            var date = $('#collection_date').val();
+            $('select[name=time_slot_id]').html('<option value="">--Select--</option>');
+            $('select[name=sub_category_id]').attr('disabled',false);
+            $.get('/admin/rent/request/time-slots', {type: type, data:date}).done(function (result) {
+                let data = JSON.parse(result);
+                $.each(data, function (i, val) {
+                    $('select[name=time_slot_id]').append($('<option></option>').val(val.id).html(val.start_time +' / ' + val.end_time));
                 })
             });
         });

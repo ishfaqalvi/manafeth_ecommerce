@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\{RentLink,ProductRent};
-use App\Contracts\{RentInterface,ProductInterface};
+use App\Contracts\{RentInterface,ProductInterface,TimeSlotInterface2};
 
 /**
  * Class RentLinkController
@@ -13,14 +13,15 @@ use App\Contracts\{RentInterface,ProductInterface};
  */
 class RentLinkController extends Controller
 {
-    protected $rentLink, $products;
+    protected $rentLink, $products, $slot;
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    function __construct(RentInterface $rentLink,ProductInterface $products)
+    function __construct(RentInterface $rentLink, ProductInterface $products, TimeSlotInterface $slot)
     {
+        $this->slot = $slot;
         $this->rentLink = $rentLink;
         $this->products = $products;
         $this->middleware('permission:rentLinks-list',  ['only' => ['index']]);
@@ -133,5 +134,18 @@ class RentLinkController extends Controller
         $rents = ProductRent::whereProductId($request->product_id)->get();
 
         echo json_encode($rents);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function timeSlots(Request $request)
+    {
+        $slots = $this->slot->available($request->type, $request->date);
+
+        echo json_encode($slots);
     }
 }
