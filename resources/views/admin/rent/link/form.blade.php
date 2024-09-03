@@ -22,23 +22,23 @@
     </div>
     <div class="form-group col-lg-4 mb-3">
         {{ Form::label('from') }}
-        {{ Form::text('from', $rentLink->from, ['class' => 'form-control from_date' . ($errors->has('from') ? ' is-invalid' : ''), 'placeholder' => 'From','required']) }}
+        {{ Form::text('from', $rentLink->from ? date('m-d-Y', $rentLink->from) : '', ['class' => 'form-control from_date' . ($errors->has('from') ? ' is-invalid' : ''), 'placeholder' => 'From','required']) }}
         {!! $errors->first('from', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="form-group col-lg-4 mb-3">
         {{ Form::label('to') }}
-        {{ Form::text('to', $rentLink->to, ['class' => 'form-control to_date' . ($errors->has('to') ? ' is-invalid' : ''), 'placeholder' => 'To','required']) }}
+        {{ Form::text('to', $rentLink->to ? date('m-d-Y', $rentLink->to) : '', ['class' => 'form-control to_date' . ($errors->has('to') ? ' is-invalid' : ''), 'placeholder' => 'To','required']) }}
         {!! $errors->first('to', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="fw-bold border-bottom pb-2 mb-3">Delivery Details</div>
     <div class="form-group col-lg-4 mb-3">
         {{ Form::label('collection_date') }}
-        {{ Form::text('collection_date', $rentLink->collection_date, ['class' => 'form-control collection_date' . ($errors->has('to') ? ' is-invalid' : ''), 'placeholder' => 'Collection Date','required','id' => 'collection_date']) }}
+        {{ Form::text('collection_date', $rentLink->collection_date ? date('m-d-Y', $rentLink->collection_date) : '', ['class' => 'form-control collection_date' . ($errors->has('to') ? ' is-invalid' : ''), 'placeholder' => 'Collection Date','required','id' => 'collection_date']) }}
         {!! $errors->first('collection_date', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="form-group col-lg-4 mb-3">
         {{ Form::label('collection_type') }}
-        {{ Form::select('collection_type', ['Self Pickup' => 'Self Pickup','Home Delivery' => 'Home Delivery'], $rentLink->collection_type, ['class' => 'form-control select', 'placeholder' => '--Select--','required']) }}
+        {{ Form::select('collection_type', ['Self Pickup' => 'Self Pickup','Home Delivery' => 'Home Delivery'], $rentLink->collection_type, ['class' => 'form-control select', 'placeholder' => '--Select--','required', 'id' => 'collection_type']) }}
     </div>
     <div class="form-group col-lg-4 mb-3">
         {{ Form::label('time_slot_id', 'Time Slot') }}
@@ -47,7 +47,7 @@
     </div>
     <div class="form-group col-lg-12 mb-3">
         {{ Form::label('address') }}
-        {{ Form::text('address', $rentLink->address, ['class' => 'form-control' . ($errors->has('address') ? ' is-invalid' : ''), 'placeholder' => 'Address','required']) }}
+        {{ Form::text('address', $rentLink->address, ['class' => 'form-control' . ($errors->has('address') ? ' is-invalid' : ''), 'placeholder' => 'Address','required', 'id' => 'address']) }}
         {!! $errors->first('address', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     {{ Form::hidden('lat', null, ['id' => 'lat']) }}

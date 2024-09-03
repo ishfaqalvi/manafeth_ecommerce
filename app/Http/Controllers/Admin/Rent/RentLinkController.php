@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\{RentLink,ProductRent};
-use App\Contracts\{RentInterface,ProductInterface,TimeSlotInterface2};
+use App\Contracts\{RentInterface,ProductInterface,TimeSlotInterface};
 
 /**
  * Class RentLinkController

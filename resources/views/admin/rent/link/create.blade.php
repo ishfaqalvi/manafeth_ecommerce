@@ -98,8 +98,8 @@
             let type = $(this).val();
             var date = $('#collection_date').val();
             $('select[name=time_slot_id]').html('<option value="">--Select--</option>');
-            $('select[name=sub_category_id]').attr('disabled',false);
-            $.get('/admin/rent/request/time-slots', {type: type, data:date}).done(function (result) {
+            $('select[name=time_slot_id]').attr('disabled',false);
+            $.get('/admin/rent/links/time-slots', {type: type, data:date}).done(function (result) {
                 let data = JSON.parse(result);
                 $.each(data, function (i, val) {
                     $('select[name=time_slot_id]').append($('<option></option>').val(val.id).html(val.start_time +' / ' + val.end_time));
@@ -107,5 +107,29 @@
             });
         });
     });
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ settings('google_map_api_key') }}&libraries=places"></script>
+<script>
+    function initAutocomplete() {
+        var addressInput = document.getElementById('address');
+
+        // Initialize Google Places Autocomplete
+        var autocomplete = new google.maps.places.Autocomplete(addressInput);
+
+        // Set up the place_changed event on the Autocomplete instance:
+        autocomplete.addListener('place_changed', function() {
+            var place = autocomplete.getPlace();
+
+            // Extract the place's latitude and longitude:
+            var latitude = place.geometry.location.lat();
+            var longitude = place.geometry.location.lng();
+
+            // Populate the latitude and longitude fields:
+            document.getElementById('lat').value = latitude;
+            document.getElementById('long').value = longitude;
+        });
+    }
+    // Call this function when the page is loaded
+    google.maps.event.addDomListener(window, 'load', initAutocomplete);
 </script>
 @endsection
