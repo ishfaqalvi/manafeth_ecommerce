@@ -107,14 +107,6 @@
                     <div class="row">
                         <form id="send-otp-form" method="Post">
                             @csrf
-                            {{-- <div class="form-group mb-3">
-                                {{ Form::label('name') }}
-                                {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name','required', 'id' => 'name']) }}
-                            </div>
-                            <div class="form-group mb-3">
-                                {{ Form::label('mobile_number','Mobile Number') }}
-                                {{ Form::number('mobile_number', null, ['class' => 'form-control', 'placeholder' => 'Mobile Number','required', 'id' => 'mobile_number']) }}
-                            </div> --}}
                             <div class="form-group col-lg-12 mb-3">
                                 <label for="name">Name</label>
                                 <input id="name" type="text" name="name" class="form-control" placeholder="Name">
@@ -204,15 +196,16 @@
                     });
                 });
             }
-            var input = document.querySelector("#mobile_number");
-            var iti = window.intlTelInput(input, {
-                initialCountry: "ae", // Default country set to UAE
-                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js" // for formatting
-            });
         });
     </script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
     <script>
+        var input = document.querySelector("#mobile_number");
+        var iti = window.intlTelInput(input, {
+            initialCountry: "ae", // Default country set to UAE
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js" // for formatting
+        });
+        $('.iti').css('display', 'block');
         var firebaseConfig = {
             apiKey: "AIzaSyB66H6E356R3eiuB7hF9DzPPEPo_X3Xhks",
             authDomain: "e-manafeth-9bd48.firebaseapp.com",
@@ -236,7 +229,6 @@
         }
         function sendOTP(phone)
         {
-
             firebase.auth().signInWithPhoneNumber(phone, window.recaptchaVerifier)
                 .then(function (confirmationResult) {
                     window.confirmationResult = confirmationResult;
@@ -271,14 +263,20 @@
                 url: "{{ route('web.products.checkout') }}",
                 type: 'POST',
                 data: {
-                    name: $("#name").val(),
-                    mobile_number: $("#mobile_number").val(),
-                    product_id : $('#product_id').val(),
-                    product_rent_id : $('#product_rent_id').val(),
-                    quantity : $('#quantity').val(),
-                    from : $('#fromDate').val(),
-                    to : $('#toDate').val(),
-                    _token: $('meta[name="csrf-token"]').attr('content')
+                    name:               $("#name").val(),
+                    mobile_number:      $("#mobile_number").val(),
+                    product_id :        $('#product_id').val(),
+                    product_rent_id :   $('#product_rent_id').val(),
+                    quantity :          $('#quantity').val(),
+                    from :              $('#fromDate').val(),
+                    to :                $('#toDate').val(),
+                    collection_type :   $('#collection_type').val(),
+                    collection_date :   $('#collection_date').val(),
+                    time_slot_id :      $('#time_slot_select').val(),
+                    address :           $('#address').val(),
+                    lat :               $('#lat').val(),
+                    long :              $('#long').val(),
+                    _token:             $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
                     toastr.success(response.message);

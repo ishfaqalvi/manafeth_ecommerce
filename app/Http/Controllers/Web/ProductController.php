@@ -87,15 +87,17 @@ class ProductController extends Controller
             /**
              * Create New Order.
              */
-            $timeSlot = TimeSlot::whereType('Home Delivery')->first();
             $orderData['customer_id']       = $customerRespnce['customer']->id;
             $orderData['payment_method']    = 'Cash On Delivery';
-            $orderData['collection_type']   = 'Home Delivery';
-            $orderData['collection_date']   = now();
-            $orderData['time_slot_id']      = $timeSlot->id;
+            $orderData['collection_type']   = $input['collection_type'];
+            $orderData['collection_date']   = $input['collection_date'];
+            $orderData['time_slot_id']      = $input['time_slot_id'];
             $orderData['name']              = 'Guest Customer';
             $orderData['email']             = 'No email';
             $orderData['phone_number']      = $input['mobile_number'];
+            $orderData['address']           = $input['address'];
+            $orderData['lat']               = $input['lat'];
+            $orderData['long']              = $input['long'];
             $orderData['status']            = 'Pending';
             $rentOrder = RentRequest::create($orderData);
             /**
