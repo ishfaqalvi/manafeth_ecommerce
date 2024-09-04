@@ -83,6 +83,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
         Route::get('link/{id}',     'link'          )->name('link'       );
         Route::get('order',         'order'         )->name('order'      );
         Route::post('checkout',     'checkout'      )->name('checkout'   );
+        Route::get('time-slots',    'timeSlots'     )->name('timeSlots'  );
     });
 
     /*

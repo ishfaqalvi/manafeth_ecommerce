@@ -5,99 +5,6 @@
 @endsection
 
 @section('content')
-    <style>
-        /* slider section */
-        .linkProduct .slider {
-            width: 80%;
-            margin: auto;
-        }
-
-        .linkProduct .slider img {
-            width: 100%;
-            border-radius: 15px;
-        }
-
-        .linkProduct .slick-dots {
-            bottom: 10px;
-        }
-
-        .linkProduct .slick-dots li button:before {
-            font-size: 10px;
-            color: #666;
-        }
-
-        .slick-dots li.slick-active button:before {
-            color: rgb(243, 160, 16);
-        }
-
-        /* End slider section */
-
-        /* nav item */
-        .linkProduct .nav-tabs {
-            border: none !important;
-        }
-
-        .linkProduct .nav-tabs .nav-link {
-            border-radius: 5px !important;
-            padding: 5px 10px !important;
-        }
-
-        .linkProduct .nav-tabs .active {
-            background-color: orange !important;
-            color: white !important;
-            border: 1px orange !important;
-        }
-
-        .linkProduct .nav-link {
-            margin-left: 10px;
-            margin-bottom: 10px;
-            color: black;
-            border: 1px solid lightgray;
-        }
-
-        .linkProduct .nav-pills .nav-link.active {
-            background-color: orange;
-            color: white;
-            border: none;
-        }
-
-        .linkProduct .nav-pills .nav-link.active:hover {
-            color: white;
-        }
-
-        .linkProduct .nav-pills .nav-link {
-            padding: 5px 10px;
-        }
-
-        .nav-pills .nav-link:hover {
-            color: black;
-        }
-
-        .price {
-            font-size: small;
-        }
-
-        .input-group-text img {
-            width: 20px;
-            height: auto;
-            margin-right: 5px;
-        }
-
-        .form-label {
-            margin-bottom: 0px;
-        }
-
-        .proceed-section button {
-            border-radius: 20px;
-            color: white;
-            background-color: rgb(243, 160, 16);
-        }
-
-        .proceed-section button:hover {
-            background-color: rgb(243, 160, 16);
-            color: white;
-        }
-    </style>
     <div class="container-fluid pt-3 linkProduct">
         <div class="container">
             <div class="row section-1 mt-3">
@@ -159,11 +66,31 @@
                             <label for="quantity" class="form-label">Quantity:</label>
                             <input type="number" class="form-control" name="quantity" placeholder="Enter quanitity" value="{{ $link->quantity }}" id="quantity">
                         </div>
-                        <div class="col-md-12 proceed-section my-3">
-                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Get This On Rent Now</button>
-                        </div>
-                        <a href="#" id="test-order">Test Order</a>
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="fw-bold border-bottom pb-2 mb-3">Delivery Details</div>
+                <div class="form-group col-lg-4 mb-3">
+                    {{ Form::label('collection_date') }}
+                    {{ Form::date('collection_date', $link->collection_date ? date('Y-m-d', $link->collection_date) : '', ['class' => 'form-control collection_date', 'placeholder' => 'Collection Date','required','id' => 'collection_date']) }}
+                </div>
+                <div class="form-group col-lg-4 mb-3">
+                    {{ Form::label('collection_type') }}
+                    {{ Form::select('collection_type', ['Self Pickup' => 'Self Pickup','Home Delivery' => 'Home Delivery'], $link->collection_type, ['class' => 'form-control', 'placeholder' => '--Select--','required', 'id' => 'collection_type']) }}
+                </div>
+                <div class="form-group col-lg-4 mb-3">
+                    {{ Form::label('time_slot_id', 'Time Slot') }}
+                    {{ Form::select('time_slot_id', [], $link->time_slot_id, ['class' => 'form-control', 'placeholder' => '--Select--','required', 'id' => 'time_slot_select', 'default' => $link->time_slot_id]) }}
+                </div>
+                <div class="form-group col-lg-12 mb-3">
+                    {{ Form::label('address') }}
+                    {{ Form::text('address', $link->address, ['class' => 'form-control', 'placeholder' => 'Address','required', 'id' => 'address']) }}
+                </div>
+                {{ Form::hidden('lat', $link->lat, ['id' => 'lat']) }}
+                {{ Form::hidden('long', $link->long, ['id' => 'long']) }}
+                <div class="col-md-12 proceed-section my-3">
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Get This On Rent Now</button>
                 </div>
             </div>
         </div>
@@ -180,13 +107,22 @@
                     <div class="row">
                         <form id="send-otp-form" method="Post">
                             @csrf
-                            <div class="form-group mb-3">
+                            {{-- <div class="form-group mb-3">
                                 {{ Form::label('name') }}
                                 {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Name','required', 'id' => 'name']) }}
                             </div>
                             <div class="form-group mb-3">
                                 {{ Form::label('mobile_number','Mobile Number') }}
-                                {{ Form::text('mobile_number', null, ['class' => 'form-control', 'placeholder' => 'Mobile Number','required', 'id' => 'mobile_number']) }}
+                                {{ Form::number('mobile_number', null, ['class' => 'form-control', 'placeholder' => 'Mobile Number','required', 'id' => 'mobile_number']) }}
+                            </div> --}}
+                            <div class="form-group col-lg-12 mb-3">
+                                <label for="name">Name</label>
+                                <input id="name" type="text" name="name" class="form-control" placeholder="Name">
+                            </div>
+
+                            <div class="form-group col-lg-12 mb-3">
+                                <label for="mobile_number">Mobile Number</label>
+                                <input id="mobile_number" type="tel" name="phone" class="form-control" placeholder="Mobile Number">
                             </div>
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-secondary">Send OTP</button>
@@ -241,6 +177,37 @@
                 if ($('#fromDate').val() && $('#fromDate').val() > toDate) {
                     $('#fromDate').val('');
                 }
+            });
+            var selected_time_slot_id = $('#time_slot_select').attr('default');
+            let type = $('#collection_type').val();
+            time_slot_list(type, selected_time_slot_id);
+            $('#collection_type').change(function () {
+                let type = $(this).val();
+                time_slot_list(type, 0);
+            });
+            function time_slot_list(type, selected_time_slot_id){
+                var $timeSlotSelect = $('#time_slot_select');
+                var date = $('#collection_date').val();
+                $timeSlotSelect.empty();
+                $timeSlotSelect.append('<option value="" disabled selected>--Select--</option>');
+                $.get("/products/time-slots", {type: type, data:date}).done(function (result) {
+                    let data = JSON.parse(result);
+                    $.each(data, function (i, val) {
+                        var isSelected = val.id == selected_time_slot_id ? true : false;
+
+                        $('select[name=time_slot_id]').append(
+                            $('<option></option>')
+                                .val(val.id)
+                                .html(val.start_time + ' / ' + val.end_time)
+                                .attr('selected', isSelected)
+                        );
+                    });
+                });
+            }
+            var input = document.querySelector("#mobile_number");
+            var iti = window.intlTelInput(input, {
+                initialCountry: "ae", // Default country set to UAE
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js" // for formatting
             });
         });
     </script>
@@ -324,9 +291,9 @@
             });
         }
         $(document).ready(function() {
-            $.validator.addMethod("pakistaniPhoneNumber", function(value, element) {
-                return this.optional(element) || /^((\+92)|(0092))-{0,1}3[0-9]{2}-{0,1}[0-9]{7}$|^03[0-9]{2}-[0-9]{7}$/.test(value);
-            }, "Please enter a valid phone number");
+            $.validator.addMethod("validPhoneNumber", function(value, element) {
+                return iti.isValidNumber();
+            }, "Please enter a valid phone number with country code");
             $('#send-otp-form').validate({
                 errorElement: "div",
                 errorPlacement: function(error, element) {
@@ -342,7 +309,7 @@
                 submitHandler: function (form, event) {
                     event.preventDefault();
                     formData = $(form).serializeArray();
-                    var phone = $("input[name='mobile_number']").val();
+                    var phone = iti.getNumber();
                     $("#overlay").show('slow');
                     $('body').addClass('body-lock');
                     sendOTP(phone);
@@ -350,7 +317,7 @@
                 rules: {
                     mobile_number: {
                         required: true,
-                        // pakistaniPhoneNumber: true
+                        validPhoneNumber: true
                     }
                 },
                 messages: {
@@ -394,5 +361,29 @@
                 }
             });
         });
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ settings('google_map_api_key') }}&libraries=places"></script>
+    <script>
+        function initAutocomplete() {
+            var addressInput = document.getElementById('address');
+
+            // Initialize Google Places Autocomplete
+            var autocomplete = new google.maps.places.Autocomplete(addressInput);
+
+            // Set up the place_changed event on the Autocomplete instance:
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+
+                // Extract the place's latitude and longitude:
+                var latitude = place.geometry.location.lat();
+                var longitude = place.geometry.location.lng();
+
+                // Populate the latitude and longitude fields:
+                document.getElementById('lat').value = latitude;
+                document.getElementById('long').value = longitude;
+            });
+        }
+        // Call this function when the page is loaded
+        google.maps.event.addDomListener(window, 'load', initAutocomplete);
     </script>
 @endsection

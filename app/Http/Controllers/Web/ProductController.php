@@ -7,17 +7,18 @@ use App\Models\RentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Contracts\{ProductInterface, RentInterface, CustomerInterface};
+use App\Contracts\{ProductInterface, RentInterface, CustomerInterface, TimeSlotInterface};
 
 class ProductController extends Controller
 {
-    protected $product, $rent, $customer;
+    protected $product, $rent, $customer, $slot;
 
-    public function __construct(ProductInterface $product, RentInterface $rent, CustomerInterface $customer)
+    public function __construct(ProductInterface $product, RentInterface $rent, CustomerInterface $customer, TimeSlotInterface $slot)
     {
         $this->product = $product;
         $this->rent = $rent;
         $this->customer = $customer;
+        $this->slot = $slot;
     }
 
     /**
@@ -117,5 +118,18 @@ class ProductController extends Controller
     public function order()
     {
         return view('web.product.success');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function timeSlots(Request $request)
+    {
+        $slots = $this->slot->available($request->type, $request->date);
+
+        echo json_encode($slots);
     }
 }
