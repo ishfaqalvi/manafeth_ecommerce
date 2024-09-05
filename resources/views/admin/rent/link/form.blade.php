@@ -15,20 +15,25 @@
         {{ Form::select('product_rent_id', [], $rentLink->product_rent_id, ['class' => 'form-control select' . ($errors->has('product_rent_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required', 'id' => 'rent-select', 'default' => $rentLink->product_rent_id]) }}
         {!! $errors->first('product_rent_id', '<div class="invalid-feedback">:message</div>') !!}
     </div>
-    <div class="form-group col-lg-4 mb-3">
+    <div class="form-group col-lg-3 mb-3">
         {{ Form::label('quantity') }}
         {{ Form::number('quantity', $rentLink->quantity, ['class' => 'form-control' . ($errors->has('quantity') ? ' is-invalid' : ''), 'placeholder' => 'Quantity','required', 'min' => '1']) }}
         {!! $errors->first('quantity', '<div class="invalid-feedback">:message</div>') !!}
     </div>
-    <div class="form-group col-lg-4 mb-3">
+    <div class="form-group col-lg-3 mb-3">
         {{ Form::label('from') }}
         {{ Form::text('from', $rentLink->from ? date('m-d-Y', $rentLink->from) : '', ['class' => 'form-control from_date' . ($errors->has('from') ? ' is-invalid' : ''), 'placeholder' => 'From','required']) }}
         {!! $errors->first('from', '<div class="invalid-feedback">:message</div>') !!}
     </div>
-    <div class="form-group col-lg-4 mb-3">
+    <div class="form-group col-lg-3 mb-3">
         {{ Form::label('to') }}
         {{ Form::text('to', $rentLink->to ? date('m-d-Y', $rentLink->to) : '', ['class' => 'form-control to_date' . ($errors->has('to') ? ' is-invalid' : ''), 'placeholder' => 'To','required']) }}
         {!! $errors->first('to', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+    <div class="form-group col-lg-3 mb-3">
+        {{ Form::label('discount') }}
+        {{ Form::number('discount', $rentLink->discount, ['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Discount','required']) }}
+        {!! $errors->first('discount', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="fw-bold border-bottom pb-2 mb-3">Delivery Details</div>
     <div class="form-group col-lg-4 mb-3">

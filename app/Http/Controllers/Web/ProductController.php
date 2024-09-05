@@ -87,17 +87,19 @@ class ProductController extends Controller
             /**
              * Create New Order.
              */
+            $link = $this->rent->linkSearch(['token' => $input['link_token']]);
             $orderData['customer_id']       = $customerRespnce['customer']->id;
             $orderData['payment_method']    = 'Cash On Delivery';
-            $orderData['collection_type']   = $input['collection_type'];
-            $orderData['collection_date']   = $input['collection_date'];
-            $orderData['time_slot_id']      = $input['time_slot_id'];
+            $orderData['collection_type']   = $link->collection_type;
+            $orderData['collection_date']   = $link->collection_date;
+            $orderData['time_slot_id']      = $link->time_slot_id;
             $orderData['name']              = 'Guest Customer';
             $orderData['email']             = 'No email';
             $orderData['phone_number']      = $input['mobile_number'];
-            $orderData['address']           = $input['address'];
-            $orderData['lat']               = $input['lat'];
-            $orderData['long']              = $input['long'];
+            $orderData['address']           = $link->address;
+            $orderData['lat']               = $link->lat;
+            $orderData['long']              = $link->long;
+            $orderData['discount']          = $link->discount;
             $orderData['status']            = 'Pending';
             $rentOrder = RentRequest::create($orderData);
             /**

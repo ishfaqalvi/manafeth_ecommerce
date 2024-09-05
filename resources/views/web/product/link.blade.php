@@ -16,7 +16,7 @@
                         @endforeach
                     </div>
                 </div>
-                <input type="hidden" name="product_id" value="{{ $link->product_id }}" id="product_id">
+                <input type="hidden" name="link_token" value="{{ $link->token }}" id="link_token">
                 <input type="hidden" name="link" value="{{ $link->web_page_url }}" id="web_page_url">
                 <div class="col-md-7 category-section">
                     <div class="row">
@@ -27,6 +27,40 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col">
+                            <h3>AED {{ $link->productRent->amount - $link->discount }} <small class="text-muted price">for{{ $link->productRent->title }}</small></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3>Date: <small class="text-muted price">{{ date('Y-m-d', $link->from) }} To {{ date('Y-m-d', $link->to) }}</small></h3>
+                        </div>
+                        <div class="col">
+                            <h3>Quantity: <small class="text-muted price">{{ $link->quantity }}</small></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3>Collection Date: <small class="text-muted price">{{ date('Y-m-d', $link->collection_date) }}</small></h3>
+                        </div>
+                        <div class="col">
+                            <h3>Collection Type: <small class="text-muted price">{{ $link->collection_type }}</small></h3>
+                        </div>
+                        <div class="col">
+                            <h3>Time Slot: <small class="text-muted price">{{ $link->timeSlot->start_time.'/'.$link->timeSlot->end_time }}</small></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h3>Address: <small class="text-muted price">{{ $link->address }}</small></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 proceed-section my-3">
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Get This On Rent Now</button>
+                        </div>
+                    </div>
+                    {{-- <div class="row">
                         <div class="tab-content">
                             @foreach ($link->product->rents as $rent)
                                 <div id="{{ 'tab' . $rent->id }}"
@@ -51,8 +85,8 @@
                                 </li>
                             @endforeach
                         </ul>
-                    </div>
-                    <input type="hidden" id="product_rent_id" name="product_rent_id" value="{{ $link->product_rent_id }}">
+                    </div> --}}
+                    {{-- <input type="hidden" id="product_rent_id" name="product_rent_id" value="{{ $link->product_rent_id }}">
                     <div class="row mt-4">
                         <div class="col-md-4">
                             <label for="fromDate" class="form-label">From:</label>
@@ -66,10 +100,10 @@
                             <label for="quantity" class="form-label">Quantity:</label>
                             <input type="number" class="form-control" name="quantity" placeholder="Enter quanitity" value="{{ $link->quantity }}" id="quantity">
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="fw-bold border-bottom pb-2 mb-3">Delivery Details</div>
                 <div class="form-group col-lg-4 mb-3">
                     {{ Form::label('collection_date') }}
@@ -92,7 +126,7 @@
                 <div class="col-md-12 proceed-section my-3">
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Get This On Rent Now</button>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="modal fade" id="confirm_proceed">
@@ -139,65 +173,6 @@
 @endsection
 
 @section('script')
-    <script>
-        $(document).ready(function() {
-            $('.slider').slick({
-                infinite: true,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                dots: true,
-                autoplay: true,
-                autoplaySpeed: 3000,
-                arrows: true,
-            });
-            $('a[data-bs-toggle="tab"]').on('shown.bs.tab', function(e) {
-                var rentId = $(e.target).data('rent-id');
-                $('#product_rent_id').val(rentId);
-            });
-            $('#fromDate').on('change', function() {
-                var fromDate = $(this).val();
-                $('#toDate').attr('min', fromDate);
-
-                if ($('#toDate').val() && $('#toDate').val() < fromDate) {
-                    $('#toDate').val('');
-                }
-            });
-            $('#toDate').on('change', function() {
-                var toDate = $(this).val();
-                $('#fromDate').attr('max', toDate);
-
-                if ($('#fromDate').val() && $('#fromDate').val() > toDate) {
-                    $('#fromDate').val('');
-                }
-            });
-            var selected_time_slot_id = $('#time_slot_select').attr('default');
-            let type = $('#collection_type').val();
-            time_slot_list(type, selected_time_slot_id);
-            $('#collection_type').change(function () {
-                let type = $(this).val();
-                time_slot_list(type, 0);
-            });
-            function time_slot_list(type, selected_time_slot_id){
-                var $timeSlotSelect = $('#time_slot_select');
-                var date = $('#collection_date').val();
-                $timeSlotSelect.empty();
-                $timeSlotSelect.append('<option value="" disabled selected>--Select--</option>');
-                $.get("/products/time-slots", {type: type, data:date}).done(function (result) {
-                    let data = JSON.parse(result);
-                    $.each(data, function (i, val) {
-                        var isSelected = val.id == selected_time_slot_id ? true : false;
-
-                        $('select[name=time_slot_id]').append(
-                            $('<option></option>')
-                                .val(val.id)
-                                .html(val.start_time + ' / ' + val.end_time)
-                                .attr('selected', isSelected)
-                        );
-                    });
-                });
-            }
-        });
-    </script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
     <script>
         var input = document.querySelector("#mobile_number");
@@ -265,17 +240,7 @@
                 data: {
                     name:               $("#name").val(),
                     mobile_number:      $("#mobile_number").val(),
-                    product_id :        $('#product_id').val(),
-                    product_rent_id :   $('#product_rent_id').val(),
-                    quantity :          $('#quantity').val(),
-                    from :              $('#fromDate').val(),
-                    to :                $('#toDate').val(),
-                    collection_type :   $('#collection_type').val(),
-                    collection_date :   $('#collection_date').val(),
-                    time_slot_id :      $('#time_slot_select').val(),
-                    address :           $('#address').val(),
-                    lat :               $('#lat').val(),
-                    long :              $('#long').val(),
+                    link_token :        $('#link_token').val(),
                     _token:             $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
@@ -289,6 +254,15 @@
             });
         }
         $(document).ready(function() {
+            $('.slider').slick({
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: true,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                arrows: true,
+            });
             $.validator.addMethod("validPhoneNumber", function(value, element) {
                 return iti.isValidNumber();
             }, "Please enter a valid phone number with country code");
@@ -359,29 +333,5 @@
                 }
             });
         });
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ settings('google_map_api_key') }}&libraries=places"></script>
-    <script>
-        function initAutocomplete() {
-            var addressInput = document.getElementById('address');
-
-            // Initialize Google Places Autocomplete
-            var autocomplete = new google.maps.places.Autocomplete(addressInput);
-
-            // Set up the place_changed event on the Autocomplete instance:
-            autocomplete.addListener('place_changed', function() {
-                var place = autocomplete.getPlace();
-
-                // Extract the place's latitude and longitude:
-                var latitude = place.geometry.location.lat();
-                var longitude = place.geometry.location.lng();
-
-                // Populate the latitude and longitude fields:
-                document.getElementById('lat').value = latitude;
-                document.getElementById('long').value = longitude;
-            });
-        }
-        // Call this function when the page is loaded
-        google.maps.event.addDomListener(window, 'load', initAutocomplete);
     </script>
 @endsection

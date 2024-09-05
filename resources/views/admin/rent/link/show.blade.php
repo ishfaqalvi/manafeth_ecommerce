@@ -55,6 +55,26 @@
                 <strong>To:</strong>
                 {{ date('d M Y', $rentLink->to) }}
             </div>
+            <div class="form-group mb-3">
+                <strong>Discount:</strong>
+                {{ $rentLink->discount }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Collection Date:</strong>
+                {{ $rentLink->collection_date }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Collection Type:</strong>
+                {{ $rentLink->collection_type }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Time Slot:</strong>
+                {{ $rentLink->timeSlot->name.'('.$rentLink->timeSlot->start_time.'/'.$rentLink->timeSlot->end_time. ')' }}
+            </div>
+            <div class="form-group mb-3">
+                <strong>Address:</strong>
+                {{ $rentLink->address }}
+            </div>
         </div>
     </div>
 </div>
