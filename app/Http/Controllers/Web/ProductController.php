@@ -106,11 +106,11 @@ class ProductController extends Controller
              * Create Order Detail.
              */
             $rentOrder->details()->create([
-                'product_id'        => $input['product_id'],
-                'product_rent_id'   => $input['product_rent_id'],
-                'quantity'          => $input['quantity'],
-                'from'              => strtotime($input['from']),
-                'to'                => strtotime($input['to']),
+                'product_id'        => $link->product_id,
+                'product_rent_id'   => $link->product_rent_id,
+                'quantity'          => $link->quantity,
+                'from'              => $link->from,
+                'to'                => $link->to,
             ]);
         });
         return response()->json(['message' => 'Your order has been placed successfully.']);
