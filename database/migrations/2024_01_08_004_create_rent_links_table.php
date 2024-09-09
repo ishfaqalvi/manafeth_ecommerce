@@ -25,9 +25,9 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->decimal('lat', 10, 7)->nullable();
             $table->decimal('long', 10, 7)->nullable();
-            $table->bigInteger('discount')->nullable();
+            $table->enum('price_change_type', ['increment', 'decrement'])->nullable();
+            $table->bigInteger('price_change_value')->nullable();
             $table->string('token')->unique();
-            // Polymorphic relation columns
             $table->morphs('linkable');
             $table->timestamps();
         });

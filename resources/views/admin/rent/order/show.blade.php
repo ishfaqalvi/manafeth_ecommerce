@@ -40,6 +40,7 @@
                         <th>Rent Amount</th>
                         <th>Delivery Charges</th>
                         <th>Discount</th>
+                        <th>Increment</th>
                         <th>Sub Total</th>
                         <th class="text-center" style="width: 20px;"><i class="ph-dots-three"></i></th>
                     </tr>
@@ -48,7 +49,7 @@
                     @php($total = 0)
                     @foreach($rentRequest->details as $key => $row)
                     @php($product = $row->product)
-                    @php($subTotal = ($row->productRent->amount * $row->quantity) + ($row->deliver_charges ?? 0) - ($row->discount ?? 0))
+                    @php($subTotal = ($row->productRent->amount * $row->quantity) + ($row->deliver_charges ?? 0) + ($row->increment ?? 0) - ($row->discount ?? 0))
                     @php($total += $subTotal)
                     <tr>
                         <td class="pe-0" style="width: 45px;">
@@ -70,6 +71,7 @@
                         <td>{{ number_format($row->productRent->amount) }}</td>
                         <td>{{ number_format($row->deliver_charges) }}</td>
                         <td>{{ number_format($row->discount) }}</td>
+                        <td>{{ number_format($row->increment) }}</td>
                         <td>{{ number_format($subTotal) }}</td>
                         <td>
                             @if(is_null($row->date_extend))

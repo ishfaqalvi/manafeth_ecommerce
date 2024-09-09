@@ -28,7 +28,18 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h3>AED {{ $link->productRent->amount - $link->discount }} <small class="text-muted price">for{{ $link->productRent->title }}</small></h3>
+                            <h3>AED
+                                @if($link->price_change_type)
+                                    @if ($link->price_change_type == 'increment')
+                                        {{ $link->productRent->amount + $link->price_change_value }}
+                                    @else
+                                        {{ $link->productRent->amount - $link->price_change_value }}
+                                    @endif
+                                @else
+                                    {{ $link->productRent->amount }}
+                                @endif
+                                <small class="text-muted price">for {{ $link->productRent->title }}</small>
+                            </h3>
                         </div>
                     </div>
                     <div class="row">

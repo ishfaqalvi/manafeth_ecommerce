@@ -55,10 +55,16 @@
                 <strong>To:</strong>
                 {{ date('d M Y', $rentLink->to) }}
             </div>
+            @if($rentLink->price_change_type)
             <div class="form-group mb-3">
-                <strong>Discount:</strong>
-                {{ $rentLink->discount }}
+                <strong>Price Change Type:</strong>
+                {{ ucfirst($rentLink->price_change_type) }}
             </div>
+            <div class="form-group mb-3">
+                <strong>Price Change Value:</strong>
+                {{ number_format($rentLink->price_change_value) }}
+            </div>
+            @endif
             <div class="form-group mb-3">
                 <strong>Collection Date:</strong>
                 {{ $rentLink->collection_date }}

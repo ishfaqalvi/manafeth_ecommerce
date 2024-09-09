@@ -66,6 +66,23 @@
                 }else {
                     error.insertAfter(element);
                 }
+            },
+            rules: {
+                price_change_value: {
+                    required: function(element) {
+                        return $('#price_change_type').val() !== '';
+                    },
+                    min: 1
+                }
+            },
+            messages: {
+                price_change_type: {
+                    required: "Please select a price change type."
+                },
+                price_change_value: {
+                    required: "Please enter the price change value.",
+                    min: "The price change value must be greater than 0."
+                }
             }
         });
         ['.from_date','.to_date', '.collection_date'].forEach(selector => {

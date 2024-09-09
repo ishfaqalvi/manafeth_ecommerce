@@ -54,7 +54,8 @@ class RentLink extends Model implements Auditable
         'address',
         'lat',
         'long',
-        'discount',
+        'price_change_type',
+        'price_change_value',
         'token'
     ];
 

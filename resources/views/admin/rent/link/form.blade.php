@@ -5,17 +5,17 @@
         {{ Form::text('title', $rentLink->title, ['class' => 'form-control' . ($errors->has('title') ? ' is-invalid' : ''), 'placeholder' => 'Title','required']) }}
         {!! $errors->first('title', '<div class="invalid-feedback">:message</div>') !!}
     </div>
-    <div class="form-group col-lg-6 mb-3">
+    <div class="form-group col-lg-5 mb-3">
         {{ Form::label('product_id','Products') }}
         {{ Form::select('product_id', $products, $rentLink->product_id, ['class' => 'form-control select' . ($errors->has('product_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required','id' => 'product-select']) }}
         {!! $errors->first('product_id', '<div class="invalid-feedback">:message</div>') !!}
     </div>
-    <div class="form-group col-lg-6 mb-3">
+    <div class="form-group col-lg-5 mb-3">
         {{ Form::label('product_rent_id', 'Rent') }}
         {{ Form::select('product_rent_id', [], $rentLink->product_rent_id, ['class' => 'form-control select' . ($errors->has('product_rent_id') ? ' is-invalid' : ''), 'placeholder' => '--Select--','required', 'id' => 'rent-select', 'default' => $rentLink->product_rent_id]) }}
         {!! $errors->first('product_rent_id', '<div class="invalid-feedback">:message</div>') !!}
     </div>
-    <div class="form-group col-lg-3 mb-3">
+    <div class="form-group col-lg-2 mb-3">
         {{ Form::label('quantity') }}
         {{ Form::number('quantity', $rentLink->quantity, ['class' => 'form-control' . ($errors->has('quantity') ? ' is-invalid' : ''), 'placeholder' => 'Quantity','required', 'min' => '1']) }}
         {!! $errors->first('quantity', '<div class="invalid-feedback">:message</div>') !!}
@@ -31,9 +31,14 @@
         {!! $errors->first('to', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="form-group col-lg-3 mb-3">
-        {{ Form::label('discount') }}
-        {{ Form::number('discount', $rentLink->discount, ['class' => 'form-control' . ($errors->has('discount') ? ' is-invalid' : ''), 'placeholder' => 'Discount','required']) }}
-        {!! $errors->first('discount', '<div class="invalid-feedback">:message</div>') !!}
+        {{ Form::label('price_change_type') }}
+        {{ Form::select('price_change_type', ['increment' => 'Increment', 'decrement' => 'Decrement'], $rentLink->price_change_type, ['class' => 'form-control select' . ($errors->has('price_change_type') ? ' is-invalid' : ''), 'placeholder' => '--Select--', 'id' => 'price_change_type']) }}
+        {!! $errors->first('price_change_type', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
+    <div class="form-group col-lg-3 mb-3">
+        {{ Form::label('price_change_value') }}
+        {{ Form::number('price_change_value', $rentLink->price_change_value, ['class' => 'form-control' . ($errors->has('price_change_value') ? ' is-invalid' : ''), 'placeholder' => 'Price Change Value']) }}
+        {!! $errors->first('price_change_value', '<div class="invalid-feedback">:message</div>') !!}
     </div>
     <div class="fw-bold border-bottom pb-2 mb-3">Delivery Details</div>
     <div class="form-group col-lg-4 mb-3">

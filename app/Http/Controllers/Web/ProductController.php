@@ -7,18 +7,30 @@ use App\Models\RentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Contracts\{ProductInterface, RentInterface, CustomerInterface, TimeSlotInterface};
+use App\Services\{AdminNotifyService,WhatsAppService};
+use App\Contracts\{ProductInterface, RentInterface, FcmInterface, CustomerInterface, TimeSlotInterface};
 
 class ProductController extends Controller
 {
-    protected $product, $rent, $customer, $slot;
+    protected $product, $rent, $customer, $slot, $whatsAppService, $fcmNotification, $adminNotify;
 
-    public function __construct(ProductInterface $product, RentInterface $rent, CustomerInterface $customer, TimeSlotInterface $slot)
+    public function __construct(
+        ProductInterface $product,
+        RentInterface $rent,
+        CustomerInterface $customer,
+        TimeSlotInterface $slot,
+        WhatsAppService $whatsAppService,
+        FcmInterface $fcmNotification,
+        AdminNotifyService $adminNotify
+    )
     {
-        $this->product = $product;
-        $this->rent = $rent;
-        $this->customer = $customer;
-        $this->slot = $slot;
+        $this->product         = $product;
+        $this->rent            = $rent;
+        $this->customer        = $customer;
+        $this->slot            = $slot;
+        $this->whatsAppService = $whatsAppService;
+        $this->fcmNotification = $fcmNotification;
+        $this->adminNotify     = $adminNotify;
     }
 
     /**
@@ -99,7 +111,15 @@ class ProductController extends Controller
             $orderData['address']           = $link->address;
             $orderData['lat']               = $link->lat;
             $orderData['long']              = $link->long;
-            $orderData['discount']          = $link->discount;
+            if($link->price_change_type)
+            {
+                if ($link->price_change_type == 'increment'){
+                    $orderData['increment'] = $link->price_change_value;
+                }
+                else{
+                    $orderData['discount'] = $link->price_change_value;
+                }
+            }
             $orderData['status']            = 'Pending';
             $rentOrder = RentRequest::create($orderData);
             /**
@@ -112,6 +132,43 @@ class ProductController extends Controller
                 'from'              => $link->from,
                 'to'                => $link->to,
             ]);
+            /**
+             * Create Order Operations.
+             */
+            $rentOrder->operations()->create([
+                'actor_id'   => $customerRespnce['customer']->id,
+                'actor_type' => 'App\Models\Customer',
+                'action'     => 'Rental Request Placed'
+            ]);
+            /**
+             * Send Order Notifications.
+             */
+            $products = $link->product->name.' ('. $link->quantity.' Qty) (From: '. date('d M Y', $link->from).') (To: '.date('d M Y', $link->to).')';
+            if(settings('rent_order_whatsapp_notification') == 'Yes'){
+                $data = [$input['name'], $input['phone_number'], $products];
+                $this->whatsAppService->sendMessage('renta_order_placed', $data);
+            }
+            if(settings('rent_order_fcm_notification_to_customer') == 'Yes'){
+                $data = [
+                    'title'     => 'Rent Request',
+                    'body'      => 'Your rental request has been submitted successfully.',
+                    'user_type' => 'App\Models\Customer',
+                    'user_id'   => $customerRespnce['customer']->id
+                ];
+                $this->fcmNotification->store($data);
+            }
+            if(settings('rent_order_fcm_notification_to_admin') == 'Yes'){
+                $data = [
+                    'title'  => 'New Rent Request',
+                    'body'   => 'New rent request received from '. $customerRespnce['customer']->name,
+                    'type'   => 'Rent Request',
+                    'id'     => $rentOrder->id,
+                    'name'   => $customerRespnce['customer']->name,
+                    'image'  => $customerRespnce['customer']->image,
+                    'message'=> 'New rent request submit click on link to see detail',
+                ];
+                $this->adminNotify->sendNotification($data);
+            }
         });
         return response()->json(['message' => 'Your order has been placed successfully.']);
     }
