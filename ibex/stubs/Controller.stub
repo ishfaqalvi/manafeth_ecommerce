@@ -28,45 +28,43 @@ class {{modelName}}Controller extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function index()
     {
-        ${{modelNamePluralLowerCase}} = {{modelName}}::get();
+        ${{modelNamePluralLowerCase}} = {{modelName}}::paginate();
 
         return view('admin.{{modelView}}.index', compact('{{modelNamePluralLowerCase}}'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
         ${{modelNameLowerCase}} = new {{modelName}}();
+
         return view('admin.{{modelView}}.create', compact('{{modelNameLowerCase}}'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
-       ${{modelNameLowerCase}} = {{modelName}}::create($request->all());
+        ${{modelNameLowerCase}} = {{modelName}}::create($request->all());
+        
         return redirect()->route('{{modelRoute}}.index')
             ->with('success', '{{modelName}} created successfully.');
     }
 
     /**
      * Display the specified resource.
-     *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function show($id)
     {
@@ -77,9 +75,8 @@ class {{modelName}}Controller extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
@@ -90,10 +87,9 @@ class {{modelName}}Controller extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request $request
      * @param  {{modelName}} ${{modelNameLowerCase}}
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, {{modelName}} ${{modelNameLowerCase}})
     {
