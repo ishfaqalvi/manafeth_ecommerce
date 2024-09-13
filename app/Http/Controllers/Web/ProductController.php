@@ -111,15 +111,6 @@ class ProductController extends Controller
             $orderData['address']           = $link->address;
             $orderData['lat']               = $link->lat;
             $orderData['long']              = $link->long;
-            if($link->price_change_type)
-            {
-                if ($link->price_change_type == 'increment'){
-                    $orderData['increment'] = $link->price_change_value;
-                }
-                else{
-                    $orderData['discount'] = $link->price_change_value;
-                }
-            }
             $orderData['status']            = 'Pending';
             $rentOrder = RentRequest::create($orderData);
             /**
@@ -131,6 +122,8 @@ class ProductController extends Controller
                 'quantity'          => $link->quantity,
                 'from'              => $link->from,
                 'to'                => $link->to,
+                'discount'          => $link->price_change_type == 'decrement' ? $link->price_change_value : null,
+                'increment'         => $link->price_change_type == 'increment' ? $link->price_change_value : null
             ]);
             /**
              * Create Order Operations.
