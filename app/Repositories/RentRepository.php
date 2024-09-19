@@ -70,7 +70,7 @@ class RentRepository implements RentInterface
 		RentCart::find($id)->delete();
 	}
 
-	public function orderList($guard = null, $pagination = false)
+	public function orderList($guard = null, $pagination = false, $filter = [])
 	{
         $relations = [
             'customer',
@@ -93,6 +93,7 @@ class RentRepository implements RentInterface
             $customer_id = Auth::guard($guard)->user()->id;
 			$query->whereCustomerId($customer_id);
 		}
+        $query->filter($filter);
         $query->with($relations)->orderBy('created_at', 'desc');
 		return $pagination ? $query->paginate() : $query->get();
 	}

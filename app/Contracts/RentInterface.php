@@ -12,7 +12,7 @@ interface RentInterface
 
 	public function cartDeleteItem($id);
 
-	public function orderList($gurard);
+	public function orderList($gurard, $pagination, $filter); 
 
 	public function orderFind($id);
 

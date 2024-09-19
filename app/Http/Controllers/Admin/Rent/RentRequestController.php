@@ -39,11 +39,12 @@ class RentRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rentRequests = $this->rentRequest->orderList(null, true);
+        $rentRequests = $this->rentRequest->orderList(null, true, $request->all());
+        $request->method() == 'POST' ? $userRequest = $request : $userRequest = null;
 
-        return view('admin.rent.order.index', compact('rentRequests'));
+        return view('admin.rent.order.index', compact('rentRequests','userRequest'));
     }
 
     /**
