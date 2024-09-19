@@ -201,6 +201,7 @@
                     event.preventDefault();
                     formData = $(form).serializeArray();
                     var phone = iti.getNumber();
+                    $("#mobile_number").val(phone);
                     $("#overlay").show('slow');
                     $('body').addClass('body-lock');
                     sendOTP(phone);

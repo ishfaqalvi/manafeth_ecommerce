@@ -17,7 +17,15 @@ class {{modelName}} extends Model implements Auditable
 
     {{softDeletes}}
 
-    protected $perPage = 20;
+    /**
+     * Default number of items per page.
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->perPage = settings('per_page_items') ? : 15;
+    }
 
     /**
      * Attributes that should be mass-assignable.
@@ -27,5 +35,4 @@ class {{modelName}} extends Model implements Auditable
     protected $fillable = [{{fillable}}];
 
 {{relations}}
-
 }
