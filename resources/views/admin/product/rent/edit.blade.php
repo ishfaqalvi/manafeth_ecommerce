@@ -135,7 +135,7 @@
         function sub_category_list(id,sub_category_id){
             $('select[name=sub_category_id]').html('<option value="">--Select--</option>');
             $('select[name=sub_category_id]').attr('disabled',false);
-            $.get('/admin/categories/sub-categories', {id: id}).done(function (result) {
+            $.get('/admin/products/rent/sub-categories', {id: id}).done(function (result) {
                 let data = JSON.parse(result);
                 $.each(data, function (i, val) {
                     if(val.id == sub_category_id){

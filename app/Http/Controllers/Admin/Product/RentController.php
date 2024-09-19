@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Product;
 
+use App\Models\Category;
 use App\Models\ProductRent;
 use Illuminate\Http\Request;
 use App\Contracts\RentInterface;
@@ -113,5 +114,14 @@ class RentController extends Controller
         $rents = ProductRent::whereProductId($request->product_id)->get();
 
         echo json_encode($rents);
+    }
+
+    /**
+     * get a listing of the resource
+     */
+    public function subCategories(Request $request)
+    {
+        $category = Category::find($request->id);
+        echo json_encode($category->subCategories);
     }
 }

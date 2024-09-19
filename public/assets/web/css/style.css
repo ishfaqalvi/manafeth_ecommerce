@@ -3253,91 +3253,11 @@ i.fa.fa-chevron-down {
 
 }
 
-/* slider section */
-.linkProduct .slider {
-    width: 80%;
-    margin: auto;
-}
-
-.linkProduct .slider img {
+.linkProduct .thumbnail img{
     width: 100%;
     border-radius: 15px;
+    border: 1px solid rgba(31, 31, 31, 0.781);
 }
-
-.linkProduct .slick-dots {
-    bottom: 10px;
-}
-
-.linkProduct .slick-dots li button:before {
-    font-size: 10px;
-    color: #666;
-}
-
-.slick-dots li.slick-active button:before {
+.linkProduct .price-unit{
     color: rgb(243, 160, 16);
-}
-
-/* End slider section */
-
-/* nav item */
-.linkProduct .nav-tabs {
-    border: none !important;
-}
-
-.linkProduct .nav-tabs .nav-link {
-    border-radius: 5px !important;
-    padding: 5px 10px !important;
-}
-
-.linkProduct .nav-tabs .active {
-    background-color: orange !important;
-    color: white !important;
-    border: 1px orange !important;
-}
-
-.linkProduct .nav-link {
-    margin-left: 10px;
-    margin-bottom: 10px;
-    color: black;
-    border: 1px solid lightgray;
-}
-
-.linkProduct .nav-pills .nav-link.active {
-    background-color: orange;
-    color: white;
-    border: none;
-}
-
-.linkProduct .nav-pills .nav-link.active:hover {
-    color: white;
-}
-
-.linkProduct .nav-pills .nav-link {
-    padding: 5px 10px;
-}
-
-.nav-pills .nav-link:hover {
-    color: black;
-}
-
-.price {
-    font-size: small;
-}
-.linkProduct .iti {
-    display: block !important;
-    width: 100% !important;
-}
-.linkProduct .iti--allow-dropdown {
-    width: -webkit-fill-available !important;
-    display: block !important;
-}
-.proceed-section button {
-    border-radius: 20px;
-    color: white;
-    background-color: rgb(243, 160, 16);
-}
-
-.proceed-section button:hover {
-    background-color: rgb(243, 160, 16);
-    color: white;
 }

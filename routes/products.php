@@ -25,16 +25,17 @@ Route::controller(SaleController::class)->prefix('sale')->as('products.sale.')->
 |--------------------------------------------------------------------------
 */
 Route::controller(RentController::class)->prefix('rent')->as('products.rent.')->group(function () {
-	Route::get('list',				 'index'	 )->name('index'  	 );
-	Route::post('list',				 'index'	 )->name('filter'  	 );
-	Route::get('create',			 'create'	 )->name('create' 	 );
-	Route::post('store',			 'store'	 )->name('store'  	 );
-	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
-	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
-	Route::patch('update/{id}', 	 'update'	 )->name('update' 	 );
-	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
-    Route::post('add-to-cart',		 'addToCart' )->name('addToCart' );
-    Route::get('get-rents',		     'getRents'  )->name('getRents'   );
+	Route::get('list',				 'index'	    )->name('index'  	    );
+	Route::post('list',				 'index'	    )->name('filter'  	    );
+	Route::get('create',			 'create'	    )->name('create' 	    );
+	Route::post('store',			 'store'	    )->name('store'  	    );
+	Route::get('edit/{id}',			 'edit'		    )->name('edit'	  	    );
+	Route::get('show/{id}',			 'show'		    )->name('show'	  	    );
+	Route::patch('update/{id}', 	 'update'	    )->name('update' 	    );
+	Route::delete('delete/{id}',	 'destroy'	    )->name('destroy'	    );
+    Route::post('add-to-cart',		 'addToCart'    )->name('addToCart'     );
+    Route::get('get-rents',		     'getRents'     )->name('getRents'      );
+    Route::get('sub-categories',     'subCategories')->name('subCategories' );
 });
 
 /*

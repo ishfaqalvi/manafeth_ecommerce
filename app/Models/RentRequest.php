@@ -67,6 +67,45 @@ class RentRequest extends Model implements Auditable
     }
 
     /**
+     * Scope a query to filter Rent order.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $category
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter($query, $request)
+    {
+        if (isset($request['brand'])) {
+            $query->whereHas('customer', function($customer) use($request['brand']){
+                $customer->whereLike('name', $request['brand'])
+            });
+        }
+        if (isset($request['category'])) {
+            $query->whereCategoryId($request['category']);
+        }
+        if (isset($request['sub_category'])) {
+            $query->whereSubCategoryId($request['sub_category']);
+        }
+        if (isset($request['model'])) {
+            $query->whereModel($request['model']);
+        }
+        if (isset($request['status'])) {
+            $query->whereStatus($request['status']);
+        }
+        if (isset($request['min_price'])) {
+            $query->where('price', '>=', $request['min_price']);
+        }
+        if (isset($request['max_price'])) {
+            $query->where('price', '<=', $request['max_price']);
+        }
+        if (isset($request['search'])) {
+            $query->where('name', 'like', '%'.$request['search'].'%')
+            ->orWhere('description', 'like', '%'.$request['search'].'%');
+        }
+        return $query;
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function customer()

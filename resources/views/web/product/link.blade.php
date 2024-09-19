@@ -5,177 +5,85 @@
 @endsection
 
 @section('content')
+<input type="hidden" name="link_token" value="{{ $link->token }}" id="link_token">
+<input type="hidden" name="link" value="{{ $link->web_page_url }}" id="web_page_url">
     <div class="container-fluid pt-3 linkProduct">
         <div class="container">
-            <div class="row section-1 mt-3">
-                <div class="col-md-5 slider-section">
-                    <div class="slider mt-4">
-                        <div><img src="{{ $link->product->thumbnail }}" alt="Slide"></div>
-                        @foreach ($link->product->images as $row)
-                            <div><img src="{{ $row->image }}" alt="Slide"></div>
-                        @endforeach
-                    </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="thumbnail"><img src="{{ $link->product->thumbnail }}" alt="Slide"></div>
                 </div>
-                <input type="hidden" name="link_token" value="{{ $link->token }}" id="link_token">
-                <input type="hidden" name="link" value="{{ $link->web_page_url }}" id="web_page_url">
-                <div class="col-md-7 category-section">
-                    <div class="row">
-                        <div class="col">
-                            <small class="text-muted">{{ $link->product->category->name }} /
-                                {{ $link->product->subCategory->name }}</small>
-                            <h1>{{ $link->product->name }}</h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <h3>AED
-                                @if($link->price_change_type)
-                                    @if ($link->price_change_type == 'increment')
-                                        {{ $link->productRent->amount + $link->price_change_value }}
-                                    @else
-                                        {{ $link->productRent->amount - $link->price_change_value }}
-                                    @endif
+                <div class="col-md-7">
+                    <h1 class="fw-bold">{{ $link->product->name }}</h1>
+                    <h4>
+                        <span class="price-unit">AED
+                            @if($link->price_change_type)
+                                @if ($link->price_change_type == 'increment')
+                                    {{ $link->productRent->amount + $link->price_change_value }}
                                 @else
-                                    {{ $link->productRent->amount }}
+                                    {{ $link->productRent->amount - $link->price_change_value }}
                                 @endif
-                                <small class="text-muted price">for {{ $link->productRent->title }}</small>
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <h3>Date: <small class="text-muted price">{{ date('Y-m-d', $link->from) }} To {{ date('Y-m-d', $link->to) }}</small></h3>
-                        </div>
-                        <div class="col">
-                            <h3>Quantity: <small class="text-muted price">{{ $link->quantity }}</small></h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <h3>Collection Date: <small class="text-muted price">{{ date('Y-m-d', $link->collection_date) }}</small></h3>
-                        </div>
-                        <div class="col">
-                            <h3>Collection Type: <small class="text-muted price">{{ $link->collection_type }}</small></h3>
-                        </div>
-                        <div class="col">
-                            <h3>Time Slot: <small class="text-muted price">{{ $link->timeSlot->start_time.'/'.$link->timeSlot->end_time }}</small></h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <h3>Address: <small class="text-muted price">{{ $link->address }}</small></h3>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 proceed-section my-3">
-                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Get This On Rent Now</button>
-                        </div>
-                    </div>
-                    {{-- <div class="row">
-                        <div class="tab-content">
-                            @foreach ($link->product->rents as $rent)
-                                <div id="{{ 'tab' . $rent->id }}"
-                                    class="container tab-pane {{ $rent->id == $link->product_rent_id ? 'active' : '' }}">
-                                    <br>
-                                    <h3>AED {{ $rent->amount }} <small class="text-muted price">for
-                                            {{ $rent->title }}</small></h3>
-                                </div>
-                            @endforeach
-                        </div>
-                        <ul class="nav nav-tabs" role="tablist">
-                            @foreach ($link->product->rents as $rent)
-                                <li class="nav-item">
-                                    <a
-                                        class="nav-link {{ $rent->id == $link->product_rent_id ? 'active' : '' }}"
-                                        data-bs-toggle="tab"
-                                        href="#{{ 'tab' . $rent->id }}"
-                                        data-rent-id="{{ $rent->id }}"
-                                        >
-                                        {{ $rent->title }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div> --}}
-                    {{-- <input type="hidden" id="product_rent_id" name="product_rent_id" value="{{ $link->product_rent_id }}">
-                    <div class="row mt-4">
-                        <div class="col-md-4">
-                            <label for="fromDate" class="form-label">From:</label>
-                            <input type="date" class="form-control" id="fromDate" name="fromDate" placeholder="Select start date" value="{{ date('Y-m-d', $link->from) }}">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="toDate" class="form-label">To:</label>
-                            <input type="date" class="form-control" id="toDate" name="toDate" placeholder="Select end date" value="{{ date('Y-m-d', $link->to) }}">
-                        </div>
-                        <div class="col-md-4">
-                            <label for="quantity" class="form-label">Quantity:</label>
-                            <input type="number" class="form-control" name="quantity" placeholder="Enter quanitity" value="{{ $link->quantity }}" id="quantity">
-                        </div>
-                    </div> --}}
-                </div>
-            </div>
-            {{-- <div class="row">
-                <div class="fw-bold border-bottom pb-2 mb-3">Delivery Details</div>
-                <div class="form-group col-lg-4 mb-3">
-                    {{ Form::label('collection_date') }}
-                    {{ Form::date('collection_date', $link->collection_date ? date('Y-m-d', $link->collection_date) : '', ['class' => 'form-control collection_date', 'placeholder' => 'Collection Date','required','id' => 'collection_date']) }}
-                </div>
-                <div class="form-group col-lg-4 mb-3">
-                    {{ Form::label('collection_type') }}
-                    {{ Form::select('collection_type', ['Self Pickup' => 'Self Pickup','Home Delivery' => 'Home Delivery'], $link->collection_type, ['class' => 'form-control', 'placeholder' => '--Select--','required', 'id' => 'collection_type']) }}
-                </div>
-                <div class="form-group col-lg-4 mb-3">
-                    {{ Form::label('time_slot_id', 'Time Slot') }}
-                    {{ Form::select('time_slot_id', [], $link->time_slot_id, ['class' => 'form-control', 'placeholder' => '--Select--','required', 'id' => 'time_slot_select', 'default' => $link->time_slot_id]) }}
-                </div>
-                <div class="form-group col-lg-12 mb-3">
-                    {{ Form::label('address') }}
-                    {{ Form::text('address', $link->address, ['class' => 'form-control', 'placeholder' => 'Address','required', 'id' => 'address']) }}
-                </div>
-                {{ Form::hidden('lat', $link->lat, ['id' => 'lat']) }}
-                {{ Form::hidden('long', $link->long, ['id' => 'long']) }}
-                <div class="col-md-12 proceed-section my-3">
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#confirm_proceed">Get This On Rent Now</button>
-                </div>
-            </div> --}}
-        </div>
-    </div>
-    <div class="modal fade" id="confirm_proceed">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"></span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <form id="send-otp-form" method="Post">
-                            @csrf
-                            <div class="form-group col-lg-12 mb-3">
-                                <label for="name">Name</label>
-                                <input id="name" type="text" name="name" class="form-control" placeholder="Name">
+                            @else
+                                {{ $link->productRent->amount }}
+                            @endif
+                        </span>
+                        <small class="text-muted price">( {{ $link->productRent->title }} )</small>
+                    </h4>
+                    <h4>Quantity
+                        {{ $link->quantity }}X
+                    </h4>
+                    <h3 class="mt-3">Rental Date:</h3>
+                    <h5>
+                        From: <small class="text-muted">{{ date('Y-m-d', $link->from) }}</small>
+                        To: <small class="text-muted">{{ date('Y-m-d', $link->to) }}</small>
+                    </h5>
+                    <ul class="list-unstyled mt-2">
+                        <li class="d-flex align-items-center mb-3">
+                            <img src="{{ asset('assets/web/images/link/calendar2x.png') }}" alt="Image" class="me-2" width="30px">
+                            <h5 class="fw-bold mb-0">Collection Date:</h5>&nbsp;
+                            <p class="text-muted mb-0">{{ date('Y-m-d', $link->collection_date) }}</p>
+                        </li>
+                        <li class="d-flex align-items-center mb-3">
+                            <img src="{{ asset('assets/web/images/link/delivery2x.png') }}" alt="Image" class="me-2" width="30px">
+                            <h5 class="fw-bold mb-0">Collection Type:</h5>&nbsp;
+                            <p class="text-muted mb-0">{{ $link->collection_type }}</p>
+                        </li>
+                        <li class="d-flex align-items-center mb-3">
+                            <img src="{{ asset('assets/web/images/link/time2x.png') }}" alt="Image" class="me-2" width="30px">
+                            <h5 class="fw-bold mb-0">Time Slot:</h5>&nbsp;
+                            <p class="text-muted mb-0">{{ $link->timeSlot->start_time.'/'.$link->timeSlot->end_time }}</p>
+                        </li>
+                        <li class="d-flex align-items-center mb-3">
+                            <img src="{{ asset('assets/web/images/link/location_duoline2x.png') }}" alt="Image" class="me-2" width="30px">
+                            <h5 class="fw-bold mb-0">Address:</h5>&nbsp;
+                            <p class="text-muted mb-0">{{ $link->address }}</p>
+                        </li>
+                    </ul>
+                    <form id="send-otp-form" method="Post">
+                        @csrf
+                        <div class="row">
+                            <div class="form-group col-md-6 mb-3">
+                                <input id="name" type="text" name="name" class="form-control" placeholder="Enter Name">
                             </div>
-
-                            <div class="form-group col-lg-12 mb-3">
-                                <label for="mobile_number">Mobile Number</label>
-                                <input id="mobile_number" type="tel" name="phone" class="form-control" placeholder="Mobile Number">
+                            <div class="form-group col-md-6 mb-3">
+                                <input id="mobile_number" type="tel" name="phone" class="form-control" placeholder="000 0000000" required>
                             </div>
                             <div class="form-group mb-3">
-                                <button type="submit" class="btn btn-secondary">Send OTP</button>
+                                <button type="submit" class="btn btn-secondary">Get This On Rent Now</button>
                             </div>
-                        </form>
-                        <form id="verify-otp-form" method="Post" class="d-none">
-                            @csrf
-                            <div class="form-group mb-3">
-                                {{ Form::label('otp','OTP') }}
-                                {{ Form::text('otp', null, ['class' => 'form-control', 'placeholder' => 'OTP','required']) }}
+                        </div>
+                    </form>
+                    <form id="verify-otp-form" method="Post" class="d-none">
+                        @csrf
+                        <div class="row">
+                            <div class="form-group col-md-6 mb-3">
+                                {{ Form::text('otp', null, ['class' => 'form-control', 'placeholder' => 'Enter OTP','required']) }}
                             </div>
                             <div class="form-group mb-3">
                                 <button type="submit" class="btn btn-secondary">Confirm & Proceed</button>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -304,9 +212,6 @@
                     }
                 },
                 messages: {
-                    name:{
-                        required: "Please enter your name"
-                    },
                     mobile_number:{
                         required: "Please enter your valid phone number"
                     }
