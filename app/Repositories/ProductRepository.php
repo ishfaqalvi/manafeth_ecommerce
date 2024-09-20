@@ -37,7 +37,7 @@ class ProductRepository implements ProductInterface
 	public function rentProductList($filter = null, $pagination = true)
 	{
         $query = Product::query();
-        if(isset($filters))
+        if(isset($filter))
         {
             $query->filter($filter)->whereStatus('Publish')->whereType('Rent')->with(['brand','category','subCategory','rents']);
         }
@@ -173,7 +173,7 @@ class ProductRepository implements ProductInterface
             $data['image'] = $image;
             ProductImage::create($data);
         }
-		return true;
+		return true; 
 	}
 
 	//To delete a product images
