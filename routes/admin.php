@@ -212,6 +212,8 @@ Route::controller(AuditController::class)->prefix('audits')->as('audits.')->grou
 */
 Route::controller(SettingController::class)->prefix('settings')->as('settings.')->group(function () {
 	Route::get('general', 		'general'	)->name('general'	  );
+	Route::get('website', 		'website'	)->name('website'	  );
+	Route::get('twilio', 		'twilio'	)->name('twilio'	  );
 	Route::get('whatsapp', 		'whatsapp'	)->name('whatsapp'	  );
 	Route::get('fcm', 		    'fcm'		)->name('fcm'		  );
 	Route::get('clear-cache', 	'clearCache')->name('clear-cache' );

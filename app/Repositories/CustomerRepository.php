@@ -52,7 +52,7 @@ class CustomerRepository implements CustomerInterface
                 } else {
                     // Send OTP to email for verification
                     $otp = rand(1000, 9999);
-                    Mail::to($data['email'])->send(new OTPMail($otp, 'Account Verification')); 
+                    Mail::to($data['email'])->send(new OTPMail($otp, 'Account Verification'));
                     Token::updateOrCreate(['email' => $data['email']], [
                         'email'       => $data['email'],
                         'otp'         => $otp,
@@ -63,7 +63,11 @@ class CustomerRepository implements CustomerInterface
                 }
             }
         } else {
-            $checkUser = Customer::where('mobile_number', $data['mobile_number'])->first();
+            if($data['otpEmail']){
+                $checkUser = Customer::whereEmail($data['email'])->first();
+            }else{
+                $checkUser = Customer::whereMobileNumber($data['mobile_number'])->first();
+            }
             if ($checkUser) {
                 $customer = $checkUser;
                 $message = 'User already exists.';

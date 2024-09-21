@@ -29,7 +29,31 @@ class SettingsSeeder extends Seeder
                 'value' => 'upload/images/settings/derivative-favicon.png',
             ],
 
+            [
+                'key' 	=> 'website_name',
+                'value' => 'Manafeth Mobility Solutions',
+            ],
+            [
+                'key' 	=> 'website_address',
+                'value' => '74 Street - Dubai Investments Park, Dubai - United Arab Emirates',
+            ],
+            [
+                'key'   => 'website_logo',
+                'value' => 'uploads/settings/logo.png',
+            ],
 
+            [
+                'key' 	=> 'twilio_sid',
+                'value' => '',
+            ],
+            [
+                'key' 	=> 'twilio_token',
+                'value' => '',
+            ],
+            [
+                'key'   => 'twilio_phone_number',
+                'value' => '',
+            ],
 
 
 
@@ -85,7 +109,7 @@ class SettingsSeeder extends Seeder
             ],
             [
                 'key' 	=> 'google_application_credentials',
-                'value' => 'uploads/files/google-application-credentials.json',
+                'value' => 'uploads/settings/google-application-credentials.json',
             ],
             [
                 'key' 	=> 'firebase_topic',

@@ -3262,3 +3262,12 @@ i.fa.fa-chevron-down {
 .linkProduct .price-unit{
     color: rgb(243, 160, 16);
 }
+
+.linkProduct .form-check-input:checked {
+    background-color: #F2A82B;
+    border-color: #F2A82B;
+}
+
+.linkProduct .form-check-input:checked::before {
+    background-color: #fff;
+}

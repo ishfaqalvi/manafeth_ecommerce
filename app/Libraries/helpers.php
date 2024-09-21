@@ -14,16 +14,21 @@ use Illuminate\Support\Facades\Auth;
  *
  * @return \Illuminate\Http\Response
  */
-function uploadFile($file, $path, $width, $height)
+function uploadFile($file, $path, $width = null, $height = null)
 {
     $extension = $file->getClientOriginalExtension();
     $name = uniqid().".".$extension;
 
-    $folder = 'images/'.$path;
+    $folder = 'uploads/'.$path;
     $finalPath = $folder.'/'.$name;
     $file->move($folder, $name);
 
-    Image::load($finalPath)->fit(Manipulations::FIT_CROP, $width, $height)->save(public_path($finalPath));
+    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp'];
+    if (in_array(strtolower($extension), $imageExtensions)) {
+        if ($width && $height) {
+            Image::load($finalPath)->fit(Manipulations::FIT_CROP, $width, $height)->save(public_path($finalPath));
+        }
+    }
     return $finalPath;
 }
 
@@ -32,9 +37,11 @@ function uploadFile($file, $path, $width, $height)
  *
  * @return \Illuminate\Http\Response
  */
-function settings($key)
-{
-    return Setting::get($key);
+if (!function_exists('settings')) {
+    function settings($key)
+    {
+        return Setting::get($key) ?? null;
+    }
 }
 
 /**

@@ -37,7 +37,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
     */
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/test-notification', 'HomeController@notification')->name('test-notification');
-    // Route::get('/message', 'HomeController@sendWatsap')->name('home');
+    Route::get('/message', 'HomeController@sendWatsap');
 
     /*
     |--------------------------------------------------------------------------
@@ -83,7 +83,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
         Route::get('link/{id}',     'link'          )->name('link'       );
         Route::get('order',         'order'         )->name('order'      );
         Route::post('checkout',     'checkout'      )->name('checkout'   );
-        Route::get('time-slots',    'timeSlots'     )->name('timeSlots'  );
+        Route::post('send-otp',     'sendOTP'       )->name('sendOTP'    );
+        Route::post('varify-otp',   'varifyOTP'     )->name('varifyOTP'  );
     });
 
     /*

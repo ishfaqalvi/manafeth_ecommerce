@@ -38,6 +38,26 @@ class SettingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function website()
+    {
+        return view('admin.settings.website');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function twilio()
+    {
+        return view('admin.settings.twilio');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function whatsapp()
     {
         return view('admin.settings.whatsapp');
@@ -74,50 +94,23 @@ class SettingController extends Controller
      */
     public function save(Request $request)
     {
-        $data = array();
+        $data = [];
+
         if ($request->values) {
-            foreach ($_POST['values'] as $key => $value) {
-                $data[] = array(
-                    'key'   => $key,
-                    'value' => $value
-                );
+            foreach ($request->input('values') as $key => $value) {
+                $data[] = ['key' => $key, 'value' => $value];
             }
         }
+
         foreach ($request->file() as $key => $file) {
-            if ($file = $request->file($key)) {
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-
-                // Check if the file is an image
-                if (in_array($file->getClientOriginalExtension(), ['jpg', 'jpeg', 'png', 'gif'])) {
-                    // Resize the image
-                    $image = Image::make($file);
-                    $image->resize(300, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    });
-
-                    // Save the resized image to a specific folder
-                    $image->save(public_path('images/settings/' . $filename));
-
-                    $filenametostore = 'images/settings/'. $filename;
-                } else {
-                    // Move the file to a specific folder as is
-                    $file->move(public_path('uploads/files'), $filename);
-                    $filenametostore = 'uploads/files/'. $filename;
-                }
-
-                // $filenamewithextension = $image->getClientOriginalName();
-                // $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
-                // $filenametostore = 'upload/images/settings/' . $filename . '_' . time() . '.webp';
-                // // $img = Image::make($image)->encode('webp', 90)->resize(100 , 200)->save(public_path($filenametostore));
-                // $img = Image::make($image)->encode('webp', 90)->save(public_path($filenametostore));
+            if ($image = $request->file($key)) {
+                $filenametostore = uploadFile($image, 'settings');
+                $data[] = ['key' => $key,'value' => $filenametostore];
             }
-            $data[] = array(
-                'key'    => $key,
-                'value'  => $filenametostore
-            );
         }
+
         Setting::set($data);
-        return redirect()->back()->with('success', 'Setting updated successfully.');
+        return redirect()->back()->with('success', 'Settings updated successfully.');
     }
 
     /**

@@ -23,8 +23,8 @@ return new class extends Migration
             $table->integer('payment')->nullable();
             $table->enum('payment_received',['Yes', 'No'])->default('No');
             $table->string('name');
-            $table->string('email');
-            $table->string('phone_number');
+            $table->string('email')->nullable();
+            $table->string('phone_number')->nullable();
             $table->text('address')->nullable();
             $table->decimal('lat', 10, 7)->nullable();
             $table->decimal('long', 10, 7)->nullable();

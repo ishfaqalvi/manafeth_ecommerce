@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Web;
 
-use GuzzleHttp\Client;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use GuzzleHttp\Exception\RequestException;
-use App\Contracts\{BlogInterface,BannerInterface,ProductInterface};
 use App\Services\WhatsAppService;
+use App\Http\Controllers\Controller;
+use App\Contracts\{BlogInterface,BannerInterface,ProductInterface};
 
 class HomeController extends Controller
 {
@@ -21,7 +19,7 @@ class HomeController extends Controller
         BannerInterface $banner,
         ProductInterface $product,
         BlogInterface $blog,
-        WhatsAppService $whatsAppService
+        WhatsAppService $whatsAppService,
     ){
         $this->banner = $banner;
         $this->product = $product;
@@ -44,9 +42,5 @@ class HomeController extends Controller
             'categories' => Category::all()
         ];
         return view('web.home.index', compact('data'));
-    }
-    public function sendWatsap()
-    {
-        return $this->whatsAppService->sendMessage('sale_product_added_to_cart', "*Heading*\nThis is a description under the heading. Here is some _italic_ text, and here is some ~strikethrough~ text. You can also use ```monospace``` for things like code.");
     }
 }

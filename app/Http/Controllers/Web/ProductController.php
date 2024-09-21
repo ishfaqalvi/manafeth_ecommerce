@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Models\TimeSlot;
+use Exception;
+use App\Mail\OTPMail;
+use App\Models\Token;
 use App\Models\RentRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Services\{AdminNotifyService,WhatsAppService};
+use Illuminate\Support\Facades\{DB, Mail};
+use App\Services\{AdminNotifyService,WhatsAppService,TwilioService};
 use App\Contracts\{ProductInterface, RentInterface, FcmInterface, CustomerInterface, TimeSlotInterface};
 
 class ProductController extends Controller
 {
-    protected $product, $rent, $customer, $slot, $whatsAppService, $fcmNotification, $adminNotify;
+    protected $product, $rent, $customer, $slot, $whatsAppService, $fcmNotification, $adminNotify, $twilio;
 
     public function __construct(
         ProductInterface $product,
@@ -21,7 +23,8 @@ class ProductController extends Controller
         TimeSlotInterface $slot,
         WhatsAppService $whatsAppService,
         FcmInterface $fcmNotification,
-        AdminNotifyService $adminNotify
+        AdminNotifyService $adminNotify,
+        TwilioService $twilio
     )
     {
         $this->product         = $product;
@@ -31,6 +34,7 @@ class ProductController extends Controller
         $this->whatsAppService = $whatsAppService;
         $this->fcmNotification = $fcmNotification;
         $this->adminNotify     = $adminNotify;
+        $this->twilio          = $twilio;
     }
 
     /**
@@ -82,6 +86,67 @@ class ProductController extends Controller
     }
 
     /**
+     * Send OTP.
+     */
+    public function sendOTP(Request $request)
+    {
+        try {
+            return DB::transaction(function () use ($request) {
+                $otp = rand(100000, 999999);
+
+                if ($request->otpEmail) {
+
+                    Token::updateOrCreate(['email' => $request->email], [
+                        'email'       => $request->email,
+                        'otp'         => $otp,
+                        'expiry_time' => now()->addMinutes(5),
+                        'used'        => false
+                    ]);
+
+                    Mail::to($request->email)->send(new OTPMail($otp, 'Account Verification'));
+
+                    return response()->json(['message' => 'OTP sent successfully via email.'], 200);
+
+                } else {
+                    try {
+                        $phone = $request->phone;
+                        $this->twilio->sendSms($phone, $otp);
+
+                        Token::updateOrCreate(['mobile_number' => $phone], [
+                            'mobile_number' => $phone,
+                            'otp'           => $otp,
+                            'expiry_time'   => now()->addMinutes(5),
+                            'used'          => false
+                        ]);
+
+                        return response()->json(['message' => 'OTP sent successfully via SMS.'], 200);
+
+                    } catch (Exception $e) {
+                        return response()->json(['message' => 'Failed to send OTP via SMS: ' . $e->getMessage()], 500);
+                    }
+                }
+            });
+        } catch (Exception $e) {
+            return response()->json(['message' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Varify OTP.
+     */
+    public function varifyOTP(Request $request)
+    {
+        $isValid = false;
+        if ($request->otpEmail) {
+            $isValid = !Token::isValidOtp($request->email, null, $request->otp);
+        } else {
+            $isValid = !Token::isValidOtp(null, $request->phone, $request->otp);
+        }
+        if ($isValid){ echo "false"; } else { echo "true"; }
+
+    }
+
+    /**
      * Store specified resource.
      */
     public function checkout(Request $request)
@@ -93,7 +158,9 @@ class ProductController extends Controller
              */
             $customerData['type']           = 'Guest';
             $customerData['name']           = $input['name'];
+            $customerData['email']          = $input['email'];
             $customerData['mobile_number']  = $input['mobile_number'];
+            $customerData['otpEmail']       = $input['otpEmail'];
             $customerRespnce = $this->customer->register($customerData);
 
             /**

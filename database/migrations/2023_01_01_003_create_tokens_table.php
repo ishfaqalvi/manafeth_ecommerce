@@ -13,11 +13,15 @@ return new class extends Migration
     {
         Schema::create('tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->index();
-            $table->string('otp');
+            $table->string('email')->nullable()->index();
+            $table->string('mobile_number')->nullable()->index();
+            $table->integer('otp');
             $table->dateTime('expiry_time');
             $table->boolean('used')->default(false);
             $table->timestamps();
+
+            // Ensuring that either email or mobile_number can be unique (but not both null)
+            $table->unique(['email', 'mobile_number']);
         });
     }
 
