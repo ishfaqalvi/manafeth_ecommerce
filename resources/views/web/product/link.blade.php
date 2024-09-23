@@ -40,7 +40,7 @@
                     <ul class="list-unstyled mt-2">
                         <li class="d-flex align-items-center mb-3">
                             <img src="{{ asset('assets/web/images/link/calendar2x.png') }}" alt="Image" class="me-2" width="25px">
-                            <h5 class=" mb-0">Collection Date:</h5>&nbsp;
+                            <h5 class=" mb-0">Delivery Date:</h5>&nbsp;
                             <p class="text-muted mb-0">{{ date('Y-m-d', $link->collection_date) }}</p>
                         </li>
                         <li class="d-flex align-items-center mb-3">
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                     </form>
-                    <form id="verify-otp-form" method="POST" class="d-none">
+                    {{-- <form id="verify-otp-form" method="POST" class="d-none">
                         @csrf
                         <div class="row">
                             <div class="form-group col-md-6 mb-3">
@@ -102,7 +102,34 @@
                                 <button type="submit" class="btn btn-secondary w-100">Confirm & Proceed</button>
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
+                    <div class="otp-container d-none" id="otp-container">
+                        <div class="card p-4 shadow">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-3">OTP Verification</h5>
+                                <p class="card-text">Enter the 6-digit code sent to your phone/email</p>
+                
+                                <form id="verify-otp-form" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="phone" value="">
+                
+                                    <div class="otp-input-wrapper">
+                                        <input type="text" class="form-control otp-input" maxlength="1" id="otp-1" required>
+                                        <input type="text" class="form-control otp-input" maxlength="1" id="otp-2" required>
+                                        <input type="text" class="form-control otp-input" maxlength="1" id="otp-3" required>
+                                        <input type="text" class="form-control otp-input" maxlength="1" id="otp-4" required>
+                                        <input type="text" class="form-control otp-input" maxlength="1" id="otp-5" required>
+                                        <input type="text" class="form-control otp-input" maxlength="1" id="otp-6" required>
+                                    </div>
+                
+                                    <!-- Hidden input field to store the complete OTP -->
+                                    <input type="hidden" id="otp" name="otp">
+                                    <!-- Hidden submit button -->
+                                    <button type="submit" class="hidden-submit-btn d-none">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -168,7 +195,7 @@
                         $('body').removeClass('body-lock');
                         toastr.success(response.message);
                         $('#send-otp-form').addClass('d-none');
-                        $('#verify-otp-form').removeClass('d-none');
+                        $('#otp-container').removeClass('d-none');
                     },
                     error: function (xhr, status, error) {
                         $("#overlay").hide('slow');
@@ -206,77 +233,175 @@
                     email: "Please enter a valid email address."
                 }
             }
-        });$('#verify-otp-form').validate({
-            errorElement: "div",
-            errorPlacement: function(error, element) {
-                error.addClass("invalid-feedback");
-                error.insertAfter(element);
-            },
-            highlight: function(element, errorClass, validClass) {
-                $(element).addClass("is-invalid").removeClass("is-valid");
-            },
-            unhighlight: function(element, errorClass, validClass) {
-                $(element).addClass("is-valid").removeClass("is-invalid");
-            },
-            rules: {
-                otp: {
-                    required: true,
-                    remote: {
-                        url: '{{ route('web.products.varifyOTP') }}',
-                        type: "POST",
-                        data: {
-                            otp: function() {
-                                return $("input[name='otp']").val();
-                            },
-                            phone: function() {
-                                return $("#mobile_number").val();
-                            },
-                            email: function() {
-                                return $("#email").val();
-                            },
-                            otpEmail: function() {
-                                return $('#otpEmail').is(':checked');
-                            },
-                            _token: $('meta[name="csrf-token"]').attr('content')
-                        }
-                    }
-                }
-            },
-            messages: {
-                otp: {
-                    required: "Please enter the OTP sent to your email or phone number.",
-                    remote: "Invalid OTP. Please try again."
-                }
-            },
-            submitHandler: function (form, event) {
-                event.preventDefault();
+        });
+        // $('#verify-otp-form').validate({
+        //     errorElement: "div",
+        //     errorPlacement: function(error, element) {
+        //         error.addClass("invalid-feedback");
+        //         error.insertAfter(element);
+        //     },
+        //     highlight: function(element, errorClass, validClass) {
+        //         $(element).addClass("is-invalid").removeClass("is-valid");
+        //     },
+        //     unhighlight: function(element, errorClass, validClass) {
+        //         $(element).addClass("is-valid").removeClass("is-invalid");
+        //     },
+        //     rules: {
+        //         otp: {
+        //             required: true,
+        //             remote: {
+        //                 url: '{{ route('web.products.varifyOTP') }}',
+        //                 type: "POST",
+        //                 data: {
+        //                     otp: function() {
+        //                         return $("input[name='otp']").val();
+        //                     },
+        //                     phone: function() {
+        //                         return $("#mobile_number").val();
+        //                     },
+        //                     email: function() {
+        //                         return $("#email").val();
+        //                     },
+        //                     otpEmail: function() {
+        //                         return $('#otpEmail').is(':checked');
+        //                     },
+        //                     _token: $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             }
+        //         }
+        //     },
+        //     messages: {
+        //         otp: {
+        //             required: "Please enter the OTP sent to your email or phone number.",
+        //             remote: "Invalid OTP. Please try again."
+        //         }
+        //     },
+        //     submitHandler: function (form, event) {
+        //         event.preventDefault();
 
-                var formData = $(form).serializeArray();
+        //         var formData = $(form).serializeArray();
 
-                formData.push({ name: 'name', value: $("#name").val() });
-                formData.push({ name: 'email', value: $("#email").val() });
-                formData.push({ name: 'mobile_number', value: $("#mobile_number").val() });
-                formData.push({ name: 'otpEmail', value: $('#otpEmail').is(':checked') });
-                formData.push({ name: 'link_token', value: $('#link_token').val() });
+        //         formData.push({ name: 'name', value: $("#name").val() });
+        //         formData.push({ name: 'email', value: $("#email").val() });
+        //         formData.push({ name: 'mobile_number', value: $("#mobile_number").val() });
+        //         formData.push({ name: 'otpEmail', value: $('#otpEmail').is(':checked') });
+        //         formData.push({ name: 'link_token', value: $('#link_token').val() });
 
-                $("#overlay").show('slow');
-                $('body').addClass('body-lock');
+        //         $("#overlay").show('slow');
+        //         $('body').addClass('body-lock');
 
-                $.ajax({
-                    url: '{{ route('web.products.checkout') }}',
-                    type: 'POST',
-                    data: formData,
-                    success: function (response) {
-                        toastr.success(response.message);
-                        window.location.href = "{{ route('web.products.order') }}";
-                    },
-                    error: function (xhr, error) {
-                        toastr.error('Something went wrong please try again!.');
-                        window.location.href = $('#web_page_url').val();
-                    }
-                });
+        //         $.ajax({
+        //             url: '{{ route('web.products.checkout') }}',
+        //             type: 'POST',
+        //             data: formData,
+        //             success: function (response) {
+        //                 toastr.success(response.message);
+        //                 window.location.href = "{{ route('web.products.order') }}";
+        //             },
+        //             error: function (xhr, error) {
+        //                 toastr.error('Something went wrong please try again!.');
+        //                 window.location.href = $('#web_page_url').val();
+        //             }
+        //         });
+        //     }
+        // });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        const inputs = $('.otp-input'); // Select all OTP input fields
+
+        // Function to move to next or previous input
+        function moveToNext(currentInput, nextInput) {
+            if (currentInput.val().length === 1) {
+                nextInput.focus();
+            }
+        }
+
+        function moveToPrev(currentInput, prevInput) {
+            if (currentInput.val().length === 0 && prevInput.length) {
+                prevInput.focus();
+            }
+        }
+
+        // Handle input event
+        inputs.on('input', function () {
+            let currentInput = $(this);
+            let nextInput = currentInput.next('.otp-input'); // Next input field
+
+            moveToNext(currentInput, nextInput);
+
+            // Concatenate all input values to the hidden input
+            let otpValue = '';
+            inputs.each(function () {
+                otpValue += $(this).val();
+            });
+
+            // If OTP is complete, auto-submit the form
+            if (otpValue.length === 6) {
+                $('#otp').val(otpValue); // Set hidden input value
+
+                // Now trigger the AJAX form submission
+                submitOtpForm();
             }
         });
+
+        // Handle backspace event
+        inputs.on('keydown', function (e) {
+            let currentInput = $(this);
+            let prevInput = currentInput.prev('.otp-input'); // Previous input field
+
+            if (e.key === 'Backspace') {
+                moveToPrev(currentInput, prevInput);
+            }
+        });
+
+        // Function to handle AJAX form submission
+        function submitOtpForm() {
+            var formData = $('#otp-form').serializeArray();
+
+            // Adding other fields to the form data
+            formData.push({ name: 'otp', value: $("#otp").val() });
+            formData.push({ name: 'name', value: $("#name").val() });
+            formData.push({ name: 'email', value: $("#email").val() });
+            formData.push({ name: 'mobile_number', value: $("#mobile_number").val() });
+            formData.push({ name: 'otpEmail', value: $('#otpEmail').is(':checked') });
+            formData.push({ name: 'link_token', value: $('#link_token').val() });
+
+            // Show loading overlay or loader (optional)
+            $("#overlay").show('slow');
+            $('body').addClass('body-lock');
+
+            // Make the AJAX request to verify the OTP and submit the form
+            $.ajax({
+                url: '{{ route('web.products.checkout') }}',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.status) {
+                        // OTP is verified, handle success
+                        toastr.success(response.message);
+
+                        // Redirect or move to another step (optional)
+                        // window.location.href = "{{ route('web.products.order') }}";
+                    } else {
+                        // OTP failed or another issue occurred
+                        toastr.error(response.message || 'Invalid OTP, please try again.');
+                        inputs.val('');
+                        inputs.first().focus();
+                    }
+                },
+                error: function (xhr, error) {
+                    toastr.error('Something went wrong, please try again.');
+                    // window.location.href = $('#web_page_url').val();
+                },
+                complete: function() {
+                    // Hide the overlay when the request is done (optional)
+                    $("#overlay").hide('slow');
+                    $('body').removeClass('body-lock');
+                }
+            });
+        }
     });
 </script>
 @endsection

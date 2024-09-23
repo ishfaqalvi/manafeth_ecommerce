@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\WhatsAppService;
 use App\Http\Controllers\Controller;
 use App\Contracts\{BlogInterface,BannerInterface,ProductInterface};
-use App\Services\{TwilioService};
+use App\Services\{TwilioOTPService};
 
 class HomeController extends Controller
 {
@@ -23,7 +23,7 @@ class HomeController extends Controller
         ProductInterface $product,
         BlogInterface $blog,
         WhatsAppService $whatsAppService,
-        TwilioService $twilio
+        TwilioOTPService $twilio
     ){
         $this->banner = $banner;
         $this->product = $product;
@@ -49,46 +49,34 @@ class HomeController extends Controller
         return view('web.home.index', compact('data'));
     }
 
-    public function lookupPhoneNumber(Request $request)
+    public function sendOTP(Request $request)
     {
         // Retrieve phone number from the request
-        $phone = "971566441716";
-        // $phone = "+923027679079";
-        $otp = rand(100000, 999999);
+        // $phone = "+971566441716";
+        $phone = "+923075528385";
+        // $otp = rand(100000, 999999);
         try {
-            $this->twilio->sendSms($phone, $otp);
+            $response = $this->twilio->sendOtp($phone);
 
-            return response()->json(['message' => 'OTP sent successfully via SMS.'], 200);
+            return response()->json($response);
 
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to send OTP via SMS: ' . $e->getMessage()], 500);
         }
+    }
 
-        // Initialize the Twilio client
-        $sid = env('TWILIO_SID');
-        $token = env('TWILIO_AUTH_TOKEN');
-        $twilio = new Client($sid, $token);
-
+    public function verifyOtp($otp)
+    {
+        // $phone = "+971566441716";
+        $phone = "+923075528385";
         try {
-            // Perform the lookup
-            $lookup = $twilio->lookups->v1->phoneNumbers($phoneNumber)->fetch([
-                "type" => "carrier"  // Fetch carrier information, optional
-            ]);
 
-            // Return the lookup data as JSON
-            return response()->json([
-                'status' => 'success',
-                'phone_number' => $lookup->phoneNumber,
-                'country_code' => $lookup->countryCode,
-                'carrier' => $lookup->carrier['name'] ?? 'N/A',
-                'phone_type' => $lookup->carrier['type'] ?? 'N/A'
-            ]);
+            $response = $this->twilio->verifyOtp($phone, $otp);
+    
+            return response()->json($response);
+
         } catch (\Exception $e) {
-            // Return error if something goes wrong
-            return response()->json([
-                'status' => 'error',
-                'message' => $e->getMessage(),
-            ], 400);
+            return response()->json(['message' => 'Failed to send OTP via SMS: ' . $e->getMessage()], 500);
         }
     }
 }

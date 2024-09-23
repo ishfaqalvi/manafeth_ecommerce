@@ -51,7 +51,7 @@ class SettingsSeeder extends Seeder
                 'value' => '',
             ],
             [
-                'key'   => 'twilio_phone_number',
+                'key'   => 'twilio_service_id',
                 'value' => '',
             ],
 

@@ -37,7 +37,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
     */
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/test-notification', 'HomeController@notification')->name('test-notification');
-    Route::get('/lookup-phone', 'HomeController@lookupPhoneNumber');
+    Route::get('/send-twilio-otp', 'HomeController@sendOTP');
+    Route::get('/varify-twilio-otp/{otp}', 'HomeController@verifyOtp');
 
     /*
     |--------------------------------------------------------------------------

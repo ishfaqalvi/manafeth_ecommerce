@@ -33,4 +33,15 @@ return [
     |
     */
     'from' => env('TWILIO_PHONE_NUMBER'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Twilio Service ID
+    |--------------------------------------------------------------------------
+    |
+    | This is your Twilio service id that will be used to send SMS messages.
+    | Use the environment variable as the primary source.
+    |
+    */
+    'serviceid' => env('TWILIO_VERIFY_SERVICE_SID'),
 ];
