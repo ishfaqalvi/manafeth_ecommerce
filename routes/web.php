@@ -37,7 +37,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Web'], function () {
     */
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/test-notification', 'HomeController@notification')->name('test-notification');
-    Route::get('/message', 'HomeController@sendWatsap');
+    Route::get('/lookup-phone', 'HomeController@lookupPhoneNumber');
 
     /*
     |--------------------------------------------------------------------------
