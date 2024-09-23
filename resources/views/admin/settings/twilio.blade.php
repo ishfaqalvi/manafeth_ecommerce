@@ -35,9 +35,9 @@
                             <div class="col-lg-8 mb-3">
                                 <input type="text" name="values[twilio_token]" class="form-control" value="{{ settings('twilio_token') }}">
                             </div>
-                            <label class="col-lg-4 mb-3 col-form-label">Phone Number :</label>
+                            <label class="col-lg-4 mb-3 col-form-label">Service ID :</label>
                             <div class="col-lg-8 mb-3">
-                                <input type="text" name="values[twilio_phone_number]" class="form-control" value="{{ settings('twilio_phone_number') }}">
+                                <input type="text" name="values[twilio_service_id]" class="form-control" value="{{ settings('twilio_service_id') }}">
                             </div>
                         </div>
                     </fieldset>

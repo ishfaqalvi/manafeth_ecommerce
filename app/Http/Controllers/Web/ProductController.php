@@ -111,14 +111,6 @@ class ProductController extends Controller
                     try {
                         $phone = $request->phone;
                         $this->twilio->sendOtp($phone);
-
-                        Token::updateOrCreate(['mobile_number' => $phone], [
-                            'mobile_number' => $phone,
-                            'otp'           => $otp,
-                            'expiry_time'   => now()->addMinutes(5),
-                            'used'          => false
-                        ]);
-
                         return response()->json(['message' => 'OTP sent successfully via SMS.'], 200);
 
                     } catch (Exception $e) {
@@ -132,28 +124,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Varify OTP.
-     */
-    public function varifyOTP(Request $request)
-    {
-        $isValid = false;
-        if ($request->otpEmail) {
-            $isValid = !Token::isValidOtp($request->email, null, $request->otp);
-        } else {
-            $isValid = !Token::isValidOtp(null, $request->phone, $request->otp);
-        }
-        if ($isValid){ echo "false"; } else { echo "true"; }
-
-    }
-
-    /**
      * Store specified resource.
      */
     public function checkout(Request $request)
     {
         $isValid = false;
         if ($request->otpEmail == true  && $request->email) {
-            $isValid = Token::isValidOtp($request->email, null, $request->otp);
+            $isValid = Token::isValidOtp($request->email, $request->otp);
         } else {
             $phone = $request->mobile_number;
             $otp = $request->otp;
@@ -162,7 +139,7 @@ class ProductController extends Controller
                 $isValid = true;
             }
         }
-        if ($isValid){ 
+        if ($isValid){
             $input = $request->all();
             DB::transaction(function () use($input) {
                 /**
@@ -243,7 +220,7 @@ class ProductController extends Controller
                 }
             });
             $response = ['status' => true, 'message' => 'Your order has been placed successfully.'];
-        } else { 
+        } else {
             $response = ['status' => false, 'message' => 'Invalid OTP. Pleas try again.'];
         }
         return response()->json($response);

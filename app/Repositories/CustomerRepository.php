@@ -63,7 +63,7 @@ class CustomerRepository implements CustomerInterface
                 }
             }
         } else {
-            if($data['otpEmail']){
+            if($data['otpEmail'] && $data['email']){
                 $checkUser = Customer::whereEmail($data['email'])->first();
             }else{
                 $checkUser = Customer::whereMobileNumber($data['mobile_number'])->first();

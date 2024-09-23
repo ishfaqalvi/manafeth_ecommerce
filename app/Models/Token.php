@@ -38,50 +38,40 @@ class Token extends Model implements Auditable
      *
      * @var array
      */
-    protected $fillable = ['email','mobile_number','otp','expiry_time','used'];
+    protected $fillable = ['email','otp','expiry_time','used'];
 
     /**
-     * Check if a valid OTP exists for the given email or mobile number.
+     * Check if a valid OTP exists for the given email.
      *
      * @param string|null $email
      * @param string|null $mobileNumber
      * @return bool
      */
-    public static function hasValidOtp($email = null, $mobileNumber = null)
+    public static function hasValidOtp($email)
     {
-        $otpToken = self::when($email, function($query, $email) {
-                                return $query->where('email', $email);
-                            })
-                            ->when($mobileNumber, function($query, $mobileNumber) {
-                                return $query->where('mobile_number', $mobileNumber);
-                            })
-                            ->where('expiry_time', '>', Carbon::now())
-                            ->where('used', false)
-                            ->first();
+        $otpToken = self::where('email', $email)
+                        ->where('expiry_time', '>', Carbon::now())
+                        ->where('used', false)
+                        ->first();
 
         return $otpToken !== null;
     }
 
     /**
-     * Check if the given OTP is valid for the given email or mobile number.
+     * Check if the given OTP is valid for the given email.
      *
      * @param string|null $email
      * @param string|null $mobileNumber
      * @param string $otp
      * @return bool
      */
-    public static function isValidOtp($email = null, $mobileNumber = null, $otp)
+    public static function isValidOtp($email, $otp)
     {
-        $otpToken = self::when($email, function($query, $email) {
-                                return $query->where('email', $email);
-                            })
-                            ->when($mobileNumber, function($query, $mobileNumber) {
-                                return $query->where('mobile_number', $mobileNumber);
-                            })
-                            ->where('otp', $otp)
-                            ->where('expiry_time', '>', Carbon::now())
-                            ->where('used', false)
-                            ->first();
+        $otpToken = self::where('email', $email)
+                        ->where('otp', $otp)
+                        ->where('expiry_time', '>', Carbon::now())
+                        ->where('used', false)
+                        ->first();
 
         return $otpToken !== null;
     }

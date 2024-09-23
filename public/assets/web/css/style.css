@@ -3253,14 +3253,72 @@ i.fa.fa-chevron-down {
 
 }
 
-.linkProduct .thumbnail img{
-    width: 100%;
+.linkProduct .product-thumbnail{
+    max-width: 100%;
     border-radius: 15px;
-    border: 1px solid rgba(47, 47, 47, 0.781);
     margin-bottom: 15px;
 }
+.linkProduct .title{
+    font-size: 32px;
+    font: normal normal 600 32px/48px Poppins;
+    letter-spacing: 0px;
+    color: #000000;
+}
 .linkProduct .price-unit{
-    color: rgb(243, 160, 16);
+    font: normal normal 600 24px/35px Poppins;
+    font-size: 24px;
+    color: #F2A82B;
+}
+.linkProduct .price{
+    font: normal normal normal 14px/21px Poppins;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+.linkProduct .quantity{
+    font: normal normal medium 18px/27px Poppins;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+.linkProduct .rental-detail{
+    font: normal normal normal 10px/16px Poppins;
+    letter-spacing: 0px;
+    color: #888888;
+    opacity: 1;
+    margin-bottom: 0px !important;
+}
+.linkProduct .date-label{
+    font-family: Poppins;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+.linkProduct .date-value{
+    font-family: Poppins;
+    font-size: 18px;
+    letter-spacing: 0px;
+    color: #888888;
+}
+.linkProduct .list-unstyled img{
+    width: 19px;
+    height: 17px;
+}
+.linkProduct .list-unstyled h5{
+    font-family: Poppins;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+.linkProduct .list-unstyled P{
+    font-family: Poppins;
+    font-size: 18px;
+    letter-spacing: 0px;
+    color: #888888;
 }
 
 .linkProduct .form-check-input:checked {
@@ -3299,4 +3357,21 @@ i.fa.fa-chevron-down {
 
 .linkProduct .otp-input:focus {
     border-color: #007bff;
+}
+@media screen and (max-width: 767px) {
+    .linkProduct .product-thumbnail{
+        border-radius: 0px;
+    }
+    .linkProduct .title{
+        font: normal normal 600 24px/48px Poppins;
+    }
+    .linkProduct .price-unit{
+        font: normal normal 600 18px/27px Poppins;
+    }
+    .linkProduct .price{
+        font: normal normal normal 14px/21px Poppins;
+    }
+    .linkProduct .quantity{
+        font: normal normal medium 16px/25px Poppins;
+    }
 }

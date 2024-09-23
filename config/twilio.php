@@ -25,17 +25,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Twilio Phone Number
-    |--------------------------------------------------------------------------
-    |
-    | This is your Twilio phone number that will be used to send SMS messages.
-    | Use the environment variable as the primary source.
-    |
-    */
-    'from' => env('TWILIO_PHONE_NUMBER'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Twilio Service ID
     |--------------------------------------------------------------------------
     |
