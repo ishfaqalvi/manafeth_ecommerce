@@ -92,12 +92,12 @@
                                 @csrf
                                 <input type="hidden" name="phone" value="">
                                 <div class="otp-input-wrapper">
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-1" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-2" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-3" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-4" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-5" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-6" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-1" inputmode="numeric" pattern="[0-9]*" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-2" inputmode="numeric" pattern="[0-9]*" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-3" inputmode="numeric" pattern="[0-9]*" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-4" inputmode="numeric" pattern="[0-9]*" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-5" inputmode="numeric" pattern="[0-9]*" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-6" inputmode="numeric" pattern="[0-9]*" required>
                                 </div>
                                 <input type="hidden" id="otp" name="otp">
                                 <button type="submit" class="hidden-submit-btn d-none">Submit</button>
