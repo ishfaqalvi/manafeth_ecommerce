@@ -59,7 +59,7 @@
                         <p class="mb-0">{{ $link->address }}</p>
                     </li>
                 </ul>
-                <form id="send-otp-form" method="POST" action="{{ route('web.products.sendOTP') }}" class="mt-4">
+                <form id="send-otp-form" method="POST" action="{{ route('web.products.sendOTP') }}" class="mt-4 d-none">
                     @csrf
                     <div class="row">
                         <div class="form-group col-md-6 mb-3">
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="otp-container d-none" id="otp-container">
+                <div class="otp-container" id="otp-container">
                     <div class="card p-4 shadow">
                         <div class="card-body text-center">
                             <h5 class="card-title mb-3">OTP Verification</h5>
@@ -116,7 +116,10 @@
     $(document).ready(function () {
         var input = document.querySelector("#mobile_number");
         var iti = window.intlTelInput(input, {
-            initialCountry: "ae",
+            initialCountry: "ae",      // Set default country to UAE (can be changed)
+            nationalMode: false,       // Ensure country code is always shown
+            autoHideDialCode: false,   // Don't hide the country code when focus is lost
+            separateDialCode: true,
             utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
         });
         $('.iti').css('display', 'block');

@@ -3263,6 +3263,7 @@ i.fa.fa-chevron-down {
     font: normal normal 600 32px/48px Poppins;
     letter-spacing: 0px;
     color: #000000;
+    line-height:0%;
 }
 .linkProduct .price-unit{
     font: normal normal 600 24px/35px Poppins;
@@ -3329,49 +3330,90 @@ i.fa.fa-chevron-down {
 .linkProduct .form-check-input:checked::before {
     background-color: #fff;
 }
-
 .linkProduct .otp-container {
-  display: flex;
-  /* justify-content: center; */
-  align-items: center;
-  width: 100%;
-  /* height: 100vh; */
-  /* background-color: #f7f7f7; */
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.linkProduct .card {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    border-radius: 10px;
 }
 
 .linkProduct .otp-input-wrapper {
-  display: flex;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 .linkProduct .otp-input {
-  width: 40px;
-  height: 40px;
-  margin: 0 5px;
-  font-size: 22px;
-  text-align: center;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  outline: none;
-  transition: border-color 0.2s;
+    width: 50px;
+    height: 50px;
+    margin: 0;
+    font-size: 24px;
+    text-align: center;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s;
 }
 
 .linkProduct .otp-input:focus {
     border-color: #007bff;
 }
+
+@media (max-width: 768px) {
+    .linkProduct .card {
+        padding: 20px;
+    }
+    .linkProduct .otp-input {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .linkProduct .otp-input {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+}
+
 @media screen and (max-width: 767px) {
     .linkProduct .product-thumbnail{
         border-radius: 0px;
     }
     .linkProduct .title{
-        font: normal normal 600 24px/48px Poppins;
+        font: normal normal 600 20px/40px Poppins;
     }
     .linkProduct .price-unit{
-        font: normal normal 600 18px/27px Poppins;
+        font: normal normal 600 16px/24px Poppins;
     }
     .linkProduct .price{
         font: normal normal normal 14px/21px Poppins;
     }
     .linkProduct .quantity{
-        font: normal normal medium 16px/25px Poppins;
+        font: normal normal medium 12px/20px Poppins;
+    }
+    .linkProduct .date-label{
+        font-size: 16px;
+    }
+    .linkProduct .date-value{
+        font-size: 16px;
+    }
+    .linkProduct .list-unstyled img{
+        width: 18px;
+        height: 16px;
+    }
+    .linkProduct .list-unstyled h5{
+        font-size: 16px;
+    }
+    .linkProduct .list-unstyled P{
+        font-size: 16px;
     }
 }
