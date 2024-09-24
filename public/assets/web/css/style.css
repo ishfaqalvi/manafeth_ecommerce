@@ -3380,7 +3380,7 @@ i.fa.fa-chevron-down {
     .linkProduct .otp-input {
         width: 35px;
         height: 35px;
-        font-size: 18px;
+        font-size: 13px;
     }
 }
 
@@ -3390,6 +3390,7 @@ i.fa.fa-chevron-down {
     }
     .linkProduct .title{
         font: normal normal 600 20px/40px Poppins;
+        line-height: 1.2;
     }
     .linkProduct .price-unit{
         font: normal normal 600 16px/24px Poppins;
