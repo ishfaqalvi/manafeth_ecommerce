@@ -88,17 +88,19 @@
                         <div class="card-body text-center">
                             <h5 class="card-title mb-3">OTP Verification</h5>
                             <p class="card-text">Enter the 6-digit code sent to your phone/email</p>
-                            <form id="verify-otp-form" method="POST">
+                            <form id="verify-otp-form" method="POST" autocomplete="one-time-code">
                                 @csrf
                                 <input type="hidden" name="phone" value="">
+
                                 <div class="otp-input-wrapper">
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-1" inputmode="numeric" pattern="[0-9]*" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-2" inputmode="numeric" pattern="[0-9]*" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-3" inputmode="numeric" pattern="[0-9]*" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-4" inputmode="numeric" pattern="[0-9]*" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-5" inputmode="numeric" pattern="[0-9]*" required>
-                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-6" inputmode="numeric" pattern="[0-9]*" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-1" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-2" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-3" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-4" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-5" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" required>
+                                    <input type="text" class="form-control otp-input" maxlength="1" id="otp-6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" required>
                                 </div>
+
                                 <input type="hidden" id="otp" name="otp">
                                 <button type="submit" class="hidden-submit-btn d-none">Submit</button>
                             </form>
