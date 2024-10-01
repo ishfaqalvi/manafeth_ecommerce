@@ -27,7 +27,7 @@ const DatatableBasic = function() {
         // Setting datatable defaults
         $.extend( $.fn.dataTable.defaults, {
             autoWidth: false,
-            columnDefs: [{ 
+            columnDefs: [{
                 orderable: false,
                 // width: 100,
                 targets: [ -1 ]
@@ -42,7 +42,11 @@ const DatatableBasic = function() {
         });
 
         // Basic datatable
-        $('.datatable-basic').DataTable();
+        $('.datatable-basic').DataTable({
+            paging: false,
+            lengthChange: false,
+            info: false
+        });
 
         // Alternative pagination
         $('.datatable-pagination').DataTable({

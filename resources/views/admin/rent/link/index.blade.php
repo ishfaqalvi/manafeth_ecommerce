@@ -57,6 +57,9 @@
             @endforeach
             </tbody>
         </table>
+        <div class="card-body">
+            {{ $rentLinks->links('vendor.pagination.bootstrap-5') }}
+        </div>
     </div>
 </div>
 @endsection

@@ -38,7 +38,7 @@ class RentLinkController extends Controller
      */
     public function index()
     {
-        $rentLinks = $this->rentLink->linkList('User');
+        $rentLinks = $this->rentLink->linkList('User', true);
 
         return view('admin.rent.link.index', compact('rentLinks'));
     }
