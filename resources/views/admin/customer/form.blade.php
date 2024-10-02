@@ -12,7 +12,7 @@
             </div>
             <div class="form-group col-lg-6 mb-3">
                 {{ Form::label('email') }}
-                {{ Form::email('email', $customer->email, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email','required']) }}
+                {{ Form::email('email', $customer->email, ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'placeholder' => 'Email']) }}
                 {!! $errors->first('email', '<div class="invalid-feedback">:message</div>') !!}
             </div>
             <div class="form-group col-lg-6 mb-3">
