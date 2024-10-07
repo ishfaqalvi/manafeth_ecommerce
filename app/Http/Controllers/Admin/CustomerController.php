@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Contracts\CustomerInterface;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CustomerOrdersExport;
+use App\Exports\CustomerRentOrdersExport;
+use App\Exports\CustomerMaintenenceRequestExport;
 
 /**
  * Class CustomerController
@@ -123,12 +127,34 @@ class CustomerController extends Controller
 
     /**
      * Validate a resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function checkEmail(Request $request)
     {
         $responce = $this->customer->checkEmail($request->all());
         echo $responce;
+    }
+
+    /**
+     * Export a resource.
+     */
+    public function exportSaleOrder($id)
+    {
+        return Excel::download(new CustomerOrdersExport($id), 'customer_sale_orders_' . $id . '.xlsx');
+    }
+
+    /**
+     * Export a resource.
+     */
+    public function exportRentOrder($id)
+    {
+        return Excel::download(new CustomerRentOrdersExport($id), 'customer_rent_orders_' . $id . '.xlsx');
+    }
+
+    /**
+     * Export a resource.
+     */
+    public function exportMaintenenceOrder($id)
+    {
+        return Excel::download(new CustomerMaintenenceRequestExport($id), 'customer_maintenence_orders_' . $id . '.xlsx');
     }
 }

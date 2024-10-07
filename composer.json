@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.2",
         "laravelcollective/html": "^6.3",
+        "maatwebsite/excel": "^3.1",
         "mehdi-fathi/eloquent-filter": "^4.0",
         "minishlink/web-push": "*",
         "mpdf/mpdf": "^8.2",

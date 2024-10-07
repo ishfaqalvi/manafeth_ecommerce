@@ -52,7 +52,7 @@ class FcmRepository implements FcmInterface
         if(isset($record->user->fcm_token) && ($record->user_type == 'App\Models\Customer' || $record->user_type == 'App\Models\Employee'))
         {
             $this->fcm->sendNotification($record->title, $record->body, $record->user->fcm_token);
-        }
+        } 
 	}
 
 	public function find($id)

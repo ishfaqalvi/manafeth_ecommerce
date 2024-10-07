@@ -1,7 +1,7 @@
 <div class="container-fluid">
-    <span>&copy; 2023 
+    <span>&copy; {{ date('Y') }} 
         <a href="#">
-            The Sots Family
+            {{ env('APP_NAME', 'Laravel') }}
         </a>
     </span>
 </div>
