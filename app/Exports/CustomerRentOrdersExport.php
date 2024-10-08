@@ -38,8 +38,8 @@ class CustomerRentOrdersExport implements FromArray, WithHeadings, WithEvents
             foreach ($order->details as $detail) {
                 $data[] = [
                     $detail->product->name,
-                    date('d M Y', $detail->quantity),
-                    date('d M Y',$detail->quantity),
+                    date('d M Y', $detail->from),
+                    date('d M Y',$detail->to),
                     $detail->quantity,
                     $detail->productRent->amount,
                     $detail->quantity * $detail->productRent->amount
