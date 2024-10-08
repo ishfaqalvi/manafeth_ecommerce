@@ -78,7 +78,7 @@
                         <div class="card-header d-flex align-items-center">
                             <h5 class="mb-0">Sale Orders</h5>
                             <div class="ms-auto my-auto">
-                                <a href="" class="btn btn-outline-indigo">Export</a>
+                                <a href="{{ route('customers.exportSaleOrder', $customer->id)}}" class="btn btn-outline-indigo">Export</a>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -130,7 +130,7 @@
                         <div class="card-header d-flex align-items-center">
                             <h5 class="mb-0">Rent Requests</h5>
                             <div class="ms-auto my-auto">
-                                <a href="" class="btn btn-outline-indigo">Export</a>
+                                <a href="{{ route('customers.exportRentOrder', $customer->id)}}" class="btn btn-outline-indigo">Export</a>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -180,7 +180,7 @@
                         <div class="card-header d-flex align-items-center">
                             <h5 class="mb-0">Maintenence Request</h5>
                             <div class="ms-auto my-auto">
-                                <a href="" class="btn btn-outline-indigo">Export</a>
+                                <a href="{{ route('customers.exportMaintenenceOrder', $customer->id)}}" class="btn btn-outline-indigo">Export</a>
                             </div>
                         </div>
                         <div class="table-responsive">

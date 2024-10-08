@@ -24,10 +24,10 @@ class OrderController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $data = $this->order->orderList(Auth::guard('customerapi')->user()->id);
+            $data = $this->order->orderList(Auth::guard('customerapi')->user()->id, null, false, $request->all());
             return $this->sendResponse($data, 'Orders list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

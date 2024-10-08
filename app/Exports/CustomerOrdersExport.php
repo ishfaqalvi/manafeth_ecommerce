@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\Models\Order;
 use App\Models\Customer;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -27,30 +26,24 @@ class CustomerOrdersExport implements FromArray, WithHeadings, WithEvents
     {
         $data = [];
 
-        // First section: Customer details (2 columns, label-value format)
-        $data[] = ['Customer Name:', $this->customer->name];
-        $data[] = ['Customer Email:', $this->customer->email];
-        $data[] = ['Phone:', $this->customer->mobile_number];
-        $data[] = ['Address:', $this->customer->address];
+        $data[] = ['Customer Name', 'Customer Email', 'Customer Mobile Number', 'Address'];
+        $data[] = [$this->customer->name, $this->customer->email, $this->customer->mobile_number, $this->customer->address];
 
-        // Empty row as a separator
         $data[] = ['', ''];
-
-        // Iterate over each order and add its details
         foreach ($this->customer->orders as $order) {
-            // Add order header
-            $data[] = ['Order ID:', $order->id, 'Order Date:', $order->order_date];
+            $data[] = ['Order ID:', $order->id, 'Order Date:', date('d M Y',$order->collection_date),'Payment Method:', $order->payment_method];
 
-            // Order Details heading
-            $data[] = ['Product Name', 'Quantity', 'Price', 'Total'];
+            $data[] = ['Serial Number', 'Product', 'Quantity', 'Price', 'Total', 'Warranty', 'Maintenance'];
 
-            // Add each order detail (Product details)
-            foreach ($order->orderDetails as $detail) {
+            foreach ($order->details as $detail) {
                 $data[] = [
-                    $detail->product_name,
+                    $detail->serial_number,
+                    $detail->product->name,
                     $detail->quantity,
                     $detail->price,
                     $detail->quantity * $detail->price,
+                    $detail->warranty,
+                    $detail->maintenance,
                 ];
             }
             $data[] = ['', ''];
@@ -78,15 +71,7 @@ class CustomerOrdersExport implements FromArray, WithHeadings, WithEvents
             AfterSheet::class => function(AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
 
-                // Merge customer detail labels
-                $sheet->mergeCells('A1:B1');
-                $sheet->mergeCells('A2:B2');
-                $sheet->mergeCells('A3:B3');
-                $sheet->mergeCells('A4:B4');
-
-                // Optional: Set bold for the order headings and customer details
-                $sheet->getStyle('A1:A4')->getFont()->setBold(true);
-                $sheet->getStyle('A6:D6')->getFont()->setBold(true);  // For the first order's heading row
+                $sheet->getStyle('A1:D1')->getFont()->setBold(true);
             },
         ];
     }

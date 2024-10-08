@@ -29,6 +29,13 @@
 @section('content')
 <div class="col-sm-12">
     <div class="card">
+        <div class="card-body">
+            <form action="" method="get">
+                @include('admin.maintenence-request.filter')
+            </form>
+        </div>
+    </div>
+    <div class="card">
         <div class="card-header">
             <h5 class="mb-0">Maintenence Request</h5>
         </div>

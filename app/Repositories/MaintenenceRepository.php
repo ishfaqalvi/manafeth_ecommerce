@@ -23,14 +23,14 @@ class MaintenenceRepository implements MaintenenceInterface
         $this->adminNotify     = $adminNotify;
     }
 
-    public function list($guard = null, $pagination = false)
+    public function list($guard = null, $pagination = false, $filters)
     {
         $query = MaintenenceRequest::query();
 
         if (!is_null($guard)) {
             $query->whereCustomerId(Auth::guard($guard)->user()->id);
         }
-        $query->with([
+        $query->filter($filters)->with([
             'customer',
             'category',
             'product',

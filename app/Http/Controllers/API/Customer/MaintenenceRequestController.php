@@ -22,10 +22,10 @@ class MaintenenceRequestController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $data = $this->maintenence->list('customerapi', false);
+            $data = $this->maintenence->list('customerapi', false, $request->all());
             return $this->sendResponse($data, 'Maintenence Request list get successfully.');
         } catch (\Throwable $th) {
             return $this->sendException($th->getMessage());

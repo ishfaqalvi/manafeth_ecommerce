@@ -67,21 +67,19 @@ class RentRequest extends Model implements Auditable
     }
 
     /**
-     * Scope a query to filter Rent order.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string $category
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Scope a query to filter orders.
      */
     public function scopeFilter($query, $request)
     {
         if (isset($request['customer'])) {
-            $query->whereHas('customer', function($customer) use($request) {
-                $customer->where('name', 'like', '%' . $request['customer'] . '%');
-            });
+            $query->whereCustomerId($request['customer']);
         }
         if (isset($request['status'])) {
-            $query->where('status', $request['status']);
+            $query->whereStatus($request['status']);
+        }
+        if (isset($request['search'])) {
+            $query->where('name', 'like', '%'.$request['search'].'%')
+            ->orWhere('phone_number', 'like', '%'.$request['search'].'%');
         }
         return $query;
     }

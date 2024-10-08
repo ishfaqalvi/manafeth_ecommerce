@@ -115,6 +115,24 @@ class MaintenenceRequest extends Model implements Auditable
     }
 
     /**
+     * Scope a query to filter orders.
+     */
+    public function scopeFilter($query, $request)
+    {
+        if (isset($request['customer'])) {
+            $query->whereCustomerId($request['customer']);
+        }
+        if (isset($request['status'])) {
+            $query->whereStatus($request['status']);
+        }
+        if (isset($request['search'])) {
+            $query->where('full_name', 'like', '%'.$request['search'].'%')
+            ->orWhere('phone_number', 'like', '%'.$request['search'].'%');
+        }
+        return $query;
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function category()

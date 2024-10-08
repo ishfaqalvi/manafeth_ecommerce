@@ -59,7 +59,7 @@ class SaleRepository implements SaleInterface
 		Cart::find($id)->delete();
 	}
 
-	public function orderList($customer_id = null, $employee_id = null,$pagination = false)
+	public function orderList($customer_id = null, $employee_id = null,$pagination = false, $filters)
 	{
         $query = Order::query();
 		if (!is_null($customer_id)) {
@@ -83,7 +83,7 @@ class SaleRepository implements SaleInterface
             'details.product.subCategory',
             'details.product.reviews.order.customer'
         ];
-        $query->with($relations)->orderBy('created_at', 'desc');
+        $query->filter($filters)->with($relations)->orderBy('created_at', 'desc');
 		return $pagination ? $query->paginate() : $query->get();
 	}
 

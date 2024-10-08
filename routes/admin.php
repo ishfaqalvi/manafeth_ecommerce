@@ -52,14 +52,17 @@ Route::controller(MaintenenceRequestController::class)->prefix('maintenance/requ
 |--------------------------------------------------------------------------
 */
 Route::controller(CustomerController::class)->prefix('customers')->as('customers.')->group(function () {
-	Route::get('list',				 'index'	 )->name('index'  	 );
-	Route::get('create',			 'create'	 )->name('create' 	 );
-	Route::post('store',			 'store'	 )->name('store'  	 );
-	Route::get('edit/{id}',			 'edit'		 )->name('edit'	  	 );
-	Route::get('show/{id}',			 'show'		 )->name('show'	  	 );
-	Route::patch('update/{user}',    'update'	 )->name('update' 	 );
-	Route::delete('delete/{id}',	 'destroy'	 )->name('destroy'	 );
-	Route::post('check-email', 		 'checkEmail')->name('checkEmail');
+	Route::get('list',				 			'index'	 				)->name('index'  	 			);
+	Route::get('create',			 			'create'	 			)->name('create' 	 			);
+	Route::post('store',			 			'store'	 				)->name('store'  	 			);
+	Route::get('edit/{id}',			 			'edit'		 			)->name('edit'	  	 			);
+	Route::get('show/{id}',			 			'show'		 			)->name('show'	  	 			);
+	Route::patch('update/{user}',    			'update'	 			)->name('update' 	 			);
+	Route::delete('delete/{id}',	 			'destroy'	 			)->name('destroy'	 			);
+	Route::post('check-email', 		 			'checkEmail'			)->name('checkEmail'			);
+	Route::get('export-sale-order/{id}',		'exportSaleOrder'		)->name('exportSaleOrder'	  	);
+	Route::get('export-rent-order/{id}',		'exportRentOrder'		)->name('exportRentOrder'	  	);
+	Route::get('export-maintenence-order/{id}',	'exportMaintenenceOrder')->name('exportMaintenenceOrder');
 });
 
 /*

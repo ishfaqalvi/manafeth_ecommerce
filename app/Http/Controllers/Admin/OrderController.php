@@ -36,9 +36,9 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = $this->order->orderList(null, null, true);
+        $orders = $this->order->orderList(null, null, true, $request->all());
 
         return view('admin.order.index', compact('orders'));
     }

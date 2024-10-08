@@ -31,7 +31,6 @@
     <div class="card">
         <div class="card-body">
             <form action="" method="get">
-                @csrf
                 @include('admin.rent.order.filter')
             </form>
         </div>

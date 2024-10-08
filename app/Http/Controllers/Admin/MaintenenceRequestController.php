@@ -36,9 +36,9 @@ class MaintenenceRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $maintenenceRequests = $this->maintenence->list(null, true);
+        $maintenenceRequests = $this->maintenence->list(null, true, $request->all());
 
         return view('admin.maintenence-request.index', compact('maintenenceRequests'));
     }

@@ -12,7 +12,7 @@ interface SaleInterface
 
 	public function cartDeleteItem($id);
 
-	public function orderList($customer_id, $employee_id, $pagination);
+	public function orderList($customer_id, $employee_id, $pagination, $filters);
 
 	public function orderNew();
 
