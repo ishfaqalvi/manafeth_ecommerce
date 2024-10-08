@@ -27,7 +27,7 @@ class CustomerMaintenenceRequestExport implements FromArray, WithHeadings, WithE
         $data = [];
 
         $data[] = ['Customer Name', 'Customer Email', 'Customer Mobile Number', 'Address'];
-        $data[] = [$this->customer->name, $this->customer->email, $this->customer->mobile_number, $this->customer->address];
+        $data[] = [$this->customer->name, $this->customer->email, "'" . $this->customer->mobile_number, $this->customer->address];
 
         $data[] = ['', ''];
 
