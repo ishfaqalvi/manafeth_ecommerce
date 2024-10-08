@@ -1,8 +1,8 @@
 <div class="row">
     <!-- Customer Input Field -->
     <div class="form-group col-md-6">
-        <input type="text" class="form-control" name="name" 
-               value="{{ request()->input('name', '') }}" 
+        <input type="text" class="form-control" name="search" 
+               value="{{ request()->input('search', '') }}" 
                placeholder="Search by name and phone number">
     </div>
 
