@@ -465,7 +465,7 @@ class RentRepository implements RentInterface
         }else{
             $quary->where('linkable_type', 'App\Models\User');
         }
-        $quary->with(['product.brand', 'product.category', 'product.subCategory', 'product.rents', 'product.images', 'productRent']);
+        $quary->with(['product.brand', 'product.category', 'product.subCategory', 'product.rents', 'product.images', 'productRent'])->orderBy('id','desc');
         return $pagination ? $quary->paginate() : $quary->get();
     }
 
