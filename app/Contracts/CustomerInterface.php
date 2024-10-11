@@ -46,7 +46,7 @@ interface CustomerInterface
 
 	public function addressDelete($id);
 
-    public function list();
+    public function list($filters);
 
     public function new();
 

@@ -28,6 +28,13 @@
 @section('content')
 <div class="col-md-12">
     <div class="card">
+        <div class="card-body">
+            <form action="" method="get">
+                @include('admin.customer.filter')
+            </form>
+        </div>
+    </div>
+    <div class="card">
         <div class="card-header">
             <h5 class="mb-0">Customers</h5>
         </div>
@@ -93,6 +100,9 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="card-body">
+            {{ $customers->links('vendor.pagination.bootstrap-5') }}
+        </div>
     </div>
 </div>
 @endsection

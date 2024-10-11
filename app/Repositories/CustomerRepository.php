@@ -260,9 +260,9 @@ class CustomerRepository implements CustomerInterface
         Address::find($id)->delete();
     }
 
-    public function list()
+    public function list($filters)
     {
-        return Customer::paginate();
+        return Customer::filter($filters)->paginate();
     }
 
     public function new()

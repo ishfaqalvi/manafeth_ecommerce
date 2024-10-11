@@ -110,6 +110,26 @@ class Customer extends Authenticatable implements Auditable
     }
 
     /**
+     * Scope a query to filter product.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $category
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeFilter($query, $request)
+    {
+        if (isset($request['status'])) {
+            $query->whereStatus($request['status']);
+        }
+        if (isset($request['search'])) {
+            $query->where('name', 'like', '%'.$request['search'].'%')
+            ->orWhere('email', 'like', '%'.$request['search'].'%')
+            ->orWhere('mobile_number', 'like', '%'.$request['search'].'%');
+        }
+        return $query;
+    }
+
+    /**
      * Get all of the customer's order operations.
      */
     public function orderOperations()

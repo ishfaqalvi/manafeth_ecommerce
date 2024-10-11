@@ -37,9 +37,9 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = $this->customer->list();
+        $customers = $this->customer->list($request->all()); 
 
         return view('admin.customer.index', compact('customers'));
     }
