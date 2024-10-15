@@ -132,23 +132,29 @@
             let id = $(this).val();
             sub_category_list(id, 0);
         });
-        function sub_category_list(id,sub_category_id){
-            $('select[name=sub_category_id]').html('<option value="">--Select--</option>');
-            $('select[name=sub_category_id]').attr('disabled',false);
-            $.get('/admin/products/rent/sub-categories', {id: id}).done(function (result) {
-                let data = JSON.parse(result);
-                $.each(data, function (i, val) {
-                    if(val.id == sub_category_id){
+        function sub_category_list(categoryId,sub_category_id){
+            if (categoryId) {
+                var allSubCategories = @json(subCategories('Rent'));
+                var subCategories = allSubCategories.filter(function(state) {
+                    return state.category_id == categoryId;
+                });
+                $('select[name=sub_category_id]').html('<option value="">--Select--</option>');
+                $('select[name=sub_category_id]').attr('disabled',false);
+                $.each(subCategories, function (key, value) {
+                    if(value.id == sub_category_id){
                         $('select[name=sub_category_id]').append($('<option>',
-                            {selected : 'selected', value : val.id, text : val.name}
+                            {selected : 'selected', value : value.id, text : value.name}
                         ));
                     }else{
                         $('select[name=sub_category_id]').append($('<option>',
-                            {value : val.id,  text : val.name}
+                            {value : value.id,  text : value.name}
                         ));
                     }
                 });
-            });
+            } else {
+                $('select[name=sub_category_id]').append('<option value="">--Select--</option>');
+                $('select[name=sub_category_id]').attr('disabled', true);
+            }
         }
         $('.editSpecRecord').click(function(){
             $('#editspec-id').val($(this).data('id'));

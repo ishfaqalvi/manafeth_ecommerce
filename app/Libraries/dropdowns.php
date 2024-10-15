@@ -3,12 +3,10 @@
 use App\Models\Product;
 use App\Models\Customer;
 use App\Models\Employee;
-use App\Models\{User,Brand,Category};
+use App\Models\{User,Brand,Category,SubCategory};
 
 /**
  * Get listing of a resource.
- *
- * @return \Illuminate\Http\Response
  */
 function brands()
 {
@@ -17,8 +15,6 @@ function brands()
 
 /**
  * Get listing of a resource.
- *
- * @return \Illuminate\Http\Response
  */
 function categories($type = null)
 {
@@ -32,8 +28,19 @@ function categories($type = null)
 
 /**
  * Get listing of a resource.
- *
- * @return \Illuminate\Http\Response
+ */
+function subCategories($type = null, $pluck = false)
+{
+    $query = SubCategory::query();
+
+    if (!is_null($type)) {
+        $query->where('type', $type);
+    }
+    return $pluck ? $query->pluck('name','id') : $query->get();
+}
+
+/**
+ * Get listing of a resource.
  */
 function users()
 {
@@ -46,8 +53,6 @@ function users()
 
 /**
  * Get listing of a resource.
- *
- * @return \Illuminate\Http\Response
  */
 function customers()
 {
@@ -60,8 +65,6 @@ function customers()
 
 /**
  * Get listing of a resource.
- *
- * @return \Illuminate\Http\Response
  */
 function drivers($pluck = false)
 {
@@ -78,8 +81,6 @@ function drivers($pluck = false)
 
 /**
  * Get listing of a resource.
- *
- * @return \Illuminate\Http\Response
  */
 function warehouseBoys($pluck = false)
 {
@@ -96,8 +97,6 @@ function warehouseBoys($pluck = false)
 
 /**
  * Get listing of a resource.
- *
- * @return \Illuminate\Http\Response
  */
 function maintenenceBoys($pluck = false)
 {
@@ -114,8 +113,6 @@ function maintenenceBoys($pluck = false)
 
 /**
  * Get listing of a resource.
- *
- * @return \Illuminate\Http\Response
  */
 function topics()
 {
@@ -129,8 +126,6 @@ function topics()
 
 /**
  * Get listing of a resource.
- *
- * @return \Illuminate\Http\Response
  */
 function productResourceTypes($productId)
 {

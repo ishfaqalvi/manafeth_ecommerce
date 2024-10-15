@@ -168,15 +168,21 @@
             }
         });
         $('select[name=category_id]').change(function () {
-            let id = $(this).val();
-            $('select[name=sub_category_id]').html('<option value="">--Select--</option>');
-            $('select[name=sub_category_id]').attr('disabled',false);
-            $.get('/admin/categories/sub-categories', {id: id}).done(function (result) {
-                let data = JSON.parse(result);
-                $.each(data, function (i, val) {
-                    $('select[name=sub_category_id]').append($('<option></option>').val(val.id).html(val.name));
-                })
-            });
+            var categoryId = $(this).val();
+            if (categoryId) {
+                var allSubCategories = @json(subCategories('Sale'));
+                var subCategories = allSubCategories.filter(function(state) {
+                    return state.category_id == categoryId;
+                });
+                $('select[name=sub_category_id]').html('<option value="">--Select--</option>');
+                $('select[name=sub_category_id]').attr('disabled',false);
+                $.each(subCategories, function (key, value) {
+                    $('select[name=sub_category_id]').append('<option value="' + value.id + '">' + value.name + '</option>');
+                });
+            } else {
+                $('select[name=sub_category_id]').append('<option value="">--Select--</option>');
+                $('select[name=sub_category_id]').attr('disabled', true);
+            }
         });
         ClassicEditor.create(document.querySelector('#ckeditorFeatures'), {
             heading: {

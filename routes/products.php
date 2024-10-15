@@ -35,7 +35,6 @@ Route::controller(RentController::class)->prefix('rent')->as('products.rent.')->
 	Route::delete('delete/{id}',	 'destroy'	    )->name('destroy'	    );
     Route::post('add-to-cart',		 'addToCart'    )->name('addToCart'     );
     Route::get('get-rents',		     'getRents'     )->name('getRents'      );
-    Route::get('sub-categories',     'subCategories')->name('subCategories' );
 });
 
 /*
