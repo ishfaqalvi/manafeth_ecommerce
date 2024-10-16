@@ -123,7 +123,7 @@
         });
         function sub_category_list(categoryId,sub_category_id){
             if (categoryId) {
-                var allSubCategories = @json(subCategories('Rent'));
+                var allSubCategories = @json(subCategories(null));
                 var subCategories = allSubCategories.filter(function(state) {
                     return state.category_id == categoryId;
                 });
