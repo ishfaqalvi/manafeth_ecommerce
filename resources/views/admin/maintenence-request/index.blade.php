@@ -44,6 +44,7 @@
                 <thead class="thead">
                     <tr>
                         <th>No</th>
+                        <th>Serial Number</th>
                         <th>Name</th>
                         <th>Phone #</th>
                         <th>Charges</th>
@@ -59,6 +60,7 @@
                 @foreach ($maintenenceRequests as $key => $maintenenceRequest)
                     <tr>
                         <td>{{ ++$key }}</td>
+                        <td>{{ $maintenenceRequest->serial_number }}</td>
                         <td>{{ $maintenenceRequest->full_name }}</td>
                         <td>{{ $maintenenceRequest->phone_number }}</td>
                         <td>{{ number_format($maintenenceRequest->payment) }}</td>
