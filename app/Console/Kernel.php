@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\SendRentalExpirationNotifications;
+use App\Console\Commands\SendRentalOrderDeliveryNotifications;
 
 class Kernel extends ConsoleKernel
 {

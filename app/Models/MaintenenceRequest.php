@@ -165,6 +165,14 @@ class MaintenenceRequest extends Model implements Auditable
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function maintenenceBoys()
+    {
+        return $this->hasMany('App\Models\MaintenenceBoy', 'maintenence_request_id', 'id');
+    }
+
+    /**
      * Get all of the employee's order operations.
      */
     public function task()

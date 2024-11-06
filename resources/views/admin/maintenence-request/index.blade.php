@@ -90,6 +90,7 @@
 @section('script')
 <script>
     $(function () {
+        $('.select').select2();
         const swalInit = swal.mixin({
             buttonsStyling: false,
             customClass: {

@@ -45,7 +45,7 @@ class SendRentalOrderDeliveryNotifications extends Command
             $collectionDate = Carbon::createFromTimestamp($order->collection_date);
 
             $daysLeft = $today->diffInDays($collectionDate, false);
-
+            $message = null;
             if ($daysLeft == 3) {
                 $message = "Reminder: Rental Order #{$order->id} is scheduled for delivery in 3 days.";
             } elseif ($daysLeft == 2) {
@@ -62,7 +62,7 @@ class SendRentalOrderDeliveryNotifications extends Command
             // Log the notification for debugging
             Log::info("WhatsApp notification sent for Rental Order ID: {$order->id}");
         }
-
+        Log::info("{$today} Rental order delivery notifications sent successfully");
         $this->info('Rental order delivery notifications sent successfully.');
     }
 

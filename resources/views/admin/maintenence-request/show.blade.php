@@ -239,5 +239,22 @@
             </div>
         </div>
     </div>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Maintenence Boys</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="list-group">
+                @foreach($maintenenceRequest->maintenenceBoys as $row)
+                <a href="#" class="list-group-item list-group-item-action d-flex">
+                    {{ $row->employee->name ?? "" }}
+                    <span class="badge text-success ms-auto">
+                        {{ $row->employee->mobile_number ?? "" }}
+                    </span>
+                </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

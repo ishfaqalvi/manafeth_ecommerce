@@ -157,6 +157,10 @@ class MaintenenceRepository implements MaintenenceInterface
                         'task_id'     => $request->id,
                         'status'      => 'Pending'
                     ]);
+                    foreach($data['maintenenceboys'] as $id)
+                    {
+                        $request->maintenenceBoys()->create(['employee_id' => $id]);
+                    }
                     $customerFcm = true;
                     $employeeFcm = true;
                     $employee = $data['maintenenceboy'];
