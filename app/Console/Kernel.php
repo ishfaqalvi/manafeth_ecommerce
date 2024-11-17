@@ -17,9 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('rental:send-expiration-notifications')->daily();
-        $schedule->command('rental:notify-delivery')->daily();
-        // $schedule->command('rental:send-expiration-notifications')->everyMinute();
+        $schedule->command('app:manage-rental-notifications')->daily();
+        // $schedule->command('app:manage-rental-notifications')->everyMinute();
     }
 
     /**
