@@ -59,9 +59,8 @@ class WhatsAppService
                 'body' => $body,
             ]);
             Log::info('Received WhatsApp response: Message sent successfully!');
-        } catch (GuzzleHttp\Exception\RequestException $e) {
+        } catch (RequestException $e) {
             Log::error('Error with WhatsApp service', ['error' => $e->getMessage()]);
         }
-
     }
 }
