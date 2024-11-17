@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\WhatsAppService;
+use App\Services\{WhatsAppService, FCMService, AdminNotifyService};
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +17,13 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(WhatsAppService::class, function ($app) {
             return new WhatsAppService();
         });
+        $this->app->singleton(FCMService::class, function ($app) {
+            return new FCMService();
+        });
+        $this->app->singleton(AdminNotifyService::class, function ($app) {
+            return new AdminNotifyService($app);
+        });
+
     }
 
     /**

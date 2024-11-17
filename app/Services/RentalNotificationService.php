@@ -6,6 +6,7 @@ use App\Models\RentRequest;
 use App\Models\RentRequestDetail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use App\Services\{WhatsAppService, FCMService, AdminNotifyService};
 
 class RentalNotificationService
 {
@@ -13,7 +14,7 @@ class RentalNotificationService
     protected $fcmNotification;
     protected $adminNotify;
 
-    public function __construct($whatsAppService, $fcmNotification, $adminNotify)
+    public function __construct(WhatsAppService $whatsAppService, FCMService $fcmNotification, AdminNotifyService $adminNotify)
     {
         $this->whatsAppService = $whatsAppService;
         $this->fcmNotification = $fcmNotification;
