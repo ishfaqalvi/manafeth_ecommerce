@@ -95,6 +95,8 @@ class RentalNotificationService
             }
 
             $this->sendWhatsAppNotification($message, $order);
+
+            Log::info("Rental delivery notification sent: {$message}");
         }
 
         Log::info('Rental delivery notifications sent successfully.');
@@ -102,6 +104,7 @@ class RentalNotificationService
 
     protected function sendWhatsAppNotification($message, $order)
     {
+        $detail = $order->details()->first();
         $data = [
             "Rental Request",
             $message,
@@ -109,7 +112,7 @@ class RentalNotificationService
             $order->name,
             date('d M Y', $order->collection_date),
             $order->collection_type,
-            $order->product->name
+            $detail->productRent->product->name
         ];
         $this->whatsAppService->sendMessage('to_admin_delivery_due_reminder', $data);
     }
