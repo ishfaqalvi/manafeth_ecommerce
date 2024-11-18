@@ -63,7 +63,11 @@ class RentRequest extends Model implements Auditable
      */
     public function setCollectionDateAttribute($value)
     {
-        $this->attributes['collection_date'] = strtotime($value);
+        if (!is_numeric($value)) {
+            $this->attributes['collection_date'] = strtotime($value);
+        } else {
+            $this->attributes['collection_date'] = $value;
+        }
     }
 
     /**
