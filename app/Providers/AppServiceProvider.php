@@ -20,10 +20,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(FCMService::class, function ($app) {
             return new FCMService();
         });
-        $this->app->singleton(AdminNotifyService::class, function ($app) {
-            return new AdminNotifyService($app);
-        });
-
     }
 
     /**
