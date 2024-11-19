@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Order;
 use App\Models\RentRequest;
 use App\Models\RentRequestDetail;
 use Carbon\Carbon;
@@ -94,19 +95,45 @@ class RentalNotificationService
                 $message = "Reminder: Rental Order #{$order->id} is scheduled for delivery today.";
             }
 
-            $this->sendWhatsAppNotification($message, $order);
+            $this->sendWhatsAppNotification($message, $order, "Rental Request");
 
             Log::info("Rental delivery notification sent: {$message}");
         }
 
-        Log::info('Rental delivery notifications sent successfully.');
+        $saleOrders = Order::whereBetween('estimated_delivery', [
+            $today->timestamp,
+            $today->copy()->addDays(3)->timestamp
+        ])->get();
+
+        foreach ($saleOrders as $order) {
+            $collectionDate = Carbon::createFromTimestamp($order->estimated_delivery);
+
+            $daysLeft = $today->diffInDays($collectionDate, false);
+            $message = null;
+
+            if ($daysLeft == 3) {
+                $message = "Reminder: Sale Order #{$order->id} is scheduled for delivery in 3 days.";
+            } elseif ($daysLeft == 2) {
+                $message = "Reminder: Sale Order #{$order->id} is scheduled for delivery in 2 days.";
+            } elseif ($daysLeft == 1) {
+                $message = "Reminder: Sale Order #{$order->id} is scheduled for delivery tomorrow.";
+            } elseif ($daysLeft == 0) {
+                $message = "Reminder: Sale Order #{$order->id} is scheduled for delivery today.";
+            }
+
+            $this->sendWhatsAppNotification($message, $order, "Sale Order");
+
+            Log::info("Sale Order delivery notification sent: {$message}");
+        }
+
+        Log::info('Sale Order delivery notifications sent successfully.');
     }
 
-    protected function sendWhatsAppNotification($message, $order)
+    protected function sendWhatsAppNotification($message, $order, $type)
     {
         $detail = $order->details()->first();
         $data = [
-            "Rental Request",
+            $type,
             $message,
             $order->id,
             $order->name,
