@@ -194,8 +194,8 @@ class ProductController extends Controller
                  */
                 $products = $link->product->name.' ('. $link->quantity.' Qty) (From: '. date('d M Y', $link->from).') (To: '.date('d M Y', $link->to).')';
                 if(settings('rent_order_whatsapp_notification') == 'Yes'){
-                    $data = [$input['name'], $input['mobile_number'], $products];
-                    $this->whatsAppService->sendMessage('renta_order_placed', $data);
+                    $data = [$input['name'], $input['mobile_number'] ?? "+971xxxxxxxxx", $products];
+                    $this->whatsAppService->sendMessage('renta_order_placed', $data); 
                 }
                 if(settings('rent_order_fcm_notification_to_customer') == 'Yes'){
                     $data = [
