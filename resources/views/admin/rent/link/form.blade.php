@@ -60,6 +60,12 @@
         {{ Form::text('address', $rentLink->address, ['class' => 'form-control' . ($errors->has('address') ? ' is-invalid' : ''), 'placeholder' => 'Address','required', 'id' => 'address']) }}
         {!! $errors->first('address', '<div class="invalid-feedback">:message</div>') !!}
     </div>
+    <div class="fw-bold border-bottom pb-2 mb-3">Payment Detail</div>
+    <div class="form-group col-lg-12 mb-3">
+        {{ Form::label('payment_link','Link') }}
+        {{ Form::text('payment_link', $rentLink->payment_link, ['class' => 'form-control' . ($errors->has('payment_link') ? ' is-invalid' : ''), 'placeholder' => 'Payment Link']) }}
+        {!! $errors->first('payment_link', '<div class="invalid-feedback">:message</div>') !!}
+    </div>
     {{ Form::hidden('lat', null, ['id' => 'lat']) }}
     {{ Form::hidden('long', null, ['id' => 'long']) }}
 	<div class="col-md-12 d-flex justify-content-end align-items-center mt-3">

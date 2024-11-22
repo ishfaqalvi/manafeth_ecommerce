@@ -56,6 +56,7 @@ class RentLink extends Model implements Auditable
         'long',
         'price_change_type',
         'price_change_value',
+        'payment_link',
         'token'
     ];
 

@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use Exception;
 use App\Mail\OTPMail;
-use App\Models\Token;
-use App\Models\RentRequest;
+use App\Models\{Token, RentRequest, RentLink};
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\{DB, Mail};
@@ -195,7 +194,7 @@ class ProductController extends Controller
                 $products = $link->product->name.' ('. $link->quantity.' Qty) (From: '. date('d M Y', $link->from).') (To: '.date('d M Y', $link->to).')';
                 if(settings('rent_order_whatsapp_notification') == 'Yes'){
                     $data = [$input['name'], $input['mobile_number'] ?? $input['email'], $products];
-                    $this->whatsAppService->sendMessage('renta_order_placed', $data); 
+                    $this->whatsAppService->sendMessage('renta_order_placed', $data);
                 }
                 if(settings('rent_order_fcm_notification_to_customer') == 'Yes'){
                     $data = [
@@ -229,9 +228,11 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function order()
+    public function order(Request $request)
     {
-        return view('web.product.success');
+        $link = RentLink::whereToken($request->token)->first();
+
+        return view('web.product.success', compact('link'));
     }
 
     /**

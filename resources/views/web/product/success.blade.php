@@ -13,7 +13,9 @@
                     <p class="lead mt-4">Your order has been placed successfully.</p>
                     <div class="mt-5">
                         <a href="{{ route('web.products.rent') }}" class="btn btn-primary btn-lg">Continue Shopping</a>
-                        {{-- <a href="{{ url('/orders') }}" class="btn btn-secondary btn-lg">View My Orders</a> --}}
+                        @if($link)
+                            <a href="{{ $link->payment_link }}" target="_blank" class="btn btn-secondary btn-lg">Pay Now</a>
+                        @endif
                     </div>
                 </div>
             </div>

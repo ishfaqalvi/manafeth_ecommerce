@@ -81,6 +81,10 @@
                 <strong>Address:</strong>
                 {{ $rentLink->address }}
             </div>
+            <div class="form-group mb-3">
+                <strong>Payment Link:</strong>
+                {{ $rentLink->payment_link }}
+            </div>
         </div>
     </div>
 </div>

@@ -281,7 +281,9 @@
                 success: function (response) {
                     if (response.status) {
                         toastr.success(response.message);
-                        window.location.href = "{{ route('web.products.order') }}";
+                        const successUrl = "{{ route('web.products.order') }}?token=" + $('#link_token').val();
+                        window.location.href = successUrl;
+                        // window.location.href = "{{ route('web.products.order', ['token' => "+ $('#link_token').val() +"]) }}";
                     } else {
                         toastr.error(response.message || 'Invalid OTP, please try again.');
                         inputs.val('');

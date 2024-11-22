@@ -139,7 +139,8 @@ class RentalNotificationService
             $order->name,
             date('d M Y', $order->collection_date),
             $order->collection_type,
-            $detail->productRent->product->name
+            $detail->productRent->product->name,
+            $order->phone_number ?? "+971xxxxxxxxxxx"
         ];
         $this->whatsAppService->sendMessage('to_admin_delivery_due_reminder', $data);
     }
